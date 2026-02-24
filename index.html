@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIL Agent Skills Hub</title>
+    <meta name="description" content="A collection of AI Agent Skills created by the Harvard Law School Library Innovation Lab.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">
+                <a href="https://lil.law.harvard.edu/" target="_blank">LIBRARY INNOVATION LAB</a>
+                <span class="divider">/</span>
+                <span class="site-title">AGENT SKILLS HUB</span>
+            </div>
+            <nav>
+                <a href="#skills">Skills</a>
+                <a href="#training">Training</a>
+                <a href="https://github.com/harvard-lil" target="_blank">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Agent Skills for<br>Legal Innovation.</h1>
+            <p class="hero-text">
+                A curated collection of modular skills for AI agents. Designed for syllabus creation, 
+                assessment generation, and data processing. Open source and ready to deploy.
+            </p>
+            <div class="hero-actions">
+                <a href="#skills" class="btn btn-primary">Browse Skills ↓</a>
+                <a href="#training" class="btn btn-secondary">Watch Tutorials</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Training Videos Section -->
+    <section id="training" class="training-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>TRAINING_MODULES</h2>
+                <span class="section-line"></span>
+            </div>
+            <div class="video-grid">
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/cbcmbubK5Qc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h3>How to Install A Skill</h3>
+                        <p>A step-by-step guide to adding new capabilities to your agent.</p>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/deKrsnaz7JE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h3>What Is A Skill?</h3>
+                        <p>Understanding the modular architecture of agent capabilities.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>AVAILABLE_SKILLS</h2>
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">ALL</button>
+                    <button class="filter-btn" data-filter="syllabus">SYLLABUS</button>
+                    <button class="filter-btn" data-filter="assessment">ASSESSMENT</button>
+                    <button class="filter-btn" data-filter="data">DATA</button>
+                </div>
+            </div>
+            
+            <div id="skills-grid" class="skills-grid">
+                <!-- Skills will be injected here by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <h3>LIBRARY INNOVATION LAB</h3>
+                    <p>Harvard Law School</p>
+                    <p>1557 Massachusetts Ave<br>Cambridge, MA 02138</p>
+                </div>
+                <div class="footer-right">
+                    <a href="https://lil.law.harvard.edu/about/">About</a>
+                    <a href="https://lil.law.harvard.edu/blog/">Blog</a>
+                    <a href="https://lil.law.harvard.edu/contact/">Contact</a>
+                    <p class="copyright">&copy; 2026 The President and Fellows of Harvard University</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+</body>
+</html>
