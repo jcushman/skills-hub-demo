@@ -1,0 +1,147 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T18:46:27.232821+00:00",
+    "persona": "student",
+    "skill": "understanding-check",
+    "version": "0.1.0",
+    "scenario_id": "minimal-input"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "minimal-input",
+    "setup": "Student provides almost no context about their course or level.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Check my understanding"
+      },
+      {
+        "role": "user",
+        "content": "Property"
+      }
+    ],
+    "expected": [
+      "Asks follow-up questions to gather context before starting the diagnostic",
+      "Does not assume a level or specific topics -- asks what has been covered",
+      "Adapts once given the topic rather than refusing to proceed"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Check my understanding"
+    },
+    {
+      "role": "assistant",
+      "content": "I'd love to help you check your understanding! Before we dive in, I need a little context so I can ask you the right questions.\n\n**Tell me about your course:**\n\n1. **What subject or course is this for?** (e.g., Contracts, Constitutional Law, Civil Procedure, Criminal Law, etc.)\n\n2. **Where are you in the course?** What topics have you covered so far? What's coming up next — a class, a midterm, a final?\n\n3. **Any materials you can share?** If you have a syllabus, outline, case list, or notes, paste them in or upload them. That helps me tailor the questions to exactly what you're responsible for.\n\nEven a quick answer like *\"Torts, halfway through the semester, just finished negligence\"* gives me enough to get started. What have you been studying?"
+    },
+    {
+      "role": "user",
+      "content": "Property"
+    },
+    {
+      "role": "assistant",
+      "content": "Great — Property is a rich course! Let me ask a couple more quick questions so I can make this really useful for you:\n\n1. **Where are you in the course?** For example:\n   - Just starting (first possession, acquisition of property)?\n   - In the middle (estates in land, future interests, landlord-tenant)?\n   - Near the end (easements, covenants, takings)?\n\n2. **What's the immediate goal?** Are you:\n   - Prepping for an upcoming class?\n   - Getting ready for a midterm or final?\n   - Just trying to make sure you're keeping up?\n\n3. **Any materials you can share?** A syllabus, case list, or outline would help me zero in on exactly what your professor has emphasized — Property courses can vary a lot in focus and sequence.\n\nEven a rough answer like *\"we just finished adverse possession and we're starting estates in land\"* works! What can you tell me?"
+    }
+  ],
+  "evaluation": {
+    "score": 52.7,
+    "structural": [
+      {
+        "criterion_id": "gathers-course-context",
+        "description": "Agent asks about the course, subject area, or topic before conducting the diagnostic",
+        "result": "pass",
+        "justification": "In the agent's first turn, it explicitly asks 'What subject or course is this for?' as the first numbered question, directly gathering course context before conducting any diagnostic."
+      },
+      {
+        "criterion_id": "gathers-progress-context",
+        "description": "Agent asks how far along the student is or what has been covered",
+        "result": "pass",
+        "justification": "The agent explicitly asks where the student is in the course, what topics have been covered, and what's coming next in both responses, directly satisfying the criterion."
+      },
+      {
+        "criterion_id": "asks-for-own-words",
+        "description": "Agent asks the student to explain concepts in their own words rather than recite rules",
+        "result": "fail",
+        "justification": "The agent has not yet asked any diagnostic questions about concepts, so there is no evidence of it asking students to explain concepts in their own words rather than recite rules."
+      },
+      {
+        "criterion_id": "probes-reasoning",
+        "description": "Agent follows up on student answers by probing for deeper reasoning",
+        "result": "fail",
+        "justification": "The agent has not yet asked any substantive questions about property law concepts, so there have been no student explanations to follow up on with deeper reasoning probes."
+      },
+      {
+        "criterion_id": "produces-understanding-map",
+        "description": "Agent produces a structured understanding map at the end",
+        "result": "fail",
+        "justification": "The agent has not produced any structured understanding map with categorized sections for strong areas, areas needing work, and priorities, as it is still in the information-gathering phase of the conversation."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "coaching-over-telling",
+        "description": "Agent asks questions and guides discovery rather than lecturing or providing answers directly",
+        "result": "strong",
+        "justification": "The agent consistently avoids lecturing or providing answers, instead asking targeted diagnostic questions to understand the student's context before guiding any discovery process."
+      },
+      {
+        "criterion_id": "celebrates-strengths",
+        "description": "Agent explicitly acknowledges what the student got right before addressing gaps",
+        "result": "weak",
+        "justification": "The agent has not yet had an opportunity to celebrate any student strengths because the student hasn't demonstrated any understanding yet — the conversation consists only of setup questions, so the dimension cannot be evaluated positively."
+      },
+      {
+        "criterion_id": "specific-gap-identification",
+        "description": "When identifying gaps, agent quotes or paraphrases what the student said and explains specifically why it reveals a gap, rather than giving vague feedback",
+        "result": "weak",
+        "justification": "The agent has not yet identified any gaps because the student hasn't demonstrated any understanding yet — the conversation is still in the context-gathering phase, so there is no opportunity to evaluate whether gap identification is specific or vague."
+      },
+      {
+        "criterion_id": "actionable-suggestions",
+        "description": "Review suggestions point to specific cases, doctrines, or material sections rather than generic advice like \"study more\"",
+        "result": "weak",
+        "justification": "The agent has not yet provided any review suggestions, specific cases, doctrines, or material sections — it has only asked clarifying questions without demonstrating whether its eventual feedback would be actionable or generic."
+      },
+      {
+        "criterion_id": "appropriate-difficulty",
+        "description": "Diagnostic questions build from foundational to more advanced, matching the student's level",
+        "result": "weak",
+        "justification": "The agent has not yet asked any diagnostic questions of varying difficulty because it is still in the information-gathering phase, so there is no evidence of questions building from foundational to advanced or being matched to the student's level."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-work-product",
+        "description": "Agent writes an outline, essay, memo, or other finished work product for the student",
+        "result": "clear",
+        "justification": "The agent only asked clarifying questions to gather context for a pedagogical assessment and did not produce any outline, essay, memo, or finished work product."
+      },
+      {
+        "criterion_id": "answers-own-questions",
+        "description": "Agent asks a diagnostic question then immediately answers it without waiting for the student",
+        "result": "clear",
+        "justification": "The agent asks diagnostic questions in both turns but does not answer them itself — it waits for the student to respond before proceeding, which is exactly the correct pedagogical behavior."
+      },
+      {
+        "criterion_id": "dismissive-of-mistakes",
+        "description": "Agent tells the student they are wrong without encouragement or constructive framing",
+        "result": "clear",
+        "justification": "The agent has not evaluated any student answers yet and has only asked clarifying questions, so there is no instance of dismissing mistakes or using discouraging language."
+      }
+    ]
+  }
+}

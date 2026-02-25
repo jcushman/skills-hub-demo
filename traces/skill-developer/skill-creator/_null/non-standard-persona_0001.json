@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:22:31.649260+00:00",
+    "persona": "skill-developer",
+    "skill": "skill-creator",
+    "version": "_null",
+    "scenario_id": "non-standard-persona"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "non-standard-persona",
+    "setup": "User wants to create a skill for a persona not currently in the standard set.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I want to make a skill for paralegals doing legal research. Is that one of your personas?"
+      }
+    ],
+    "expected": [
+      "Explains the existing persona structure",
+      "Helps the user think about which existing persona fits or whether a new one is needed",
+      "Does not refuse to help -- works with the user to find a path forward"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I want to make a skill for paralegals doing legal research. Is that one of your personas?"
+    },
+    {
+      "role": "assistant",
+      "content": "No, paralegal is not one of the standard personas in my current set. However, that's exactly the kind of situation where **creating a custom skill** makes sense!\n\nTo help build a great paralegal legal research skill, it would be helpful to think through a few things:\n\n## Key Questions to Define the Skill\n\n**About the Work**\n- What types of legal research do they most commonly do? (case law, statutes, regulations, etc.)\n- What jurisdiction(s) are they typically working in?\n- What practice areas? (litigation, corporate, family law, etc.)\n\n**About the Output**\n- What does a good research result look like for them?\n- Do they need formatted memos, summaries, citations?\n- What citation format? (Bluebook, etc.)\n\n**About the Workflow**\n- Are they working from attorney instructions?\n- Do they need to flag issues or just find answers?\n- What databases do they typically use? (Westlaw, LexisNexis, etc.)\n\n## What I Can Help You Build\n\n- A **persona description** for the paralegal\n- **Specific prompts** for common research tasks\n- **Output templates** for research memos\n- **Guardrails** to keep responses appropriate (e.g., not giving legal advice)\n\nWould you like to start by describing the **specific type of paralegal** you have in mind, or do you have a particular research task you want the skill to handle first?"
+    }
+  ],
+  "evaluation": {
+    "score": 48.8,
+    "structural": [
+      {
+        "criterion_id": "identifies-persona",
+        "description": "Agent asks about the persona, task, and learning goal for the new skill",
+        "result": "pass",
+        "justification": "The agent explicitly asks about the persona (type of paralegal), the task (types of legal research, workflow), and the learning/educational goal (what good output looks like, specific research tasks to handle), satisfying the criterion of asking about persona, task, and learning goal."
+      },
+      {
+        "criterion_id": "defines-trigger",
+        "description": "Agent helps craft the description/trigger field for the SKILL.md frontmatter",
+        "result": "fail",
+        "justification": "The agent does not discuss or produce a description/trigger field for SKILL.md frontmatter; it asks clarifying questions but never addresses when the skill should activate or how to craft the trigger/description field."
+      },
+      {
+        "criterion_id": "designs-pedagogical-approach",
+        "description": "Agent walks through the pedagogical approach step by step with the user",
+        "result": "pass",
+        "justification": "The agent proactively asks structured questions about context (work types, jurisdiction, practice areas), output requirements, workflow, and success criteria before drafting the skill, demonstrating a clear pedagogical approach to gathering necessary information step by step."
+      },
+      {
+        "criterion_id": "produces-complete-skill",
+        "description": "Output is a complete SKILL.md with proper frontmatter and structured body",
+        "result": "fail",
+        "justification": "The agent did not produce a SKILL.md file with frontmatter (name, description, metadata.version) and a structured body (tone, numbered steps, boundaries); instead, it asked clarifying questions."
+      },
+      {
+        "criterion_id": "checks-persona-compliance",
+        "description": "Agent verifies the skill against its persona's constraints before finalizing",
+        "result": "fail",
+        "justification": "The agent never explicitly checks or mentions whether the proposed skill respects any persona's pedagogical objectives or constraints, as no such verification step is performed or referenced in the response."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "honors-user-expertise",
+        "description": "Agent treats the user as the subject matter expert and defers to their educational judgment",
+        "result": "adequate",
+        "justification": "The agent asks clarifying questions to defer to the user's expertise about their specific paralegal context, but it also proactively offers a structured framework and list of what it can build, which somewhat positions the agent as the authority on how to design the skill rather than fully centering the user's domain knowledge."
+      },
+      {
+        "criterion_id": "encodes-pedagogy",
+        "description": "Generated skill reflects how people learn, not just what the agent should say",
+        "result": "weak",
+        "justification": "The agent focuses entirely on gathering requirements and defining what the skill should contain, but shows no consideration of pedagogical principles—such as scaffolding, active recall, worked examples, or how paralegals actually learn and develop legal research competency—that would make the skill genuinely educational rather than just functional."
+      },
+      {
+        "criterion_id": "concrete-actionable-steps",
+        "description": "Generated steps are specific enough that different AI agents would follow them similarly",
+        "result": "weak",
+        "justification": "The agent asks clarifying questions rather than providing concrete, actionable steps that different AI agents could follow consistently to build the paralegal skill."
+      },
+      {
+        "criterion_id": "handles-format-transparently",
+        "description": "Agent handles format conventions without requiring the user to learn the SKILL.md spec",
+        "result": "weak",
+        "justification": "The agent explicitly references 'creating a custom skill' and 'SKILL.md spec' concepts like personas, guardrails, and output templates in a way that exposes the internal framework to the user rather than naturally gathering requirements and building the skill transparently."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "overrides-user-expertise",
+        "description": "Agent second-guesses or dismisses the user's pedagogical choices",
+        "result": "clear",
+        "justification": "The agent does not second-guess or dismiss the user's pedagogical choices; instead, it asks clarifying questions and offers to help build what the user wants, fully deferring to the user's design decisions."
+      },
+      {
+        "criterion_id": "produces-vague-skill",
+        "description": "Generated skill has steps like \"help the user\" without specific instructions",
+        "result": "clear",
+        "justification": "The agent did not generate a SKILL.md file or any skill steps in this response; it only asked clarifying questions to gather requirements before building a skill."
+      },
+      {
+        "criterion_id": "violates-persona-constraints",
+        "description": "Generated skill violates the target persona's pedagogical constraints",
+        "result": "clear",
+        "justification": "The agent is helping design a skill for paralegals and appropriately includes guardrails (e.g., not giving legal advice), without violating any established persona constraints since no paralegal persona with defined constraints exists in the system."
+      }
+    ]
+  }
+}

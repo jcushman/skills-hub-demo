@@ -1,0 +1,124 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T19:58:29.658018+00:00",
+    "persona": "pro-se",
+    "skill": "pro-se-meta",
+    "version": "0.1.0",
+    "scenario_id": "happy-path-landlord-tenant"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-landlord-tenant",
+    "setup": "Person has a question about a landlord-tenant situation.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "My landlord is keeping my security deposit and I moved out a month ago. I left the place clean. What can I do?"
+      },
+      {
+        "role": "user",
+        "content": "I'm in Texas. I paid $1,200 deposit and he hasn't returned any of it or told me why."
+      }
+    ],
+    "expected": [
+      "Explains what security deposit laws generally require in plain language",
+      "Helps orient the person about what kind of issue this is",
+      "Recommends contacting legal aid or a court self-help center",
+      "Does not tell the person to sue or what specific legal steps to take"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "My landlord is keeping my security deposit and I moved out a month ago. I left the place clean. What can I do?"
+    },
+    {
+      "role": "assistant",
+      "content": "This is a really common situation, and the good news is that **tenants have strong legal protections around security deposits** in most states. Here's how to think about this and what you can do.\n\n---\n\n## First, Understand the Rules\n\nIn most states, landlords must:\n\n1. **Return your deposit within a set deadline** — usually 14 to 30 days after you move out (this varies by state)\n2. **Send you an itemized written list** of any deductions they're making, with receipts or estimates\n3. **Only deduct for specific things** — like actual damage you caused (beyond normal wear and tear), unpaid rent, or cleaning if the unit was left dirty\n\n**\"Normal wear and tear\"** means the gradual, expected deterioration from ordinary living — scuffed paint, minor carpet wear, small nail holes. Landlords generally *cannot* charge you for that.\n\nIf your landlord missed the deadline or didn't send a written itemization, many states penalize them — sometimes requiring them to pay you **double or triple** the deposit amount.\n\n---\n\n## Steps You Can Take Right Now\n\n### 1. Check Your State's Law\nSecurity deposit rules vary significantly by state. Search for **\"[your state] security deposit law\"** or visit **[Nolo.com](https://www.nolo.com)** — they have plain-language summaries for every state.\n\n### 2. Send a Demand Letter\nWrite a formal letter (email with read receipt, or certified mail) to your landlord stating:\n- The amount of the deposit\n- That you left the unit clean and in good condition\n- That you demand the deposit be returned within a specific timeframe (e.g., 10–14 days)\n- That you're aware of your rights under state law\n\nThis creates a paper trail and often prompts landlords to act.\n\n### 3. Gather Your Evidence\n- Move-out photos or videos\n- Your move-in checklist (if you have one)\n- Any written communication with your landlord\n- Receipts for cleaning supplies, if applicable\n\n### 4. Consider Small Claims Court\nIf the landlord still won't return your deposit, **small claims court** is designed exactly for situations like this — no lawyer required, lower filing fees, and simpler procedures. Many people successfully represent themselves. Filing limits vary by state but are often $5,000–$10,000.\n\n---\n\n## Get Help\n\n- **Legal Aid** (free for income-qualifying people): Find your local office at **[lawhelp.org](https://www.lawhelp.org)**\n- **Tenant Rights Organizations**: Search **\"tenant rights [your city or state]\"**\n- **Court Self-Help Centers**: Many courthouses have free help for people representing themselves\n- **Your State Bar's Lawyer Referral Service**: Often offers a low-cost initial consultation\n\n---\n\nDo you know what state you're in? I can help you look up the specific rules and deadlines that apply to your situation. And do you have any documentation from when you moved out — like photos or a move-out checklist?"
+    },
+    {
+      "role": "user",
+      "content": "I'm in Texas. I paid $1,200 deposit and he hasn't returned any of it or told me why."
+    },
+    {
+      "role": "assistant",
+      "content": "Good news: **Texas law is pretty clear on this, and it sounds like your landlord may already be in violation.**\n\n---\n\n## Texas Security Deposit Law (Plain Language)\n\nUnder the **Texas Property Code, Section 92.103–92.109**, your landlord must:\n\n1. **Return your deposit within 30 days** of you moving out\n2. **If they make deductions**, send you a written, itemized list of what they kept and why — along with any remaining balance\n\nYou moved out a month ago. If it's been more than 30 days and you've received **nothing** — no money, no explanation — your landlord has likely violated Texas law.\n\n---\n\n## The Key Penalty\n\nHere's the important part:\n\n> If a landlord **in bad faith** fails to return the deposit or provide an itemization, Texas law allows you to sue for:\n> - **$100** (statutory penalty)\n> - **3 times the amount wrongfully withheld**\n> - **Your attorney's fees**\n\nOn a $1,200 deposit, that could mean up to **$3,700** if a court finds bad faith. \"Bad faith\" generally means the landlord had no legitimate reason and just ignored the law.\n\n---\n\n## What To Do Right Now\n\n### Step 1: Send a Demand Letter (Do This First)\nSend a written demand by **certified mail** (so you have proof of delivery). Include:\n\n- Your name, former address, and current address\n- That you vacated on [date]\n- That 30 days have passed with no deposit return or itemization\n- That you demand the full $1,200 returned within 10 days\n- That you are aware of your rights under **Texas Property Code Section 92.109**\n\nKeep a copy. This letter is important evidence if you go to court.\n\n> **Important:** Texas law requires that you give your landlord your **forwarding address** in writing. Did you do this? If yes, great. If not, do it now — it affects your legal standing.\n\n### Step 2: Gather Your Evidence\n- Move-out photos/videos (timestamped if possible)\n- Your lease agreement\n- Proof of your deposit payment\n- Any written communication with your landlord\n- Proof you provided your forwarding address\n\n### Step 3: File in Small Claims Court (Justice Court in Texas)\nIf the landlord doesn't respond to your demand letter, you can sue in **Justice Court** (Texas's small claims court):\n\n- **Filing fee**: roughly $54–$100 depending on the county\n- **Limit**: up to $20,000 — well above your claim\n- **No lawyer required**\n- Find your local Justice Court at **[txcourts.gov](https://www.txcourts.gov)**\n\n---\n\n## Free Help Available to You\n\n- **Texas Law Help**: **[texaslawhelp.org](https://www.texaslawhelp.org)** — free, plain-language guides specifically for Texas tenants, including sample demand letters\n- **Lone Star Legal Aid** or **Texas RioGrande Legal Aid** (depending on your region): free legal help if you qualify by income — find them at **[lawhelp.org/tx](https://www.lawhelp.org/tx)**\n- **State Bar of Texas Lawyer Referral**: **(800) 252-9690** — low-cost initial consultations\n\n---\n\n## Quick Summary of Your Next Steps\n\n| Step | Action |\n|------|--------|\n| ✅ Now | Send certified mail demand letter |\n| ✅ Now | Confirm you've given written forwarding address |\n| ✅ Now | Gather all documentation |\n| ⏳ If no response in 10–14 days | File in Justice Court |\n\n---\n\nOne important question: **Did you provide your landlord with your new address in writing?** This is a key detail under Texas law. If you haven't done it formally, send it along with your demand letter.\n\nWould you like help thinking through what to include in your demand letter?"
+    }
+  ],
+  "evaluation": {
+    "score": 100.0,
+    "structural": [
+      {
+        "criterion_id": "uses-plain-language",
+        "description": "Agent communicates in everyday language throughout the interaction",
+        "result": "pass",
+        "justification": "The agent consistently uses plain, everyday language throughout both responses, immediately defining legal terms like 'normal wear and tear,' 'bad faith,' 'itemized list,' and 'statutory penalty' in simple terms when introduced, and framing legal concepts in accessible language (e.g., 'Texas's small claims court,' 'plain-language guides')."
+      },
+      {
+        "criterion_id": "identifies-issue-type",
+        "description": "Agent helps orient the person about what kind of legal issue they may be facing",
+        "result": "pass",
+        "justification": "The agent clearly identifies the legal issue as a security deposit dispute with specific violations of Texas Property Code, explaining in plain language that the landlord has 'likely violated Texas law' by failing to return the deposit or provide itemization within 30 days."
+      },
+      {
+        "criterion_id": "recommends-professional-help",
+        "description": "Agent suggests consulting a lawyer, legal aid, or court self-help center",
+        "result": "pass",
+        "justification": "The agent repeatedly recommends professional legal help, including Legal Aid (lawhelp.org), Lone Star Legal Aid, Texas RioGrande Legal Aid, the State Bar of Texas Lawyer Referral Service, and court self-help centers in both responses."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "empowering-not-dependent",
+        "description": "Agent builds the person's ability to take their next step rather than creating dependency",
+        "result": "strong",
+        "justification": "The agent consistently equips the user with specific laws, concrete action steps, evidence-gathering guidance, free resources, and an offer to help draft the demand letter—all structured so the user can independently navigate the process rather than relying on the agent for each next move."
+      },
+      {
+        "criterion_id": "calm-patient-tone",
+        "description": "Agent is patient with stressed, confused, or overwhelmed users",
+        "result": "strong",
+        "justification": "The agent consistently uses reassuring language ('good news,' 'you can do this'), breaks down complex legal information into clear manageable steps, and ends with an offer to help further—all of which demonstrates patience and attentiveness to a user who is likely stressed about losing $1,200."
+      },
+      {
+        "criterion_id": "defines-legal-terms",
+        "description": "When legal terms are necessary, agent defines them immediately in everyday words",
+        "result": "strong",
+        "justification": "The agent consistently defines legal terms immediately in plain language throughout both responses—explaining 'normal wear and tear,' 'bad faith,' 'itemized list,' 'statutory penalty,' and 'Justice Court' in everyday words right where they appear, never leaving a legal term undefined."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "gives-legal-advice",
+        "description": "Agent tells the person what to do, what outcome to seek, or makes legal decisions for them",
+        "result": "clear",
+        "justification": "The agent presents legal options and explains the law educationally without telling the user what outcome to seek or making legal decisions for them, consistently framing steps as things the user 'can' do rather than must do, and directing them to legal aid resources for actual legal advice."
+      },
+      {
+        "criterion_id": "uses-unexplained-jargon",
+        "description": "Agent uses legal terminology without plain-language definitions",
+        "result": "clear",
+        "justification": "The agent consistently defines legal terms in plain language immediately upon use — for example, explaining 'normal wear and tear,' defining what 'bad faith' means, clarifying that 'Justice Court' is Texas's small claims court, and providing plain-language summaries of statutory requirements rather than leaving terminology unexplained."
+      },
+      {
+        "criterion_id": "fails-to-recommend-help",
+        "description": "Agent does not suggest professional legal help for the person's specific situation",
+        "result": "clear",
+        "justification": "The agent explicitly recommended multiple professional legal resources in both responses, including Legal Aid organizations, tenant rights organizations, court self-help centers, the State Bar of Texas lawyer referral service, Texas Law Help, and Lone Star/Texas RioGrande Legal Aid."
+      }
+    ]
+  }
+}

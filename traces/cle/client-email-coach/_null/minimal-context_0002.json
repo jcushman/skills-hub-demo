@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:09:20.172412+00:00",
+    "persona": "cle",
+    "skill": "client-email-coach",
+    "version": "_null",
+    "scenario_id": "minimal-context"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "minimal-context",
+    "setup": "Attorney provides only the draft with no context.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Review this: 'Hi Sarah, The deal is moving forward. We should close by end of month if all goes well. I'll send the revised docs tomorrow. Let me know if the board has any concerns. Thanks, [Name]'"
+      }
+    ],
+    "expected": [
+      "Asks for context about the client relationship, the deal, and any specific concerns",
+      "May offer preliminary observations (very brief, potentially too casual, \"if all goes well\" is hedgy)",
+      "Explains why context matters for calibrating feedback"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Review this: 'Hi Sarah, The deal is moving forward. We should close by end of month if all goes well. I'll send the revised docs tomorrow. Let me know if the board has any concerns. Thanks, [Name]'"
+    },
+    {
+      "role": "assistant",
+      "content": "## Review of Email Draft\n\n### Overall Assessment\nThe email is **functional but vague**, which could create problems in a legal or business context.\n\n---\n\n### Key Concerns\n\n**Lack of Specificity**\n- \"The deal\" — which deal? No matter name, file number, or identifying reference\n- \"End of month\" — no specific date\n- \"Revised docs\" — which documents specifically?\n- \"All goes well\" — undefined contingencies\n\n**Risk Areas**\n- Casual tone may **not reflect well** if this email becomes part of a record or discovery\n- \"If all goes well\" could be interpreted as **acknowledging unresolved issues** without documenting what they are\n- No mention of **which board** or what their authority/role is in the transaction\n\n**Missing Elements**\n- No subject line provided — should be specific and matter-referenced\n- No deadline for Sarah's response\n- No clear **next steps or action items**\n\n---\n\n### Suggested Revisions to Consider\n- Reference the matter by name or number\n- State a **specific closing date**\n- Name the documents being sent\n- Identify outstanding contingencies explicitly\n- Set a **response deadline**\n\n---\n\n### Bottom Line\nThis reads more like a **casual check-in** than professional legal correspondence. Given the stakes typically involved in closings, greater precision is advisable."
+    }
+  ],
+  "evaluation": {
+    "score": 60.0,
+    "structural": [
+      {
+        "criterion_id": "receives-draft-and-context",
+        "description": "Agent asks for the draft email, client relationship context, purpose, and concerns",
+        "result": "fail",
+        "justification": "The agent immediately reviewed the email without asking for any contextual information such as the client relationship, purpose of the email, or specific concerns before evaluating."
+      },
+      {
+        "criterion_id": "evaluates-along-dimensions",
+        "description": "Agent assesses the draft across key communication dimensions",
+        "result": "pass",
+        "justification": "The agent addresses at least three communication dimensions: clarity (vague references, lack of specificity), tone (casual tone inappropriate for legal correspondence), completeness (missing subject line, deadlines, action items), and risk management (discovery concerns, unresolved contingencies)."
+      },
+      {
+        "criterion_id": "quotes-specific-passages",
+        "description": "Agent references specific parts of the draft when giving feedback",
+        "result": "pass",
+        "justification": "The agent directly quotes specific phrases from the draft ('The deal,' 'End of month,' 'Revised docs,' 'All goes well,' 'If all goes well') when identifying concerns, rather than speaking only in generalities."
+      },
+      {
+        "criterion_id": "identifies-patterns",
+        "description": "Agent names recurring communication patterns, not just one-off issues",
+        "result": "fail",
+        "justification": "The agent identifies specific one-off issues with this email but never names a recurring communication pattern (such as burying the lead, over-hedging, or vague language habits) that the attorney should watch for across future emails."
+      },
+      {
+        "criterion_id": "offers-principles",
+        "description": "Agent closes with actionable communication principles the attorney can apply going forward",
+        "result": "fail",
+        "justification": "The agent provides useful feedback on this specific email but does not close with any transferable communication principles framed as applicable beyond this particular email (e.g., 'always reference matters by name in legal correspondence' or 'professional legal emails should always include specific dates rather than relative timeframes')."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "candid-direct-feedback",
+        "description": "Feedback is specific and direct like a senior colleague, not generic praise",
+        "result": "strong",
+        "justification": "The agent delivers specific, actionable critique by identifying exact phrases that are problematic ('the deal,' 'all goes well,' 'revised docs'), explaining the concrete risks each creates, and providing clear remediation steps—exactly how a senior colleague would mark up a draft."
+      },
+      {
+        "criterion_id": "shows-not-tells",
+        "description": "Agent provides rewritten examples for problems rather than just describing what's wrong",
+        "result": "weak",
+        "justification": "The agent only describes what's wrong and lists suggested revisions to consider, but never actually rewrites the email or provides a concrete example of how the improved version would look."
+      },
+      {
+        "criterion_id": "prioritized-feedback",
+        "description": "Agent focuses on the most important 3-5 points rather than line-editing every sentence",
+        "result": "adequate",
+        "justification": "The agent identifies several valid concerns but fragments them into many sub-points across multiple sections rather than consolidating into 3-5 clearly prioritized takeaways, making the feedback feel more like a comprehensive line-edit than focused guidance."
+      },
+      {
+        "criterion_id": "transferable-skills",
+        "description": "Patterns and principles help the attorney improve future emails, not just this one",
+        "result": "adequate",
+        "justification": "The agent identifies specific problems and suggests fixes for this email, but frames feedback as corrections to this draft rather than explicitly teaching transferable principles (like 'always reference matters by identifier' or 'never use vague contingency language in closing communications') that the attorney could apply independently to future correspondence."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "rewrites-whole-email",
+        "description": "Agent rewrites the entire email rather than coaching the attorney to improve it",
+        "result": "clear",
+        "justification": "The agent provided targeted feedback, identified specific problems, and offered coaching suggestions rather than rewriting the email itself."
+      },
+      {
+        "criterion_id": "too-deferential",
+        "description": "Agent is so gentle that important problems go unflagged",
+        "result": "clear",
+        "justification": "The agent clearly flags multiple significant problems with the email—vagueness, risk areas, missing elements, and inappropriate casual tone—without hedging or softening critiques to the point of uselessness."
+      },
+      {
+        "criterion_id": "ignores-risk",
+        "description": "Agent doesn't address risk management issues in the draft",
+        "result": "clear",
+        "justification": "The agent explicitly addresses risk management issues, flagging the casual tone's implications for legal records, the unresolved contingencies implied by 'if all goes well,' and the ambiguity around the board's authority, while recommending specific revisions to mitigate these risks."
+      }
+    ]
+  }
+}

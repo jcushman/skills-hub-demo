@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:06:48.549515+00:00",
+    "persona": "cle",
+    "skill": "client-email-coach",
+    "version": "0.1.0",
+    "scenario_id": "minimal-context"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "minimal-context",
+    "setup": "Attorney provides only the draft with no context.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Review this: 'Hi Sarah, The deal is moving forward. We should close by end of month if all goes well. I'll send the revised docs tomorrow. Let me know if the board has any concerns. Thanks, [Name]'"
+      }
+    ],
+    "expected": [
+      "Asks for context about the client relationship, the deal, and any specific concerns",
+      "May offer preliminary observations (very brief, potentially too casual, \"if all goes well\" is hedgy)",
+      "Explains why context matters for calibrating feedback"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Review this: 'Hi Sarah, The deal is moving forward. We should close by end of month if all goes well. I'll send the revised docs tomorrow. Let me know if the board has any concerns. Thanks, [Name]'"
+    },
+    {
+      "role": "assistant",
+      "content": "Before I dive in, a couple of quick questions that will sharpen the feedback:\n\n1. **What's the deal?** (Acquisition, financing, real estate, etc. — just the type)\n2. **What's the relationship?** (New client, long-standing, is Sarah the GC, a founder, board member?)\n3. **What prompted this email?** (Routine update, or did Sarah reach out with concerns?)\n\nThat said, the draft is short enough that I can give you useful feedback now, with the caveat that some of it may shift depending on context.\n\n---\n\n## Feedback\n\n### The Lead Is Doing Too Little Work\n\n> *\"The deal is moving forward.\"*\n\nThis is the most important sentence in the email, and it's doing the least work. \"Moving forward\" is filler — it tells Sarah almost nothing. Moving forward *from where*? What happened since the last update?\n\n**Rewrite:** Lead with the actual development. If something specific happened — a condition was satisfied, a party signed off, a sticking point resolved — say that. *\"The lender approved the revised term sheet this morning\"* is a sentence. *\"The deal is moving forward\"* is not.\n\n---\n\n### \"If All Goes Well\" Is a Problem\n\n> *\"We should close by end of month if all goes well.\"*\n\nThis phrase is doing double duty as a hedge and as a confidence signal — and it fails at both. As a hedge, it's too vague to protect you. As a confidence signal, it undermines the message. The client reads: *\"My lawyer isn't sure.\"*\n\nIf there are specific conditions that need to be met before closing, name them. If there aren't, drop the qualifier.\n\n**Option A (conditions exist):** *\"We're on track to close by month-end, assuming the title search clears and the other side returns executed docs by Friday.\"*\n\n**Option B (no real conditions):** *\"We're on track to close by month-end.\"*\n\n---\n\n### \"Revised Docs\" — Which Ones?\n\n> *\"I'll send the revised docs tomorrow.\"*\n\nSarah may be tracking multiple documents. \"The revised docs\" assumes she knows exactly what you mean. In a deal context, that's often a safe assumption — but if there's any ambiguity, name them. *\"I'll send the revised purchase agreement and disclosure schedules tomorrow\"* takes three extra seconds to write and eliminates a follow-up email.\n\n---\n\n### The Board Question Is Dangling\n\n> *\"Let me know if the board has any concerns.\"*\n\nThis is a reasonable thing to say, but it's passive and slightly awkward as a closing. A few issues:\n\n- It implies the board *might* have concerns you're not aware of — which could plant anxiety if there's nothing to worry about.\n- It puts the burden entirely on Sarah without giving her anything to work with.\n\n**Better approach:** If board approval is a live issue, address it directly. *\"Does the board need anything from us before the vote on Thursday?\"* is more useful than a general invitation to raise concerns.\n\nIf it's not a live issue, cut it.\n\n---\n\n### What's Missing: Next Steps With Ownership\n\nThe email mentions one action item (docs tomorrow) but doesn't tell Sarah what, if anything, she needs to do. Clients want to know: *Am I waiting on you, or are you waiting on me?*\n\nAdd a clear line: *\"On your end, the only thing we need before closing is [X] by [date].\"* Or if nothing is needed: *\"Nothing needed from you right now — I'll be in touch once the docs are ready for review.\"*\n\n---\n\n## The Pattern Here\n\n**You're writing for yourself, not for Sarah.** The email reflects what you know and what you're doing. It doesn't tell Sarah what she needs to know to feel informed and confident. Client status updates should answer three questions: *Where do things stand? What happens next? What do you need from me?* This email answers the first question vaguely and the other two not at all.\n\n---\n\n## One Principle to Take Forward\n\n**In deal status emails, lead with the development, close with the action.** The middle can have context. But if a client has to read to the end to find out what happened or what they need to do, the structure is backwards. Sarah is probably busy; make the email work for her, not for you.\n\n---\n\nHappy to look at a revised draft once you have context to add, or to work through a rewrite together."
+    }
+  ],
+  "evaluation": {
+    "score": 93.6,
+    "structural": [
+      {
+        "criterion_id": "receives-draft-and-context",
+        "description": "Agent asks for the draft email, client relationship context, purpose, and concerns",
+        "result": "pass",
+        "justification": "The agent explicitly asks for contextual elements (deal type, relationship, and what prompted the email) before or alongside its evaluation, satisfying the requirement to seek the draft and at least one contextual element."
+      },
+      {
+        "criterion_id": "evaluates-along-dimensions",
+        "description": "Agent assesses the draft across key communication dimensions",
+        "result": "pass",
+        "justification": "The agent explicitly addresses clarity (vague 'moving forward' language), risk management ('if all goes well' as an inadequate hedge), completeness (missing next steps with ownership), and client relationship (writing for yourself vs. for Sarah), covering at least four of the five specified dimensions."
+      },
+      {
+        "criterion_id": "quotes-specific-passages",
+        "description": "Agent references specific parts of the draft when giving feedback",
+        "result": "pass",
+        "justification": "The agent consistently quotes specific phrases from the draft (e.g., 'The deal is moving forward,' 'if all goes well,' 'I'll send the revised docs tomorrow,' 'Let me know if the board has any concerns') and builds targeted feedback around each quoted passage rather than speaking only in generalities."
+      },
+      {
+        "criterion_id": "identifies-patterns",
+        "description": "Agent names recurring communication patterns, not just one-off issues",
+        "result": "pass",
+        "justification": "The agent explicitly identifies 'over-hedging' (the 'if all goes well' pattern) and 'burying the lead' as recurring communication patterns, and closes with a named principle ('lead with the development, close with the action') that the attorney can watch for in future emails."
+      },
+      {
+        "criterion_id": "offers-principles",
+        "description": "Agent closes with actionable communication principles the attorney can apply going forward",
+        "result": "pass",
+        "justification": "The agent explicitly closes with a transferable principle—'In deal status emails, lead with the development, close with the action'—framed as broadly applicable beyond this specific email, and also articulates the pattern of 'writing for yourself, not for the client' as a generalizable communication principle."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "candid-direct-feedback",
+        "description": "Feedback is specific and direct like a senior colleague, not generic praise",
+        "result": "strong",
+        "justification": "The agent delivers precise, actionable critique with specific rewrites and named examples (e.g., 'The lender approved the revised term sheet this morning'), diagnoses the underlying pattern ('You're writing for yourself, not for Sarah'), and avoids generic praise entirely—reading exactly like a senior colleague's redline session."
+      },
+      {
+        "criterion_id": "shows-not-tells",
+        "description": "Agent provides rewritten examples for problems rather than just describing what's wrong",
+        "result": "strong",
+        "justification": "The agent consistently provides concrete rewritten examples throughout (e.g., 'The lender approved the revised term sheet this morning,' Option A/B rewrites for the hedge phrase, the board question rewrite, and the next-steps line), rather than merely describing what's wrong with each element."
+      },
+      {
+        "criterion_id": "prioritized-feedback",
+        "description": "Agent focuses on the most important 3-5 points rather than line-editing every sentence",
+        "result": "weak",
+        "justification": "The agent line-edits nearly every sentence in the five-line email, producing five separate critique sections plus a pattern analysis and a principle, far exceeding the 3-5 prioritized points guideline and treating a brief status email to exhaustive scrutiny."
+      },
+      {
+        "criterion_id": "transferable-skills",
+        "description": "Patterns and principles help the attorney improve future emails, not just this one",
+        "result": "strong",
+        "justification": "The agent explicitly extracts transferable principles—'write for the reader not yourself,' 'lead with the development, close with the action,' and the three-question framework for client updates—that the attorney can apply to future deal emails, not just this one."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "rewrites-whole-email",
+        "description": "Agent rewrites the entire email rather than coaching the attorney to improve it",
+        "result": "clear",
+        "justification": "The agent provided targeted, section-by-section feedback with selective example rewrites for specific phrases rather than producing a complete replacement draft of the email."
+      },
+      {
+        "criterion_id": "too-deferential",
+        "description": "Agent is so gentle that important problems go unflagged",
+        "result": "clear",
+        "justification": "The agent delivers direct, substantive critiques throughout—flagging vague language, problematic hedging, missing specificity, and structural failures—without softening or burying any of the feedback."
+      },
+      {
+        "criterion_id": "ignores-risk",
+        "description": "Agent doesn't address risk management issues in the draft",
+        "result": "clear",
+        "justification": "The agent explicitly flagged the risk management issue in the draft by calling out that 'if all goes well' fails as a hedge because it's too vague to protect the sender, and provided concrete alternatives that either name specific conditions or drop the qualifier entirely."
+      }
+    ]
+  }
+}

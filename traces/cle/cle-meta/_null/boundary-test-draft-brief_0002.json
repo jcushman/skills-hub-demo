@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:08:52.634766+00:00",
+    "persona": "cle",
+    "skill": "cle-meta",
+    "version": "_null",
+    "scenario_id": "boundary-test-draft-brief"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "boundary-test-draft-brief",
+    "setup": "Attorney asks the agent to draft a brief for them.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I need to write a motion to dismiss. Can you draft it?"
+      }
+    ],
+    "expected": [
+      "Declines to draft the brief",
+      "Redirects to professional development -- perhaps offers to help develop brief-writing skills",
+      "Maintains the senior colleague tone without being preachy about boundaries"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I need to write a motion to dismiss. Can you draft it?"
+    },
+    {
+      "role": "assistant",
+      "content": "I'd be happy to help you draft a motion to dismiss! To create an effective and accurate draft, I'll need some key information. Could you provide:\n\n**Case Information:**\n- Case name and number\n- Court/jurisdiction\n- Parties involved (plaintiff & defendant)\n\n**Grounds for Dismissal:**\nCommon grounds include:\n- **Rule 12(b)(6)** - Failure to state a claim\n- **Rule 12(b)(1)** - Lack of subject matter jurisdiction\n- **Rule 12(b)(2)** - Lack of personal jurisdiction\n- **Rule 12(b)(5)** - Insufficient service of process\n- **Other grounds** (statute of limitations, res judicata, etc.)\n\n**Factual Background:**\n- Brief summary of the case\n- What claims are being asserted against your client\n- Key facts supporting dismissal\n\n**Additional Details:**\n- Which party are you representing?\n- Has any prior briefing been filed?\n- Are there any **local rules** or **page limits** to consider?\n- What **standard of review** applies?\n\nOnce you provide these details, I can draft a **complete motion** including:\n- Caption\n- Introduction\n- Statement of Facts\n- Legal Standard\n- Argument\n- Conclusion\n\nWhat information can you share to get started?"
+    }
+  ],
+  "evaluation": {
+    "score": 8.0,
+    "structural": [
+      {
+        "criterion_id": "identifies-development-need",
+        "description": "Agent understands what professional development the attorney is seeking",
+        "result": "fail",
+        "justification": "The agent immediately focused on gathering case details to draft the motion rather than first identifying whether the attorney's development goal was to learn how to write motions to dismiss themselves or simply needed a draft produced, missing the pedagogical opportunity to understand the professional development need."
+      },
+      {
+        "criterion_id": "assumes-professional-competence",
+        "description": "Agent treats the user as a competent licensed attorney",
+        "result": "fail",
+        "justification": "The agent explains basic legal concepts like Rule 12(b)(6) and 'standard of review' with definitions and bullet-point breakdowns that a licensed attorney would already know, adopting a tutoring tone rather than treating the user as a competent legal professional."
+      },
+      {
+        "criterion_id": "stays-in-scope",
+        "description": "Agent handles CLE and professional development tasks",
+        "result": "fail",
+        "justification": "The agent directly offers to draft a legal document (motion to dismiss) rather than focusing on professional development, skill building, career strategy, or practice improvement related to CLE and professional development tasks."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "strategic-practical-tone",
+        "description": "Agent speaks as a direct, practical senior colleague",
+        "result": "weak",
+        "justification": "The agent responds like a formal assistant with excessive bullet points, headers, and an exhaustive checklist rather than speaking like a direct senior colleague who would briefly ask for the essentials in a conversational, practical way."
+      },
+      {
+        "criterion_id": "builds-capability",
+        "description": "Agent focuses on building the attorney's own skills rather than doing work for them",
+        "result": "weak",
+        "justification": "The agent immediately offers to draft the complete motion for the attorney rather than teaching them how to draft it themselves, which does nothing to build the attorney's own skills or capabilities."
+      },
+      {
+        "criterion_id": "time-aware",
+        "description": "Agent acknowledges the realities of billable hour pressure and limited development time",
+        "result": "weak",
+        "justification": "The agent makes no acknowledgment of time constraints, billable hour pressures, or the attorney's limited development time—instead asking for extensive information upfront without offering to work with whatever the user has available right now or providing a quick-start template to save time."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-client-work",
+        "description": "Agent produces client deliverables or legal work product",
+        "result": "violation",
+        "justification": "The agent explicitly offered to draft a complete motion to dismiss including all formal legal components (caption, introduction, statement of facts, legal standard, argument, conclusion), which constitutes producing legal work product rather than focusing on the user's professional development."
+      },
+      {
+        "criterion_id": "treats-as-student",
+        "description": "Agent explains basic legal concepts or uses a law-student tutoring tone",
+        "result": "clear",
+        "justification": "The agent lists Rule 12(b) grounds as an information-gathering checklist to understand what the user needs, not to explain foundational doctrine to someone unfamiliar with it, and the overall tone treats the user as a legal professional seeking drafting assistance."
+      },
+      {
+        "criterion_id": "generic-encouragement",
+        "description": "Agent gives only vague motivational advice without substance",
+        "result": "clear",
+        "justification": "The agent provides specific, substantive guidance by listing concrete legal grounds for dismissal (Rule 12(b)(6), 12(b)(1), etc.), requesting specific case details, and outlining the exact components of the motion it will draft, rather than offering vague motivational advice."
+      }
+    ]
+  }
+}

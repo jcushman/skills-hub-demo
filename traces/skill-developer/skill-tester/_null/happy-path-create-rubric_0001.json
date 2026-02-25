@@ -1,0 +1,143 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:15:41.151420+00:00",
+    "persona": "skill-developer",
+    "skill": "skill-tester",
+    "version": "_null",
+    "scenario_id": "happy-path-create-rubric"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-create-rubric",
+    "setup": "User wants to create a rubric for the socratic-tutor skill. They provide the SKILL.md content.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I want to create a rubric for testing the socratic-tutor skill. Here's the SKILL.md."
+      },
+      {
+        "role": "user",
+        "content": "It's a student skill that does Socratic dialogue to prepare students for class. Steps are: gather the assignment, begin dialogue progressing in difficulty, follow up on weak answers, scaffold when stuck, and debrief."
+      }
+    ],
+    "expected": [
+      "Derives structural criteria from the skill's steps (e.g., gathers assignment, progresses in difficulty, scaffolds when stuck)",
+      "Defines pedagogical criteria reflecting the skill's coaching objectives",
+      "Includes anti-patterns from the student persona (no work product, no giving answers immediately)",
+      "Creates scenarios covering happy path, boundary test, and minimal input",
+      "Produces a complete rubric.yaml"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I want to create a rubric for testing the socratic-tutor skill. Here's the SKILL.md."
+    },
+    {
+      "role": "assistant",
+      "content": "I'd be happy to help you create a rubric for testing the Socratic tutor skill! However, it looks like the SKILL.md content didn't come through with your message.\n\nCould you please share the **SKILL.md content**? Once I can see it, I'll be able to create a rubric that accurately reflects:\n\n- The skill's **intended behaviors and goals**\n- The **specific guidelines or rules** it follows\n- The **edge cases or constraints** it handles\n- The **quality criteria** that matter most for this skill\n\nGo ahead and paste it and we'll get started! 🎓"
+    },
+    {
+      "role": "user",
+      "content": "It's a student skill that does Socratic dialogue to prepare students for class. Steps are: gather the assignment, begin dialogue progressing in difficulty, follow up on weak answers, scaffold when stuck, and debrief."
+    },
+    {
+      "role": "assistant",
+      "content": "Thank you for the description! Here's a rubric for testing the Socratic tutor skill:\n\n---\n\n# Socratic Tutor Skill — Evaluation Rubric\n\n## Dimension 1: Assignment Gathering\n| Score | Criteria |\n|-------|----------|\n| 3 | Clearly asks for and confirms the assignment/topic before beginning; asks clarifying questions if the submission is vague |\n| 2 | Gathers the assignment but misses clarifying details or moves on too quickly |\n| 1 | Skips or rushes the gathering step; begins dialogue without understanding the assignment |\n\n---\n\n## Dimension 2: Question Progression\n| Score | Criteria |\n|-------|----------|\n| 3 | Questions clearly start at foundational concepts and progressively increase in difficulty and complexity in a logical order |\n| 2 | Some progression in difficulty but with noticeable gaps or jumps |\n| 1 | Questions are random, flat in difficulty, or jump straight to advanced concepts |\n\n---\n\n## Dimension 3: Follow-Up on Weak Answers\n| Score | Criteria |\n|-------|----------|\n| 3 | Identifies incomplete or incorrect answers and probes further with targeted follow-up questions rather than simply correcting |\n| 2 | Acknowledges weak answers but either corrects directly or asks generic follow-ups |\n| 1 | Accepts weak or incorrect answers without challenge or follow-up |\n\n---\n\n## Dimension 4: Scaffolding When Stuck\n| Score | Criteria |\n|-------|----------|\n| 3 | Recognizes when a student is stuck and provides hints, analogies, or simpler sub-questions to guide them toward the answer without giving it away |\n| 2 | Provides some help when stuck but either gives too much away or doesn't sufficiently unblock the student |\n| 1 | Ignores student confusion, repeats the same question, or immediately gives the answer |\n\n---\n\n## Dimension 5: Debrief Quality\n| Score | Criteria |\n|-------|----------|\n| 3 | Closes with a meaningful summary of what was covered, highlights gaps or strengths, and connects the dialogue back to the assignment goals |\n| 2 | Provides a debrief but it is generic, incomplete, or doesn't reference the student's specific performance |\n| 1 | Skips the debrief entirely or ends the session abruptly |\n\n---\n\n## Dimension 6: Socratic Method Fidelity\n| Score | Criteria |\n|-------|----------|\n| 3 | Consistently uses questions rather than lectures; never simply delivers information; keeps the student doing the cognitive work |\n| 2 | Mostly question-driven but occasionally slips into lecturing or over-explaining |\n| 1 | Frequently tells rather than asks; functions more like a tutor than a Socratic dialogue partner |\n\n---\n\n## Dimension 7: Tone and Student Experience\n| Score | Criteria |\n|-------|----------|\n| 3 | Maintains an encouraging, patient, and appropriately challenging tone throughout; student feels supported not interrogated |\n| 2 | Tone is mostly appropriate but occasionally too harsh, too soft, or inconsistent |\n| 1 | Tone is discouraging, robotic, or creates a negative experience for the student |\n\n---\n\n## Scoring Summary\n\n| Total Score | Interpretation |\n|-------------|----------------|\n| 18–21 | Excellent — skill performs as intended across all dimensions |\n| 13–17 | Good — skill is functional with minor gaps |\n| 8–12 | Needs Improvement — key behaviors are inconsistent |\n| 7 or below | Poor — skill fails to deliver the Socratic tutor experience |\n\n---\n\nWould you like me to also draft **test cases or sample conversations** to use alongside this rubric?"
+    }
+  ],
+  "evaluation": {
+    "score": 55.2,
+    "structural": [
+      {
+        "criterion_id": "understands-skill",
+        "description": "Agent obtains and reads the skill content before defining criteria",
+        "result": "fail",
+        "justification": "The agent never read or received the actual SKILL.md content — the user said it was attached but it didn't come through, and the agent proceeded to build the rubric based only on a brief verbal summary rather than the actual skill document."
+      },
+      {
+        "criterion_id": "defines-structural-criteria",
+        "description": "Agent identifies concrete, checkable behaviors the agent should exhibit",
+        "result": "pass",
+        "justification": "The agent proposes at least two structural criteria with both a description and a check statement across seven rubric dimensions, each containing a clear description of the behavior and a checkable scoring condition (e.g., Dimension 3 describes 'identifies incomplete or incorrect answers and probes further' with a check that the agent uses 'targeted follow-up questions rather than simply correcting')."
+      },
+      {
+        "criterion_id": "defines-pedagogical-criteria",
+        "description": "Agent identifies subjective quality dimensions with weights",
+        "result": "fail",
+        "justification": "The agent proposes seven pedagogical criteria with descriptions and scoring levels (1-3), but does not assign weight levels (low/medium/high) to any of the dimensions as required by the criterion."
+      },
+      {
+        "criterion_id": "defines-anti-patterns",
+        "description": "Agent identifies things the agent must never do",
+        "result": "fail",
+        "justification": "The rubric describes desired behaviors and scoring levels but never explicitly identifies anti-patterns — specific things the agent must never do (e.g., 'never give away the answer directly,' 'never skip the assignment-gathering step,' 'never lecture instead of asking questions') as a distinct category of prohibited behaviors."
+      },
+      {
+        "criterion_id": "creates-test-scenarios",
+        "description": "Agent designs test scenarios covering different interaction types",
+        "result": "fail",
+        "justification": "The agent created a rubric with evaluation dimensions but did not propose any test scenarios with setup, messages, and expected behaviors; it only offered to draft test cases at the end without actually providing them."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "criteria-from-skill-steps",
+        "description": "Structural criteria derive from the skill's own defined steps and behaviors",
+        "result": "strong",
+        "justification": "Every rubric dimension maps directly to one of the five explicitly stated skill steps (gather assignment, progress in difficulty, follow up on weak answers, scaffold when stuck, debrief), with two additional dimensions (Socratic method fidelity and tone) that reasonably derive from the nature of Socratic dialogue as described."
+      },
+      {
+        "criterion_id": "comprehensive-scenario-coverage",
+        "description": "Scenarios test different types of interactions (happy path, edge case, boundary, minimal input)",
+        "result": "weak",
+        "justification": "The agent produced a rubric with evaluation dimensions but never addressed comprehensive scenario coverage (happy path, edge cases, boundary conditions, minimal input) — it only offered to draft test cases at the end without actually creating them."
+      },
+      {
+        "criterion_id": "testable-criteria",
+        "description": "Criteria are specific enough to evaluate consistently across different evaluators",
+        "result": "strong",
+        "justification": "Each rubric criterion is concrete and behaviorally specific (e.g., 'probes further with targeted follow-up questions rather than simply correcting' vs. 'accepts weak or incorrect answers without challenge'), making it straightforward for different evaluators to apply the same standards consistently."
+      },
+      {
+        "criterion_id": "persona-grounded-anti-patterns",
+        "description": "Anti-patterns reflect the persona's constraints, not just generic quality concerns",
+        "result": "adequate",
+        "justification": "The rubric dimensions map reasonably well to the specific steps described (gather assignment, progress difficulty, follow up on weak answers, scaffold, debrief), but without the actual SKILL.md the agent cannot ground anti-patterns in persona-specific constraints, and Dimension 6 and 7 read as generic Socratic/tutoring quality concerns rather than constraints derived from the skill's documented behavior."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "vague-criteria",
+        "description": "Agent defines criteria too vague to evaluate consistently",
+        "result": "clear",
+        "justification": "The rubric's criteria describe specific, observable behaviors throughout (e.g., 'asks clarifying questions if the submission is vague,' 'probes further with targeted follow-up questions rather than simply correcting,' 'provides hints, analogies, or simpler sub-questions') rather than vague language like 'agent is helpful' or 'does a good job.'"
+      },
+      {
+        "criterion_id": "insufficient-scenarios",
+        "description": "Agent creates only one test scenario or only happy-path scenarios",
+        "result": "clear",
+        "justification": "The agent produced a multi-dimensional rubric covering seven distinct dimensions including edge cases like weak answers, stuck students, and debrief quality, and even offered to create additional test cases, so it did not limit itself to a single or only happy-path scenario."
+      },
+      {
+        "criterion_id": "ignores-persona-constraints",
+        "description": "Anti-patterns don't reflect the persona's specific constraints",
+        "result": "clear",
+        "justification": "The rubric dimensions are specifically tied to the Socratic tutor skill's described constraints and steps (assignment gathering, progressive dialogue, follow-up on weak answers, scaffolding, and debrief), rather than being generic anti-patterns like 'agent is rude.'"
+      }
+    ]
+  }
+}

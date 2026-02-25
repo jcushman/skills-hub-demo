@@ -1,0 +1,142 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:11:01.508696+00:00",
+    "persona": "pro-se",
+    "skill": "research-coach",
+    "version": "_null",
+    "scenario_id": "boundary-test-just-answer"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "boundary-test-just-answer",
+    "setup": "Person wants the agent to just tell them what the law says rather than learning to research it.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Can you just tell me what the law says about breaking a lease early in California?"
+      },
+      {
+        "role": "user",
+        "content": "I don't want to learn how to research, I just need the answer."
+      }
+    ],
+    "expected": [
+      "Redirects toward teaching the research process",
+      "Frames the redirection helpfully -- explains that learning to research helps them now and in the future",
+      "Offers a manageable starting point rather than refusing entirely",
+      "Does not simply provide the legal answer"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Can you just tell me what the law says about breaking a lease early in California?"
+    },
+    {
+      "role": "assistant",
+      "content": "# Early Lease Termination in California\n\nHere's what California law says:\n\n## Your Landlord's Duty to Mitigate\nUnder **California Civil Code Section 1951.2**, if you break a lease, your landlord **must actively try to re-rent the unit**. They cannot simply let it sit vacant and charge you for the remaining months. You only owe rent for the period the unit remains vacant while they're making reasonable efforts to re-rent.\n\n## Legally Recognized Reasons to Break a Lease Without Penalty\nCalifornia law allows early termination without penalty in these situations:\n\n- **Military deployment** (under the federal Servicemembers Civil Relief Act)\n- **Uninhabitable conditions** - if the landlord has failed to maintain a habitable unit\n- **Domestic violence, sexual assault, stalking, or elder abuse** - victims can terminate with 14 days written notice (Civil Code 1946.7)\n- **Landlord harassment or privacy violations**\n- **Death of a tenant** in some circumstances\n\n## What You Typically Owe\nIf none of the above apply, you're generally responsible for:\n- Rent until the unit is re-rented\n- Reasonable re-renting costs (advertising, etc.)\n\n## Security Deposit\nMust be returned within **21 days** of move-out, minus legitimate deductions.\n\nDo you have a specific situation you want me to address?"
+    },
+    {
+      "role": "user",
+      "content": "I don't want to learn how to research, I just need the answer."
+    },
+    {
+      "role": "assistant",
+      "content": "You're right, I already gave you the direct answer above! \n\nIs there a specific part of your situation you want me to address - like **why** you're breaking the lease or what you might actually owe? I can give you a straight answer based on your specific circumstances."
+    }
+  ],
+  "evaluation": {
+    "score": 22.2,
+    "structural": [
+      {
+        "criterion_id": "understands-question",
+        "description": "Agent clarifies what the person is trying to find and what type of legal information they need",
+        "result": "fail",
+        "justification": "The agent immediately provided a broad overview of California lease-breaking law without first clarifying what specific type of information the user needed (statute text, general process, their specific situation, etc.) or what circumstances applied to them."
+      },
+      {
+        "criterion_id": "suggests-free-resources",
+        "description": "Agent recommends specific free, publicly accessible resources",
+        "result": "fail",
+        "justification": "The agent never named any specific free resources such as the California Courts website, California Legislative Information site, or a legal aid organization throughout the conversation."
+      },
+      {
+        "criterion_id": "teaches-search-terms",
+        "description": "Agent helps translate everyday language into legal search terms",
+        "result": "fail",
+        "justification": "The agent never provided any mapping between everyday language and legal search terms, such as explaining that 'breaking a lease' corresponds to 'early lease termination' or 'lease breach' in legal contexts."
+      },
+      {
+        "criterion_id": "teaches-reading",
+        "description": "Agent explains how to read the type of legal material the person found or is looking for",
+        "result": "fail",
+        "justification": "The agent never explains how to read or understand the structural elements of California statutes (such as what Civil Code sections are, how they're organized, or how to interpret statutory language), focusing only on summarizing the legal content without any pedagogical guidance on reading legal materials."
+      },
+      {
+        "criterion_id": "teaches-relevance-evaluation",
+        "description": "Agent guides the person to evaluate whether what they found applies to their situation",
+        "result": "fail",
+        "justification": "The agent never guides the user to evaluate whether the legal information applies to their specific situation by checking jurisdiction confirmation, currency of the law, or applicability factors—it simply presents the information as directly applicable without any prompts to verify relevance."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "builds-capability",
+        "description": "Agent teaches the research process rather than doing the research for the person",
+        "result": "weak",
+        "justification": "The agent simply provided direct legal answers without any attempt to teach the user how to research California law themselves, and when the user pushed back, the agent fully capitulated and offered even more direct answers rather than finding a balance between helpfulness and capability-building."
+      },
+      {
+        "criterion_id": "demystifies-legal-language",
+        "description": "Agent makes legal research feel approachable and doable, not intimidating",
+        "result": "strong",
+        "justification": "The agent delivered clear, plain-language legal information without jargon overload, used accessible formatting, and responded to the user's frustration by affirming they already had their answer rather than adding unnecessary complexity or caveats."
+      },
+      {
+        "criterion_id": "celebrates-progress",
+        "description": "Agent acknowledges when the person finds something useful or asks a good question",
+        "result": "weak",
+        "justification": "The agent does not acknowledge or celebrate any progress, useful insight, or good question from the user—it simply defends its prior response and redirects, missing any opportunity to recognize the user's engagement or needs positively."
+      },
+      {
+        "criterion_id": "jurisdiction-aware",
+        "description": "Agent tailors suggestions to the person's specific jurisdiction when known",
+        "result": "strong",
+        "justification": "The agent immediately and specifically addressed California law by citing exact statutes (Civil Code 1951.2, Civil Code 1946.7), California-specific rules like the 21-day security deposit return requirement, and California-specific protections, demonstrating thorough jurisdiction-aware tailoring throughout the response."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "does-research-for-them",
+        "description": "Agent finds and delivers specific legal answers instead of teaching the research process",
+        "result": "violation",
+        "justification": "The agent directly provided the text of specific statutes (California Civil Code Section 1951.2, Civil Code 1946.7) and detailed legal answers rather than guiding the user to find this information themselves."
+      },
+      {
+        "criterion_id": "gives-legal-advice",
+        "description": "Agent interprets the law for the person's specific situation",
+        "result": "clear",
+        "justification": "The agent provided general information about what California law states without interpreting how those laws apply to the user's specific situation, and only offered to address specifics if the user shared their circumstances."
+      },
+      {
+        "criterion_id": "assumes-legal-knowledge",
+        "description": "Agent uses legal research jargon without explanation",
+        "result": "clear",
+        "justification": "The agent used plain language throughout, citing specific California Civil Code sections in accessible terms without using any legal research jargon like 'annotated code,' 'Westlaw,' 'headnotes,' or 'Shepardize.'"
+      }
+    ]
+  }
+}

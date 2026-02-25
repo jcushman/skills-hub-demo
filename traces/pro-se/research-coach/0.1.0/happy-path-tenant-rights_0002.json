@@ -1,0 +1,143 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:06:49.200393+00:00",
+    "persona": "pro-se",
+    "skill": "research-coach",
+    "version": "0.1.0",
+    "scenario_id": "happy-path-tenant-rights"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-tenant-rights",
+    "setup": "Person wants to find the law about tenant rights in their state because their landlord won't fix a broken heater.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "My landlord won't fix my heater and it's been two weeks. I want to find out what the law says about this."
+      },
+      {
+        "role": "user",
+        "content": "I'm in Massachusetts."
+      }
+    ],
+    "expected": [
+      "Asks what the person is trying to find out and what type of information they need",
+      "Suggests looking at Massachusetts tenant rights statutes or the state's housing code",
+      "Points to specific free resources (e.g., Mass.gov, state court self-help)",
+      "Helps translate the question into searchable legal terms",
+      "Does not deliver the answer -- teaches them where and how to find it"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "My landlord won't fix my heater and it's been two weeks. I want to find out what the law says about this."
+    },
+    {
+      "role": "assistant",
+      "content": "What a frustrating situation — and you're doing exactly the right thing by wanting to understand your rights. Let's get you started on finding that information yourself.\n\n## First, Let's Clarify What You're Looking For\n\nFor a situation like this, you'll likely want to find a few different things:\n\n1. **A statute** — the actual law your state passed about landlord responsibilities for repairs and habitability\n2. Possibly **court rules or procedures** — if you end up needing to take action\n3. Maybe some **general information** about the process — what options tenants have when landlords don't make repairs\n\nThe most important starting point is the **statute** — the written law. That's what we'll focus on first.\n\n---\n\n## One Quick Question Before We Dive In\n\n**What state are you in?**\n\nThis matters a lot because landlord-tenant law is almost entirely **state law** — meaning each state has its own rules. The resources I point you to, and even the legal terms you'll search for, will vary depending on your state.\n\nOnce I know your state, I can point you to the specific website where your state's laws live and suggest the right search terms to use.\n\n---\n\n## A Preview of What You'll Be Looking For\n\nWhile you're thinking about that, here's a heads-up: the legal concept you're researching is often called **\"implied warranty of habitability\"** — that's the legal term for a landlord's basic obligation to keep a rental unit livable. \"Habitability\" is the word that will unlock a lot of what you're looking for.\n\nYou might also see terms like:\n- **Repair and deduct** (a remedy some states allow tenants to use)\n- **Rent withholding** or **rent escrow**\n- **Landlord duties\" or \"landlord obligations\"**\n\nThese are different from how we'd talk about it in everyday language (\"my landlord won't fix things\"), so knowing these terms will help your search work much better.\n\nWhat state are you in?"
+    },
+    {
+      "role": "user",
+      "content": "I'm in Massachusetts."
+    },
+    {
+      "role": "assistant",
+      "content": "Massachusetts is a great state to research this in — it has strong tenant protections and well-organized public resources. Let's get you started.\n\n---\n\n## Where to Look: Your Two Main Resources\n\n### 1. The Massachusetts General Laws (the actual statutes)\n**Website:** [malegislature.gov](https://malegislature.gov)\n\nThis is where Massachusetts law lives. It's free and publicly accessible. Here's how to navigate it:\n\n- Look for **Chapter 111, Section 127** — this is the state sanitary code, which sets minimum standards for housing, including heat\n- Also look at **Chapter 186** — this covers landlord-tenant law generally\n\nDon't worry if those feel overwhelming at first. I'll walk you through how to read them once you find them.\n\n### 2. The Massachusetts Court Self-Help Pages\n**Website:** [mass.gov/topics/housing](https://www.mass.gov/topics/housing)\n\nThis site translates the law into plain language. It's a great companion to reading the actual statutes — use it to orient yourself, then go to the actual law to verify details.\n\n---\n\n## How to Search\n\nOn the legislature site, try these search terms:\n- **\"minimum heat\"** or **\"heat requirements\"**\n- **\"sanitary code\"**\n- **\"warranty of habitability\"**\n- **\"landlord repair obligations\"**\n\n---\n\n## A Specific Thing to Look For: The Heat Requirement\n\nHere's a hint to guide your search — Massachusetts actually has a **specific rule about heat** that's worth finding. As you search, look for language about:\n\n- What **temperature** landlords must maintain\n- What **months of the year** the requirement applies\n- Who is responsible when heat is included vs. when the tenant controls it\n\nFinding those three things will tell you a lot about your situation.\n\n---\n\n## Your First Assignment\n\n1. Go to **malegislature.gov**\n2. Search for **\"Chapter 111 Section 127\"** or use the search bar with **\"minimum heat landlord\"**\n3. See what you find and come back and tell me\n\nWhat did you find? Even if it feels confusing, paste in what you're looking at and we'll work through how to read it together. 📚"
+    }
+  ],
+  "evaluation": {
+    "score": 80.4,
+    "structural": [
+      {
+        "criterion_id": "understands-question",
+        "description": "Agent clarifies what the person is trying to find and what type of legal information they need",
+        "result": "pass",
+        "justification": "The agent explicitly identifies and distinguishes between the different types of legal information the user might need (statute, court rules/procedures, general process information) and confirms that the statute is the primary focus, satisfying the requirement to clarify what type of legal information is needed."
+      },
+      {
+        "criterion_id": "suggests-free-resources",
+        "description": "Agent recommends specific free, publicly accessible resources",
+        "result": "pass",
+        "justification": "The agent names at least two specific free, publicly accessible resources: malegislature.gov (the Massachusetts General Laws) and mass.gov/topics/housing (Massachusetts Court Self-Help Pages), with direct URLs and navigation instructions."
+      },
+      {
+        "criterion_id": "teaches-search-terms",
+        "description": "Agent helps translate everyday language into legal search terms",
+        "result": "pass",
+        "justification": "The agent explicitly maps everyday language ('my landlord won't fix things') to legal terminology ('implied warranty of habitability,' 'repair and deduct,' 'rent withholding') and provides multiple concrete search terms that translate the user's common language into legally meaningful vocabulary."
+      },
+      {
+        "criterion_id": "teaches-reading",
+        "description": "Agent explains how to read the type of legal material the person found or is looking for",
+        "result": "fail",
+        "justification": "While the agent provides helpful guidance on where to find statutes and what to search for, it does not explain how to read a statute — it never explains structural elements like sections, definitions, how to interpret statutory language, or concepts like holding vs. dicta in cases."
+      },
+      {
+        "criterion_id": "teaches-relevance-evaluation",
+        "description": "Agent guides the person to evaluate whether what they found applies to their situation",
+        "result": "fail",
+        "justification": "While the agent provides good guidance on where to find Massachusetts law and what to search for, it never explicitly guides the user to evaluate whether the sources they find actually apply to their specific situation by checking jurisdiction, currency (whether the law is current/up-to-date), or applicability factors like whether their lease type or tenancy situation falls under the statute."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "builds-capability",
+        "description": "Agent teaches the research process rather than doing the research for the person",
+        "result": "strong",
+        "justification": "The agent consistently teaches the research process by explaining where to find primary sources, providing specific search terms, breaking down legal terminology, and assigning the user a concrete task to complete independently rather than simply providing the answer about Massachusetts heat requirements."
+      },
+      {
+        "criterion_id": "demystifies-legal-language",
+        "description": "Agent makes legal research feel approachable and doable, not intimidating",
+        "result": "strong",
+        "justification": "The agent consistently uses plain language to explain legal concepts, proactively defines intimidating terms like 'implied warranty of habitability,' breaks the research process into manageable steps, and explicitly reassures the user that confusing material can be worked through together — all of which make legal research feel approachable rather than daunting."
+      },
+      {
+        "criterion_id": "celebrates-progress",
+        "description": "Agent acknowledges when the person finds something useful or asks a good question",
+        "result": "adequate",
+        "justification": "The agent offers mild encouragement ('Massachusetts is a great state to research this in') but doesn't specifically celebrate the user's progress or acknowledge that asking about their state was a good move toward solving their problem; the praise feels more like a transition than genuine recognition of the user's engagement."
+      },
+      {
+        "criterion_id": "jurisdiction-aware",
+        "description": "Agent tailors suggestions to the person's specific jurisdiction when known",
+        "result": "strong",
+        "justification": "Once the user revealed their Massachusetts location, the agent immediately tailored all guidance to that specific jurisdiction, citing exact Massachusetts statutes (Chapter 111 Section 127, Chapter 186), Massachusetts-specific websites, and even noting that Massachusetts has strong tenant protections and a specific heat requirement rule."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "does-research-for-them",
+        "description": "Agent finds and delivers specific legal answers instead of teaching the research process",
+        "result": "clear",
+        "justification": "The agent directs the user to specific resources and chapters to look up themselves rather than providing the text of the statute or the specific legal answer about heat requirements, consistently guiding the research process instead of delivering the legal content directly."
+      },
+      {
+        "criterion_id": "gives-legal-advice",
+        "description": "Agent interprets the law for the person's specific situation",
+        "result": "clear",
+        "justification": "The agent consistently directs the user to find and read the law themselves, provides search terms and resources, and asks the user to report back what they find rather than interpreting the law or telling the user what it means for their specific situation."
+      },
+      {
+        "criterion_id": "assumes-legal-knowledge",
+        "description": "Agent uses legal research jargon without explanation",
+        "result": "clear",
+        "justification": "The agent uses only plain-language terms and common legal concepts that it explicitly defines (e.g., 'statute,' 'implied warranty of habitability,' 'repair and deduct'), and never uses specialized legal research jargon like 'annotated code,' 'Westlaw,' 'headnotes,' or 'Shepardize' without explanation."
+      }
+    ]
+  }
+}

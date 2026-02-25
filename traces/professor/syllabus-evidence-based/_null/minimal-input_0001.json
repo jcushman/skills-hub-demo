@@ -1,0 +1,135 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:15:54.823153+00:00",
+    "persona": "professor",
+    "skill": "syllabus-evidence-based",
+    "version": "_null",
+    "scenario_id": "minimal-input"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "minimal-input",
+    "setup": "Professor requests a modern syllabus without providing source material.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Build me an evidence-based syllabus for Crim Law."
+      }
+    ],
+    "expected": [
+      "Asks for source material (casebook, readings, or topics)",
+      "Asks for logistical details (sessions, length, credit hours)",
+      "Does not generate a syllabus without the professor's content"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Build me an evidence-based syllabus for Crim Law."
+    },
+    {
+      "role": "assistant",
+      "content": "# Criminal Law: An Evidence-Based Syllabus\n### Upper-Division Law School Course | 3 Credits | 14 Weeks\n\n---\n\n## COURSE DESCRIPTION\n\nThis course examines the foundational principles of substantive criminal law, including the theoretical justifications for punishment, the elements of major crimes, and the constitutional limits on criminalization. Emphasis is placed on doctrinal analysis, policy critique, and engagement with empirical research on how criminal law operates in practice.\n\n---\n\n## LEARNING OUTCOMES\n\nBy the end of this course, students will be able to:\n\n1. Identify and analyze the elements of major common law and statutory crimes\n2. Apply the Model Penal Code and compare it to common law approaches\n3. Evaluate competing theories of punishment using philosophical and empirical frameworks\n4. Critically assess how race, class, and gender intersect with criminal law doctrine and enforcement\n5. Construct well-reasoned arguments about criminal liability and defenses\n6. Read and synthesize primary legal sources, empirical studies, and theoretical scholarship\n\n---\n\n## REQUIRED TEXTS\n\n- Dressler, Joshua. *Cases and Materials on Criminal Law* (8th ed., West Academic)\n- Model Penal Code (ALI, official text)\n- Dressler, Joshua & Garvey, Stephen. *Criminal Law: Model Problems and Outstanding Answers* (Oxford)\n- Selected empirical readings posted to course management system (CMS)\n\n---\n\n## RECOMMENDED SUPPLEMENTAL RESOURCES\n\n- LaFave, Wayne. *Substantive Criminal Law* (3d ed., West) *(treatise reference)*\n- Robinson, Paul H. *Criminal Law* (Aspen)\n- Stuntz, William J. *The Collapse of American Criminal Justice* (Harvard UP)\n- Zimring, Franklin & Hawkins, Gordon. *Incapacitation: Penal Confinement and the Restraint of Crime* (Oxford UP)\n\n---\n\n## COURSE POLICIES\n\n| Policy | Detail |\n|---|---|\n| **Attendance** | Maximum 2 unexcused absences; Socratic method used daily |\n| **Preparation** | All assigned reading completed before class |\n| **Laptops/Devices** | Permitted for course-related use only |\n| **Office Hours** | Weekly; appointments encouraged |\n| **Academic Integrity** | ABA Standards and institutional honor code apply |\n| **Accessibility** | Contact professor within first week for accommodations |\n\n---\n\n## ASSESSMENT\n\n| Component | Weight | Description |\n|---|---|---|\n| Midterm Exam | 20% | Issue-spotting and short essay; closed book |\n| Final Exam | 50% | Comprehensive essay exam; closed book |\n| Policy Memo | 15% | 1,500-word evidence-based memo on a criminal law reform issue |\n| Participation | 15% | Socratic preparation, quality of contribution, professionalism |\n\n---\n\n## GRADING SCALE\n\n| Grade | Range |\n|---|---|\n| A | 93–100 |\n| A- | 90–92 |\n| B+ | 87–89 |\n| B | 83–86 |\n| B- | 80–82 |\n| C+ | 77–79 |\n| C | 73–76 |\n| Below C | Below 73 |\n\n---\n\n---\n\n# COURSE SCHEDULE\n\n---\n\n## MODULE I: FOUNDATIONS OF CRIMINAL LAW\n### Weeks 1–2\n\n---\n\n### Week 1 — Introduction: What Is Criminal Law and Why Does It Matter?\n\n**Class 1: The Nature and Function of Criminal Law**\n\n*Doctrinal Focus:*\n- Criminal vs. civil law: the significance of the distinction\n- The role of the state as prosecutor\n- Stigma, punishment, and the criminal sanction\n\n*Readings:*\n- Dressler, Ch. 1 (Introduction to Criminal Law)\n- *People v. Superior Court (Du)*, 5 Cal. App. 4th 822 (1992)\n- Henry M. Hart, Jr., *The Aims of the Criminal Law*, 23 Law & Contemp. Probs. 401 (1958) *(excerpts, CMS)*\n\n*Discussion Questions:*\n1. What distinguishes a crime from a civil wrong?\n2. What does Hart mean when he says criminal law defines \"the minimum conditions of man's responsibility to his fellows\"?\n\n---\n\n**Class 2: Theories of Punishment**\n\n*Doctrinal Focus:*\n- Retributivism\n- Utilitarianism: deterrence, incapacitation, rehabilitation\n- Expressive and communicative theories\n- Mixed theories\n\n*Readings:*\n- Dressler, Ch. 2 (Punishment: Theory and Practice)\n- Kant, *The Metaphysics of Morals* (excerpts, CMS)\n- Bentham, *An Introduction to the Principles of Morals and Legislation* (excerpts, CMS)\n- Dan M. Kahan, *What Do Alternative Sanctions Mean?*, 63 U. Chi. L. Rev. 591 (1996) *(excerpts, CMS)*\n\n*Empirical Supplement:*\n- Daniel S. Nagin, *Deterrence in the Twenty-First Century*, 42 Crime & Just. 199 (2013) *(CMS)* — **Key finding:** Certainty of punishment deters more effectively than severity\n\n---\n\n**Class 3: Constitutional Limits on Criminalization**\n\n*Doctrinal Focus:*\n- Due process and vagueness doctrine\n- Legality principle (*nullum crimen sine lege*)\n- Proportionality: *Eighth Amendment* constraints\n- *Lawrence v. Texas* and the limits of morals legislation\n\n*Readings:*\n- *Chicago v. Morales*, 527 U.S. 41 (1999)\n- *Lawrence v. Texas*, 539 U.S. 558 (2003)\n- *Atkins v. Virginia*, 536 U.S. 304 (2002)\n- Dressler, Ch. 3 (Constitutional Limits)\n\n---\n\n### Week 2 — The Act Requirement (Actus Reus)\n\n**Class 4: Voluntary Acts and Omissions**\n\n*Doctrinal Focus:*\n- Voluntary act requirement\n- Habit, reflex, and automatism\n- Omission liability: duty to act\n- Sources of legal duty\n\n*Readings:*\n- Dressler, Ch. 9 (Actus Reus)\n- MPC § 2.01\n- *Martin v. State*, 31 Ala. App. 334 (1944)\n- *People v. Newton*, 8 Cal. App. 3d 359 (1970)\n- *Jones v. United States*, 308 F.2d 307 (D.C. Cir. 1962)\n\n*Discussion:*\n- Should the law impose a general duty to rescue? Compare U.S. approach to European civil law jurisdictions.\n\n---\n\n**Class 5: Status Crimes and Social Context**\n\n*Doctrinal Focus:*\n- *Robinson v. California* and the status/act distinction\n- Homelessness, addiction, and criminalization\n- Empirical evidence on enforcement patterns\n\n*Readings:*\n- *Robinson v. California*, 370 U.S. 660 (1962)\n- *Powell v. Texas*, 392 U.S. 514 (1968)\n- Bernard Harcourt, *Reflecting on the Subject: A Critique of the Social Influence Conception of Deterrence*, 97 Mich. L. Rev. 269 (1998) *(excerpts, CMS)*\n\n*Empirical Supplement:*\n- National Academies of Sciences, *The Growth of Incarceration in the United States* (2014), Ch. 2 *(CMS)*\n\n---\n\n## MODULE II: MENTAL STATE (MENS REA)\n### Weeks 3–4\n\n---\n\n### Week 3 — Culpability and Mental States\n\n**Class 6: Common Law Mens Rea**\n\n*Doctrinal Focus:*\n- General vs. specific intent\n- Malice aforethought\n- Problems with common law mental state categories\n\n*Readings:*\n- Dressler, Ch. 10 (Mens Rea)\n- *Regina v. Cunningham*, [1957] 2 QB 396\n- *People v. Conley*, 187 Ill. App. 3d 234 (1989)\n\n---\n\n**Class 7: The Model Penal"
+    }
+  ],
+  "evaluation": {
+    "score": 22.4,
+    "structural": [
+      {
+        "criterion_id": "analyzes-provided-content",
+        "description": "Agent reviews the user's source material before generating the syllabus",
+        "result": "fail",
+        "justification": "The agent generated a generic Criminal Law syllabus without referencing any user-provided source material, because the user did not provide any casebook chapters, case names, or topic areas — they only made a general request — so there was no content to analyze."
+      },
+      {
+        "criterion_id": "asks-missing-info",
+        "description": "Agent asks for missing logistical information needed to build the syllabus",
+        "result": "fail",
+        "justification": "The agent immediately generated a full syllabus with assumed parameters (3 credits, 14 weeks, upper-division law school) without asking the user for any logistical information such as session count, session length, semester duration, or credit hours."
+      },
+      {
+        "criterion_id": "includes-spiral-markers",
+        "description": "Schedule includes explicit spiral return points connecting later sessions to earlier material",
+        "result": "fail",
+        "justification": "The schedule contains no explicit spiral markers or connections back to earlier sessions in any of the sessions presented; each session introduces new material without referencing or linking back to prior sessions' topics."
+      },
+      {
+        "criterion_id": "includes-scaffolding-levels",
+        "description": "Sessions indicate the scaffolding progression across the semester",
+        "result": "fail",
+        "justification": "The syllabus contains no scaffolding annotations or explicit descriptions of how student independence progresses across the semester (e.g., no labels like 'guided framework' in early weeks versus 'independent analysis' in later weeks)."
+      },
+      {
+        "criterion_id": "includes-spaced-practice",
+        "description": "Schedule includes cumulative practice touchpoints that draw on material from multiple units",
+        "result": "fail",
+        "justification": "The syllabus contains no session or assignment explicitly labeled as a cumulative problem set, connection class, or diagnostic spanning multiple doctrinal areas; the midterm and final exams are described as comprehensive but are not structured or labeled as spaced-practice touchpoints drawing on material from multiple units in the way the criterion requires."
+      },
+      {
+        "criterion_id": "includes-design-note",
+        "description": "Syllabus includes a note explaining the evidence-based design approach for students",
+        "result": "fail",
+        "justification": "The syllabus does not include any section or note explaining that the course uses evidence-based pedagogical design techniques such as spaced practice, interleaving, or scaffolded complexity, despite being labeled 'evidence-based.'"
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "evidence-based-grounding",
+        "description": "Design decisions reference or reflect learning science principles rather than just conventional practice",
+        "result": "adequate",
+        "justification": "The syllabus incorporates some evidence-based elements, notably the Nagin deterrence research with an explicit key finding callout and empirical supplements on incarceration, but these are isolated additions rather than a systematic design philosophy—the overall structure, assessment weighting (70% on closed-book exams), and pedagogical approach largely reflect conventional law school practice without explicit grounding in learning science principles like retrieval practice, spaced repetition, or formative feedback."
+      },
+      {
+        "criterion_id": "difficulty-calibrated-pacing",
+        "description": "More time is allocated to conceptually dense topics, not just proportional to page count",
+        "result": "strong",
+        "justification": "The syllabus deliberately allocates more class sessions and richer multi-layered readings (empirical supplements, philosophical excerpts, multiple cases) to conceptually dense topics like mens rea (given its own two-week module) and punishment theory, rather than simply distributing time proportionally to page count or topic count."
+      },
+      {
+        "criterion_id": "transparent-rationale",
+        "description": "Pacing choices and revisitation decisions are explained, supporting student metacognition",
+        "result": "weak",
+        "justification": "The agent provides a detailed syllabus but never explains the rationale behind its pacing choices, sequencing decisions, or why topics are revisited, leaving students without metacognitive scaffolding to understand why the course is structured as it is."
+      },
+      {
+        "criterion_id": "cumulative-assessment",
+        "description": "Assessments draw from multiple units rather than testing only the most recent block",
+        "result": "weak",
+        "justification": "The syllabus places the only midterm at Week 7 (implied) and a final exam at the end, with no low-stakes cumulative checkpoints, quizzes, or assessments that draw from multiple prior units throughout the course, meaning students are not regularly assessed across accumulated learning from earlier modules."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "linear-block-design",
+        "description": "Agent produces a traditional linear syllabus without spiral returns or spaced practice",
+        "result": "violation",
+        "justification": "The syllabus covers each topic once in strict linear sequence (Foundations → Actus Reus → Mens Rea, etc.) with no explicit spiral returns, interleaving of earlier concepts, or cumulative spaced practice built into the schedule."
+      },
+      {
+        "criterion_id": "produces-student-work",
+        "description": "Agent produces student-facing work product like study guides or outlines",
+        "result": "clear",
+        "justification": "The agent produced an instructor-facing syllabus with course policies, assessment weights, learning outcomes, and pedagogical structure—not student-facing study materials like outlines, study guides, or summaries."
+      },
+      {
+        "criterion_id": "ignores-source-material",
+        "description": "Agent generates a syllabus from general knowledge rather than the user's provided content",
+        "result": "clear",
+        "justification": "The user provided no source materials—only a topic request—so the agent appropriately generated a syllabus from general knowledge and standard criminal law resources rather than ignoring any user-provided content."
+      }
+    ]
+  }
+}

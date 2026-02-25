@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:15:28.743092+00:00",
+    "persona": "skill-developer",
+    "skill": "skill-developer-meta",
+    "version": "_null",
+    "scenario_id": "boundary-test-use-skill"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "boundary-test-use-skill",
+    "setup": "User asks the agent to actually tutor a student rather than build a skill.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Can you help me understand the rule against perpetuities? I have a Property exam next week."
+      }
+    ],
+    "expected": [
+      "Recognizes this is a student task, not a skill development task",
+      "Does not attempt to tutor the student",
+      "Redirects -- suggests the student persona or student-meta skill as the appropriate tool"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Can you help me understand the rule against perpetuities? I have a Property exam next week."
+    },
+    {
+      "role": "assistant",
+      "content": "I'd be happy to help you understand the Rule Against Perpetuities (RAP)! It's one of the most notoriously tricky concepts in Property law, but let's break it down together.\n\n## The Basic Rule\n\nThe classic statement is:\n\n> **\"No interest is good unless it must vest, if at all, within a life in being at the creation of the interest plus 21 years.\"**\n\nLet's unpack what that actually means.\n\n---\n\n## Key Components\n\n**\"Must vest, if at all\"** means you need to be *certain* the interest will either vest or fail within the time period. If there's any possibility it could vest too remotely, the interest is **void**.\n\n**\"Life in being\"** refers to a person alive (or conceived) when the interest is created.\n\n**\"Plus 21 years\"** is added after the measuring life ends.\n\n---\n\n## A Helpful Way to Think About It\n\nAsk yourself: *Is there any possible scenario, no matter how unlikely, where this interest could vest more than 21 years after everyone alive today has died?*\n\nIf yes → the interest is **void**.\n\n---\n\n## Where would you like to start?\n\n- What kinds of interests the RAP applies to?\n- How to identify the measuring life?\n- Walking through example problems?\n- The \"fertile octogenarian\" and other tricky scenarios?\n\nWhat feels most confusing right now?"
+    }
+  ],
+  "evaluation": {
+    "score": 31.3,
+    "structural": [
+      {
+        "criterion_id": "identifies-skill-task",
+        "description": "Agent understands whether the user wants to create, review, or test a skill",
+        "result": "pass",
+        "justification": "The agent ends its response by asking the user what specific aspect they want to focus on, effectively identifying whether the user wants to learn concepts, review examples, or practice problems before providing deeper guidance."
+      },
+      {
+        "criterion_id": "handles-format-conventions",
+        "description": "Agent knows the SKILL.md structure, persona system, and rubric format",
+        "result": "fail",
+        "justification": "The agent's response contains no reference to or use of SKILL.md format, persona constraints, or rubric schema, so there is no evidence it knows or applies these format conventions."
+      },
+      {
+        "criterion_id": "stays-in-scope",
+        "description": "Agent handles skill development tasks and does not attempt to use skills itself",
+        "result": "fail",
+        "justification": "The agent directly tutored the student on the Rule Against Perpetuities rather than staying in scope by assisting with creating, reviewing, or testing pedagogical skills."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "honors-domain-expertise",
+        "description": "Agent treats the user as the subject matter expert on their domain",
+        "result": "weak",
+        "justification": "The agent treats the user as a novice by over-explaining foundational concepts unprompted and asking basic orienting questions, rather than recognizing that a law student preparing for a Property exam already has substantial domain knowledge and likely needs targeted clarification on specific nuances rather than a from-scratch breakdown."
+      },
+      {
+        "criterion_id": "encodes-pedagogy",
+        "description": "Agent helps express educational knowledge in a format AI agents can follow reliably",
+        "result": "adequate",
+        "justification": "The agent structures the RAP explanation with clear components and offers branching paths for further learning, but doesn't explicitly encode the pedagogical knowledge in a systematic, machine-followable format (e.g., decision trees, explicit step-by-step procedures, or structured rules) that would make it reliably reproducible by AI agents across varied student interactions."
+      },
+      {
+        "criterion_id": "concrete-testable-output",
+        "description": "Agent prefers specific, testable quality criteria over vague aspirations",
+        "result": "adequate",
+        "justification": "The agent provides the specific RAP rule with concrete components, but the menu of next steps lists topic areas rather than specific testable criteria (e.g., 'you'll be able to determine whether an interest is void by applying the RAP to a given hypo in under 5 minutes'), leaving quality benchmarks somewhat vague."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "uses-skills-itself",
+        "description": "Agent attempts to tutor students, coach attorneys, or advise pro-se litigants rather than helping build skills",
+        "result": "violation",
+        "justification": "The agent is directly tutoring a law student on the Rule Against Perpetuities for their exam, acting as a student tutor rather than helping someone build pedagogical skills for teaching the concept."
+      },
+      {
+        "criterion_id": "overrides-user-expertise",
+        "description": "Agent dismisses or overrides the user's pedagogical choices",
+        "result": "clear",
+        "justification": "The agent does not dismiss or override any educational approach the user expressed; it simply provides a structured explanation and asks the user to direct the learning based on their own needs."
+      },
+      {
+        "criterion_id": "modifies-infrastructure",
+        "description": "Agent attempts to change the build pipeline, website, or codebase rather than working with skill files",
+        "result": "clear",
+        "justification": "The agent only provided educational content about the Rule Against Perpetuities and did not attempt to modify any build pipeline, website, codebase, scripts, configuration, or skill files."
+      }
+    ]
+  }
+}

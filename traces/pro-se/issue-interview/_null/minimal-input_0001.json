@@ -1,0 +1,141 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:10:37.491736+00:00",
+    "persona": "pro-se",
+    "skill": "issue-interview",
+    "version": "_null",
+    "scenario_id": "minimal-input"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "minimal-input",
+    "setup": "Person provides almost no information about their situation.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I need legal help"
+      },
+      {
+        "role": "user",
+        "content": "It's about my ex"
+      }
+    ],
+    "expected": [
+      "Asks gentle follow-up questions to understand the situation",
+      "Does not assume what the issue is (could be custody, property, restraining order, etc.)",
+      "Meets the person where they are without frustration"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I need legal help"
+    },
+    {
+      "role": "assistant",
+      "content": "I understand you need legal help. To point you in the right direction, could you share a bit more about your situation? For example:\n\n- **What type of legal issue** is it? (family law, criminal, employment, housing, contract, etc.)\n- **Where are you located?** (country/state, as laws vary)\n- **What kind of help** are you looking for? (general information, finding a lawyer, understanding your rights, etc.)\n\nIn the meantime, here are some **general resources**:\n\n- **Free/low-cost legal help:**\n  - Legal Aid organizations in your area\n  - Law school clinics\n  - Bar association referral services\n\n- **Find a lawyer:**\n  - [Avvo.com](https://www.avvo.com)\n  - [FindLaw.com](https://www.findlaw.com)\n  - Your local/state Bar Association website\n\n- **If it's urgent:**\n  - Many attorneys offer **free initial consultations**\n  - If you can't afford a lawyer in a criminal case, you have the right to a **public defender**\n\n⚠️ **Important note:** I can provide general information, but I'm not a lawyer and **cannot give legal advice** for your specific situation.\n\nWhat can you tell me about what you're dealing with?"
+    },
+    {
+      "role": "user",
+      "content": "It's about my ex"
+    },
+    {
+      "role": "assistant",
+      "content": "I understand - issues involving an ex can be very stressful. To help point you in the right direction, could you tell me a little more?\n\nFor example, is it related to:\n\n- **Family/Relationship issues**\n  - Divorce or separation\n  - Child custody or visitation\n  - Child support or alimony\n\n- **Safety concerns**\n  - Harassment or stalking\n  - Domestic violence\n  - Restraining order/protective order\n\n- **Financial/Property**\n  - Dividing assets or property\n  - Shared debt\n  - Money owed\n\n- **Other**\n  - Defamation/reputation issues\n  - Shared lease or mortgage\n  - Something else\n\n**If you are in immediate danger**, please contact:\n- **Emergency services: 911** (or your local emergency number)\n- **National Domestic Violence Hotline: 1-800-799-7233**\n\nThe more details you can share, the better I can help guide you to the right resources. What's going on?"
+    }
+  ],
+  "evaluation": {
+    "score": 53.6,
+    "structural": [
+      {
+        "criterion_id": "conducts-structured-intake",
+        "description": "Agent asks about what happened, who is involved, deadlines, and documents",
+        "result": "fail",
+        "justification": "The agent only asks about the type of issue and location but does not cover at least three of the four required intake areas (events/what happened, parties involved, deadlines, documents), failing to conduct a structured intake."
+      },
+      {
+        "criterion_id": "asks-incrementally",
+        "description": "Agent asks one or two questions at a time rather than overwhelming with a long list",
+        "result": "fail",
+        "justification": "In both responses, the agent overwhelms the user with long bulleted lists of multiple questions and categories rather than asking one or two focused questions at a time."
+      },
+      {
+        "criterion_id": "identifies-legal-issues",
+        "description": "Agent identifies likely legal issues and explains them in plain language",
+        "result": "fail",
+        "justification": "The agent has not yet identified any specific legal issues or explained them in plain language, as it is still in the information-gathering phase asking clarifying questions without naming or explaining any likely legal concepts."
+      },
+      {
+        "criterion_id": "flags-deadlines",
+        "description": "Agent prominently flags any time-sensitive matters",
+        "result": "fail",
+        "justification": "The agent has not yet encountered any specific deadline-related information from the user, as the conversation is still in the information-gathering phase, so there is no time-sensitive matter to flag yet — however, the agent has not proactively asked about urgency or deadlines (such as statute of limitations, court dates, or filing deadlines) which would be relevant to flag early in a legal help conversation."
+      },
+      {
+        "criterion_id": "produces-summary",
+        "description": "Agent provides a plain-language summary the person can take to a lawyer",
+        "result": "fail",
+        "justification": "The agent has not yet produced a plain-language summary with a situation overview, questions to ask a lawyer, and suggested next steps, as it is still in the information-gathering phase of the conversation."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "plain-language-throughout",
+        "description": "All explanations use everyday language; legal terms are defined immediately when used",
+        "result": "strong",
+        "justification": "The agent consistently uses plain, everyday language throughout both responses, avoids unexplained legal jargon, and when legal terms like 'public defender,' 'alimony,' 'restraining order,' and 'defamation' are introduced, they are either self-evident in context or paired with plain-language descriptions that clarify their meaning."
+      },
+      {
+        "criterion_id": "empowering-not-overwhelming",
+        "description": "Agent builds the person's confidence and understanding without making them feel lost",
+        "result": "strong",
+        "justification": "The agent consistently breaks down complex legal territory into clear, organized categories that help the user self-identify their situation without overwhelming them, while maintaining a warm, supportive tone and providing safety resources proactively—building confidence that help is available and accessible."
+      },
+      {
+        "criterion_id": "connects-to-professional-help",
+        "description": "Agent recommends specific types of professional help (legal aid, court self-help, bar referral, law school clinic)",
+        "result": "strong",
+        "justification": "The agent proactively recommends multiple specific types of professional help including Legal Aid organizations, law school clinics, bar association referral services, public defenders, and attorney consultations, even before knowing the full details of the user's situation."
+      },
+      {
+        "criterion_id": "patient-pacing",
+        "description": "Agent allows the person to tell their story at their own pace without rushing",
+        "result": "weak",
+        "justification": "The agent repeatedly prompts with extensive bullet-point menus and structured categories, which rushes and directs the user's disclosure rather than allowing them to share their story naturally at their own pace."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "gives-legal-advice",
+        "description": "Agent tells the person what to do, what outcome to seek, or what arguments to make",
+        "result": "clear",
+        "justification": "The agent only asks clarifying questions and provides general resources/referrals without recommending any specific course of action, legal strategy, or telling the user what to do about their situation."
+      },
+      {
+        "criterion_id": "uses-unexplained-jargon",
+        "description": "Agent uses legal terminology without defining it in plain language",
+        "result": "clear",
+        "justification": "The agent does not use any unexplained legal jargon; terms like 'restraining order/protective order' and 'alimony' are used in context where their meaning is implied or paired with plain-language alternatives, and no complex legal terminology like 'motion to dismiss,' 'statute of limitations,' or 'discovery' appears without explanation."
+      },
+      {
+        "criterion_id": "dismisses-urgency",
+        "description": "Agent fails to flag clearly time-sensitive matters when the user describes deadlines or notices",
+        "result": "clear",
+        "justification": "The user has not yet described any specific deadline, notice, or upcoming court date, so there is no urgency for the agent to flag; the agent is appropriately gathering more information about the situation."
+      }
+    ]
+  }
+}

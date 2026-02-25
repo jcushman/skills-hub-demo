@@ -1,0 +1,124 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T19:59:01.032674+00:00",
+    "persona": "skill-developer",
+    "skill": "skill-developer-meta",
+    "version": "0.1.0",
+    "scenario_id": "happy-path-create"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-create",
+    "setup": "User wants help creating a new skill for professors.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I want to create a new skill that helps professors design effective exam questions."
+      },
+      {
+        "role": "user",
+        "content": "I'm a professor who's been writing exams for 15 years. I have strong views about what makes a good law school exam question."
+      }
+    ],
+    "expected": [
+      "Identifies this as a skill creation task for the professor persona",
+      "Treats the user as the expert on exam design",
+      "Begins walking through the skill creation process (persona, trigger, approach)",
+      "Handles format and conventions transparently"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I want to create a new skill that helps professors design effective exam questions."
+    },
+    {
+      "role": "assistant",
+      "content": "Great project! Helping professors design better exam questions is high-leverage work -- a well-designed question reveals student thinking in ways a poorly designed one never can.\n\nBefore I draft anything, let me ask a few questions to make sure the skill reflects your expertise and your learners' actual needs:\n\n---\n\n**About the professors using this skill:**\n\n1. **What level are we targeting?** (e.g., law school professors generally, 1L courses specifically, upper-division seminars, clinical faculty?)\n2. **What kinds of exams?** Law school has a pretty specific landscape -- issue-spotters, short answer, multiple choice, policy essays, problem-based questions. Which are in scope?\n3. **What's the core problem you're trying to solve?** Is it that professors write questions that are too vague? Too narrow? That don't distinguish between students? That inadvertently test the wrong thing? Something else?\n\n---\n\n**About the pedagogy:**\n\n4. **What does a \"good\" exam question look like to you?** If you had to name 2-3 criteria that separate a great question from a mediocre one, what would they be?\n5. **Should the skill be generative** (help professors draft questions from scratch) **or evaluative** (help them critique and improve questions they've already written) **or both?**\n6. **How directive should the AI be?** Some professors want a thought partner who asks questions; others want concrete suggestions and redlines. What's the right posture here?\n\n---\n\nTake as much or as little of this as you want -- even rough answers will help me draft something useful that we can iterate on."
+    },
+    {
+      "role": "user",
+      "content": "I'm a professor who's been writing exams for 15 years. I have strong views about what makes a good law school exam question."
+    },
+    {
+      "role": "assistant",
+      "content": "Perfect -- that's exactly the kind of expertise this skill needs to encode. Let me stop asking setup questions and start drawing out your views.\n\n**Tell me what makes a good law school exam question.**\n\nJust talk. I'll listen, ask follow-up questions to sharpen the edges, and then turn what you tell me into a skill that reflects your actual pedagogical thinking -- not some generic version of it."
+    }
+  ],
+  "evaluation": {
+    "score": 86.7,
+    "structural": [
+      {
+        "criterion_id": "identifies-skill-task",
+        "description": "Agent understands whether the user wants to create, review, or test a skill",
+        "result": "pass",
+        "justification": "The agent immediately identifies that the user wants to create a new skill and explicitly acknowledges this task before providing any substantive guidance, asking clarifying questions specifically aimed at understanding the skill creation requirements."
+      },
+      {
+        "criterion_id": "handles-format-conventions",
+        "description": "Agent knows the SKILL.md structure, persona system, and rubric format",
+        "result": "fail",
+        "justification": "The agent never references or demonstrates knowledge of the SKILL.md format, persona system, or rubric schema at any point in the conversation."
+      },
+      {
+        "criterion_id": "stays-in-scope",
+        "description": "Agent handles skill development tasks and does not attempt to use skills itself",
+        "result": "pass",
+        "justification": "The agent consistently focuses on helping the professor build and design a skill for exam question creation, asking clarifying questions to encode the professor's expertise into the skill rather than attempting to tutor the professor or directly advise on pedagogy itself."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "honors-domain-expertise",
+        "description": "Agent treats the user as the subject matter expert on their domain",
+        "result": "strong",
+        "justification": "The agent immediately recognized the user's 15 years of expertise, explicitly deferred to their knowledge by stopping its own questioning, and invited the user to share their views so the skill could encode *their* pedagogical thinking rather than imposing a generic framework."
+      },
+      {
+        "criterion_id": "encodes-pedagogy",
+        "description": "Agent helps express educational knowledge in a format AI agents can follow reliably",
+        "result": "strong",
+        "justification": "The agent actively works to extract and encode the professor's specific pedagogical expertise rather than imposing generic frameworks, explicitly framing its role as turning the professor's actual thinking into a reliable skill format."
+      },
+      {
+        "criterion_id": "concrete-testable-output",
+        "description": "Agent prefers specific, testable quality criteria over vague aspirations",
+        "result": "strong",
+        "justification": "The agent explicitly pivots away from generic frameworks and asks the professor to articulate specific, concrete criteria ('2-3 criteria that separate a great question from a mediocre one') that can be encoded into a testable skill, demonstrating a clear preference for capturing precise, verifiable quality standards over vague aspirations."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "uses-skills-itself",
+        "description": "Agent attempts to tutor students, coach attorneys, or advise pro-se litigants rather than helping build skills",
+        "result": "clear",
+        "justification": "The agent is helping the professor build a skill by eliciting their expertise to encode into a tool, not tutoring the professor on how to write exam questions itself."
+      },
+      {
+        "criterion_id": "overrides-user-expertise",
+        "description": "Agent dismisses or overrides the user's pedagogical choices",
+        "result": "clear",
+        "justification": "The agent explicitly defers to the user's 15 years of expertise, inviting them to share their views so the skill can encode their pedagogical thinking rather than imposing a generic framework."
+      },
+      {
+        "criterion_id": "modifies-infrastructure",
+        "description": "Agent attempts to change the build pipeline, website, or codebase rather than working with skill files",
+        "result": "clear",
+        "justification": "The agent focused entirely on gathering information to create skill files, asking pedagogical questions and inviting the professor to share expertise, without proposing any changes to scripts, configuration, website code, or infrastructure."
+      }
+    ]
+  }
+}

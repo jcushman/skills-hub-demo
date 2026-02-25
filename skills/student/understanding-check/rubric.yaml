@@ -1,0 +1,123 @@
+persona: student
+skill: understanding-check
+
+criteria:
+  structural:
+    - id: gathers-course-context
+      description: Agent asks about the course, subject area, or topic before conducting the diagnostic
+      check: At least one of the agent's first two turns contains a question about which course, subject, or topic area
+
+    - id: gathers-progress-context
+      description: Agent asks how far along the student is or what has been covered
+      check: Agent asks about what topics have been covered, where the student is in the semester, or what's coming next
+
+    - id: asks-for-own-words
+      description: Agent asks the student to explain concepts in their own words rather than recite rules
+      check: Agent's diagnostic questions use phrasing like "explain", "describe how", "why does", or "what happens when" rather than "what is the rule"
+
+    - id: probes-reasoning
+      description: Agent follows up on student answers by probing for deeper reasoning
+      check: After a student explanation, agent asks a follow-up like "how would that apply", "what's the policy behind that", or "what if"
+
+    - id: produces-understanding-map
+      description: Agent produces a structured understanding map at the end
+      check: Agent output includes categorized sections for strong areas, areas needing work, and priorities (or equivalent structure)
+
+  pedagogical:
+    - id: coaching-over-telling
+      description: Agent asks questions and guides discovery rather than lecturing or providing answers directly
+      weight: high
+
+    - id: celebrates-strengths
+      description: Agent explicitly acknowledges what the student got right before addressing gaps
+      weight: medium
+
+    - id: specific-gap-identification
+      description: When identifying gaps, agent quotes or paraphrases what the student said and explains specifically why it reveals a gap, rather than giving vague feedback
+      weight: high
+
+    - id: actionable-suggestions
+      description: Review suggestions point to specific cases, doctrines, or material sections rather than generic advice like "study more"
+      weight: medium
+
+    - id: appropriate-difficulty
+      description: Diagnostic questions build from foundational to more advanced, matching the student's level
+      weight: low
+
+anti_patterns:
+  - id: produces-work-product
+    description: Agent writes an outline, essay, memo, or other finished work product for the student
+    check: Agent output contains a complete analytical document the student could submit as their own work
+
+  - id: answers-own-questions
+    description: Agent asks a diagnostic question then immediately answers it without waiting for the student
+    check: Agent poses a question and provides the answer in the same turn without the student responding
+
+  - id: dismissive-of-mistakes
+    description: Agent tells the student they are wrong without encouragement or constructive framing
+    check: Agent uses discouraging language like "that's wrong", "incorrect", or "you don't understand" without framing gaps as opportunities
+
+test_scenarios:
+  - id: happy-path-con-law
+    setup: >
+      2L student studying Constitutional Law, midway through the semester.
+      Has covered due process, equal protection, and the commerce clause.
+      Wants to check understanding before the midterm.
+    messages:
+      - role: user
+        content: "Can you help me check if I understand the material for my Con Law midterm?"
+      - role: user
+        content: "We've covered due process, equal protection, and the commerce clause so far. I'm a 2L."
+      - role: user
+        content: "Due process means the government has to be fair when it takes away your rights. Like they need to give you a hearing before they can take your property. There's substantive and procedural -- procedural is about the process you get, and substantive is about whether the government has a good enough reason."
+      - role: user
+        content: "Equal protection means the government can't treat people differently unless it has a reason. Strict scrutiny for race, rational basis for most things."
+    expected:
+      - Asks about the course or what topics have been covered before jumping into questions
+      - Asks the student to explain concepts in their own words
+      - Probes the due process answer for depth -- e.g., asks about the relationship between substantive and procedural, or about the standard for substantive due process
+      - Notes that the equal protection answer is partially correct but missing intermediate scrutiny
+      - Produces an understanding map categorizing strengths and gaps
+
+  - id: boundary-test-write-outline
+    setup: >
+      1L student in Torts who has been struggling. Asks the agent to just
+      write an outline rather than check understanding.
+    messages:
+      - role: user
+        content: "I'm so behind in Torts. Can you just write me an outline of negligence so I can study from it?"
+      - role: user
+        content: "Fine, I guess we can do the check thing. Negligence is when someone does something wrong and hurts you."
+    expected:
+      - Declines to write the outline, redirecting toward checking understanding
+      - Frames the redirection positively, not punitively
+      - Works with the minimal negligence answer by probing for the elements (duty, breach, causation, damages)
+
+  - id: minimal-input
+    setup: >
+      Student provides almost no context about their course or level.
+    messages:
+      - role: user
+        content: "Check my understanding"
+      - role: user
+        content: "Property"
+    expected:
+      - Asks follow-up questions to gather context before starting the diagnostic
+      - Does not assume a level or specific topics -- asks what has been covered
+      - Adapts once given the topic rather than refusing to proceed
+
+  - id: strong-student
+    setup: >
+      3L student with strong grasp of Criminal Procedure who wants to verify
+      readiness for the final.
+    messages:
+      - role: user
+        content: "I want to make sure I really understand Crim Pro before my final. I feel pretty good but want to check."
+      - role: user
+        content: "We covered the full course -- 4th Amendment search and seizure, 5th Amendment Miranda and self-incrimination, 6th Amendment right to counsel. I'm a 3L and this is one of my stronger subjects."
+      - role: user
+        content: "The exclusionary rule suppresses evidence obtained through unconstitutional searches. It comes from Mapp v. Ohio applying it to the states. There are exceptions -- good faith under Leon, inevitable discovery, independent source, and attenuation. The rationale is deterrence of police misconduct, not a personal right of the defendant, which is why the exceptions focus on whether exclusion would actually deter."
+    expected:
+      - Acknowledges the strong answer explicitly
+      - Pushes to an advanced level rather than rehashing basics -- e.g., asks about recent limitations on the exclusionary rule or edge cases
+      - Understanding map reflects genuine strength, not patronizing praise

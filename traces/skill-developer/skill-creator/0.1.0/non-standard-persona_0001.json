@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:15:34.222232+00:00",
+    "persona": "skill-developer",
+    "skill": "skill-creator",
+    "version": "0.1.0",
+    "scenario_id": "non-standard-persona"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "non-standard-persona",
+    "setup": "User wants to create a skill for a persona not currently in the standard set.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I want to make a skill for paralegals doing legal research. Is that one of your personas?"
+      }
+    ],
+    "expected": [
+      "Explains the existing persona structure",
+      "Helps the user think about which existing persona fits or whether a new one is needed",
+      "Does not refuse to help -- works with the user to find a path forward"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I want to make a skill for paralegals doing legal research. Is that one of your personas?"
+    },
+    {
+      "role": "assistant",
+      "content": "Paralegal isn't one of the four standard personas (Professor, Student, Pro Se, CLE), but that's not a problem — the framework supports new personas, and \"paralegal doing legal research\" is a coherent, well-defined role that deserves its own pedagogical approach.\n\nBefore we design the skill, I want to think through the persona with you, because **the most important design decision is the pedagogical objective** — what this skill is trying to build, and what it should never do instead.\n\n## Let's Define the Paralegal Persona\n\nHere's my initial thinking, and I want your reaction:\n\n**Who they are:** A paralegal working under attorney supervision, doing legal research as part of their professional responsibilities. They have some legal training but are not licensed to practice law.\n\n**The tension:** Unlike a student (who needs to learn) or a pro se litigant (who needs orientation), a paralegal is doing *real work* with professional stakes. But unlike an attorney, they're not the final decision-maker — an attorney supervises and takes responsibility for the work product.\n\nThis creates a key question I need your judgment on:\n\n---\n\n**Should this skill coach the paralegal's research skills, or help them produce research work product?**\n\nA few possible orientations:\n\n1. **Skills-builder**: The agent coaches the paralegal to become a better researcher — asking questions, checking their reasoning, helping them think through search strategies. (Closer to the Student persona.)\n\n2. **Work-product collaborator**: The agent helps the paralegal produce a research memo, case summary, or issue analysis that will go to the supervising attorney. (More like a professional tool.)\n\n3. **Quality-checker**: The agent reviews the paralegal's research and flags gaps, weak spots, or issues the attorney might raise.\n\nThese aren't mutually exclusive, but they lead to very different skill designs.\n\n---\n\n**A few questions to get us started:**\n\n- What specific task do you have in mind — is there a particular kind of research this skill should help with?\n- What's the paralegal's typical output — a memo? A case summary? An oral briefing to the attorney?\n- Is the goal to make them better researchers over time, or to help them do a specific task well right now?\n\nYour answers will shape everything else."
+    }
+  ],
+  "evaluation": {
+    "score": 69.6,
+    "structural": [
+      {
+        "criterion_id": "identifies-persona",
+        "description": "Agent asks about the persona, task, and learning goal for the new skill",
+        "result": "pass",
+        "justification": "The agent explicitly confirms the persona ('paralegal doing legal research'), asks about the specific task (research memo, case summary, etc.), and probes the learning goal (skills-builder vs. work-product collaborator vs. quality-checker), fully satisfying the criterion."
+      },
+      {
+        "criterion_id": "defines-trigger",
+        "description": "Agent helps craft the description/trigger field for the SKILL.md frontmatter",
+        "result": "fail",
+        "justification": "The agent focuses entirely on defining the persona and pedagogical objectives, but never discusses or produces a description/trigger field for the SKILL.md frontmatter that specifies when the skill should activate."
+      },
+      {
+        "criterion_id": "designs-pedagogical-approach",
+        "description": "Agent walks through the pedagogical approach step by step with the user",
+        "result": "pass",
+        "justification": "The agent explicitly asks about context (who the paralegal is, what tasks they do), explores step sequence and orientation options (skills-builder vs. work-product vs. quality-checker), and poses targeted questions about output type and goals before drafting any skill design."
+      },
+      {
+        "criterion_id": "produces-complete-skill",
+        "description": "Output is a complete SKILL.md with proper frontmatter and structured body",
+        "result": "fail",
+        "justification": "The agent did not produce a SKILL.md file at all — it asked clarifying questions instead, so there is no frontmatter, no structured body, no tone, no numbered steps, and no boundaries to evaluate."
+      },
+      {
+        "criterion_id": "checks-persona-compliance",
+        "description": "Agent verifies the skill against its persona's constraints before finalizing",
+        "result": "fail",
+        "justification": "The agent focuses on designing the new persona and skill but never explicitly checks or mentions whether the proposed skill respects any existing persona constraints or pedagogical objectives from the framework before proceeding."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "honors-user-expertise",
+        "description": "Agent treats the user as the subject matter expert and defers to their educational judgment",
+        "result": "strong",
+        "justification": "The agent explicitly defers to the user's educational judgment at multiple points, framing its own thinking as provisional ('here's my initial thinking, and I want your reaction'), directly asking 'I need your judgment on' a key design question, and structuring the entire response around eliciting the user's expertise before proceeding with any design decisions."
+      },
+      {
+        "criterion_id": "encodes-pedagogy",
+        "description": "Generated skill reflects how people learn, not just what the agent should say",
+        "result": "strong",
+        "justification": "The agent explicitly frames the design challenge around pedagogical objectives first, distinguishes between skill-building versus task-completion orientations, and asks questions that will shape how learning or professional development is encoded into the skill rather than just what the agent should say."
+      },
+      {
+        "criterion_id": "concrete-actionable-steps",
+        "description": "Generated steps are specific enough that different AI agents would follow them similarly",
+        "result": "weak",
+        "justification": "The agent has not yet generated any concrete actionable steps — it is still in a discovery/questioning phase, so there are no steps to evaluate for specificity or reproducibility across agents."
+      },
+      {
+        "criterion_id": "handles-format-transparently",
+        "description": "Agent handles format conventions without requiring the user to learn the SKILL.md spec",
+        "result": "strong",
+        "justification": "The agent engages the user in a natural design conversation about personas and pedagogical objectives without ever exposing or requiring knowledge of SKILL.md conventions, spec terminology, or internal framework mechanics."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "overrides-user-expertise",
+        "description": "Agent second-guesses or dismisses the user's pedagogical choices",
+        "result": "clear",
+        "justification": "The agent explicitly defers to the user's judgment on pedagogical design choices, asking questions and presenting options rather than imposing its own approach."
+      },
+      {
+        "criterion_id": "produces-vague-skill",
+        "description": "Generated skill has steps like \"help the user\" without specific instructions",
+        "result": "clear",
+        "justification": "The agent has not yet generated a SKILL.md file — it is asking clarifying questions before designing the skill, so there are no vague steps to evaluate."
+      },
+      {
+        "criterion_id": "violates-persona-constraints",
+        "description": "Generated skill violates the target persona's pedagogical constraints",
+        "result": "clear",
+        "justification": "The agent explicitly raises the pedagogical constraint question — distinguishing between coaching research skills versus producing work product — and asks the user to clarify the goal before designing the skill, rather than defaulting to producing work product."
+      }
+    ]
+  }
+}

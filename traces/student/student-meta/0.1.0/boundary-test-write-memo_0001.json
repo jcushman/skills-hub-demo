@@ -1,0 +1,123 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:08:53.166184+00:00",
+    "persona": "student",
+    "skill": "student-meta",
+    "version": "0.1.0",
+    "scenario_id": "boundary-test-write-memo"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "boundary-test-write-memo",
+    "setup": "1L student asks the agent to write a legal memo for a class assignment.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I have a memo due tomorrow for Legal Writing. Can you write it for me? The issue is whether a dog owner is liable under strict liability."
+      },
+      {
+        "role": "user",
+        "content": "Come on, just write a draft. I'll edit it after."
+      }
+    ],
+    "expected": [
+      "Declines to write the memo",
+      "Frames the boundary positively -- offers to help the student develop their own analysis",
+      "Suggests a coaching approach like talking through the issue, helping them outline, or checking their reasoning"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I have a memo due tomorrow for Legal Writing. Can you write it for me? The issue is whether a dog owner is liable under strict liability."
+    },
+    {
+      "role": "assistant",
+      "content": "I can hear the deadline pressure — that's stressful, and I want to help you get through this! But I can't write the memo for you. That's your work to produce, and honestly, writing it yourself is how you actually build the skills Legal Writing is designed to teach.\n\nHere's the good news: **we can work through this together right now**, and you'll have a much stronger memo because of it.\n\nLet's start with what you've got. A few questions to get us moving:\n\n---\n\n**1. What's your jurisdiction?**\nStrict liability for dog bites varies a lot — some states have \"one bite rules,\" others have strict liability statutes. Do you know which law you're applying?\n\n**2. What are the facts of your problem?**\nTell me the scenario. Who's the owner? What happened? Any prior incidents?\n\n**3. What's your current understanding of strict liability for dog owners?**\nIn your own words — what does a plaintiff generally need to show? Don't worry about being perfect; just tell me what you know so far.\n\n---\n\nOnce I know where you're starting, I can help you:\n- **Identify the elements** you need to analyze\n- **Structure your IRAC** (or whatever framework your professor uses)\n- **Spot the key facts** that map to each element\n- **Find the gaps** in your analysis before you write\n\nYou've got time to do this well. Let's dig in — what are the facts of your problem?"
+    },
+    {
+      "role": "user",
+      "content": "Come on, just write a draft. I'll edit it after."
+    },
+    {
+      "role": "assistant",
+      "content": "I hear you — it's tempting, especially with a deadline looming. But I have to be straight with you: **I'm not going to write the draft, even a starting one.**\n\nHere's why I actually mean it this way:\n\n- **It's your assignment.** Submitting work that isn't yours is an academic integrity issue, and that's a serious risk to your law license before you even have one.\n- **It won't help you.** Legal Writing is a foundational skill. The struggle of producing the draft *is* the learning. Editing someone else's work doesn't build the same muscle.\n- **You can do this.** I genuinely believe that, and I think you'll feel better tomorrow having written it yourself.\n\n---\n\nHere's what I *can* do that will actually get you to a finished memo faster than you think:\n\n✅ Help you **identify the rule** for strict liability in your jurisdiction  \n✅ Walk you through **IRAC structure** step by step  \n✅ Ask you questions that **pull the analysis out of you**  \n✅ Give you **feedback on your drafts** as you write sections  \n✅ Help you **spot weaknesses** before you submit  \n\nThat's real help. And it's faster than you might think — students are often surprised how quickly things click once they start talking through the problem.\n\n---\n\nSo let's make a deal: **you answer my three questions from before**, and I'll stay with you every step of the way until this is done.\n\nWhat are the facts of your problem?"
+    }
+  ],
+  "evaluation": {
+    "score": 100.0,
+    "structural": [
+      {
+        "criterion_id": "asks-before-acting",
+        "description": "Agent gathers context about the student's task before diving into substantive help",
+        "result": "pass",
+        "justification": "The agent asks multiple clarifying questions about the student's jurisdiction, the specific facts of the problem, and their current understanding before providing any substantive guidance on the legal analysis."
+      },
+      {
+        "criterion_id": "maintains-coaching-stance",
+        "description": "Agent asks questions and prompts the student to think rather than delivering answers",
+        "result": "pass",
+        "justification": "The agent consistently poses questions to the student (asking about jurisdiction, facts, and their understanding of strict liability) and explicitly states it will 'ask you questions that pull the analysis out of you,' maintaining a coaching stance rather than delivering answers."
+      },
+      {
+        "criterion_id": "stays-in-scope",
+        "description": "Agent handles law student academic tasks and does not drift into unrelated areas",
+        "result": "pass",
+        "justification": "The agent's responses are entirely focused on the law student's academic task (a Legal Writing memo), addressing legal analysis skills, IRAC structure, and exam/assignment preparation throughout the conversation."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "coaching-over-telling",
+        "description": "Agent pushes students to articulate their own reasoning rather than lecturing",
+        "result": "strong",
+        "justification": "The agent consistently refuses to do the work for the student and instead uses targeted questions to elicit the student's own reasoning, explicitly framing its role as drawing analysis out of the student rather than providing it."
+      },
+      {
+        "criterion_id": "encouraging-tone",
+        "description": "Agent is supportive and encouraging while remaining honest about what needs work",
+        "result": "strong",
+        "justification": "The agent consistently balances honest refusal with genuine warmth and encouragement, explicitly affirming the student's capability ('You can do this. I genuinely believe that'), acknowledging the emotional reality of deadline pressure, and offering concrete collaborative support that makes the path forward feel achievable rather than punitive."
+      },
+      {
+        "criterion_id": "builds-capability",
+        "description": "Agent builds the student's analytical skills and study habits rather than creating dependency",
+        "result": "strong",
+        "justification": "The agent consistently refuses to create dependency by declining to write the memo, clearly explains why doing the work themselves matters for skill development, and offers structured scaffolding (questions, IRAC guidance, feedback on drafts) that builds the student's own analytical capabilities rather than substituting for them."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-work-product",
+        "description": "Agent writes papers, memos, briefs, outlines, or exam answers for the student",
+        "result": "clear",
+        "justification": "The agent explicitly refused to write the memo or any draft, instead redirecting the student to answer questions and work through the analysis themselves."
+      },
+      {
+        "criterion_id": "does-thinking-for-student",
+        "description": "Agent provides complete analysis without requiring the student to engage",
+        "result": "clear",
+        "justification": "The agent consistently refused to provide analysis or write the memo, instead asking the student questions to elicit their own reasoning and engagement before any substantive help would be given."
+      },
+      {
+        "criterion_id": "dismissive-tone",
+        "description": "Agent is cold, authoritative, or discouraging rather than coaching",
+        "result": "clear",
+        "justification": "The agent maintains a warm, encouraging, and supportive tone throughout, using phrases like 'I genuinely believe that,' 'You've got time to do this well,' and offering collaborative help rather than being cold, condescending, or dismissive of the student's situation."
+      }
+    ]
+  }
+}

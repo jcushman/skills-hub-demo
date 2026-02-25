@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:00:59.005978+00:00",
+    "persona": "cle",
+    "skill": "client-email-coach",
+    "version": "_null",
+    "scenario_id": "minimal-context"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "minimal-context",
+    "setup": "Attorney provides only the draft with no context.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Review this: 'Hi Sarah, The deal is moving forward. We should close by end of month if all goes well. I'll send the revised docs tomorrow. Let me know if the board has any concerns. Thanks, [Name]'"
+      }
+    ],
+    "expected": [
+      "Asks for context about the client relationship, the deal, and any specific concerns",
+      "May offer preliminary observations (very brief, potentially too casual, \"if all goes well\" is hedgy)",
+      "Explains why context matters for calibrating feedback"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Review this: 'Hi Sarah, The deal is moving forward. We should close by end of month if all goes well. I'll send the revised docs tomorrow. Let me know if the board has any concerns. Thanks, [Name]'"
+    },
+    {
+      "role": "assistant",
+      "content": "## Review of Email Draft\n\n### Overall Assessment\nThe email is functional but **vague and potentially risky** for professional/legal communication. Here are the key concerns:\n\n---\n\n### Specific Issues\n\n**Vagueness**\n- \"The deal\" — which deal? No matter, party names, or reference number\n- \"End of month\" — no specific date\n- \"Revised docs\" — which documents specifically?\n- \"All goes well\" — undefined contingencies\n\n**Professional/Legal Risk**\n- **\"If all goes well\"** could be read as an informal acknowledgment that conditions remain unmet — potentially problematic if disputed later\n- No clear **subject line** referenced\n- **\"[Name]\"** placeholder left unfilled\n\n**Tone**\n- Casual for what appears to be a significant transaction\n- May not reflect the formality expected in attorney-client or deal communications\n\n---\n\n### Suggested Revision Points\n- Identify the deal by name or reference\n- State a **specific closing date** or deadline\n- Name the documents being sent\n- Replace \"if all goes well\" with specific conditions or remove it\n- Confirm who \"the board\" refers to\n\n---\n\n### Bottom Line\nThis reads like a **placeholder draft** that needs specifics filled in before sending. Would you like a revised version?"
+    }
+  ],
+  "evaluation": {
+    "score": 53.6,
+    "structural": [
+      {
+        "criterion_id": "receives-draft-and-context",
+        "description": "Agent asks for the draft email, client relationship context, purpose, and concerns",
+        "result": "fail",
+        "justification": "Judge response unparseable: {\"result\": \"pass\", \"justification\": \"The user provided the draft email directly in their message, and while the agent did not explicitly ask for additional context, it received the draft text and proc"
+      },
+      {
+        "criterion_id": "evaluates-along-dimensions",
+        "description": "Agent assesses the draft across key communication dimensions",
+        "result": "pass",
+        "justification": "The agent addresses at least three communication dimensions: clarity (vagueness about deal details, dates, documents), risk management (legal risks of informal language), and tone (casual vs. formal expectations), satisfying the criterion."
+      },
+      {
+        "criterion_id": "quotes-specific-passages",
+        "description": "Agent references specific parts of the draft when giving feedback",
+        "result": "pass",
+        "justification": "The agent directly quotes specific phrases from the draft such as 'The deal,' 'End of month,' 'Revised docs,' 'All goes well,' and 'If all goes well' when providing feedback, rather than speaking only in generalities."
+      },
+      {
+        "criterion_id": "identifies-patterns",
+        "description": "Agent names recurring communication patterns, not just one-off issues",
+        "result": "fail",
+        "justification": "The agent identifies specific one-off issues in this email but never names any recurring communication patterns (such as burying the lead, over-hedging, or vagueness as a habitual tendency) that the attorney should watch for across future emails."
+      },
+      {
+        "criterion_id": "offers-principles",
+        "description": "Agent closes with actionable communication principles the attorney can apply going forward",
+        "result": "fail",
+        "justification": "The agent provides specific feedback on this email but does not close with any transferable communication principles framed as applicable beyond this specific email (e.g., 'always include reference identifiers in legal correspondence' or 'avoid conditional language that implies unmet obligations')."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "candid-direct-feedback",
+        "description": "Feedback is specific and direct like a senior colleague, not generic praise",
+        "result": "strong",
+        "justification": "The agent delivers specific, actionable critique like a senior colleague—identifying exact phrases ('if all goes well,' 'the deal'), explaining concrete risks (legal ambiguity, undefined contingencies), and providing clear revision directives rather than offering generic praise or vague suggestions."
+      },
+      {
+        "criterion_id": "shows-not-tells",
+        "description": "Agent provides rewritten examples for problems rather than just describing what's wrong",
+        "result": "weak",
+        "justification": "The agent only describes what's wrong and lists suggested revision points, but never actually shows a rewritten example of the email despite explicitly offering one at the end ('Would you like a revised version?')."
+      },
+      {
+        "criterion_id": "prioritized-feedback",
+        "description": "Agent focuses on the most important 3-5 points rather than line-editing every sentence",
+        "result": "weak",
+        "justification": "The agent line-edits nearly every phrase in the short email rather than focusing on 3-5 prioritized concerns, producing an exhaustive critique that treats minor issues (like the placeholder name) with the same weight as substantive ones like vagueness and legal risk."
+      },
+      {
+        "criterion_id": "transferable-skills",
+        "description": "Patterns and principles help the attorney improve future emails, not just this one",
+        "result": "weak",
+        "justification": "The agent identifies problems in this specific email but fails to articulate transferable principles or patterns (e.g., 'always include deal identifiers in transaction emails,' 'avoid conditional language that implies unmet conditions') that would help the attorney improve future communications independently."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "rewrites-whole-email",
+        "description": "Agent rewrites the entire email rather than coaching the attorney to improve it",
+        "result": "clear",
+        "justification": "The agent provided targeted feedback with specific issues and suggested revision points rather than rewriting the entire email, and only offered a revised version as an optional follow-up."
+      },
+      {
+        "criterion_id": "too-deferential",
+        "description": "Agent is so gentle that important problems go unflagged",
+        "result": "clear",
+        "justification": "The agent clearly flagged multiple significant problems including vagueness, professional/legal risk, and placeholder issues without hedging or softening the critique to the point of uselessness."
+      },
+      {
+        "criterion_id": "ignores-risk",
+        "description": "Agent doesn't address risk management issues in the draft",
+        "result": "clear",
+        "justification": "The agent explicitly identified and addressed risk management issues, flagging 'if all goes well' as legally problematic, noting the placeholder name, and recommending specific conditions replace vague language."
+      }
+    ]
+  }
+}

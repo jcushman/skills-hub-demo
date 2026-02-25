@@ -377,6 +377,31 @@ section {
     background-color: #333;
 }
 
+.card-links,
+.meta-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.75rem;
+    justify-content: flex-end;
+}
+
+.meta-links {
+    justify-content: flex-start;
+}
+
+.traces-link,
+.edit-link {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: #999;
+}
+
+.traces-link:hover,
+.edit-link:hover {
+    color: #666;
+    text-decoration: underline;
+}
+
 .no-results {
     font-family: var(--font-mono);
     color: #666;

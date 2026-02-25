@@ -1,0 +1,111 @@
+persona: skill-developer
+skill: skill-tester
+
+criteria:
+  structural:
+    - id: understands-skill
+      description: Agent obtains and reads the skill content before defining criteria
+      check: Agent asks for or reads the SKILL.md content and identifies the persona and key behaviors before proposing criteria
+
+    - id: defines-structural-criteria
+      description: Agent identifies concrete, checkable behaviors the agent should exhibit
+      check: Agent proposes at least two structural criteria with both a description and a check statement
+
+    - id: defines-pedagogical-criteria
+      description: Agent identifies subjective quality dimensions with weights
+      check: Agent proposes at least two pedagogical criteria with descriptions and weight levels (low/medium/high)
+
+    - id: defines-anti-patterns
+      description: Agent identifies things the agent must never do
+      check: Agent proposes at least one anti-pattern derived from the persona's constraints or the skill's boundaries
+
+    - id: creates-test-scenarios
+      description: Agent designs test scenarios covering different interaction types
+      check: Agent proposes at least two test scenarios with setup, messages, and expected behaviors
+
+  pedagogical:
+    - id: criteria-from-skill-steps
+      description: Structural criteria derive from the skill's own defined steps and behaviors
+      weight: high
+
+    - id: comprehensive-scenario-coverage
+      description: Scenarios test different types of interactions (happy path, edge case, boundary, minimal input)
+      weight: high
+
+    - id: testable-criteria
+      description: Criteria are specific enough to evaluate consistently across different evaluators
+      weight: medium
+
+    - id: persona-grounded-anti-patterns
+      description: Anti-patterns reflect the persona's constraints, not just generic quality concerns
+      weight: medium
+
+anti_patterns:
+  - id: vague-criteria
+    description: Agent defines criteria too vague to evaluate consistently
+    check: Criteria descriptions use language like "agent is helpful" or "agent does a good job" without specifying observable behaviors
+
+  - id: insufficient-scenarios
+    description: Agent creates only one test scenario or only happy-path scenarios
+    check: Agent produces fewer than two test scenarios or all scenarios test the same type of interaction
+
+  - id: ignores-persona-constraints
+    description: Anti-patterns don't reflect the persona's specific constraints
+    check: Anti-patterns are entirely generic (e.g., "agent is rude") without any tied to the persona's pedagogical boundaries
+
+test_scenarios:
+  - id: happy-path-create-rubric
+    setup: >
+      User wants to create a rubric for the socratic-tutor skill.
+      They provide the SKILL.md content.
+    messages:
+      - role: user
+        content: "I want to create a rubric for testing the socratic-tutor skill. Here's the SKILL.md."
+      - role: user
+        content: "It's a student skill that does Socratic dialogue to prepare students for class. Steps are: gather the assignment, begin dialogue progressing in difficulty, follow up on weak answers, scaffold when stuck, and debrief."
+    expected:
+      - Derives structural criteria from the skill's steps (e.g., gathers assignment, progresses in difficulty, scaffolds when stuck)
+      - Defines pedagogical criteria reflecting the skill's coaching objectives
+      - Includes anti-patterns from the student persona (no work product, no giving answers immediately)
+      - Creates scenarios covering happy path, boundary test, and minimal input
+      - Produces a complete rubric.yaml
+
+  - id: evaluate-trace
+    setup: >
+      User provides a conversation trace and wants it evaluated against
+      a rubric.
+    messages:
+      - role: user
+        content: "I have a trace from testing the understanding-check skill. Can you evaluate it against the rubric?"
+      - role: user
+        content: "The agent asked about the course, then asked the student to explain due process. The student said 'due process means fairness' and the agent said 'That's correct! Due process is about fundamental fairness. Let's move to equal protection.' Then it produced an understanding map."
+    expected:
+      - Evaluates structural criteria (gathered context -- pass; asked for own words -- partial; probed reasoning -- fail)
+      - Notes the agent accepted a shallow answer without probing
+      - Flags that saying "That's correct" to an incomplete answer is pedagogically problematic
+      - Produces a structured evaluation with pass/fail for structural and ratings for pedagogical criteria
+
+  - id: minimal-input
+    setup: >
+      User wants to test a skill but provides no content.
+    messages:
+      - role: user
+        content: "Help me test a skill."
+    expected:
+      - Asks the user to provide the SKILL.md content
+      - Asks which persona it belongs to
+      - Asks whether a rubric already exists
+
+  - id: existing-partial-rubric
+    setup: >
+      User has a partial rubric they want to improve.
+    messages:
+      - role: user
+        content: "I started a rubric for the research-coach skill but I only have one criterion and no test scenarios. Can you help me finish it?"
+      - role: user
+        content: "Here's what I have: criteria structural: teaches-search-terms: Agent helps translate everyday language into legal search terms."
+    expected:
+      - Builds on the existing criterion rather than starting from scratch
+      - Reads the skill to identify additional criteria the user hasn't covered
+      - Adds pedagogical criteria, anti-patterns, and test scenarios
+      - Produces the complete rubric incorporating the user's starting point

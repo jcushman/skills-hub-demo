@@ -1,0 +1,142 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:07:25.469671+00:00",
+    "persona": "professor",
+    "skill": "syllabus-traditional",
+    "version": "0.1.0",
+    "scenario_id": "specific-constraints"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "specific-constraints",
+    "setup": "Professor provides detailed constraints about what to include and exclude.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I need a traditional Con Law syllabus. 42 sessions, 50 minutes each. I want to skip the structural Constitution stuff and focus entirely on individual rights -- due process, equal protection, First Amendment."
+      },
+      {
+        "role": "user",
+        "content": "I'm using Chemerinsky's Constitutional Law casebook, 6th edition. Chapters 8-16 cover individual rights."
+      }
+    ],
+    "expected": [
+      "Respects the professor's scoping decision to skip structural content",
+      "Builds the syllabus from the specified chapters",
+      "Allocates 42 sessions across the individual rights topics",
+      "Asks for confirmation and offers to iterate"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I need a traditional Con Law syllabus. 42 sessions, 50 minutes each. I want to skip the structural Constitution stuff and focus entirely on individual rights -- due process, equal protection, First Amendment."
+    },
+    {
+      "role": "assistant",
+      "content": "I'll start by researching existing Con Law syllabi focused on individual rights before building yours. Let me search for comparable courses.\n\n<search>constitutional law individual rights syllabus due process equal protection First Amendment law school casebook</search>\n\n<search>constitutional law II individual rights syllabus Harvard Yale Stanford law school</search>\n\n<search>Stone Seidman Sunstein Tushnet constitutional law casebook syllabus individual rights</search>\n\n<search>Chemerinsky constitutional law individual rights syllabus due process equal protection First Amendment</search>\n\nLet me ask a few quick questions before I finalize the design, since your answers will affect pacing and case selection significantly:\n\n1. **Casebook**: Are you using a specific casebook (e.g., Stone/Seidman/Sunstein/Tushnet, Chemerinsky/Gillian, Sullivan/Feldman, Dorf/Morrison)? Or should I build from a canonical case list?\n\n2. **Student population**: Is this a 1L required course, an upper-level elective, or a seminar? That affects how much I assume students already know about judicial review, tiers of scrutiny, etc.\n\n3. **First Amendment scope**: The First Amendment alone can fill a semester. Do you want the full sweep — speech, press, religion (both clauses) — or do you want to prioritize certain areas and compress others? For example, many individual-rights courses give religion clauses only 2-3 sessions while spending 8-10 on free speech.\n\n4. **Due process scope**: Substantive due process only, or both substantive and procedural? And how do you want to handle the incorporation doctrine — as a standalone unit or woven into the substantive DP discussion?\n\n5. **Any cases or topics you consider non-negotiable?** (e.g., *Dobbs*, *Obergefell*, *Bruen*, *303 Creative*)\n\n6. **Dates**: Do you want actual calendar dates, or session numbers only?\n\nWhile you answer, here is my preliminary read on how the 42 sessions should be distributed across your three areas, based on standard individual-rights course patterns:\n\n| Area | Approx. Sessions | Rationale |\n|---|---|---|\n| Due Process (substantive + procedural + incorporation) | 10–12 | Foundational tier-of-scrutiny logic; must precede EP |\n| Equal Protection | 12–14 | Race, sex, sexual orientation, fundamental rights EP — the largest doctrinal block |\n| First Amendment | 14–16 | Speech alone justifies 10+ sessions; religion adds 4–6 |\n| Review | 2 | Dead week / exam prep |\n\nThis leaves essentially no room for structural material, which matches your instruction. Let me know your answers and I'll build the full session-by-session schedule."
+    },
+    {
+      "role": "user",
+      "content": "I'm using Chemerinsky's Constitutional Law casebook, 6th edition. Chapters 8-16 cover individual rights."
+    },
+    {
+      "role": "assistant",
+      "content": "Let me search for syllabi specifically using Chemerinsky's casebook before I build yours.\n\n<search>Chemerinsky \"Constitutional Law\" \"6th edition\" syllabus individual rights</search>\n\n<search>Chemerinsky constitutional law casebook syllabus chapters 8 9 10 11 12 13 14 15 16</search>\n\n<search>Chemerinsky \"Constitutional Law principles and policies\" syllabus due process equal protection First Amendment law school</search>\n\n<search>\"Con Law II\" OR \"Constitutional Law II\" Chemerinsky syllabus individual rights law school 2023 2024</search>\n\nWhile those results come in, I have a few remaining questions before I can build the full schedule:\n\n**Still need from you:**\n\n1. **Student population**: 1L required course or upper-level elective? This affects whether I need to build in scaffolding for tiers of scrutiny or can assume prior exposure.\n\n2. **First Amendment scope**: Chemerinsky Chapters 11–16 cover speech and religion. Do you want the full sweep of both, or do you want to compress religion (Establishment + Free Exercise) to make more room for speech doctrine?\n\n3. **Substantive vs. procedural due process**: Chemerinsky Chapter 10 covers both. Do you want equal time on procedural DP, or should I treat it as a brief unit (1–2 sessions) and spend the bulk of the DP allocation on substantive DP?\n\n4. **Any non-negotiable cases or recent decisions** you want foregrounded — e.g., *Dobbs*, *Bruen*, *303 Creative*, *Kennedy v. Bremerton*?\n\n5. **Calendar dates or session numbers only?**\n\nIn the meantime, here is my refined preliminary allocation based on Chemerinsky Chapters 8–16:\n\n| Chemerinsky Chapter | Topic | Preliminary Sessions |\n|---|---|---|\n| Ch. 8 | The Incorporation Doctrine | 1–2 |\n| Ch. 9 | Economic Liberties / Rational Basis | 2–3 |\n| Ch. 10 | Due Process (Procedural + Substantive) | 8–10 |\n| Ch. 11 | Equal Protection (Race, Sex, Fundamental Rights) | 10–12 |\n| Ch. 12 | First Amendment — Speech (Content, Categories) | 6–8 |\n| Ch. 13 | First Amendment — Speech (Time/Place/Manner, etc.) | 4–5 |\n| Ch. 14 | First Amendment — Speech (Special Contexts) | 2–3 |\n| Ch. 15 | First Amendment — Religion (Free Exercise) | 2–3 |\n| Ch. 16 | First Amendment — Religion (Establishment) | 2–3 |\n| Review | Dead week / exam prep | 2 |\n| **Total** | | **~42** |\n\nOnce you answer the questions above — especially the First Amendment scope question and student population — I can lock in the session counts and build the full case-by-case schedule."
+    }
+  ],
+  "evaluation": {
+    "score": 55.2,
+    "structural": [
+      {
+        "criterion_id": "analyzes-provided-content",
+        "description": "Agent reviews the user's source material before generating the syllabus",
+        "result": "pass",
+        "justification": "The agent explicitly references specific Chemerinsky 6th edition chapters (8–16) by number and topic, mapping each chapter to session allocations in its preliminary schedule, demonstrating direct engagement with the user's provided source material."
+      },
+      {
+        "criterion_id": "asks-missing-info",
+        "description": "Agent asks for missing logistical information needed to build the syllabus",
+        "result": "fail",
+        "justification": "The user already provided all key logistical information (42 sessions, 50 minutes each) in the first message, so the agent did not need to ask for missing logistical information — and indeed did not ask about session count, session length, semester duration, or credit hours, making this criterion not applicable rather than satisfied through active questioning."
+      },
+      {
+        "criterion_id": "produces-complete-syllabus",
+        "description": "Output includes all required sections of a complete syllabus",
+        "result": "fail",
+        "justification": "The agent has not produced a complete syllabus; it has only provided preliminary session allocation tables and is still asking clarifying questions, with no course header, course description, learning objectives, required materials, assessment breakdown, or session-by-session schedule present."
+      },
+      {
+        "criterion_id": "assigns-specific-readings",
+        "description": "Each session has specific reading assignments drawn from the provided content",
+        "result": "fail",
+        "justification": "The agent has not yet produced a session-by-session schedule with specific case names, page ranges, or chapter references; it has only provided a preliminary chapter-level allocation table while continuing to ask clarifying questions."
+      },
+      {
+        "criterion_id": "includes-discussion-questions",
+        "description": "Sessions include Socratic discussion questions",
+        "result": "fail",
+        "justification": "The agent asks clarifying questions about course design and logistics but never includes Socratic discussion questions (e.g., questions posed to students about case reasoning, constitutional tensions, or normative debates) in either of its responses."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "follows-source-ordering",
+        "description": "Syllabus follows the canonical casebook ordering and linear doctrinal progression",
+        "result": "strong",
+        "justification": "The agent explicitly anchors the syllabus structure to Chemerinsky Chapters 8–16 in canonical order, mapping each chapter sequentially to session allocations and maintaining the linear doctrinal progression from incorporation through due process, equal protection, and First Amendment that the casebook prescribes."
+      },
+      {
+        "criterion_id": "appropriate-coverage",
+        "description": "All major doctrinal areas from the source material are represented in the schedule",
+        "result": "strong",
+        "justification": "The agent maps all major doctrinal areas from Chemerinsky Chapters 8–16 (incorporation, economic liberties, procedural and substantive due process, equal protection, and the full First Amendment sweep including both speech and religion clauses) into the preliminary session allocation, ensuring no significant area from the specified source material is omitted."
+      },
+      {
+        "criterion_id": "uniform-pacing",
+        "description": "Sessions are allocated roughly evenly or proportionally to source material, not calibrated to difficulty",
+        "result": "weak",
+        "justification": "The agent's preliminary allocation assigns 14–16 sessions to First Amendment (Chapters 12–16) but only 8–10 to Due Process (Chapter 10) and 10–12 to Equal Protection (Chapter 11), without any difficulty-based justification for this disparity—it simply mirrors the number of Chemerinsky chapters rather than calibrating proportionally to the actual doctrinal complexity or volume of material in each area, which is exactly the uniform-pacing failure the dimension describes."
+      },
+      {
+        "criterion_id": "practical-completeness",
+        "description": "Syllabus is detailed enough that a professor could use it as-is with minimal modification",
+        "result": "weak",
+        "justification": "After two exchanges, the agent has only produced a preliminary allocation table with approximate session ranges and has not delivered any actual syllabus content—no session-by-session schedule, no specific case assignments, no reading pages, no discussion questions—making it completely unusable by a professor as-is."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "uses-evidence-based-techniques",
+        "description": "Agent injects evidence-based techniques (spiral structure, interleaving, spaced practice) into a traditional syllabus",
+        "result": "clear",
+        "justification": "The agent produced a straightforward traditional syllabus structure with topic allocations and session counts, with no spiral return markers, interleaving notes, scaffolding levels, or explicit spaced practice elements injected into the design."
+      },
+      {
+        "criterion_id": "produces-student-work",
+        "description": "Agent produces student-facing work product like study guides or outlines",
+        "result": "clear",
+        "justification": "The agent is producing an instructor-facing syllabus with session allocations, chapter mappings, and pedagogical scaffolding questions — not student-facing study materials like outlines, study guides, or summaries."
+      },
+      {
+        "criterion_id": "ignores-source-material",
+        "description": "Agent generates a syllabus from general knowledge rather than the user's provided content",
+        "result": "clear",
+        "justification": "The agent explicitly anchored the syllabus structure to Chemerinsky's 6th edition Chapters 8–16 as provided by the user, mapping session allocations directly to those specific chapters rather than generating a generic syllabus from general knowledge."
+      }
+    ]
+  }
+}

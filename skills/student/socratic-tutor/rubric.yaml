@@ -1,0 +1,116 @@
+persona: student
+skill: socratic-tutor
+
+criteria:
+  structural:
+    - id: gathers-assignment
+      description: Agent asks what cases, readings, or topics are assigned before beginning the dialogue
+      check: Agent asks about assigned readings, case names, or topics before posing substantive Socratic questions
+
+    - id: progresses-in-difficulty
+      description: Questions move from foundational (facts, holding) to analytical (reasoning, policy) to advanced (hypotheticals, counterarguments)
+      check: Early questions address facts or procedural posture; later questions address reasoning, policy, or hypothetical variations
+
+    - id: follows-up-on-answers
+      description: Agent adapts questions based on the student's actual responses rather than running through a fixed list
+      check: At least one agent question directly references or builds on something the student said in a previous turn
+
+    - id: scaffolds-when-stuck
+      description: When the student struggles, agent offers hints or reframes the question rather than giving the answer immediately
+      check: When student gives a weak or incorrect answer, agent provides scaffolding (hint, simpler sub-question, reframe) before explaining directly
+
+    - id: provides-debrief
+      description: Agent provides a debrief summarizing strengths and areas to review
+      check: Agent produces a wrap-up that identifies what the student handled well and what to solidify before class
+
+  pedagogical:
+    - id: dialogue-not-quiz
+      description: Interaction feels like a genuine conversation that adapts, not a fixed list of questions
+      weight: high
+
+    - id: appropriate-pressure
+      description: Agent pushes for precision and depth without intimidation or anxiety-inducing tone
+      weight: high
+
+    - id: celebrates-good-answers
+      description: Agent explicitly acknowledges when the student answers well before moving to harder territory
+      weight: medium
+
+    - id: builds-confidence
+      description: The overall interaction builds the student's confidence and readiness for class
+      weight: medium
+
+anti_patterns:
+  - id: gives-answer-immediately
+    description: Agent provides the correct answer without letting the student attempt it first
+    check: Agent states the holding, rule, or analysis before the student has had a chance to respond
+
+  - id: produces-work-product
+    description: Agent writes an outline, brief, case summary, or other finished work product
+    check: Agent output contains a complete case brief, outline, or analytical document the student could use as-is
+
+  - id: intimidating-tone
+    description: Agent uses harsh, dismissive, or anxiety-inducing language
+    check: Agent uses language like "that's wrong," "you clearly don't understand," or otherwise makes the student feel humiliated rather than supported
+
+test_scenarios:
+  - id: happy-path-case-prep
+    setup: >
+      2L student preparing for a Contracts class on promissory estoppel.
+      Has read Ricketts v. Scothorn and Hoffman v. Red Owl Stores.
+    messages:
+      - role: user
+        content: "Can you quiz me Socratically on my Contracts reading for tomorrow? We're covering promissory estoppel."
+      - role: user
+        content: "We read Ricketts v. Scothorn and Hoffman v. Red Owl Stores."
+      - role: user
+        content: "In Ricketts, a grandfather promised his granddaughter money so she wouldn't have to work. She quit her job based on the promise. The court enforced the promise even though there was no consideration."
+      - role: user
+        content: "I think the court said it was unfair for the grandfather to go back on his word after she relied on it."
+    expected:
+      - Starts with foundational questions about the case facts and holding
+      - Pushes for more precision on the student's "unfair" characterization -- what legal doctrine is at work?
+      - Follows up by probing the relationship between promissory estoppel and consideration
+      - Eventually moves to comparing the two cases or posing a hypothetical variation
+
+  - id: boundary-test-give-answer
+    setup: >
+      1L student who wants the agent to just explain the case rather
+      than engage in Socratic dialogue.
+    messages:
+      - role: user
+        content: "I need to prepare for Property class tomorrow. Can you just explain the rule in Pierson v. Post?"
+      - role: user
+        content: "OK fine, ask me about it. It's about two guys hunting a fox."
+    expected:
+      - Redirects from just explaining to engaging in dialogue
+      - Frames the redirection positively -- Socratic practice is better preparation for cold calls
+      - Works with the student's minimal answer by asking follow-up questions about the holding and reasoning
+
+  - id: minimal-input
+    setup: >
+      Student provides almost no information about what they're preparing for.
+    messages:
+      - role: user
+        content: "Help me prepare for class"
+      - role: user
+        content: "Torts"
+    expected:
+      - Asks which cases or readings are assigned before starting
+      - Does not guess at topics -- asks what has been covered
+      - Adapts once given the topic rather than refusing to proceed
+
+  - id: advanced-student
+    setup: >
+      3L student who handles basic questions easily and should be
+      pushed to harder territory quickly.
+    messages:
+      - role: user
+        content: "Quiz me on my Fed Courts reading. We're covering Younger abstention and I know this material pretty well."
+      - role: user
+        content: "Younger v. Harris says federal courts should abstain from enjoining ongoing state criminal proceedings. The rationale is comity and respect for state court processes. There are exceptions for bad faith prosecution, patently unconstitutional statutes, and other extraordinary circumstances."
+    expected:
+      - Acknowledges the strong answer
+      - Moves quickly past basics to harder territory -- hypotheticals, edge cases, or connections to other abstention doctrines
+      - Might ask about how Younger applies to civil proceedings or what counts as "ongoing"
+      - Does not rehash the basics the student already demonstrated mastery of

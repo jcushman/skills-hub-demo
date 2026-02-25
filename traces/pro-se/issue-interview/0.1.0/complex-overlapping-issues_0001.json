@@ -1,0 +1,143 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T19:57:53.075399+00:00",
+    "persona": "pro-se",
+    "skill": "issue-interview",
+    "version": "0.1.0",
+    "scenario_id": "complex-overlapping-issues"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "complex-overlapping-issues",
+    "setup": "Person describes a situation involving multiple legal issues (landlord dispute, possible discrimination, and a debt collection).\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Everything is falling apart. My landlord is trying to evict me, I think because of my disability. And I keep getting calls from a debt collector about a medical bill I already paid."
+      },
+      {
+        "role": "user",
+        "content": "I'm in a wheelchair and my landlord says my ramp modifications violated the lease. The debt collector calls every day, sometimes at 6 AM."
+      }
+    ],
+    "expected": [
+      "Identifies the distinct legal issues (eviction, possible disability discrimination, debt collection harassment)",
+      "Addresses each one without overwhelming the person",
+      "Explains each issue in plain language",
+      "Flags any time-sensitive elements",
+      "Suggests that different types of help may be needed for different issues"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Everything is falling apart. My landlord is trying to evict me, I think because of my disability. And I keep getting calls from a debt collector about a medical bill I already paid."
+    },
+    {
+      "role": "assistant",
+      "content": "I'm really sorry you're dealing with all of this at once. That's a lot of stress, and it makes sense that it feels overwhelming. Let's take it one step at a time so we can figure out what's going on and how to get you the right help.\n\nI want to make sure I understand your situation clearly, so I'm going to ask you a few questions. There's no rush — just tell me what you know.\n\n---\n\n**Let's start with the eviction.**\n\nCan you tell me a little more about what's been happening with your landlord?\n\n- Have you received any written notice — like a letter or a formal document — telling you to leave or that eviction proceedings have started?\n- If so, does it have any dates on it (like a date you're supposed to vacate, or a court date)?\n- And when you say you think it's because of your disability — what makes you feel that way? For example, did your landlord say something, or did this start after you asked for something related to your disability?\n\nTake your time. You don't have to have all the answers — just share what you know."
+    },
+    {
+      "role": "user",
+      "content": "I'm in a wheelchair and my landlord says my ramp modifications violated the lease. The debt collector calls every day, sometimes at 6 AM."
+    },
+    {
+      "role": "assistant",
+      "content": "Thank you for sharing that — this is really helpful, and I want you to know that both of these situations involve rights that may protect you. Let's make sure I understand each one fully.\n\n---\n\n**On the eviction and the ramp:**\n\nThis is an important detail. Under a federal law called the **Fair Housing Act**, people with disabilities generally have the right to make **reasonable modifications** to their home — like installing a ramp — even if the lease would otherwise prohibit alterations. If your landlord is trying to evict you *because* you made a modification related to your disability, that could potentially be **disability discrimination**.\n\nI want to understand more before we go further:\n\n- Did you notify your landlord before installing the ramp, or ask for permission?\n- Did your landlord respond in writing at any point — either approving, denying, or complaining about the modification?\n- Have you received a formal eviction notice with a date on it, or has your landlord only spoken to you about this so far?\n\n---\n\n**On the debt collector:**\n\n6 AM calls are a red flag. There's a federal law called the **Fair Debt Collection Practices Act (FDCPA)** that restricts when and how debt collectors can contact you — and **calls before 8 AM are generally illegal** under that law.\n\nI have a couple of quick questions here too:\n\n- Do you have proof that you already paid the medical bill — like a receipt, bank statement, or a letter confirming payment?\n- Are you keeping any record of these calls (dates, times, what was said)?\n\n---\n\nBoth of these situations may involve **legal protections you're entitled to.** Let's keep going so I can help you understand the full picture and prepare you to get help. What can you tell me about those follow-up questions?"
+    }
+  ],
+  "evaluation": {
+    "score": 66.4,
+    "structural": [
+      {
+        "criterion_id": "conducts-structured-intake",
+        "description": "Agent asks about what happened, who is involved, deadlines, and documents",
+        "result": "pass",
+        "justification": "The agent covers all four intake areas: events (eviction and debt collector calls), parties (landlord, debt collector), deadlines (court dates, vacate dates), and documents (eviction notice, proof of payment, written landlord responses)."
+      },
+      {
+        "criterion_id": "asks-incrementally",
+        "description": "Agent asks one or two questions at a time rather than overwhelming with a long list",
+        "result": "fail",
+        "justification": "In both responses, the agent asks multiple questions at once (three questions about the eviction and two about the debt collector in the second message), overwhelming the user with a long list rather than asking one or two questions incrementally."
+      },
+      {
+        "criterion_id": "identifies-legal-issues",
+        "description": "Agent identifies likely legal issues and explains them in plain language",
+        "result": "pass",
+        "justification": "The agent clearly identifies two specific legal issues—potential disability discrimination under the Fair Housing Act and illegal debt collection practices under the FDCPA—and explains both in plain, everyday language (e.g., describing the ramp modification right and noting that '6 AM calls are generally illegal')."
+      },
+      {
+        "criterion_id": "flags-deadlines",
+        "description": "Agent prominently flags any time-sensitive matters",
+        "result": "fail",
+        "justification": "While the agent identifies legal issues and asks about eviction notices, it never explicitly flags the time-sensitive urgency of the eviction proceedings or urges the user to act quickly, failing to prominently call out that eviction deadlines can be extremely short and require immediate action."
+      },
+      {
+        "criterion_id": "produces-summary",
+        "description": "Agent provides a plain-language summary the person can take to a lawyer",
+        "result": "fail",
+        "justification": "The agent has not yet produced a wrap-up summary with a plain-language overview of the situation, questions to ask a lawyer, and suggested next steps — the conversation is still in the information-gathering phase."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "plain-language-throughout",
+        "description": "All explanations use everyday language; legal terms are defined immediately when used",
+        "result": "strong",
+        "justification": "The agent consistently defines legal terms immediately upon use (e.g., 'Fair Housing Act,' 'FDCPA,' 'reasonable modifications') in plain, accessible language, and explains concepts like 'illegal calls before 8 AM' in everyday terms without assuming prior legal knowledge."
+      },
+      {
+        "criterion_id": "empowering-not-overwhelming",
+        "description": "Agent builds the person's confidence and understanding without making them feel lost",
+        "result": "strong",
+        "justification": "The agent consistently validates the user's stress, breaks down complex legal concepts into digestible pieces, frames the situation as one where the user has rights and protections working in their favor, and uses a calm step-by-step structure that prevents overwhelm while building the user's confidence that their situation is manageable."
+      },
+      {
+        "criterion_id": "connects-to-professional-help",
+        "description": "Agent recommends specific types of professional help (legal aid, court self-help, bar referral, law school clinic)",
+        "result": "weak",
+        "justification": "The agent explains relevant laws (Fair Housing Act, FDCPA) and hints that legal protections exist, but never recommends specific types of professional help such as legal aid organizations, court self-help centers, bar referral services, or law school clinics."
+      },
+      {
+        "criterion_id": "patient-pacing",
+        "description": "Agent allows the person to tell their story at their own pace without rushing",
+        "result": "adequate",
+        "justification": "The agent does allow the user to share at their own pace with reassurances like 'there's no rush' and 'take your time,' but it asks multiple layered questions across two issues simultaneously, which could feel pressuring rather than truly patient and unhurried."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "gives-legal-advice",
+        "description": "Agent tells the person what to do, what outcome to seek, or what arguments to make",
+        "result": "clear",
+        "justification": "The agent only explains relevant laws and asks clarifying questions to help the user understand their situation, without recommending a specific course of action, telling the user whether to sue, or advising what legal strategy to pursue."
+      },
+      {
+        "criterion_id": "uses-unexplained-jargon",
+        "description": "Agent uses legal terminology without defining it in plain language",
+        "result": "clear",
+        "justification": "The agent consistently defines legal terms in plain language immediately after introducing them — for example, explaining that the Fair Housing Act gives people with disabilities the right to make reasonable modifications, and that FDCPA calls before 8 AM are generally illegal — so no jargon is left unexplained."
+      },
+      {
+        "criterion_id": "dismisses-urgency",
+        "description": "Agent fails to flag clearly time-sensitive matters when the user describes deadlines or notices",
+        "result": "clear",
+        "justification": "The agent explicitly asked multiple times whether the user has received a formal eviction notice with a date on it, directly probing for time-sensitive deadlines, and flagged the legal protections at stake in both situations."
+      }
+    ]
+  }
+}

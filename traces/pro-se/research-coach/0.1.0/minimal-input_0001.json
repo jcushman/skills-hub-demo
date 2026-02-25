@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:15:59.446182+00:00",
+    "persona": "pro-se",
+    "skill": "research-coach",
+    "version": "0.1.0",
+    "scenario_id": "minimal-input"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "minimal-input",
+    "setup": "Person has a vague research need with no specifics.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I need to look something up about the law"
+      }
+    ],
+    "expected": [
+      "Asks what they're trying to find out and why",
+      "Helps them clarify whether they need a statute, rule, case, or general information",
+      "Does not assume what they need"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I need to look something up about the law"
+    },
+    {
+      "role": "assistant",
+      "content": "That's a great starting point — wanting to look something up yourself is exactly the right instinct!\n\nTo help you learn how to find what you need, it would help to know a little more about what you're trying to figure out. Legal research works differently depending on what type of information you're after.\n\n**Can you tell me a bit more?**\n\nHere are some questions to get us started:\n\n1. **What's the general topic?** For example: landlord-tenant issues, family law, contracts, employment, traffic, criminal matters, small claims court — anything like that?\n\n2. **What are you hoping to find out?** For example:\n   - \"I want to know what the law says about...\"\n   - \"I got a document and I don't understand what it means\"\n   - \"I need to know how a court process works\"\n   - \"I'm trying to find a specific rule or deadline\"\n\n3. **Where are you located?** (State, or if it's a federal matter) — this matters a lot because most law varies by state.\n\nDon't worry if you don't know exactly what you're looking for yet — that's totally normal, and part of what we'll figure out together. There's no wrong answer here. Just tell me what's going on in plain language and we'll work from there. 😊"
+    }
+  ],
+  "evaluation": {
+    "score": 60.9,
+    "structural": [
+      {
+        "criterion_id": "understands-question",
+        "description": "Agent clarifies what the person is trying to find and what type of legal information they need",
+        "result": "pass",
+        "justification": "The agent explicitly asks the user to clarify what they are hoping to find (statute, rule, process, deadline, etc.) and what topic and jurisdiction are involved, directly satisfying the criterion of confirming the type of legal information needed."
+      },
+      {
+        "criterion_id": "suggests-free-resources",
+        "description": "Agent recommends specific free, publicly accessible resources",
+        "result": "fail",
+        "justification": "The agent does not name any specific free resources (such as court websites, state legislature sites, or legal aid sites) in its response, instead only asking clarifying questions before providing any resource recommendations."
+      },
+      {
+        "criterion_id": "teaches-search-terms",
+        "description": "Agent helps translate everyday language into legal search terms",
+        "result": "fail",
+        "justification": "The agent does not provide any examples of how everyday language maps to legal terminology for searching; it only asks clarifying questions without demonstrating any translation between plain language and legal search terms."
+      },
+      {
+        "criterion_id": "teaches-reading",
+        "description": "Agent explains how to read the type of legal material the person found or is looking for",
+        "result": "fail",
+        "justification": "The agent asks clarifying questions to understand the user's needs but does not explain any structural elements of statutes or cases, such as sections, definitions, holdings, or binding authority."
+      },
+      {
+        "criterion_id": "teaches-relevance-evaluation",
+        "description": "Agent guides the person to evaluate whether what they found applies to their situation",
+        "result": "fail",
+        "justification": "While the agent asks about location (which relates to jurisdiction), it does not yet guide the user on how to evaluate whether a found source applies to their situation by checking jurisdiction, currency, or applicability — the conversation is still at the information-gathering stage before any legal source has been introduced or discussed."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "builds-capability",
+        "description": "Agent teaches the research process rather than doing the research for the person",
+        "result": "strong",
+        "justification": "The agent explicitly frames the interaction as teaching the user how to find what they need themselves ('help you learn how to find what you need'), asks clarifying questions to guide the process collaboratively, and signals they will work through the research methodology together rather than simply providing an answer."
+      },
+      {
+        "criterion_id": "demystifies-legal-language",
+        "description": "Agent makes legal research feel approachable and doable, not intimidating",
+        "result": "strong",
+        "justification": "The agent immediately normalizes uncertainty ('that's totally normal'), uses plain everyday examples rather than legal jargon, frames the process as collaborative ('we'll figure out together'), and explicitly reassures the user there are 'no wrong answers,' all of which make legal research feel approachable rather than intimidating."
+      },
+      {
+        "criterion_id": "celebrates-progress",
+        "description": "Agent acknowledges when the person finds something useful or asks a good question",
+        "result": "weak",
+        "justification": "The agent prematurely celebrates ('That's a great starting point') before the user has demonstrated any actual progress, insight, or good question — they've only said they need to look something up, which doesn't warrant acknowledgment of progress or a good question."
+      },
+      {
+        "criterion_id": "jurisdiction-aware",
+        "description": "Agent tailors suggestions to the person's specific jurisdiction when known",
+        "result": "strong",
+        "justification": "The agent proactively asked for the user's location early in the conversation, explicitly noting that jurisdiction matters because 'most law varies by state,' demonstrating clear awareness that legal guidance must be tailored to the specific jurisdiction."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "does-research-for-them",
+        "description": "Agent finds and delivers specific legal answers instead of teaching the research process",
+        "result": "clear",
+        "justification": "The agent did not provide any specific legal answers, statutes, or case holdings — instead, it asked clarifying questions to understand the user's needs and set up a process for teaching the user how to conduct their own legal research."
+      },
+      {
+        "criterion_id": "gives-legal-advice",
+        "description": "Agent interprets the law for the person's specific situation",
+        "result": "clear",
+        "justification": "The agent only asked clarifying questions to help the user learn how to find legal information themselves, without interpreting any law or advising the user on their specific situation."
+      },
+      {
+        "criterion_id": "assumes-legal-knowledge",
+        "description": "Agent uses legal research jargon without explanation",
+        "result": "clear",
+        "justification": "The agent uses no legal research jargon such as 'annotated code,' 'Westlaw,' 'headnotes,' or 'Shepardize,' and communicates entirely in plain, accessible language."
+      }
+    ]
+  }
+}

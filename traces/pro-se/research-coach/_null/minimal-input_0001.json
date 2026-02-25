@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:11:14.670059+00:00",
+    "persona": "pro-se",
+    "skill": "research-coach",
+    "version": "_null",
+    "scenario_id": "minimal-input"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "minimal-input",
+    "setup": "Person has a vague research need with no specifics.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I need to look something up about the law"
+      }
+    ],
+    "expected": [
+      "Asks what they're trying to find out and why",
+      "Helps them clarify whether they need a statute, rule, case, or general information",
+      "Does not assume what they need"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I need to look something up about the law"
+    },
+    {
+      "role": "assistant",
+      "content": "Sure, I can try to help! What would you like to look up about the law? For example, are you interested in:\n\n- A **specific legal topic** (contracts, criminal law, family law, etc.)\n- **Your rights** in a particular situation\n- How a **legal process** works\n- Laws in a **specific country or state**\n- Something else entirely?\n\nFeel free to share more details and I'll do my best to help point you in the right direction!"
+    }
+  ],
+  "evaluation": {
+    "score": 43.1,
+    "structural": [
+      {
+        "criterion_id": "understands-question",
+        "description": "Agent clarifies what the person is trying to find and what type of legal information they need",
+        "result": "pass",
+        "justification": "The agent asks clarifying questions to understand what type of legal information the user needs, including options that cover legal topics, rights, processes, and jurisdiction, which aligns with confirming whether the person needs a statute, court rule, case, or general process information."
+      },
+      {
+        "criterion_id": "suggests-free-resources",
+        "description": "Agent recommends specific free, publicly accessible resources",
+        "result": "fail",
+        "justification": "The agent did not recommend any specific free resources such as court websites, state legislature sites, or legal aid sites, and instead only asked clarifying questions."
+      },
+      {
+        "criterion_id": "teaches-search-terms",
+        "description": "Agent helps translate everyday language into legal search terms",
+        "result": "fail",
+        "justification": "The agent does not provide any examples of how everyday language maps to legal terminology for searching; it only asks clarifying questions about the user's topic of interest."
+      },
+      {
+        "criterion_id": "teaches-reading",
+        "description": "Agent explains how to read the type of legal material the person found or is looking for",
+        "result": "fail",
+        "justification": "The agent does not explain how to read any type of legal material; it only asks clarifying questions about what the user wants to look up."
+      },
+      {
+        "criterion_id": "teaches-relevance-evaluation",
+        "description": "Agent guides the person to evaluate whether what they found applies to their situation",
+        "result": "fail",
+        "justification": "The agent does not guide the user to evaluate jurisdiction, currency, or applicability of legal sources — it only asks clarifying questions about the topic of interest without any pedagogical guidance on how to assess whether a legal source applies to their situation."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "builds-capability",
+        "description": "Agent teaches the research process rather than doing the research for the person",
+        "result": "weak",
+        "justification": "The agent offers to help look up legal information for the user rather than teaching them how to research legal topics themselves (e.g., explaining how to use legal databases, official government websites, or other research strategies)."
+      },
+      {
+        "criterion_id": "demystifies-legal-language",
+        "description": "Agent makes legal research feel approachable and doable, not intimidating",
+        "result": "adequate",
+        "justification": "The agent is welcoming and organized with clear categories, but doesn't specifically address any intimidation around legal research or actively demystify the process—it's helpful but neutral in tone rather than explicitly making legal research feel approachable and doable."
+      },
+      {
+        "criterion_id": "celebrates-progress",
+        "description": "Agent acknowledges when the person finds something useful or asks a good question",
+        "result": "weak",
+        "justification": "The agent's response is a helpful clarifying question but contains no celebration of progress, acknowledgment of a good question, or recognition of the user's inquiry, as there was no meaningful progress or insight to celebrate yet in this opening exchange."
+      },
+      {
+        "criterion_id": "jurisdiction-aware",
+        "description": "Agent tailors suggestions to the person's specific jurisdiction when known",
+        "result": "adequate",
+        "justification": "The agent proactively asks about the user's specific jurisdiction by including 'Laws in a specific country or state' as an option, but doesn't explicitly prompt for location information as a priority consideration before offering other topics, missing an opportunity to establish jurisdiction upfront."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "does-research-for-them",
+        "description": "Agent finds and delivers specific legal answers instead of teaching the research process",
+        "result": "clear",
+        "justification": "The agent only asked clarifying questions and offered to 'point you in the right direction,' without providing any specific statute text, case holdings, or legal answers."
+      },
+      {
+        "criterion_id": "gives-legal-advice",
+        "description": "Agent interprets the law for the person's specific situation",
+        "result": "clear",
+        "justification": "The agent only asked clarifying questions about what legal topic the user wants to look up, without interpreting any law or providing advice specific to the user's situation."
+      },
+      {
+        "criterion_id": "assumes-legal-knowledge",
+        "description": "Agent uses legal research jargon without explanation",
+        "result": "clear",
+        "justification": "The agent used no legal research jargon such as 'annotated code,' 'Westlaw,' 'headnotes,' or 'Shepardize,' and instead communicated in plain, accessible language."
+      }
+    ]
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T19:57:59.731308+00:00",
+    "persona": "cle",
+    "skill": "topic-curriculum",
+    "version": "0.1.0",
+    "scenario_id": "minimal-input"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "minimal-input",
+    "setup": "Attorney makes a vague request without specifics.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I need to learn employment law."
+      }
+    ],
+    "expected": [
+      "Asks clarifying questions about why, what aspects, and timeline",
+      "Does not produce a curriculum without understanding the scope and urgency",
+      "Helps the attorney narrow the topic to something learnable"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I need to learn employment law."
+    },
+    {
+      "role": "assistant",
+      "content": "Before I build you a curriculum, I need to understand your situation so I can make this actually useful rather than generic.\n\nA few quick questions:\n\n**1. What's driving this?**\n- New client matter (and if so, what kind — wrongful termination claim, wage dispute, harassment investigation, employment contracts, something else)?\n- Expanding your practice to serve employer clients? Employee-side plaintiffs' work?\n- Lateral move or firm transition?\n\n**2. What's your timeline?**\n- Do you need to be functional in days (active matter), or do you have weeks/months to build real depth?\n\n**3. What's your baseline?**\n- Completely new — never touched it since law school?\n- Some exposure (e.g., you've reviewed employment agreements in transactional work, handled a one-off matter)?\n- Familiar with one side (say, management-side) but moving to the other?\n\n**4. What jurisdiction(s)?**\n- Federal law only, or a specific state (California employment law, for example, is its own universe)?\n- Multi-state employer work?\n\n**5. What will you actually be *doing*?**\n- Advising employers on compliance and policies?\n- Litigating claims?\n- Drafting agreements and handbooks?\n- Conducting internal investigations?\n- M&A due diligence on workforce issues?\n\n---\n\nEmployment law is a broad field — federal statutes alone include Title VII, the ADEA, the ADA, the FMLA, the FLSA, the NLRA, and more, each with its own doctrine and practice patterns. The right curriculum for a litigator defending discrimination claims looks very different from the one for a transactional lawyer advising on workforce restructuring.\n\nTell me what you're actually trying to do and I'll build you something targeted."
+    }
+  ],
+  "evaluation": {
+    "score": 53.6,
+    "structural": [
+      {
+        "criterion_id": "clarifies-learning-goal",
+        "description": "Agent asks about the topic, timeline, baseline knowledge, and reason for learning",
+        "result": "pass",
+        "justification": "The agent explicitly asks about all four criteria: topic/reason (question 1 - what's driving this), timeline (question 2), and baseline knowledge (question 3), satisfying the requirement to confirm at least three of the specified elements before building a curriculum."
+      },
+      {
+        "criterion_id": "maps-knowledge-landscape",
+        "description": "Agent identifies the essential elements of competence in the target area",
+        "result": "pass",
+        "justification": "Before building the curriculum, the agent explicitly names key concepts and governing sources in the field (Title VII, ADEA, ADA, FMLA, FLSA, NLRA) and identifies the essential practical skill domains (litigation, compliance advising, drafting, investigations, M&A due diligence), thereby mapping the knowledge landscape of employment law."
+      },
+      {
+        "criterion_id": "builds-sequenced-curriculum",
+        "description": "Curriculum is organized into Foundation, Depth, Practice, and Currency phases",
+        "result": "fail",
+        "justification": "The agent has not yet built any curriculum at all — it only asked clarifying questions — so there are no phases or stages to evaluate."
+      },
+      {
+        "criterion_id": "explains-each-resource",
+        "description": "Each recommended resource includes a description, rationale, and priority level",
+        "result": "fail",
+        "justification": "The agent has not yet recommended any resources, so there are no resources to evaluate for descriptions, rationales, or priority levels."
+      },
+      {
+        "criterion_id": "produces-curriculum-document",
+        "description": "Output is a structured document with learning goal, phases, time estimates, and sequence",
+        "result": "fail",
+        "justification": "The agent has not yet produced any curriculum document; it only asked clarifying questions and has not provided a learning goal, phased resources, or time estimates."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "efficient-prioritization",
+        "description": "Curriculum respects the attorney's limited time and prioritizes high-impact resources",
+        "result": "strong",
+        "justification": "The agent efficiently avoids dumping a generic, time-wasting curriculum by first gathering targeted information about timeline, jurisdiction, and specific tasks, which directly enables prioritization of only the highest-impact resources for the attorney's actual needs."
+      },
+      {
+        "criterion_id": "practice-oriented",
+        "description": "Curriculum includes practical exercises or skills, not just reading",
+        "result": "weak",
+        "justification": "The agent's response consists entirely of diagnostic questions and has not yet included any practical exercises, skills, or hands-on components — it has not built a curriculum at all yet, let alone a practice-oriented one."
+      },
+      {
+        "criterion_id": "minimum-viable-path",
+        "description": "Curriculum offers a shortcut or \"if time is limited\" path for urgent timelines",
+        "result": "weak",
+        "justification": "The agent asks about timeline but does not offer any minimum-viable-path or 'if time is limited' shortcut — it defers curriculum building entirely until the user answers questions, leaving someone with an urgent deadline without any immediate guidance."
+      },
+      {
+        "criterion_id": "currency-sources",
+        "description": "Curriculum identifies ongoing sources for staying current after initial learning",
+        "result": "weak",
+        "justification": "The agent has not yet provided any curriculum content, let alone identified ongoing sources for staying current after initial learning — it is still in the diagnostic questioning phase."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "does-the-learning",
+        "description": "Agent teaches the substantive law rather than creating a learning plan",
+        "result": "clear",
+        "justification": "The agent asked clarifying questions and briefly named relevant statutes only to illustrate the field's breadth, rather than providing substantive legal analysis or doctrinal explanations of those statutes."
+      },
+      {
+        "criterion_id": "unrealistic-time-estimates",
+        "description": "Agent recommends a curriculum requiring hundreds of hours for someone with a short timeline",
+        "result": "clear",
+        "justification": "The agent has not yet provided any curriculum or time estimates — it is appropriately gathering information about the user's timeline and goals before making any recommendations."
+      },
+      {
+        "criterion_id": "no-primary-sources",
+        "description": "Agent fails to include governing statutes, regulations, or key cases",
+        "result": "clear",
+        "justification": "The agent explicitly identifies multiple primary federal statutes (Title VII, ADEA, ADA, FMLA, FLSA, NLRA) before even building the curriculum, demonstrating awareness of and intent to incorporate governing statutes into the learning plan."
+      }
+    ]
+  }
+}

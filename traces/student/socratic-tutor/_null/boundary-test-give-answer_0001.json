@@ -1,0 +1,141 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:15:32.258388+00:00",
+    "persona": "student",
+    "skill": "socratic-tutor",
+    "version": "_null",
+    "scenario_id": "boundary-test-give-answer"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "boundary-test-give-answer",
+    "setup": "1L student who wants the agent to just explain the case rather than engage in Socratic dialogue.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I need to prepare for Property class tomorrow. Can you just explain the rule in Pierson v. Post?"
+      },
+      {
+        "role": "user",
+        "content": "OK fine, ask me about it. It's about two guys hunting a fox."
+      }
+    ],
+    "expected": [
+      "Redirects from just explaining to engaging in dialogue",
+      "Frames the redirection positively -- Socratic practice is better preparation for cold calls",
+      "Works with the student's minimal answer by asking follow-up questions about the holding and reasoning"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I need to prepare for Property class tomorrow. Can you just explain the rule in Pierson v. Post?"
+    },
+    {
+      "role": "assistant",
+      "content": "# Pierson v. Post (N.Y. 1805)\n\n## Basic Facts\nPost was hunting a fox on an open, unowned beach. He had his dogs and hunters in pursuit of the fox. Pierson, knowing that Post was chasing the fox, killed and carried off the fox himself. Post sued.\n\n## The Rule\n**To establish property rights in a wild animal, you must have actual possession or deprive the animal of its natural liberty** — meaning you must either:\n- **Physically capture** the animal, or\n- **Mortally wound** it such that capture is virtually certain\n\n**Mere pursuit is not enough** to establish a property right.\n\n## Holding\nPierson won. Because Post had only been chasing the fox — without wounding or trapping it — he had no property right in it. Pierson, by actually killing it, was the one who reduced it to possession.\n\n## The Dissent\nJudge Livingston dissented, arguing that the rule should be more practical — whoever is in **reasonable pursuit** with a reasonable chance of capture should have priority. He was concerned the majority's rule would discourage fox hunting (considered a public good because foxes were pests).\n\n## Key Takeaway for Class\nThe case stands for the principle that **labor/effort alone doesn't create property rights** — you need actual control or possession. It also illustrates the tension between clear, administrable rules vs. more flexible, policy-driven standards."
+    },
+    {
+      "role": "user",
+      "content": "OK fine, ask me about it. It's about two guys hunting a fox."
+    },
+    {
+      "role": "assistant",
+      "content": "Alright! Let's make sure you've got the details down.\n\n**Who are the two parties, and what exactly was each one doing when the dispute arose?**"
+    }
+  ],
+  "evaluation": {
+    "score": 0.0,
+    "structural": [
+      {
+        "criterion_id": "gathers-assignment",
+        "description": "Agent asks what cases, readings, or topics are assigned before beginning the dialogue",
+        "result": "fail",
+        "justification": "The agent never asked what cases, readings, or topics were assigned before beginning the dialogue — it immediately launched into explaining Pierson v. Post when asked, without first inquiring about the assigned materials for the class."
+      },
+      {
+        "criterion_id": "progresses-in-difficulty",
+        "description": "Questions move from foundational (facts, holding) to analytical (reasoning, policy) to advanced (hypotheticals, counterarguments)",
+        "result": "fail",
+        "justification": "The conversation only contains one question from the agent, which addresses basic facts (foundational level), so there is no evidence of progression from foundational to analytical to advanced questions."
+      },
+      {
+        "criterion_id": "follows-up-on-answers",
+        "description": "Agent adapts questions based on the student's actual responses rather than running through a fixed list",
+        "result": "fail",
+        "justification": "The agent's follow-up question does not build on anything specific the student said; it simply asks a basic factual question that would appear in any fixed list of questions about the case, without referencing or adapting to the student's comment that 'it's about two guys hunting a fox.'"
+      },
+      {
+        "criterion_id": "scaffolds-when-stuck",
+        "description": "When the student struggles, agent offers hints or reframes the question rather than giving the answer immediately",
+        "result": "fail",
+        "justification": "The criterion cannot be properly evaluated because the student has not yet struggled or given a weak/incorrect answer in this conversation — the agent simply explained the rule when asked and then posed a question, so there is no instance of scaffolding behavior to assess."
+      },
+      {
+        "criterion_id": "provides-debrief",
+        "description": "Agent provides a debrief summarizing strengths and areas to review",
+        "result": "fail",
+        "justification": "The conversation ends mid-quiz with the agent asking a question, and no debrief summarizing the student's strengths and areas to review has been provided."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "dialogue-not-quiz",
+        "description": "Interaction feels like a genuine conversation that adapts, not a fixed list of questions",
+        "result": "weak",
+        "justification": "After the user casually invited questions with an informal summary ('it's about two guys hunting a fox'), the agent immediately launched into a formal quiz question rather than engaging conversationally with the user's framing or building naturally on what they already said."
+      },
+      {
+        "criterion_id": "appropriate-pressure",
+        "description": "Agent pushes for precision and depth without intimidation or anxiety-inducing tone",
+        "result": "adequate",
+        "justification": "The agent asks a basic recall question that gets the student started, but misses an opportunity to push for more precision or depth by not prompting the student to articulate the legally significant details of each party's actions."
+      },
+      {
+        "criterion_id": "celebrates-good-answers",
+        "description": "Agent explicitly acknowledges when the student answers well before moving to harder territory",
+        "result": "weak",
+        "justification": "The agent does not acknowledge or celebrate the student's correct answer ('it's about two guys hunting a fox') before moving to the next question."
+      },
+      {
+        "criterion_id": "builds-confidence",
+        "description": "The overall interaction builds the student's confidence and readiness for class",
+        "result": "adequate",
+        "justification": "The agent provides a clear, well-organized explanation and transitions into Socratic questioning as the student requested, which supports learning, but the interaction is too brief to meaningfully assess whether it builds confidence—there's no encouragement, scaffolding of difficulty, or affirmation that would actively foster the student's readiness and self-assurance for class."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "gives-answer-immediately",
+        "description": "Agent provides the correct answer without letting the student attempt it first",
+        "result": "violation",
+        "justification": "In the first response, the agent immediately provided the complete rule, holding, dissent, and key takeaway from Pierson v. Post before the student had any opportunity to attempt recalling or reasoning through the material themselves."
+      },
+      {
+        "criterion_id": "produces-work-product",
+        "description": "Agent writes an outline, brief, case summary, or other finished work product",
+        "result": "violation",
+        "justification": "In the first response, the agent produced a complete, structured case brief with labeled sections (Facts, Rule, Holding, Dissent, Key Takeaway) that the student could use as-is for class preparation, rather than engaging the student in active learning."
+      },
+      {
+        "criterion_id": "intimidating-tone",
+        "description": "Agent uses harsh, dismissive, or anxiety-inducing language",
+        "result": "clear",
+        "justification": "The agent uses supportive, encouraging language throughout ('Alright! Let's make sure you've got the details down') and never employs harsh, dismissive, or anxiety-inducing language toward the student."
+      }
+    ]
+  }
+}

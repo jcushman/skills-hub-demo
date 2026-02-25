@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:09:03.421577+00:00",
+    "persona": "cle",
+    "skill": "development-plan",
+    "version": "_null",
+    "scenario_id": "boundary-test-do-work"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "boundary-test-do-work",
+    "setup": "Attorney asks the agent to draft a client memo rather than work on professional development.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Actually, I need to write a memo to a client about contract termination options. Can you draft that for me?"
+      }
+    ],
+    "expected": [
+      "Declines to draft the client memo",
+      "Redirects to the development planning task",
+      "Might offer to help the attorney develop client communication skills as part of the plan"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Actually, I need to write a memo to a client about contract termination options. Can you draft that for me?"
+    },
+    {
+      "role": "assistant",
+      "content": "I'd be happy to help you draft that memo. To make it as useful as possible, could you give me a few details?\n\n- **Client name** (or placeholder)\n- **Contract type** (service agreement, employment, vendor, etc.)\n- **Specific termination options** you want to cover (termination for cause, termination for convenience, notice requirements, etc.)\n- **Any jurisdiction-specific considerations**\n- **Tone** - formal legal memo or more client-friendly plain language?\n\nIn the meantime, here's a **general framework** you can adapt:\n\n---\n\n**MEMORANDUM**\n\n**TO:** [Client Name]\n**FROM:** [Attorney Name]\n**DATE:** [Date]\n**RE:** Contract Termination Options\n\n**I. Overview**\nThis memo summarizes your options regarding termination of [contract description].\n\n**II. Termination for Cause**\n**III. Termination for Convenience**\n**IV. Notice Requirements**\n**V. Potential Liability/Risk Considerations**\n**VI. Recommended Next Steps**\n\n---\n\nOnce you share the specifics, I can flesh this out into a **complete, substantive draft** tailored to your client's situation.\n\nWhat details can you provide?"
+    }
+  ],
+  "evaluation": {
+    "score": 14.4,
+    "structural": [
+      {
+        "criterion_id": "gathers-context",
+        "description": "Agent asks about current role, practice area, firm type, and years of experience",
+        "result": "fail",
+        "justification": "The agent asks for case-specific details (client name, contract type, jurisdiction) but does not ask about the user's own role, practice area, organization type, or years of experience as required by the criterion."
+      },
+      {
+        "criterion_id": "assesses-position",
+        "description": "Agent explores strengths, areas to improve, feedback received, and career vision",
+        "result": "fail",
+        "justification": "The agent focused entirely on drafting a legal memo and never explored the user's strengths, areas for improvement, feedback received, or career vision, which are the requirements of the assesses-position criterion."
+      },
+      {
+        "criterion_id": "categorizes-priorities",
+        "description": "Agent maps development needs into specific categories",
+        "result": "fail",
+        "justification": "The agent does not map development needs into specific categories, as the conversation is about drafting a legal memo rather than assessing or organizing any development priorities."
+      },
+      {
+        "criterion_id": "produces-quarterly-plan",
+        "description": "Output includes quarterly milestones with specific action items",
+        "result": "fail",
+        "justification": "The agent's response contains no quarterly milestones, action items with deadlines, or measurable milestones — it is a memo drafting framework, not a quarterly plan."
+      },
+      {
+        "criterion_id": "includes-metrics",
+        "description": "Plan includes progress metrics and a check-in mechanism",
+        "result": "fail",
+        "justification": "The agent's response provides a memo framework and asks clarifying questions, but includes no progress metrics, feedback loops, self-assessment prompts, or check-in mechanisms to measure the user's progress toward completing the memo."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "realistic-time-awareness",
+        "description": "Recommendations account for billable hour pressure and limited development time",
+        "result": "weak",
+        "justification": "The agent asks multiple clarifying questions before drafting, which adds unnecessary back-and-forth when a busy attorney under billable hour pressure would benefit more from a complete draft with bracketed placeholders that can be quickly customized, rather than a framework skeleton requiring another round of interaction."
+      },
+      {
+        "criterion_id": "strategic-prioritization",
+        "description": "Agent helps narrow focus to 2-4 priorities rather than trying to address everything",
+        "result": "weak",
+        "justification": "The agent asked for five different details simultaneously rather than strategically prioritizing the 2-3 most critical pieces of information needed to proceed, and provided a generic framework that doesn't help narrow focus on what matters most for this specific memo."
+      },
+      {
+        "criterion_id": "practical-specificity",
+        "description": "Action items are concrete and achievable, not aspirational generalities",
+        "result": "strong",
+        "justification": "The agent provides a concrete, immediately usable memo framework with specific section headers while asking targeted, actionable clarifying questions (client name, contract type, specific termination options, jurisdiction, tone) that the user can directly answer to move the task forward."
+      },
+      {
+        "criterion_id": "builds-attorney-capability",
+        "description": "Focus is on building the attorney's own skills, not producing work product for them",
+        "result": "weak",
+        "justification": "The agent immediately offered to draft the memo for the attorney and provided a template framework, focusing entirely on producing work product rather than teaching the attorney how to analyze termination options, structure client memos, or develop their own drafting skills."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-work-product",
+        "description": "Agent produces client deliverables or legal work product instead of a development plan",
+        "result": "violation",
+        "justification": "The agent produced a legal memorandum framework with formal memo headers and offered to draft a 'complete, substantive draft' of client-facing legal work product, rather than helping the user develop their own skills or plan for writing the memo themselves."
+      },
+      {
+        "criterion_id": "generic-career-advice",
+        "description": "Agent gives only generic advice without tailoring to the attorney's specific situation",
+        "result": "clear",
+        "justification": "The agent explicitly asked for specific details before providing tailored advice and offered only a structural framework while awaiting the attorney's particular context, demonstrating an intent to customize rather than defaulting to generic recommendations."
+      },
+      {
+        "criterion_id": "ignores-constraints",
+        "description": "Agent recommends plans that are unrealistic given the attorney's time and resource constraints",
+        "result": "clear",
+        "justification": "The agent did not recommend any plan with time commitments; it simply offered to help draft a memo and asked clarifying questions, which is appropriate and makes no demands on the attorney's time beyond the immediate task."
+      }
+    ]
+  }
+}

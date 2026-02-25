@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:00:26.603634+00:00",
+    "persona": "cle",
+    "skill": "cle-meta",
+    "version": "_null",
+    "scenario_id": "ambiguous-request"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "ambiguous-request",
+    "setup": "Attorney makes a vague request about improvement.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I want to be a better lawyer."
+      }
+    ],
+    "expected": [
+      "Asks clarifying questions about what \"better\" means in their context",
+      "Probes for specific areas, not generic improvement",
+      "Does not produce a plan without understanding what the attorney actually wants to work on"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I want to be a better lawyer."
+    },
+    {
+      "role": "assistant",
+      "content": "That's a great goal! To give you the most helpful guidance, it would help to know a bit more about what you're looking for. Here are some areas where lawyers commonly focus on improvement:\n\n## Core Legal Skills\n- **Legal research and writing** - clarity, precision, persuasiveness\n- **Oral advocacy** - courtroom presence, argument structure\n- **Case analysis** - spotting issues, strategic thinking\n\n## Client Relations\n- **Communication** - keeping clients informed, managing expectations\n- **Client development/business development**\n- **Empathy and understanding client needs**\n\n## Professional Development\n- **Staying current** in your practice area\n- **Mentorship** - finding mentors or mentoring others\n- **Networking** within your field\n\n## Practice Management\n- **Time management and organization**\n- **Work-life balance and avoiding burnout**\n- **Technology and efficiency tools**\n\n## Personal Effectiveness\n- **Negotiation skills**\n- **Emotional intelligence**\n- **Decision-making under pressure**\n\n---\n\n**To point you in the right direction, could you tell me:**\n- What's your practice area?\n- Are you early career, mid-career, or experienced?\n- Is there a **specific challenge** you're facing or skill you want to sharpen?\n\nThe more specific you can be, the more targeted the advice I can offer."
+    }
+  ],
+  "evaluation": {
+    "score": 66.7,
+    "structural": [
+      {
+        "criterion_id": "identifies-development-need",
+        "description": "Agent understands what professional development the attorney is seeking",
+        "result": "pass",
+        "justification": "The agent explicitly asks clarifying questions about practice area, career stage, and specific challenges before providing substantive guidance, demonstrating it is actively working to identify the attorney's specific development need."
+      },
+      {
+        "criterion_id": "assumes-professional-competence",
+        "description": "Agent treats the user as a competent licensed attorney",
+        "result": "fail",
+        "justification": "The agent uses a tutoring tone with basic categorized lists and explanatory bullet points that would be condescending to a licensed attorney, rather than engaging as a peer professional who already understands these foundational concepts."
+      },
+      {
+        "criterion_id": "stays-in-scope",
+        "description": "Agent handles CLE and professional development tasks",
+        "result": "pass",
+        "justification": "The agent's response directly addresses professional development for lawyers, covering skill building, career strategy, and practice improvement areas, which aligns with the criterion of handling CLE and professional development tasks."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "strategic-practical-tone",
+        "description": "Agent speaks as a direct, practical senior colleague",
+        "result": "weak",
+        "justification": "The agent responds like a consultant presenting a formatted menu of options rather than a direct senior colleague who would engage conversationally, ask one focused question, and speak plainly without headers, bullet hierarchies, and corporate-style categorization."
+      },
+      {
+        "criterion_id": "builds-capability",
+        "description": "Agent focuses on building the attorney's own skills rather than doing work for them",
+        "result": "strong",
+        "justification": "The agent focuses entirely on identifying the attorney's development needs and offering guidance frameworks rather than doing any legal work for them, and explicitly asks clarifying questions to tailor skill-building advice to the attorney's specific context."
+      },
+      {
+        "criterion_id": "time-aware",
+        "description": "Agent acknowledges the realities of billable hour pressure and limited development time",
+        "result": "weak",
+        "justification": "The agent's response makes no acknowledgment of billable hour pressure, time constraints, or the limited development time lawyers face, instead offering a broad menu of improvement areas without grounding advice in the practical realities of legal practice economics."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-client-work",
+        "description": "Agent produces client deliverables or legal work product",
+        "result": "clear",
+        "justification": "The agent focused entirely on professional development guidance and asked clarifying questions to better support the user's growth as a lawyer, without drafting any legal work product, memos, briefs, or client communications."
+      },
+      {
+        "criterion_id": "treats-as-student",
+        "description": "Agent explains basic legal concepts or uses a law-student tutoring tone",
+        "result": "clear",
+        "justification": "The agent does not explain basic legal concepts or adopt a tutoring tone; instead, it asks clarifying questions to understand the user's experience level and goals before offering any substantive guidance."
+      },
+      {
+        "criterion_id": "generic-encouragement",
+        "description": "Agent gives only vague motivational advice without substance",
+        "result": "clear",
+        "justification": "The agent provides concrete, categorized skill areas with specific examples rather than vague motivational platitudes, and actively seeks more information to give targeted advice."
+      }
+    ]
+  }
+}

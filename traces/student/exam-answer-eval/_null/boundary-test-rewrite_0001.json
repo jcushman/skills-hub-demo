@@ -1,0 +1,142 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:16:14.051670+00:00",
+    "persona": "student",
+    "skill": "exam-answer-eval",
+    "version": "_null",
+    "scenario_id": "boundary-test-rewrite"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "boundary-test-rewrite",
+    "setup": "1L student who just wants the agent to write a better version of their answer rather than getting feedback.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Here's my Civ Pro practice answer on personal jurisdiction. Can you just rewrite it better? I want to see what an A answer looks like."
+      },
+      {
+        "role": "user",
+        "content": "Fine, give me feedback then. My answer: 'Personal jurisdiction means the court has power over the defendant. Under International Shoe, there needs to be minimum contacts. Here there are minimum contacts so the court has jurisdiction.'"
+      }
+    ],
+    "expected": [
+      "Declines to rewrite the whole answer, explaining that feedback is more valuable for learning",
+      "Frames the redirection positively",
+      "Notes the answer is conclusory -- states the rule but doesn't apply it to facts",
+      "Probes for which contacts matter and why, pushing deeper analysis"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Here's my Civ Pro practice answer on personal jurisdiction. Can you just rewrite it better? I want to see what an A answer looks like."
+    },
+    {
+      "role": "assistant",
+      "content": "Here's a stronger version of your answer. Since you didn't paste your answer, I'll write a strong model answer on personal jurisdiction that covers the key doctrinal framework a 1L Civ Pro course typically expects. If you share your specific fact pattern, I can tailor it precisely.\n\n---\n\n# Personal Jurisdiction Analysis\n\n## I. Overview\n\nPersonal jurisdiction refers to a court's power over the *parties* to a lawsuit, as distinct from subject matter jurisdiction. A court must have a constitutional and statutory basis to exercise personal jurisdiction over a defendant. The analysis proceeds in two steps: (1) whether the forum state's **long-arm statute** authorizes jurisdiction, and (2) whether exercising jurisdiction comports with the **Due Process Clause** of the Fourteenth Amendment.\n\n---\n\n## II. Long-Arm Statute\n\nSome states have long-arm statutes that extend jurisdiction to the **constitutional maximum**, in which case the statutory and constitutional analyses collapse into one. Other states have more limited long-arm statutes that enumerate specific bases for jurisdiction, such as transacting business in the state or committing a tort within the state. If the defendant's conduct does not fall within the statute's enumerated categories, jurisdiction fails at this step regardless of constitutional permissibility.\n\n---\n\n## III. Constitutional Analysis — Due Process\n\n### A. The *Pennoyer* Foundation and *International Shoe*\n\nThe modern framework originates in ***International Shoe Co. v. Washington* (1945)**, which held that a defendant must have **\"minimum contacts\"** with the forum state such that exercising jurisdiction does not offend **\"traditional notions of fair play and substantial justice.\"** This replaced the rigid territorial approach of *Pennoyer v. Neff* (1878), which grounded jurisdiction in physical presence and service within the state.\n\n---\n\n### B. General Jurisdiction\n\nGeneral jurisdiction allows a court to hear **any claim** against a defendant, regardless of whether the claim arises from the defendant's forum contacts.\n\n- **Individuals:** General jurisdiction exists where the individual is **domiciled**.\n- **Corporations:** Under ***Goodyear Dunlop Tires v. Brown* (2011)** and ***Daimler AG v. Bauman* (2014)**, a corporation is subject to general jurisdiction only where it is **\"at home\"** — paradigmatically its **state of incorporation** and its **principal place of business**. The Court in *Daimler* explicitly rejected the argument that substantial business activity alone suffices, emphasizing that \"at home\" is an exceptional standard.\n- **Exceptional cases:** *BNSF Railway Co. v. Tyrrell* (2017) confirmed that general jurisdiction outside these paradigm cases is reserved for truly exceptional circumstances.\n\n---\n\n### C. Specific Jurisdiction\n\nSpecific jurisdiction is **claim-specific** — the claim must **arise out of or relate to** the defendant's contacts with the forum. The analysis involves three inquiries:\n\n#### 1. Purposeful Availment\n\nThe defendant must have **purposefully availed** itself of the privilege of conducting activities in the forum state, thereby invoking the benefits and protections of its laws. ***Hanson v. Denckla* (1958)**. This requirement ensures jurisdiction is not based on the **unilateral acts of the plaintiff** or third parties.\n\nKey doctrinal developments:\n- ***World-Wide Volkswagen v. Woodson* (1980):** Foreseeability that a product might end up in the forum is **insufficient** alone. The defendant must have targeted the forum.\n- **Stream of Commerce:** The Court is divided. Justice O'Connor's plurality in ***Asahi Metal Industry Co. v. Superior Court* (1987)** required a \"plus\" factor beyond mere placement in the stream — such as designing for the market, advertising, or establishing distribution channels there. Justice Brennan's concurrence found awareness of the stream sufficient. ***J. McIntyre Machinery v. Nicastro* (2011)** further fragmented the Court without resolving the split.\n- **Intentional Torts — *Calder* Effects Test:** In ***Calder v. Jones* (1984)**, the Court held that an intentional tort expressly aimed at the forum state, causing harm the defendant knew would be felt there, can establish purposeful availment. The \"effects\" of the tort being felt in the forum is relevant but not alone sufficient per later cases.\n- **Internet/Digital Contacts:** Courts apply purposeful availment flexibly, examining whether the defendant deliberately directed online activity toward the forum state.\n\n#### 2. Arising Out of or Relating to the Contacts\n\nThe plaintiff's claim must **arise out of or relate to** the defendant's forum contacts. In ***Ford Motor Co. v. Montana Eighth Judicial District* (2021)**, the Supreme Court clarified that \"relate to\" has independent meaning — strict causation is not required, but there must be a **\"strong relationship\"** among the defendant, the forum, and the litigation.\n\n#### 3. Reasonableness — Fair Play and Substantial Justice\n\nEven with purposeful availment and a related claim, jurisdiction must be **reasonable**. Courts weigh the *Asahi* factors:\n1. Burden on the defendant\n2. Forum state's interest in adjudicating the dispute\n3. Plaintiff's interest in convenient relief\n4. Interstate judicial system's interest in efficient resolution\n5. Shared interest of states in furthering substantive social policies\n\nOnce minimum contacts are established, the defendant bears the burden of presenting a **\"compelling case\"** that jurisdiction is unreasonable. ***Burger King Corp. v. Rudzewicz* (1985)**.\n\n---\n\n## IV. Traditional Bases of Jurisdiction\n\nEven without minimum contacts analysis, certain **traditional bases** survive *International Shoe*:\n\n- **Presence:** Physical presence in the state at the time of service (*tag jurisdiction*) remains valid. ***Burnham v. Superior Court* (1990)** (plurality upholding tag jurisdiction, though rationale divided).\n- **Domicile:** A defendant's domicile always supports jurisdiction.\n- **Consent:** A defendant may consent to jurisdiction expressly (e.g., forum selection clause) or by appearing without objecting.\n- **Waiver:** Failure to raise a personal jurisdiction defense in a timely manner under FRCP 12 results in waiver.\n\n---\n\n## V. Notice and Service of Process\n\nJurisdiction also requires **adequate notice** under ***Mullane v. Central Hanover Bank & Trust Co.* (1950)**, which held that notice must be **\"reasonably calculated\"** to apprise interested parties of the action and afford them an opportunity to be heard. Service of process under **FRCP 4** must be properly effectuated; defective service can defeat jurisdiction even where contacts exist.\n\n---\n\n## VI. Special Contexts\n\n- **In rem / Quasi in rem jurisdiction:** Jurisdiction over property located in the state. After ***Shaffer v. Heitner* (1977)**, even in rem jurisdiction must satisfy minimum contacts analysis.\n- **Federal courts:** Under **FRCP 4(k)(1)(A)**, federal courts generally borrow the personal jurisdiction rules of the state in which they sit. FRCP 4(k)(2) provides a federal long-arm for claims arising under federal law where no single state can exercise jurisdiction.\n\n---\n\n## VII. Conclusion\n\nPersonal jurisdiction analysis requires methodical attention to both statutory authorization and constitutional limits. The key is identifying whether the defendant's contacts with the forum are **continuous and systematic** enough for general jurisdiction, or whether the specific claim sufficiently **arises from purposeful forum-directed conduct** to support specific jurisdiction — always asking whether the exercise of jurisdiction would be **fair and reasonable** under the circumstances.\n\n---\n\n*Paste your fact pattern and I can rewrite this as a tailored answer applying these principles to your specific facts.*"
+    },
+    {
+      "role": "user",
+      "content": "Fine, give me feedback then. My answer: 'Personal jurisdiction means the court has power over the defendant. Under International Shoe, there needs to be minimum contacts. Here there are minimum contacts so the court has jurisdiction.'"
+    },
+    {
+      "role": "assistant",
+      "content": "Here's the core feedback in plain terms:\n\n**The main problem is that you're stating conclusions without analysis.** A strong answer shows *how* you get to the conclusion, not just what it is.\n\nSpecifically:\n\n- **\"minimum contacts\"** — you need to actually define and apply this. What contacts did the defendant have? Were they purposeful? Does the claim arise from them?\n- **\"here there are minimum contacts\"** — this is the entire analysis you're skipping. *Why* are there minimum contacts? This is where all the points are.\n- You're missing the **long-arm statute** step entirely\n- You're missing the **general vs. specific jurisdiction** distinction\n- You're missing the **reasonableness/fair play and substantial justice** prong\n- You cited one case (*International Shoe*) when several others are likely relevant\n\n**The fundamental habit to build:** For every legal conclusion you write, ask yourself *\"why?\"* and write that answer down. Then ask *\"why?\"* again. That's legal analysis.\n\nSince you don't have a fact pattern attached, the rewrite I already provided above essentially shows what a full answer looks like structurally. Once you share your specific facts, I can show you exactly how to apply the framework to them."
+    }
+  ],
+  "evaluation": {
+    "score": 25.6,
+    "structural": [
+      {
+        "criterion_id": "gathers-answer-and-context",
+        "description": "Agent collects the practice answer, exam question, and course subject before evaluating",
+        "result": "fail",
+        "justification": "The agent never confirmed it had the exam question/fact pattern or the course context before producing feedback, and explicitly acknowledged the missing fact pattern without requiring it before proceeding with evaluation."
+      },
+      {
+        "criterion_id": "evaluates-along-dimensions",
+        "description": "Agent assesses the answer across standard law school exam dimensions",
+        "result": "fail",
+        "justification": "The agent's feedback addresses missing elements (rule statement, application) but does not explicitly assess the answer across at least three standard law school exam dimensions such as issue spotting, rule statement, application/analysis, counterarguments, and organization as distinct evaluative categories."
+      },
+      {
+        "criterion_id": "quotes-specific-passages",
+        "description": "Agent references specific parts of the student's answer rather than speaking in generalities",
+        "result": "pass",
+        "justification": "The agent directly quotes specific phrases from the student's answer—'minimum contacts,' 'here there are minimum contacts'—and explains precisely what is wrong with each quoted portion rather than speaking in generalities."
+      },
+      {
+        "criterion_id": "identifies-patterns",
+        "description": "Agent steps back to identify recurring strengths and weaknesses across the answer",
+        "result": "fail",
+        "justification": "The agent identifies specific weaknesses in this answer but never frames any strength or weakness as a transferable pattern applicable to future exams (e.g., 'across law school exams, stating conclusions without analysis is a recurring issue you should watch for')."
+      },
+      {
+        "criterion_id": "suggests-practice-strategies",
+        "description": "Agent recommends tailored practice strategies based on identified weaknesses",
+        "result": "fail",
+        "justification": "The agent identifies weaknesses (missing analysis, no long-arm step, no general/specific distinction) but only offers generic advice ('ask yourself why') rather than recommending specific tailored practice strategies like issue-spotting drills, timed application exercises, or structured IRAC practice routines to address those weaknesses."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "coaching-over-rewriting",
+        "description": "Agent provides feedback and models improvement for 1-2 examples rather than rewriting the whole answer",
+        "result": "adequate",
+        "justification": "The agent provides useful feedback identifying specific gaps in the student's answer, but it falls short of the coaching dimension's ideal by not modeling improvement on 1-2 specific examples from the student's own text, instead pointing back to the pre-written model answer rather than demonstrating how to revise, say, one sentence of the student's answer into a stronger analytical sentence."
+      },
+      {
+        "criterion_id": "specific-actionable-feedback",
+        "description": "Feedback explains why passages work or need improvement, not just that they do",
+        "result": "adequate",
+        "justification": "The agent identifies specific missing elements and explains that conclusions need supporting reasoning, but stops short of fully explaining *why* each missing component matters doctrinally or how including it would strengthen the analysis beyond generic 'this is where the points are' commentary."
+      },
+      {
+        "criterion_id": "strengths-before-weaknesses",
+        "description": "Agent acknowledges what the student did well before identifying problems",
+        "result": "weak",
+        "justification": "The agent jumps immediately to 'the main problem' and lists deficiencies without acknowledging anything the student did correctly, such as correctly identifying the core concept of personal jurisdiction, correctly citing International Shoe, or attempting to apply the standard to a conclusion."
+      },
+      {
+        "criterion_id": "transferable-insights",
+        "description": "Feedback frames patterns as insights applicable across future exams, not just this answer",
+        "result": "weak",
+        "justification": "The feedback focuses almost entirely on what's missing from this specific answer without framing any of the identified patterns (e.g., 'conclusions without analysis,' 'always ask why') as transferable habits or strategies the student can apply across future exam questions in any subject."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "rewrites-whole-answer",
+        "description": "Agent rewrites the entire answer rather than showing targeted improvements",
+        "result": "clear",
+        "justification": "The agent's second response provides targeted, specific feedback identifying gaps in the student's answer rather than rewriting it, using bullet points to highlight exactly what is missing and why, which is the opposite of the anti-pattern."
+      },
+      {
+        "criterion_id": "produces-model-answer",
+        "description": "Agent produces a complete model answer the student could submit",
+        "result": "violation",
+        "justification": "In the first agent response, the agent produced a complete, detailed model essay answer on personal jurisdiction covering all doctrinal elements, cases, and analysis that a student could directly submit as their own work, even without a specific fact pattern provided."
+      },
+      {
+        "criterion_id": "generic-feedback-only",
+        "description": "Agent gives only vague feedback without referencing specific parts of the answer",
+        "result": "clear",
+        "justification": "The agent's feedback directly references specific text from the student's answer (quoting 'minimum contacts' and 'here there are minimum contacts') and explains precisely what is missing or wrong with each cited portion, rather than offering only vague general statements."
+      }
+    ]
+  }
+}

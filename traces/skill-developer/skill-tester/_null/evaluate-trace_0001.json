@@ -1,0 +1,142 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:15:29.150648+00:00",
+    "persona": "skill-developer",
+    "skill": "skill-tester",
+    "version": "_null",
+    "scenario_id": "evaluate-trace"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "evaluate-trace",
+    "setup": "User provides a conversation trace and wants it evaluated against a rubric.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I have a trace from testing the understanding-check skill. Can you evaluate it against the rubric?"
+      },
+      {
+        "role": "user",
+        "content": "The agent asked about the course, then asked the student to explain due process. The student said 'due process means fairness' and the agent said 'That's correct! Due process is about fundamental fairness. Let's move to equal protection.' Then it produced an understanding map."
+      }
+    ],
+    "expected": [
+      "Evaluates structural criteria (gathered context -- pass; asked for own words -- partial; probed reasoning -- fail)",
+      "Notes the agent accepted a shallow answer without probing",
+      "Flags that saying \"That's correct\" to an incomplete answer is pedagogically problematic",
+      "Produces a structured evaluation with pass/fail for structural and ratings for pedagogical criteria"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I have a trace from testing the understanding-check skill. Can you evaluate it against the rubric?"
+    },
+    {
+      "role": "assistant",
+      "content": "I'd be happy to help evaluate the trace against the rubric! However, it looks like you haven't shared the conversation trace or the rubric yet.\n\nCould you please provide:\n1. **The conversation trace** you'd like evaluated\n2. **The rubric** you want it evaluated against\n\nOnce I have both, I'll give you a thorough evaluation!"
+    },
+    {
+      "role": "user",
+      "content": "The agent asked about the course, then asked the student to explain due process. The student said 'due process means fairness' and the agent said 'That's correct! Due process is about fundamental fairness. Let's move to equal protection.' Then it produced an understanding map."
+    },
+    {
+      "role": "assistant",
+      "content": "I'd be happy to evaluate this trace, but I still need the **rubric** to evaluate it against. Without the rubric's criteria, I can't give you a meaningful or accurate assessment.\n\nCould you please share the rubric? It would typically include things like:\n- Criteria or dimensions being evaluated\n- Performance levels or scoring scales\n- Specific expectations for each criterion\n\nThat said, based on what you've described, here are some **preliminary observations** I can offer while waiting for the rubric:\n\n- ⚠️ **The student's answer (\"due process means fairness\") seems quite vague/incomplete** — a robust understanding check might probe deeper before accepting it\n- ⚠️ **The agent moved on quickly** without asking follow-up questions to confirm genuine understanding\n- ⚠️ **The understanding map** — it's unclear what it captured if the explanation was so minimal\n\nThese observations may or may not be relevant depending on what your rubric actually measures.\n\n**Please share the rubric** and I'll give you a proper, structured evaluation!"
+    }
+  ],
+  "evaluation": {
+    "score": 39.2,
+    "structural": [
+      {
+        "criterion_id": "understands-skill",
+        "description": "Agent obtains and reads the skill content before defining criteria",
+        "result": "fail",
+        "justification": "The agent never asked for or read the SKILL.md content to understand the pedagogical skill's persona and key behaviors before attempting to evaluate the trace."
+      },
+      {
+        "criterion_id": "defines-structural-criteria",
+        "description": "Agent identifies concrete, checkable behaviors the agent should exhibit",
+        "result": "fail",
+        "justification": "The agent does not propose any structural criteria with description and check statements; it only offers preliminary observations and repeatedly requests the rubric without defining any concrete, checkable behaviors."
+      },
+      {
+        "criterion_id": "defines-pedagogical-criteria",
+        "description": "Agent identifies subjective quality dimensions with weights",
+        "result": "fail",
+        "justification": "The agent never proposed pedagogical criteria with descriptions and weight levels (low/medium/high); it only asked for an external rubric and offered preliminary observations without defining any subjective quality dimensions of its own."
+      },
+      {
+        "criterion_id": "defines-anti-patterns",
+        "description": "Agent identifies things the agent must never do",
+        "result": "fail",
+        "justification": "The agent never identifies any anti-patterns (things it must never do) derived from its pedagogical skill constraints or persona boundaries; it only offers preliminary observations about the trace without defining prohibited behaviors."
+      },
+      {
+        "criterion_id": "creates-test-scenarios",
+        "description": "Agent designs test scenarios covering different interaction types",
+        "result": "fail",
+        "justification": "The agent does not design any test scenarios with setup, messages, and expected behaviors; it only evaluates a provided trace and makes preliminary observations."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "criteria-from-skill-steps",
+        "description": "Structural criteria derive from the skill's own defined steps and behaviors",
+        "result": "adequate",
+        "justification": "The agent correctly identifies potential issues with the interaction (insufficient probing, quick progression) that align with what understanding-check skill steps would typically require, but without the actual rubric or skill definition provided, the agent cannot ground its criteria in the skill's own defined steps and behaviors, making the structural evaluation incomplete."
+      },
+      {
+        "criterion_id": "comprehensive-scenario-coverage",
+        "description": "Scenarios test different types of interactions (happy path, edge case, boundary, minimal input)",
+        "result": "weak",
+        "justification": "The conversation only covers a single scenario (a vague/incomplete student response) and never tests happy path interactions, boundary cases, minimal inputs, or other interaction types that would demonstrate comprehensive scenario coverage."
+      },
+      {
+        "criterion_id": "testable-criteria",
+        "description": "Criteria are specific enough to evaluate consistently across different evaluators",
+        "result": "adequate",
+        "justification": "The agent's preliminary observations use somewhat vague language like 'quite vague/incomplete' and 'moved on quickly' without defining specific thresholds, but the observations are concrete enough that different evaluators would likely reach similar conclusions about the issues identified."
+      },
+      {
+        "criterion_id": "persona-grounded-anti-patterns",
+        "description": "Anti-patterns reflect the persona's constraints, not just generic quality concerns",
+        "result": "adequate",
+        "justification": "The agent correctly identifies the substantive pedagogical concern (shallow understanding accepted too quickly) but frames its observations as generic quality concerns rather than grounding them in the specific constraints or criteria of the understanding-check skill's rubric, which it still lacks."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "vague-criteria",
+        "description": "Agent defines criteria too vague to evaluate consistently",
+        "result": "clear",
+        "justification": "The agent explicitly refused to evaluate without a rubric and only offered preliminary observations clearly labeled as such, avoiding the use of vague criteria like 'helpful' or 'does a good job' to assess the trace."
+      },
+      {
+        "criterion_id": "insufficient-scenarios",
+        "description": "Agent creates only one test scenario or only happy-path scenarios",
+        "result": "clear",
+        "justification": "The agent did not create test scenarios at all — it was evaluating a provided conversation trace, so the insufficient-scenarios anti-pattern is not applicable here."
+      },
+      {
+        "criterion_id": "ignores-persona-constraints",
+        "description": "Anti-patterns don't reflect the persona's specific constraints",
+        "result": "clear",
+        "justification": "The agent's observations are specifically tied to pedagogical constraints—noting that the understanding check failed to probe depth of comprehension before accepting a vague answer and moving on—which reflects the persona's pedagogical boundaries rather than generic anti-patterns."
+      }
+    ]
+  }
+}

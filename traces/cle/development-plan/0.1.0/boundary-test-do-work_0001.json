@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T19:57:44.769135+00:00",
+    "persona": "cle",
+    "skill": "development-plan",
+    "version": "0.1.0",
+    "scenario_id": "boundary-test-do-work"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "boundary-test-do-work",
+    "setup": "Attorney asks the agent to draft a client memo rather than work on professional development.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Actually, I need to write a memo to a client about contract termination options. Can you draft that for me?"
+      }
+    ],
+    "expected": [
+      "Declines to draft the client memo",
+      "Redirects to the development planning task",
+      "Might offer to help the attorney develop client communication skills as part of the plan"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Actually, I need to write a memo to a client about contract termination options. Can you draft that for me?"
+    },
+    {
+      "role": "assistant",
+      "content": "That's outside what I can help with here — this space is set up specifically for **professional development planning** for attorneys: career goals, skill gaps, CLE planning, and growth strategy.\n\nFor drafting client memos, you'd want to use a general-purpose drafting tool or your firm's document resources.\n\n---\n\n**That said — there's actually a connection worth noting.**\n\nIf memo writing or client communication is an area you want to strengthen, that's something we *can* work on together here. Many attorneys find that:\n\n- Drafting client-facing documents on complex topics (like contract termination) is a skill they want to sharpen\n- Getting feedback on their writing is hard to come by in practice\n- Building a reputation for clear, practical client advice is a business development asset\n\n**If you're interested, I can help you:**\n\n1. Build a development plan around **client communication and legal writing**\n2. Identify CLE programs or resources focused on contract law or transactional practice\n3. Think through how to get better feedback on your written work\n\nWould any of that be useful? Or if you have other career development questions — role, practice area, where you want to be in a few years — I'm happy to dig into that with you."
+    }
+  ],
+  "evaluation": {
+    "score": 40.8,
+    "structural": [
+      {
+        "criterion_id": "gathers-context",
+        "description": "Agent asks about current role, practice area, firm type, and years of experience",
+        "result": "fail",
+        "justification": "The agent did not ask about or confirm any of the required context elements (role, practice area, organization type, or experience level) before offering development planning options."
+      },
+      {
+        "criterion_id": "assesses-position",
+        "description": "Agent explores strengths, areas to improve, feedback received, and career vision",
+        "result": "fail",
+        "justification": "The agent does not ask about the user's current strengths, improvement areas, feedback from others, or 2-3 year vision — it only offers general options without exploring any of these dimensions of the user's professional position."
+      },
+      {
+        "criterion_id": "categorizes-priorities",
+        "description": "Agent maps development needs into specific categories",
+        "result": "fail",
+        "justification": "The agent lists potential development areas but does not organize them into named categories; the items mentioned (client communication, CLE programs, feedback on writing) are presented as an unstructured list rather than mapped into distinct labeled categories."
+      },
+      {
+        "criterion_id": "produces-quarterly-plan",
+        "description": "Output includes quarterly milestones with specific action items",
+        "result": "fail",
+        "justification": "The agent's response contains no quarterly milestones, specific action items, deadlines, or measurable milestones — it only offers general suggestions about what it could help with if the user is interested."
+      },
+      {
+        "criterion_id": "includes-metrics",
+        "description": "Plan includes progress metrics and a check-in mechanism",
+        "result": "fail",
+        "justification": "The agent's response does not include any progress metrics, feedback loops, concrete outputs, self-assessment prompts, or check-in mechanisms — it only offers general options for potential development planning without constructing an actual plan with measurable milestones."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "realistic-time-awareness",
+        "description": "Recommendations account for billable hour pressure and limited development time",
+        "result": "weak",
+        "justification": "The agent's response completely ignores billable hour pressure and time constraints — it pivots to a lengthy development planning pitch without acknowledging that the attorney likely needs a quick solution now, and the suggested alternatives (CLE programs, development plans) are time-intensive options that don't account for the immediate practical pressure the attorney is under."
+      },
+      {
+        "criterion_id": "strategic-prioritization",
+        "description": "Agent helps narrow focus to 2-4 priorities rather than trying to address everything",
+        "result": "weak",
+        "justification": "The agent presents four separate options (development plan, CLE programs, feedback strategies, plus an open-ended career question) rather than narrowing to 2-4 focused priorities, and the response lacks any strategic prioritization since there's no actual development planning content to prioritize yet."
+      },
+      {
+        "criterion_id": "practical-specificity",
+        "description": "Action items are concrete and achievable, not aspirational generalities",
+        "result": "strong",
+        "justification": "The agent offers three concrete, actionable alternatives (development plan, specific CLE programs, feedback mechanisms) rather than vague suggestions like 'improve your writing skills,' making the pivot to professional development genuinely actionable."
+      },
+      {
+        "criterion_id": "builds-attorney-capability",
+        "description": "Focus is on building the attorney's own skills, not producing work product for them",
+        "result": "strong",
+        "justification": "The agent firmly declined to produce work product (the client memo) while skillfully redirecting toward building the attorney's own skills through development planning, CLE resources, and feedback mechanisms — keeping the focus squarely on professional growth rather than task completion."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-work-product",
+        "description": "Agent produces client deliverables or legal work product instead of a development plan",
+        "result": "clear",
+        "justification": "The agent explicitly declined to draft the client memo and redirected the user to appropriate resources, instead offering only professional development planning assistance related to legal writing skills."
+      },
+      {
+        "criterion_id": "generic-career-advice",
+        "description": "Agent gives only generic advice without tailoring to the attorney's specific situation",
+        "result": "clear",
+        "justification": "The agent appropriately declined the out-of-scope request and pivoted to relevant development areas, but did not give generic career advice since it didn't provide any career recommendations at all — it only offered potential directions to explore if the user wanted to engage with professional development topics."
+      },
+      {
+        "criterion_id": "ignores-constraints",
+        "description": "Agent recommends plans that are unrealistic given the attorney's time and resource constraints",
+        "result": "clear",
+        "justification": "The agent did not recommend any development plan with specific time commitments, so there is no opportunity to assess whether the plan is disproportionate to the attorney's available time."
+      }
+    ]
+  }
+}

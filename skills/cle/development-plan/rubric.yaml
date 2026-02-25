@@ -1,0 +1,108 @@
+persona: cle
+skill: development-plan
+
+criteria:
+  structural:
+    - id: gathers-context
+      description: Agent asks about current role, practice area, firm type, and years of experience
+      check: Agent asks about or confirms at least three of role, practice area, organization type, and experience level before building the plan
+
+    - id: assesses-position
+      description: Agent explores strengths, areas to improve, feedback received, and career vision
+      check: Agent asks about at least two of current strengths, improvement areas, feedback from others, or 2-3 year vision
+
+    - id: categorizes-priorities
+      description: Agent maps development needs into specific categories
+      check: Agent organizes priorities into named categories (e.g., technical skills, client management, business development) rather than an unstructured list
+
+    - id: produces-quarterly-plan
+      description: Output includes quarterly milestones with specific action items
+      check: Plan contains at least two quarters with specific actions, deadlines or time estimates, and measurable milestones
+
+    - id: includes-metrics
+      description: Plan includes progress metrics and a check-in mechanism
+      check: Plan contains at least one way to measure progress (feedback loops, concrete outputs, self-assessment prompts) and a check-in prompt
+
+  pedagogical:
+    - id: realistic-time-awareness
+      description: Recommendations account for billable hour pressure and limited development time
+      weight: high
+
+    - id: strategic-prioritization
+      description: Agent helps narrow focus to 2-4 priorities rather than trying to address everything
+      weight: high
+
+    - id: practical-specificity
+      description: Action items are concrete and achievable, not aspirational generalities
+      weight: medium
+
+    - id: builds-attorney-capability
+      description: Focus is on building the attorney's own skills, not producing work product for them
+      weight: medium
+
+anti_patterns:
+  - id: produces-work-product
+    description: Agent produces client deliverables or legal work product instead of a development plan
+    check: Agent output contains legal memoranda, briefs, client communications, or other legal work product
+
+  - id: generic-career-advice
+    description: Agent gives only generic advice without tailoring to the attorney's specific situation
+    check: Agent's recommendations could apply to any attorney at any stage and don't reference the specific context the user provided
+
+  - id: ignores-constraints
+    description: Agent recommends plans that are unrealistic given the attorney's time and resource constraints
+    check: Plan requires time commitments wildly disproportionate to the attorney's available time (e.g., 20 hours/week for a busy associate)
+
+test_scenarios:
+  - id: happy-path-associate
+    setup: >
+      3rd-year associate at a mid-size litigation firm who wants to
+      develop business development and client management skills to
+      position for partnership.
+    messages:
+      - role: user
+        content: "I'm a 3rd-year associate at a mid-size litigation firm. I want to start building toward partnership. What should I focus on?"
+      - role: user
+        content: "My supervising partner says my legal work is strong but I need to start originating business and managing client relationships more independently. I have maybe 3-4 hours a month for development."
+    expected:
+      - Identifies business development and client management as the key priorities
+      - Asks about current strengths and specific gaps
+      - Produces a plan with quarterly milestones that fits within 3-4 hours/month
+      - Suggests concrete actions (networking events, writing opportunities, shadowing client meetings)
+      - Does not overload the plan
+
+  - id: boundary-test-do-work
+    setup: >
+      Attorney asks the agent to draft a client memo rather than
+      work on professional development.
+    messages:
+      - role: user
+        content: "Actually, I need to write a memo to a client about contract termination options. Can you draft that for me?"
+    expected:
+      - Declines to draft the client memo
+      - Redirects to the development planning task
+      - Might offer to help the attorney develop client communication skills as part of the plan
+
+  - id: minimal-input
+    setup: >
+      Attorney provides almost no context about their situation.
+    messages:
+      - role: user
+        content: "Help me with my career"
+    expected:
+      - Asks clarifying questions about role, practice area, experience, and goals
+      - Does not produce a plan without understanding the attorney's context
+
+  - id: solo-practitioner
+    setup: >
+      Solo practitioner with very different constraints than a firm attorney.
+    messages:
+      - role: user
+        content: "I'm a solo practitioner doing family law. Been at it 8 years. I feel like I'm stuck -- good at what I do but not growing."
+      - role: user
+        content: "I want to expand into mediation but I also need to improve my practice management. I'm stretched thin doing everything myself."
+    expected:
+      - Recognizes the unique constraints of solo practice (wearing all hats, limited time)
+      - Helps prioritize between mediation expansion and practice management
+      - Suggests actions that account for a solo practitioner's resource constraints
+      - Plan is realistic for someone without a firm's infrastructure

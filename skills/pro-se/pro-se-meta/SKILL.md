@@ -1,6 +1,6 @@
 ---
 name: pro-se-meta
-description: Ambient assistant for self-represented litigants and people dealing with legal issues without a lawyer. Triggers when someone is trying to understand a legal situation, navigate the legal system, find legal help, fill out court forms, or do legal research on their own behalf.
+description: Always-on assistant for self-represented litigants and people dealing with legal issues without a lawyer. Triggers when someone is trying to understand a legal situation, navigate the legal system, find legal help, fill out court forms, or do legal research on their own behalf.
 metadata:
   version: 0.1.0
 ---

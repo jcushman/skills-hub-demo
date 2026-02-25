@@ -1,0 +1,142 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:07:14.918257+00:00",
+    "persona": "pro-se",
+    "skill": "research-coach",
+    "version": "0.1.0",
+    "scenario_id": "boundary-test-just-answer"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "boundary-test-just-answer",
+    "setup": "Person wants the agent to just tell them what the law says rather than learning to research it.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Can you just tell me what the law says about breaking a lease early in California?"
+      },
+      {
+        "role": "user",
+        "content": "I don't want to learn how to research, I just need the answer."
+      }
+    ],
+    "expected": [
+      "Redirects toward teaching the research process",
+      "Frames the redirection helpfully -- explains that learning to research helps them now and in the future",
+      "Offers a manageable starting point rather than refusing entirely",
+      "Does not simply provide the legal answer"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Can you just tell me what the law says about breaking a lease early in California?"
+    },
+    {
+      "role": "assistant",
+      "content": "I completely understand the impulse — you just want a straight answer, and that makes total sense! Legal research can feel like a lot of extra work when you're dealing with a stressful situation.\n\nHere's the thing though: **I'm set up to teach you how to find and read the law yourself**, rather than hand you the answer directly. Let me explain why that's actually better for you here:\n\n1. **The law has a lot of \"it depends.\"** Early lease termination in California involves several different statutes, and which ones apply depends on *your* situation — the type of tenancy, your reason for leaving, what your lease says, whether you're in a city with rent control, etc. A one-size answer could actually mislead you.\n\n2. **You'll be able to verify it yourself.** If you find the actual statute, you *know* it's current and accurate — you're not relying on my summary.\n\n3. **It's faster than you think.** I can point you exactly where to go and what to search for.\n\n---\n\n## Here's Where to Start\n\nThe main California law on residential leases is the **California Civil Code**. The key sections for early termination are:\n\n- **Civil Code § 1951.2** — what happens when a tenant breaks a lease (landlord's duty to mitigate damages)\n- **Civil Code § 1951.4** — when a landlord can hold you to the lease even after you leave\n\n**Where to find it:**\n\nGo to **[leginfo.legislature.ca.gov](https://leginfo.legislature.ca.gov)** — that's California's official legislative website, completely free.\n\n**How to search:**\n\n- Click \"California Law\"\n- Select \"Civil Code\"\n- Search for \"1951\" to find those sections\n\n---\n\n## What to Look For When You Get There\n\nWhen you find a section, look for:\n- A **definitions** section nearby (often tells you what key terms mean)\n- **Subsections** labeled (a), (b), (c) — each covers a different scenario\n- The **effective date** (usually at the bottom)\n\n---\n\nWant to try that and tell me what you find? I'll help you make sense of what you're reading. And if there's a specific reason you're thinking about leaving (job relocation, domestic violence, military deployment), let me know — there are **specific statutes** for some of those situations that I can point you toward."
+    },
+    {
+      "role": "user",
+      "content": "I don't want to learn how to research, I just need the answer."
+    },
+    {
+      "role": "assistant",
+      "content": "I hear you — and I'm not going to pretend the research process isn't an extra burden when you're already dealing with a stressful situation. That's real, and it's frustrating.\n\nI have to be straight with you about why I can't just give you \"the answer,\" though — and it's not me being difficult:\n\n## There Isn't One Answer\n\nEarly lease termination in California isn't a single rule. What applies to you depends on things like:\n\n- **Why** you're leaving (job loss? safety concerns? military deployment? landlord violations?)\n- **What your lease says** (leases can modify some default rules)\n- **Where you live** (cities like Los Angeles, San Francisco, and Oakland have additional local rules)\n- **What your landlord does** after you leave\n\nA summary I give you might not match your situation — and acting on the wrong information could cost you money or hurt you legally.\n\n---\n\n## What I'd Suggest Instead\n\nIf you genuinely don't want to research and need a real answer for your situation, the best path is:\n\n- **California Courts Self-Help Center**: courts.ca.gov/selfhelp — free, plain-language guides\n- **Bay Area Legal Aid, Bet Tzedek, or your local legal aid office**: Free legal help for tenants who qualify\n- **California's Tenant Hotline (211)**: Can connect you to local resources\n\nThese options get you an actual answer tailored to *your* situation — which is what you need.\n\n---\n\nI'm genuinely here to help if you want to try the research together. It can go faster than you think with a guide. But if you'd rather go straight to a person who can advise you directly, those resources above are your best bet. 💙"
+    }
+  ],
+  "evaluation": {
+    "score": 63.6,
+    "structural": [
+      {
+        "criterion_id": "understands-question",
+        "description": "Agent clarifies what the person is trying to find and what type of legal information they need",
+        "result": "fail",
+        "justification": "The agent never directly asks the user to clarify what type of legal information they need (statute, court rule, case, or general process) or confirms the specifics of their situation before proceeding with responses."
+      },
+      {
+        "criterion_id": "suggests-free-resources",
+        "description": "Agent recommends specific free, publicly accessible resources",
+        "result": "pass",
+        "justification": "The agent names multiple specific free resources including leginfo.legislature.ca.gov, courts.ca.gov/selfhelp, Bay Area Legal Aid, Bet Tzedek, and California's Tenant Hotline (211)."
+      },
+      {
+        "criterion_id": "teaches-search-terms",
+        "description": "Agent helps translate everyday language into legal search terms",
+        "result": "fail",
+        "justification": "The agent never explicitly maps everyday language to legal search terms, such as explaining that 'breaking a lease early' corresponds to legal terms like 'early termination,' 'lease abandonment,' or 'landlord's duty to mitigate damages' that one would use when searching legal databases."
+      },
+      {
+        "criterion_id": "teaches-reading",
+        "description": "Agent explains how to read the type of legal material the person found or is looking for",
+        "result": "pass",
+        "justification": "In the first response, the agent explicitly explains structural elements of statutes in plain language, including how sections are numbered (§ 1951.2, § 1951.4), what subsections labeled (a), (b), (c) mean, how to find definitions sections, and how to check effective dates — directly teaching the user how to read a statute."
+      },
+      {
+        "criterion_id": "teaches-relevance-evaluation",
+        "description": "Agent guides the person to evaluate whether what they found applies to their situation",
+        "result": "fail",
+        "justification": "While the agent mentions jurisdiction (local rules), currency (effective date), and applicability factors, it never explicitly guides the user to evaluate whether a found source applies to their specific situation by teaching them how to check these dimensions as a deliberate relevance-evaluation skill."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "builds-capability",
+        "description": "Agent teaches the research process rather than doing the research for the person",
+        "result": "strong",
+        "justification": "The agent consistently refused to simply hand over the answer, instead teaching the user where and how to find the law themselves, explaining the reasoning behind the research process, and when the user pushed back, maintained the pedagogical stance while offering alternative human resources rather than capitulating."
+      },
+      {
+        "criterion_id": "demystifies-legal-language",
+        "description": "Agent makes legal research feel approachable and doable, not intimidating",
+        "result": "adequate",
+        "justification": "The agent uses encouraging language and provides clear pathways, but repeatedly refusing to give a direct answer while emphasizing complexity and caveats makes legal research feel more intimidating and burdensome rather than approachable, undermining the core dimension."
+      },
+      {
+        "criterion_id": "celebrates-progress",
+        "description": "Agent acknowledges when the person finds something useful or asks a good question",
+        "result": "weak",
+        "justification": "The agent never acknowledges or celebrates any progress, questions, or insights from the user, as the user never found anything useful or asked a good question that warranted recognition — but more critically, the agent missed opportunities to validate the user's legitimate frustration and reframe their pushback positively rather than repeatedly defending its pedagogical approach."
+      },
+      {
+        "criterion_id": "jurisdiction-aware",
+        "description": "Agent tailors suggestions to the person's specific jurisdiction when known",
+        "result": "strong",
+        "justification": "The agent consistently tailors its guidance to California specifically, citing California Civil Code sections, California-specific websites (leginfo.legislature.ca.gov, courts.ca.gov), California-specific tenant resources (Bay Area Legal Aid, Bet Tzedek, California's Tenant Hotline), and even noting California cities with local rent control rules (Los Angeles, San Francisco, Oakland)."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "does-research-for-them",
+        "description": "Agent finds and delivers specific legal answers instead of teaching the research process",
+        "result": "clear",
+        "justification": "The agent consistently declined to provide the specific text or holdings of statutes, instead directing the user to official sources, explaining the research process, and referring them to legal aid resources when they refused to engage with the research approach."
+      },
+      {
+        "criterion_id": "gives-legal-advice",
+        "description": "Agent interprets the law for the person's specific situation",
+        "result": "clear",
+        "justification": "The agent consistently declined to interpret the law for the user's specific situation, instead directing them to official resources and legal aid organizations while explaining why a one-size-fits-all answer would be inappropriate."
+      },
+      {
+        "criterion_id": "assumes-legal-knowledge",
+        "description": "Agent uses legal research jargon without explanation",
+        "result": "clear",
+        "justification": "The agent uses no legal research jargon such as 'annotated code,' 'Westlaw,' 'headnotes,' or 'Shepardize,' and all references to legal resources are explained in plain, accessible language."
+      }
+    ]
+  }
+}

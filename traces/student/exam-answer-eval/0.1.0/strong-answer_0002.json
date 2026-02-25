@@ -1,0 +1,142 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:08:39.867751+00:00",
+    "persona": "student",
+    "skill": "exam-answer-eval",
+    "version": "0.1.0",
+    "scenario_id": "strong-answer"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "strong-answer",
+    "setup": "3L student with a strong practice answer on criminal law self-defense who wants to verify quality before the exam.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I'm prepping for my Crim Law final. Can you evaluate this practice answer on self-defense?"
+      },
+      {
+        "role": "user",
+        "content": "Question: 'Dan, a 150-pound man, was confronted by Vic, a 220-pound man, in a bar. Vic said \"I'm going to kill you\" and reached into his jacket. Dan grabbed a bottle and struck Vic, killing him. Vic had no weapon. Discuss Dan's self-defense claim.' My answer: 'Self-defense requires (1) honest and reasonable belief in imminent threat of unlawful force, (2) proportional response, and (3) no duty to retreat in this jurisdiction (assuming stand-your-ground). Dan honestly believed he faced deadly force -- Vic's verbal threat combined with reaching into his jacket would cause a reasonable person to fear imminent deadly harm, especially given the size disparity. The key issue is proportionality: Dan used deadly force (bottle strike causing death) against what he believed was a deadly threat. Under the objective standard, a reasonable person in Dan's position -- smaller, facing a verbal death threat and an ambiguous reaching motion -- would likely find deadly force justified. The prosecution will argue Vic had no weapon, so Dan's belief was unreasonable. But self-defense is evaluated from the defendant's perspective at the time, not with hindsight. The reaching motion plus verbal threat creates reasonable apprehension regardless of whether Vic actually had a weapon (citing cases like State v. Simon where courts held the defendant need not wait to confirm the weapon). Dan has a strong self-defense claim, though the prosecution's strongest argument is that Dan could have retreated from the bar rather than escalating, which matters only if this is a duty-to-retreat jurisdiction.'"
+      }
+    ],
+    "expected": [
+      "Acknowledges the answer is strong -- well-structured, good rule statement, solid application",
+      "Identifies specific strengths like the analysis of proportionality and the prosecution counterargument",
+      "Pushes to an advanced level -- perhaps asks about imperfect self-defense, the role of initial aggressor doctrine, or how the analysis changes under MPC vs. common law",
+      "Feedback reflects genuine quality rather than manufacturing problems"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I'm prepping for my Crim Law final. Can you evaluate this practice answer on self-defense?"
+    },
+    {
+      "role": "assistant",
+      "content": "I'd be happy to evaluate your self-defense answer! To give you useful, specific feedback, I need a few things from you:\n\n1. **Your practice answer** — paste the full text here.\n2. **The exam question/fact pattern** — paste or summarize the question you were answering.\n3. **Any rubric or model answer** — if your professor provided one, share it so I can calibrate my feedback to their expectations.\n\nOnce I have those, I'll give you a thorough breakdown across issue spotting, rule statements, analysis, counterarguments, and organization — plus patterns to watch for and targeted practice suggestions before your final."
+    },
+    {
+      "role": "user",
+      "content": "Question: 'Dan, a 150-pound man, was confronted by Vic, a 220-pound man, in a bar. Vic said \"I'm going to kill you\" and reached into his jacket. Dan grabbed a bottle and struck Vic, killing him. Vic had no weapon. Discuss Dan's self-defense claim.' My answer: 'Self-defense requires (1) honest and reasonable belief in imminent threat of unlawful force, (2) proportional response, and (3) no duty to retreat in this jurisdiction (assuming stand-your-ground). Dan honestly believed he faced deadly force -- Vic's verbal threat combined with reaching into his jacket would cause a reasonable person to fear imminent deadly harm, especially given the size disparity. The key issue is proportionality: Dan used deadly force (bottle strike causing death) against what he believed was a deadly threat. Under the objective standard, a reasonable person in Dan's position -- smaller, facing a verbal death threat and an ambiguous reaching motion -- would likely find deadly force justified. The prosecution will argue Vic had no weapon, so Dan's belief was unreasonable. But self-defense is evaluated from the defendant's perspective at the time, not with hindsight. The reaching motion plus verbal threat creates reasonable apprehension regardless of whether Vic actually had a weapon (citing cases like State v. Simon where courts held the defendant need not wait to confirm the weapon). Dan has a strong self-defense claim, though the prosecution's strongest argument is that Dan could have retreated from the bar rather than escalating, which matters only if this is a duty-to-retreat jurisdiction.'"
+    },
+    {
+      "role": "assistant",
+      "content": "This is a strong practice answer — you clearly understand the doctrine and can apply it under pressure. Here's a detailed breakdown:\n\n---\n\n## Issue Spotting: A−\n\n**Strengths:** You correctly identified the core issues — reasonable belief, imminence, proportionality, and retreat. That's the right framework and shows solid issue-spotting instincts.\n\n**What's missing:** A few issues worth flagging:\n\n- **Initial aggressor doctrine** — Did Dan *start* the confrontation? The facts don't say, but a strong answer flags this and disposes of it quickly (\"no facts suggest Dan was the initial aggressor, so this doctrine doesn't apply\").\n- **Imperfect self-defense** — If Dan's belief was honest but *unreasonable*, many jurisdictions reduce murder to voluntary manslaughter. This is a significant issue in a fact pattern with an ambiguous threat and deserves its own paragraph.\n- **Deadly force definition** — You conclude the bottle strike was \"deadly force,\" which is correct, but briefly defining it (force likely to cause death or serious bodily injury) would strengthen the foundation before your proportionality analysis.\n\n---\n\n## Rule Statement: B+\n\n**Strengths:** Your three-element framework is accurate and clean. Citing *State v. Simon* (or a similar case) for the \"need not wait to confirm the weapon\" principle shows you're thinking in terms of authority, which professors reward.\n\n**What to improve:** Your rule statements are somewhat compressed. For example, you state the \"objective standard\" without fully articulating it:\n\n> *Your version:* \"Under the objective standard, a reasonable person in Dan's position...\"\n\nA tighter rule statement would look like:\n\n> *Stronger version:* \"Most jurisdictions apply an objective standard: the defendant's belief must be one a reasonable person *in the defendant's circumstances* would hold, including the defendant's knowledge of the victim's prior threats, physical disparities, and the specific context of the encounter.\"\n\nThe italicized phrase matters — it's what lets you legitimately factor in the size disparity and the verbal threat. Without it, you're asserting the conclusion rather than showing the legal basis for considering those facts.\n\n---\n\n## Application/Analysis: A−\n\n**Strengths:** This is the strongest part of your answer. You do real work with the facts:\n- Size disparity (150 vs. 220 lbs) — correctly identified as relevant to reasonableness\n- Verbal threat + reaching motion — correctly analyzed as creating reasonable apprehension\n- Hindsight bias point — sophisticated and correct\n\n**What to improve:** Your proportionality analysis is slightly conclusory. You establish that Dan *believed* he faced deadly force, but you could push harder on *why* that belief was reasonable given the absence of a visible weapon. Walk through the inference chain more explicitly:\n\n> Vic outweighed Dan by 70 pounds → Vic made an explicit death threat → Vic reached into his jacket in a manner consistent with drawing a weapon → Dan had seconds to react → a reasonable person in those circumstances would conclude deadly force was imminent\n\nSpelling out each step shows the grader you're doing analysis, not just asserting a result.\n\n---\n\n## Counterarguments: B+\n\n**Strengths:** You correctly identify the prosecution's two strongest arguments — no actual weapon, and possible retreat. Good instinct to address both.\n\n**What to improve:** You dispose of the \"no weapon\" argument a bit quickly. Acknowledge its force more directly before rebutting it:\n\n> *Your version:* \"The prosecution will argue Vic had no weapon, so Dan's belief was unreasonable. But self-defense is evaluated from the defendant's perspective at the time...\"\n\n> *Stronger version:* \"The prosecution's strongest argument is that Vic was unarmed — a fact the jury will know — making Dan's fear of deadly force appear objectively unreasonable. This is a genuine weakness in Dan's claim. However, the objective standard asks what a reasonable person *at the moment of the threat* would believe, not what a jury knows in hindsight. Given the explicit death threat and the reaching motion, a reasonable person would not have waited for confirmation of a weapon before acting.\"\n\nThe difference: you're showing the grader you understand *why* the counterargument has teeth, not just that it exists.\n\n---\n\n## Organization and Clarity: A−\n\n**Strengths:** Logical flow, clear progression through the elements, and a strong closing that correctly flags the retreat issue as jurisdiction-dependent. That's a sophisticated move.\n\n**What to improve:** Consider adding **brief headers** for each element (Reasonable Belief, Imminence, Proportionality, Retreat). On a timed exam, headers help graders track your analysis and signal that you're methodically working through the doctrine — which itself earns credit.\n\n---\n\n## Recurring Strengths to Carry Forward\n\n- **You think adversarially.** Raising the prosecution's arguments and rebutting them is exactly what separates good exam answers from great ones. Keep doing this on every question.\n- **You use facts purposefully.** You don't just recite the fact pattern — you deploy specific facts to do legal work. This is the core skill of exam writing.\n- **You flag jurisdictional variation.** Noting that retreat rules vary by jurisdiction shows doctrinal sophistication. Do this wherever the law is genuinely split.\n\n---\n\n## Recurring Weaknesses to Address\n\n- **Compressed rule statements.** You know the rules, but you're not always fully articulating them before applying them. This costs points because graders can't give credit for rules they have to infer.\n- **Slightly conclusory application.** You reach the right conclusions but sometimes skip steps in the inference chain. Slow down and show your work, especially on the key contested issues.\n- **Missing secondary issues.** Imperfect self-defense and the initial aggressor doctrine are the kinds of issues that separate B+ answers from A answers. Train yourself to ask: *what happens if the primary defense fails?*\n\n---\n\n## Targeted Practice Strategies\n\n1. **Imperfect self-defense drill:** Take this same fact pattern and write a standalone paragraph analyzing imperfect self-defense. Practice treating it as a fallback argument with its own IRAC structure.\n\n2. **Rule statement isolation exercise:** For each element of self-defense, write out the full rule statement in one or two sentences *without* any facts. Then check it against your casebook or outline. This builds the habit of complete rule articulation before application.\n\n3. **Inference chain practice:** On your next practice answer, after you reach a conclusion in your application section, ask yourself: *did I show every step, or did I skip from facts to conclusion?* Write out the chain explicitly at least once per issue.\n\n4. **Issue checklist:** Before your final, build a self-defense checklist (reasonable belief → imminence → proportionality → retreat → initial aggressor → imperfect self-defense). Run every self-defense fact pattern through the full checklist, even if some issues resolve quickly.\n\n---\n\n**Bottom line:** This is a genuinely strong answer that would score well. The gap between where you are and an A is mostly about *completeness* — fuller rule statements, explicit inference chains, and catching the secondary issues. You have the analytical instincts; now it's about making sure the grader can see all your work. Good luck on the final."
+    }
+  ],
+  "evaluation": {
+    "score": 90.4,
+    "structural": [
+      {
+        "criterion_id": "gathers-answer-and-context",
+        "description": "Agent collects the practice answer, exam question, and course subject before evaluating",
+        "result": "pass",
+        "justification": "Before producing feedback, the agent explicitly requested the practice answer, the exam question/fact pattern, and confirmed the course subject (Crim Law was stated by the user), satisfying all three required elements of the criterion."
+      },
+      {
+        "criterion_id": "evaluates-along-dimensions",
+        "description": "Agent assesses the answer across standard law school exam dimensions",
+        "result": "pass",
+        "justification": "The agent explicitly addresses all five standard law school exam dimensions—issue spotting, rule statement, application/analysis, counterarguments, and organization—each with its own dedicated section and detailed feedback."
+      },
+      {
+        "criterion_id": "quotes-specific-passages",
+        "description": "Agent references specific parts of the student's answer rather than speaking in generalities",
+        "result": "pass",
+        "justification": "The agent repeatedly quotes or directly paraphrases specific passages from the student's answer (e.g., 'Your version: Under the objective standard, a reasonable person in Dan's position...' and 'Your version: The prosecution will argue Vic had no weapon, so Dan's belief was unreasonable. But self-defense is evaluated from the defendant's perspective at the time...') before offering targeted improvements, demonstrating consistent reference to particular sections rather than speaking in generalities."
+      },
+      {
+        "criterion_id": "identifies-patterns",
+        "description": "Agent steps back to identify recurring strengths and weaknesses across the answer",
+        "result": "pass",
+        "justification": "The agent explicitly names transferable strengths and weaknesses under 'Recurring Strengths to Carry Forward' and 'Recurring Weaknesses to Address,' framing them as patterns applicable to future exams (e.g., 'Keep doing this on every question' and 'Train yourself to ask: what happens if the primary defense fails?')."
+      },
+      {
+        "criterion_id": "suggests-practice-strategies",
+        "description": "Agent recommends tailored practice strategies based on identified weaknesses",
+        "result": "pass",
+        "justification": "The agent recommends four specific, tailored practice strategies—imperfect self-defense drills, rule statement isolation exercises, inference chain practice, and building an issue checklist—each directly addressing the weaknesses identified in the student's answer rather than offering generic study advice."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "coaching-over-rewriting",
+        "description": "Agent provides feedback and models improvement for 1-2 examples rather than rewriting the whole answer",
+        "result": "weak",
+        "justification": "The agent rewrote multiple sections of the student's answer with 'stronger versions' throughout the entire response rather than modeling improvement for only 1-2 examples and coaching the student to apply those lessons independently."
+      },
+      {
+        "criterion_id": "specific-actionable-feedback",
+        "description": "Feedback explains why passages work or need improvement, not just that they do",
+        "result": "strong",
+        "justification": "The agent consistently explains *why* each passage works or needs improvement, providing specific before/after rewrites, explicit inference chains, and precise reasoning (e.g., explaining that the objective standard phrase matters because 'it's what lets you legitimately factor in the size disparity' rather than just saying the rule statement needs improvement)."
+      },
+      {
+        "criterion_id": "strengths-before-weaknesses",
+        "description": "Agent acknowledges what the student did well before identifying problems",
+        "result": "strong",
+        "justification": "The agent consistently leads with explicit strengths before identifying weaknesses at every level of feedback—opening with 'This is a strong practice answer,' using 'Strengths' headers before 'What to improve' headers in each section, and closing with a dedicated 'Recurring Strengths' section before 'Recurring Weaknesses.'"
+      },
+      {
+        "criterion_id": "transferable-insights",
+        "description": "Feedback frames patterns as insights applicable across future exams, not just this answer",
+        "result": "strong",
+        "justification": "The agent explicitly frames recurring strengths and weaknesses as transferable patterns (e.g., 'compressed rule statements,' 'conclusory application,' 'missing secondary issues') and provides targeted practice strategies designed to build habits applicable across all future exam questions, not just this one answer."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "rewrites-whole-answer",
+        "description": "Agent rewrites the entire answer rather than showing targeted improvements",
+        "result": "clear",
+        "justification": "The agent provided targeted feedback with only 1-2 specific illustrative rewrites per section (e.g., the rule statement and counterargument improvements), rather than producing a complete rewritten version of the student's entire answer."
+      },
+      {
+        "criterion_id": "produces-model-answer",
+        "description": "Agent produces a complete model answer the student could submit",
+        "result": "clear",
+        "justification": "The agent provided detailed feedback, critique, and improvement suggestions on the student's own submitted answer rather than producing a complete model answer the student could submit as their own work."
+      },
+      {
+        "criterion_id": "generic-feedback-only",
+        "description": "Agent gives only vague feedback without referencing specific parts of the answer",
+        "result": "clear",
+        "justification": "The agent consistently references specific portions of the student's actual text (quoting directly from the answer multiple times), identifies particular missing issues like imperfect self-defense and the initial aggressor doctrine, and provides concrete before/after rewrites tied to the student's exact language rather than relying on vague general statements."
+      }
+    ]
+  }
+}

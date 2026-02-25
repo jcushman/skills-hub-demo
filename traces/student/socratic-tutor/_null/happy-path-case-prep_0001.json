@@ -1,0 +1,166 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:15:30.007348+00:00",
+    "persona": "student",
+    "skill": "socratic-tutor",
+    "version": "_null",
+    "scenario_id": "happy-path-case-prep"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-case-prep",
+    "setup": "2L student preparing for a Contracts class on promissory estoppel. Has read Ricketts v. Scothorn and Hoffman v. Red Owl Stores.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Can you quiz me Socratically on my Contracts reading for tomorrow? We're covering promissory estoppel."
+      },
+      {
+        "role": "user",
+        "content": "We read Ricketts v. Scothorn and Hoffman v. Red Owl Stores."
+      },
+      {
+        "role": "user",
+        "content": "In Ricketts, a grandfather promised his granddaughter money so she wouldn't have to work. She quit her job based on the promise. The court enforced the promise even though there was no consideration."
+      },
+      {
+        "role": "user",
+        "content": "I think the court said it was unfair for the grandfather to go back on his word after she relied on it."
+      }
+    ],
+    "expected": [
+      "Starts with foundational questions about the case facts and holding",
+      "Pushes for more precision on the student's \"unfair\" characterization -- what legal doctrine is at work?",
+      "Follows up by probing the relationship between promissory estoppel and consideration",
+      "Eventually moves to comparing the two cases or posing a hypothetical variation"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Can you quiz me Socratically on my Contracts reading for tomorrow? We're covering promissory estoppel."
+    },
+    {
+      "role": "assistant",
+      "content": "I'd be happy to quiz you Socratically on promissory estoppel! Let's dig in.\n\nLet's start with the foundation. In **Ricketts v. Scothorn**, what exactly did John Ricketts promise his granddaughter Katie, and what did she do in response?"
+    },
+    {
+      "role": "user",
+      "content": "We read Ricketts v. Scothorn and Hoffman v. Red Owl Stores."
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, exactly — those are the two cases I'm working from! Let's start there.\n\nIn **Ricketts v. Scothorn**, what exactly did John Ricketts promise his granddaughter Katie, and what did she do in response?"
+    },
+    {
+      "role": "user",
+      "content": "In Ricketts, a grandfather promised his granddaughter money so she wouldn't have to work. She quit her job based on the promise. The court enforced the promise even though there was no consideration."
+    },
+    {
+      "role": "assistant",
+      "content": "Good summary. Now let me push you on that last point.\n\nYou said there was **no consideration** — why not? What was missing that prevented this from being a standard enforceable contract? Think about what consideration requires."
+    },
+    {
+      "role": "user",
+      "content": "I think the court said it was unfair for the grandfather to go back on his word after she relied on it."
+    },
+    {
+      "role": "assistant",
+      "content": "That's getting at the *result* the court reached, but I want to push you to be more precise about the *doctrine*. Let's back up a step.\n\nFor a promise to be supported by consideration, what are the basic requirements? Think about the bargain element — what needs to be exchanged?"
+    }
+  ],
+  "evaluation": {
+    "score": 64.8,
+    "structural": [
+      {
+        "criterion_id": "gathers-assignment",
+        "description": "Agent asks what cases, readings, or topics are assigned before beginning the dialogue",
+        "result": "fail",
+        "justification": "The agent immediately began asking substantive Socratic questions about Ricketts v. Scothorn before the user had disclosed their assigned readings, only learning about the specific cases (Ricketts and Hoffman v. Red Owl Stores) after the user volunteered that information in their second message."
+      },
+      {
+        "criterion_id": "progresses-in-difficulty",
+        "description": "Questions move from foundational (facts, holding) to analytical (reasoning, policy) to advanced (hypotheticals, counterarguments)",
+        "result": "pass",
+        "justification": "The agent begins with foundational fact-based questions about case details (what was promised, what happened) and progressively moves toward analytical questions about doctrine (what consideration requires and why it was absent), demonstrating appropriate progression from factual to analytical difficulty."
+      },
+      {
+        "criterion_id": "follows-up-on-answers",
+        "description": "Agent adapts questions based on the student's actual responses rather than running through a fixed list",
+        "result": "pass",
+        "justification": "In the fourth agent turn, the agent directly references the student's previous statement ('You said there was no consideration') and builds a follow-up question on that specific claim, asking the student to explain why consideration was absent."
+      },
+      {
+        "criterion_id": "scaffolds-when-stuck",
+        "description": "When the student struggles, agent offers hints or reframes the question rather than giving the answer immediately",
+        "result": "pass",
+        "justification": "When the student gave a vague answer about fairness rather than explaining the doctrine, the agent redirected with a scaffolding question about consideration's basic requirements instead of directly explaining why consideration was absent."
+      },
+      {
+        "criterion_id": "provides-debrief",
+        "description": "Agent provides a debrief summarizing strengths and areas to review",
+        "result": "fail",
+        "justification": "The conversation is still mid-quiz with no debrief provided; the agent has not yet summarized the student's strengths or areas to review before class."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "dialogue-not-quiz",
+        "description": "Interaction feels like a genuine conversation that adapts, not a fixed list of questions",
+        "result": "weak",
+        "justification": "The agent mechanically repeats the same question twice when the user clarifies their reading list, and then follows a rigid sequential questioning pattern without genuinely adapting to the student's responses or exploring unexpected angles, making it feel more like a scripted quiz than an organic Socratic dialogue."
+      },
+      {
+        "criterion_id": "appropriate-pressure",
+        "description": "Agent pushes for precision and depth without intimidation or anxiety-inducing tone",
+        "result": "strong",
+        "justification": "The agent consistently redirects vague or result-oriented answers toward precise doctrinal thinking using phrases like 'let me push you' and 'be more precise,' maintaining intellectual pressure without any condescending or anxiety-inducing language."
+      },
+      {
+        "criterion_id": "celebrates-good-answers",
+        "description": "Agent explicitly acknowledges when the student answers well before moving to harder territory",
+        "result": "weak",
+        "justification": "The agent never explicitly celebrates or acknowledges strong answers; it consistently redirects or pushes further without pausing to affirm when the student provides a good response, such as the accurate summary of Ricketts v. Scothorn."
+      },
+      {
+        "criterion_id": "builds-confidence",
+        "description": "The overall interaction builds the student's confidence and readiness for class",
+        "result": "adequate",
+        "justification": "The agent maintains a supportive, encouraging tone and keeps the student engaged through Socratic questioning, but repeatedly pushing back without affirming partial understanding or offering encouragement risks slightly undermining confidence rather than building it."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "gives-answer-immediately",
+        "description": "Agent provides the correct answer without letting the student attempt it first",
+        "result": "clear",
+        "justification": "The agent consistently uses questions to guide the student toward discovering the answer themselves, never stating the holding, rule, or analysis before the student has had a chance to respond."
+      },
+      {
+        "criterion_id": "produces-work-product",
+        "description": "Agent writes an outline, brief, case summary, or other finished work product",
+        "result": "clear",
+        "justification": "The agent consistently uses Socratic questioning to guide the student's thinking rather than producing any finished work product like an outline, case brief, or analytical document."
+      },
+      {
+        "criterion_id": "intimidating-tone",
+        "description": "Agent uses harsh, dismissive, or anxiety-inducing language",
+        "result": "clear",
+        "justification": "The agent uses encouraging, supportive language throughout ('Good summary,' 'That's getting at the result') and redirects the student constructively without any harsh, dismissive, or humiliating language."
+      }
+    ]
+  }
+}

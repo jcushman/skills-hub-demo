@@ -1,0 +1,143 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:06:37.961251+00:00",
+    "persona": "pro-se",
+    "skill": "issue-interview",
+    "version": "0.1.0",
+    "scenario_id": "complex-overlapping-issues"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "complex-overlapping-issues",
+    "setup": "Person describes a situation involving multiple legal issues (landlord dispute, possible discrimination, and a debt collection).\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Everything is falling apart. My landlord is trying to evict me, I think because of my disability. And I keep getting calls from a debt collector about a medical bill I already paid."
+      },
+      {
+        "role": "user",
+        "content": "I'm in a wheelchair and my landlord says my ramp modifications violated the lease. The debt collector calls every day, sometimes at 6 AM."
+      }
+    ],
+    "expected": [
+      "Identifies the distinct legal issues (eviction, possible disability discrimination, debt collection harassment)",
+      "Addresses each one without overwhelming the person",
+      "Explains each issue in plain language",
+      "Flags any time-sensitive elements",
+      "Suggests that different types of help may be needed for different issues"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Everything is falling apart. My landlord is trying to evict me, I think because of my disability. And I keep getting calls from a debt collector about a medical bill I already paid."
+    },
+    {
+      "role": "assistant",
+      "content": "I'm really sorry you're dealing with all of this at once. That's a lot of stress, and it makes sense that it feels overwhelming. Let's take it one step at a time so we can figure out what's going on and how to get you the right help.\n\nI want to make sure I understand your situation clearly, so I'm going to ask you a few questions. There's no rush — just tell me what you know in your own words.\n\n---\n\n**Let's start with the eviction situation, since that's often the most time-sensitive.**\n\nCan you tell me a little more about what's been happening with your landlord?\n\n- Have you received any **written notices** from your landlord — like an eviction notice or a letter telling you to leave?\n- If so, does the notice have a **date or deadline** on it?\n- And when you say you think it's because of your disability — what makes you think that? Did your landlord say something, or did this start after you asked for something related to your disability?\n\nTake your time. Any details you can share will help me understand what you're dealing with."
+    },
+    {
+      "role": "user",
+      "content": "I'm in a wheelchair and my landlord says my ramp modifications violated the lease. The debt collector calls every day, sometimes at 6 AM."
+    },
+    {
+      "role": "assistant",
+      "content": "Thank you for sharing that — this is really helpful, and I want you to know that both of these situations involve rights that exist specifically to protect people in your position. Let's make sure I understand each one fully.\n\n---\n\n**On the eviction/ramp situation — a couple of follow-up questions:**\n\n- Did you ask your landlord for **permission** to install the ramp before you did it, or did you notify them in any way?\n- Have you received a **written notice** from your landlord — something that says you need to leave, or fix a lease violation — and if so, does it have a **date or deadline** on it?\n\n---\n\n**On the debt collector — this is important:**\n\n- You mentioned the bill is already paid. Do you have **proof of payment** — like a receipt, bank statement, or a letter confirming it was paid?\n- How long have the calls been going on, and have they ever called you **before 8 AM or after 9 PM** before? (You mentioned 6 AM calls — I want to make sure I understand that correctly.)\n\n---\n\nI'm asking these questions because **both of these situations may involve specific legal protections** that could work in your favor — but the details really matter. \n\nAnd just so you know upfront: **if there are any deadlines on that eviction notice, we'll want to address those quickly.** Time limits in eviction cases can be very short — sometimes just a few days."
+    }
+  ],
+  "evaluation": {
+    "score": 61.6,
+    "structural": [
+      {
+        "criterion_id": "conducts-structured-intake",
+        "description": "Agent asks about what happened, who is involved, deadlines, and documents",
+        "result": "pass",
+        "justification": "The agent covers all four intake areas: events (ramp modification, debt collector calls), parties (landlord, debt collector), deadlines (asking about dates on eviction notice, flagging time-sensitivity), and documents (written notices, proof of payment)."
+      },
+      {
+        "criterion_id": "asks-incrementally",
+        "description": "Agent asks one or two questions at a time rather than overwhelming with a long list",
+        "result": "fail",
+        "justification": "In both responses, the agent asks four or more questions at once (three about the eviction plus one about debt in the first message, and four questions split across two topics in the second), which overwhelms the user rather than asking one to three questions incrementally."
+      },
+      {
+        "criterion_id": "identifies-legal-issues",
+        "description": "Agent identifies likely legal issues and explains them in plain language",
+        "result": "fail",
+        "justification": "While the agent hints that legal protections exist ('both of these situations involve rights that exist specifically to protect people in your position'), it never explicitly names any legal issues (such as Fair Housing Act disability discrimination, the right to reasonable accommodations, or FDCPA violations for early-morning debt collection calls) nor explains what those laws mean in plain language."
+      },
+      {
+        "criterion_id": "flags-deadlines",
+        "description": "Agent prominently flags any time-sensitive matters",
+        "result": "pass",
+        "justification": "The agent explicitly flags the time-sensitive nature of eviction proceedings twice — first by prioritizing it as 'often the most time-sensitive' and later by warning that 'time limits in eviction cases can be very short — sometimes just a few days' — while urging the user to address any deadlines quickly."
+      },
+      {
+        "criterion_id": "produces-summary",
+        "description": "Agent provides a plain-language summary the person can take to a lawyer",
+        "result": "fail",
+        "justification": "The agent has not yet produced any wrap-up summary, questions to ask a lawyer, or suggested next steps — it is still in the information-gathering phase of the conversation."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "plain-language-throughout",
+        "description": "All explanations use everyday language; legal terms are defined immediately when used",
+        "result": "adequate",
+        "justification": "The agent mostly uses plain language and explains urgency around deadlines clearly, but uses terms like 'lease violation' and 'legal protections' without immediately defining them, and the phrase 'rights that exist specifically to protect people in your position' is vague rather than explaining what those rights actually are."
+      },
+      {
+        "criterion_id": "empowering-not-overwhelming",
+        "description": "Agent builds the person's confidence and understanding without making them feel lost",
+        "result": "strong",
+        "justification": "The agent consistently validates the user's situation, breaks down complex legal issues into manageable questions, signals that protections exist in the user's favor, and proactively flags time-sensitive concerns—all of which build confidence and prevent the user from feeling lost or overwhelmed."
+      },
+      {
+        "criterion_id": "connects-to-professional-help",
+        "description": "Agent recommends specific types of professional help (legal aid, court self-help, bar referral, law school clinic)",
+        "result": "weak",
+        "justification": "The agent has not yet recommended any specific types of professional help (legal aid, court self-help, bar referral, or law school clinic) despite two exchanges involving serious legal issues with time-sensitive deadlines."
+      },
+      {
+        "criterion_id": "patient-pacing",
+        "description": "Agent allows the person to tell their story at their own pace without rushing",
+        "result": "adequate",
+        "justification": "The agent says 'there's no rush' and acknowledges the user's stress, but then immediately fires multiple structured questions in both turns, which creates a somewhat pressured, checklist-driven pace rather than truly allowing the user to tell their story organically."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "gives-legal-advice",
+        "description": "Agent tells the person what to do, what outcome to seek, or what arguments to make",
+        "result": "clear",
+        "justification": "The agent only asks clarifying questions and notes that legal protections may exist, without recommending any specific course of action, legal strategy, or telling the user what to do or seek."
+      },
+      {
+        "criterion_id": "uses-unexplained-jargon",
+        "description": "Agent uses legal terminology without defining it in plain language",
+        "result": "clear",
+        "justification": "The agent does not use unexplained legal jargon; any potentially technical references (like deadlines and time limits) are explained in plain, everyday language accessible to a non-legal audience."
+      },
+      {
+        "criterion_id": "dismisses-urgency",
+        "description": "Agent fails to flag clearly time-sensitive matters when the user describes deadlines or notices",
+        "result": "clear",
+        "justification": "The agent explicitly flagged the time-sensitive nature of eviction deadlines multiple times, noting that 'time limits in eviction cases can be very short — sometimes just a few days' and proactively asking about written notices and deadlines."
+      }
+    ]
+  }
+}

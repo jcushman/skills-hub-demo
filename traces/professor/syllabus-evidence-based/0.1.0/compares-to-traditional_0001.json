@@ -1,0 +1,136 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T19:58:28.659827+00:00",
+    "persona": "professor",
+    "skill": "syllabus-evidence-based",
+    "version": "0.1.0",
+    "scenario_id": "compares-to-traditional"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "compares-to-traditional",
+    "setup": "Professor asks how this approach differs from a traditional syllabus.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I usually teach a traditional block syllabus. Why would I want an evidence-based one? What's different?"
+      }
+    ],
+    "expected": [
+      "Explains the key structural differences (spiral vs. linear, spaced practice, scaffolded complexity)",
+      "Grounds the explanation in learning science, not just preference",
+      "Respects the professor's existing approach while making the case for evidence-based design",
+      "Does not dismiss traditional approaches"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I usually teach a traditional block syllabus. Why would I want an evidence-based one? What's different?"
+    },
+    {
+      "role": "assistant",
+      "content": "Great question — and worth answering directly before you invest time in building one.\n\n## What a Traditional Block Syllabus Does\n\nA typical law school syllabus sequences topics in logical doctrinal order, covers each unit, and moves on. Students read, attend class, take a midterm (sometimes) and a final. The final exam is usually the first time students are asked to integrate material across the whole course.\n\nThat structure is intuitive and easy to administer. It's also, from a learning science standpoint, not optimally designed for durable retention or transfer.\n\n---\n\n## The Core Problem: Learn It, Test It, Forget It\n\nResearch on memory and skill acquisition consistently shows three things that traditional syllabi work against:\n\n**1. Single exposure doesn't produce durable learning.**\nWhen students encounter a concept once and then move on, retention drops sharply — even if they understood it in the moment. This is the *forgetting curve* (Ebbinghaus, replicated extensively). By finals, students are essentially relearning material from the first half of the course.\n\n**2. Massed practice (cramming) produces the illusion of learning.**\nStudents feel fluent after a study session. But fluency right after exposure is a poor predictor of performance weeks later. *Spaced practice* — returning to material at intervals — produces far better long-term retention, even though it feels harder in the moment. (Cepeda et al., 2006; Kornell & Bjork, 2008.)\n\n**3. Blocked practice doesn't build the discrimination skill exams actually test.**\nWhen students practice Contracts problems in the Contracts unit and Torts problems in the Torts unit, they never have to figure out *which framework applies* — the block tells them. Law school exams don't. *Interleaving* different topics in practice problems forces students to do the harder cognitive work of framework selection, which is exactly what exam performance requires. (Rohrer & Taylor, 2007; Kornell & Bjork, 2008.)\n\n---\n\n## What an Evidence-Based Syllabus Does Differently\n\n| Feature | Traditional Block Syllabus | Evidence-Based Syllabus |\n|---|---|---|\n| **Structure** | Cover topic → move on | Spiral: topics return in new contexts |\n| **Practice** | Problems grouped by current unit | Cumulative problems mixing earlier material |\n| **Integration** | Happens at finals | Built into the calendar throughout |\n| **Difficulty pacing** | Proportional to page count | Calibrated to conceptual density |\n| **Scaffolding** | Consistent throughout | Deliberately reduced as semester progresses |\n| **Student metacognition** | Implicit | Explicit — students are told *why* the course is structured this way |\n\n---\n\n## What This Looks Like in Practice\n\n- A concept introduced in Week 3 reappears as a comparison point in Week 9 — not as review, but as new analytical work that uses the earlier concept as a building block.\n- Problem sets in Week 10 include issues from Weeks 2, 5, and 8, not just Week 10.\n- A few dedicated \"synthesis sessions\" ask students to compare frameworks across doctrinal areas — before the final, not only during exam prep.\n- The syllabus tells students this is happening and why, which research shows improves both performance and study habits.\n\n---\n\n## The Honest Tradeoff\n\nAn evidence-based syllabus takes more design work upfront. You have to think about which concepts are load-bearing (worth spiraling back to) and where in the calendar to place spaced touchpoints. It also requires some tolerance for the fact that students may find it harder and less comfortable — interleaving and spaced practice *feel* more difficult than blocked study, even when they produce better outcomes.\n\nThe payoff is students who arrive at the final having already integrated material multiple times, rather than doing it for the first time under exam pressure.\n\n---\n\nIf you want to try it, the most practical starting point is usually **one change at a time**: keep your existing sequence but add cumulative problem sets and two or three explicit spiral return points. You don't have to redesign everything at once.\n\nWant to start building one for a specific course?"
+    }
+  ],
+  "evaluation": {
+    "score": 73.3,
+    "structural": [
+      {
+        "criterion_id": "analyzes-provided-content",
+        "description": "Agent reviews the user's source material before generating the syllabus",
+        "result": "fail",
+        "justification": "The agent never reviewed any user-provided source material (casebook chapters, case names, or topic areas) because the user did not provide any course content — the conversation was purely conceptual, so there was nothing to analyze or reference."
+      },
+      {
+        "criterion_id": "asks-missing-info",
+        "description": "Agent asks for missing logistical information needed to build the syllabus",
+        "result": "fail",
+        "justification": "The agent ended by asking if the user wants to build a syllabus for a specific course, but did not ask for any logistical information such as session count, session length, semester duration, or credit hours needed to actually construct a syllabus."
+      },
+      {
+        "criterion_id": "includes-spiral-markers",
+        "description": "Schedule includes explicit spiral return points connecting later sessions to earlier material",
+        "result": "fail",
+        "justification": "The agent explains the concept of spiral return points and mentions them in general terms, but does not provide a schedule with at least two specific sessions that include explicit spiral markers connecting later sessions to earlier material."
+      },
+      {
+        "criterion_id": "includes-scaffolding-levels",
+        "description": "Sessions indicate the scaffolding progression across the semester",
+        "result": "pass",
+        "justification": "The agent explicitly describes scaffolding progression in the comparison table with the annotation 'Deliberately reduced as semester progresses' and elaborates in the practice examples how scaffolding changes over the semester (e.g., concepts introduced early return later as building blocks, cumulative problems mix earlier material), satisfying the criterion's requirement for scaffolding annotations or explicit progression description."
+      },
+      {
+        "criterion_id": "includes-spaced-practice",
+        "description": "Schedule includes cumulative practice touchpoints that draw on material from multiple units",
+        "result": "pass",
+        "justification": "The agent explicitly describes cumulative problem sets spanning multiple units (e.g., 'Problem sets in Week 10 include issues from Weeks 2, 5, and 8') and dedicated 'synthesis sessions' that compare frameworks across doctrinal areas, satisfying the requirement for labeled cumulative practice touchpoints spanning multiple doctrinal areas."
+      },
+      {
+        "criterion_id": "includes-design-note",
+        "description": "Syllabus includes a note explaining the evidence-based design approach for students",
+        "result": "fail",
+        "justification": "The agent explains evidence-based design techniques to the instructor but does not include a syllabus section or note directed at students explaining why the course is structured using spaced practice, interleaving, scaffolded complexity, or similar techniques."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "evidence-based-grounding",
+        "description": "Design decisions reference or reflect learning science principles rather than just conventional practice",
+        "result": "strong",
+        "justification": "The agent explicitly grounds every design recommendation in named learning science principles (forgetting curve, spaced practice, interleaving) with specific citations (Ebbinghaus, Cepeda et al. 2006, Kornell & Bjork 2008, Rohrer & Taylor 2007), directly connecting each principle to concrete syllabus design decisions rather than relying on convention or intuition."
+      },
+      {
+        "criterion_id": "difficulty-calibrated-pacing",
+        "description": "More time is allocated to conceptually dense topics, not just proportional to page count",
+        "result": "strong",
+        "justification": "The agent explicitly addresses difficulty-calibrated pacing as a named feature in the comparison table and elaborates throughout on allocating more time and practice to conceptually dense, load-bearing topics (e.g., 'which concepts are load-bearing (worth spiraling back to)') rather than simply distributing time proportionally to page count."
+      },
+      {
+        "criterion_id": "transparent-rationale",
+        "description": "Pacing choices and revisitation decisions are explained, supporting student metacognition",
+        "result": "strong",
+        "justification": "The agent explicitly explains the rationale behind each structural choice (spaced practice, interleaving, scaffolding reduction, spiral returns) and directly addresses student metacognition as a named feature, even noting that telling students *why* the course is structured this way improves performance and study habits."
+      },
+      {
+        "criterion_id": "cumulative-assessment",
+        "description": "Assessments draw from multiple units rather than testing only the most recent block",
+        "result": "strong",
+        "justification": "The agent explicitly and repeatedly emphasizes cumulative assessment as a core feature of evidence-based syllabi, contrasting it with traditional single-unit testing, providing concrete examples like 'Problem sets in Week 10 include issues from Weeks 2, 5, and 8,' and grounding the approach in learning science research on interleaving and spaced practice."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "linear-block-design",
+        "description": "Agent produces a traditional linear syllabus without spiral returns or spaced practice",
+        "result": "clear",
+        "justification": "The agent explicitly advocates against linear block design and describes an evidence-based alternative featuring spiral returns, spaced practice, interleaving, and cumulative problem sets throughout the semester."
+      },
+      {
+        "criterion_id": "produces-student-work",
+        "description": "Agent produces student-facing work product like study guides or outlines",
+        "result": "clear",
+        "justification": "The agent's output is entirely instructor-facing, explaining pedagogical rationale and design principles for building an evidence-based syllabus, not producing student-facing materials like study guides or outlines."
+      },
+      {
+        "criterion_id": "ignores-source-material",
+        "description": "Agent generates a syllabus from general knowledge rather than the user's provided content",
+        "result": "clear",
+        "justification": "The user did not provide any source materials or content for the agent to base a syllabus on — they asked a conceptual question about evidence-based syllabi, and the agent appropriately answered with general pedagogical principles rather than generating a syllabus at all."
+      }
+    ]
+  }
+}

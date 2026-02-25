@@ -1,0 +1,142 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:10:22.067348+00:00",
+    "persona": "cle",
+    "skill": "topic-curriculum",
+    "version": "_null",
+    "scenario_id": "partial-familiarity"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "partial-familiarity",
+    "setup": "Attorney with some background in the area who wants to deepen expertise.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I've been doing some trademark work for a couple years -- prosecution mostly. I want to build real depth in trademark litigation specifically."
+      },
+      {
+        "role": "user",
+        "content": "I handle office actions and registrations fine, but I've never done a TTAB proceeding or a Lanham Act case in federal court."
+      }
+    ],
+    "expected": [
+      "Acknowledges existing prosecution competence and builds from there",
+      "Skips foundation-level trademark overview",
+      "Focuses curriculum on TTAB practice and federal litigation specifics",
+      "Includes practical resources like sample briefs and procedural guides"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I've been doing some trademark work for a couple years -- prosecution mostly. I want to build real depth in trademark litigation specifically."
+    },
+    {
+      "role": "assistant",
+      "content": "Building depth in trademark litigation is a great goal — it's a distinct skill set from prosecution even though the substantive law overlaps significantly. Here's how I'd think about structuring your development:\n\n## Ground Your Litigation Knowledge in the Right Doctrinal Areas\n\nProsecution gives you a solid foundation but litigation emphasizes different things:\n\n- **Likelihood of confusion** analysis becomes much richer — you need to master the *Polaroid* factors (2d Cir.) or *DuPont* factors (Fed. Cir./TTAB) as applied through actual evidence, not just examining attorney logic\n- **Dilution** under the TDRA — fame threshold, blurring vs. tarnishment\n- **Cancellation and opposition proceedings** at the TTAB — this is a natural bridge from prosecution\n- **Affirmative defenses** — fair use (descriptive and nominative), functionality, acquiescence, laches, abandonment\n- **Remedies** — injunctions, disgorgement, actual damages, attorney's fees under § 35, and the Romag decision on profits (2020)\n\n## Understand the Procedural Landscape\n\n- TTAB proceedings vs. federal district court — know when each matters and how they interact (preclusion issues post-*B&B Hardware*)\n- Preliminary injunction practice is huge in trademark — the standard and how courts apply it to TM cases specifically\n- Discovery in TM cases has distinctive features: consumer surveys, expert witnesses, financial records for damages\n\n## Prioritize These Specific Skills\n\n**Consumer surveys** deserve special attention — Teflon surveys, Squirt surveys, likelihood of confusion surveys. Understanding how to attack and defend survey methodology is genuinely specialized and valuable.\n\n**Expert witnesses** — you'll deal with survey experts, damages experts, and sometimes industry experts. Learn how Daubert challenges play out in TM cases.\n\n**Injunction drafting** — TM injunctions require precision about geographic scope, product scope, and transition periods. Courts scrutinize this carefully.\n\n## Practical Development Path\n\n1. **Start with TTAB oppositions and cancellations** — lower stakes, faster, and directly builds on your prosecution background. The TBMP is your procedural bible.\n\n2. **Read the key circuit decisions carefully** — not just holdings but the evidentiary reasoning. The 9th and 2d Circuits generate the most significant TM litigation.\n\n3. **Find a mentor or firm doing TM litigation** — even seconding yourself to a case in a support role teaches you things reading can't.\n\n4. **McCarthy's treatise** — if you're not already in it regularly, it should become a primary reference. It's organized well for litigation issues.\n\n5. **Follow INTA and the TTABlog** — John Welch's TTABlog is genuinely excellent for staying current on TTAB developments.\n\n## A Few Things That Trip Up Prosecutors Moving to Litigation\n\n- Thinking about marks in isolation rather than in market context with actual evidence\n- Underestimating how much the strength of the mark drives everything in litigation (versus prosecution where it's one factor)\n- Not appreciating how much damages and remedies strategy should shape litigation decisions from the start\n- The difference between what's registrable and what's protectable/infringed — they're related but not identical\n\nWhat's your current situation — are you at a firm where litigation happens, or are you trying to build this as a solo/small firm practitioner? That affects what the most practical next steps look like."
+    },
+    {
+      "role": "user",
+      "content": "I handle office actions and registrations fine, but I've never done a TTAB proceeding or a Lanham Act case in federal court."
+    },
+    {
+      "role": "assistant",
+      "content": "That's a useful baseline — you have the substantive foundation but zero procedural experience in either litigation forum. That's actually a pretty common position and there's a logical progression to address it.\n\n## Start with TTAB — Here's Why It Makes Sense for You\n\nTTAB is the right first step for several reasons:\n\n- **Procedural complexity is lower** than federal court but real enough to teach you litigation fundamentals\n- **No judges, no juries, no courtroom** — it's a paper proceeding decided on the written record\n- **Your prosecution knowledge transfers directly** — you already understand the register, the goods/services analysis, the marks\n- **Mistakes are less catastrophic** than in federal court\n- **You can realistically get your first matter without a supervisor** if you're careful\n\nThe TBMP (Trademark Trial and Appeal Board Manual of Procedure) is freely available on the USPTO website and is genuinely readable. Spend real time with it before your first proceeding.\n\n## What TTAB Proceedings Actually Involve\n\n**Oppositions** are more common than cancellations as entry points. The basic flow:\n\n- Notice of Opposition filed within 30 days of publication\n- Answer due 40 days after service\n- Discovery period (typically 6 months)\n- Trial period — testimony taken by affidavit/declaration, not live\n- Briefs\n- Oral argument optional and rarely granted\n\nKey things that surprise newcomers:\n- \"Trial\" means submitting testimony declarations and exhibits, not a courtroom proceeding\n- Evidence rules apply but are applied somewhat loosely\n- The record is everything — if it's not in the record, it doesn't exist\n- Stipulated extensions are routine and the Board expects them\n\n## Getting Your First TTAB Matter\n\nRealistic options depending on your situation:\n\n**If you're at a firm:** Ask to be staffed on an opposition or cancellation in a support role first. Draft the Notice of Opposition, handle discovery responses, prepare testimony declarations. You don't need to be lead counsel immediately.\n\n**If you handle clients directly:** Watch for publications in the Official Gazette for your clients' competitors. When a client has a legitimate basis to oppose, that's your opportunity. Start with a straightforward likelihood of confusion opposition rather than something involving complex dilution or fraud claims.\n\n**Consider filing a cancellation** on a matter where the grounds are clean — non-use abandonment is often the most straightforward.\n\n## The Bridge to Federal Court\n\nTTAB experience builds specific skills that translate:\n\n- Discovery practice — requests, responses, objections\n- Motion practice — motions to compel, summary judgment\n- Brief writing in an adversarial context\n- Thinking about building a record rather than just making arguments\n\nFederal court adds everything TTAB doesn't have:\n- Preliminary injunctions — often the most urgent and consequential moment in TM litigation\n- Jury considerations\n- Live witnesses and cross-examination\n- Full damages litigation\n- TROs in counterfeiting cases\n\n## For Federal Court — How to Actually Get Experience\n\nThis is harder to manufacture on your own. Realistic paths:\n\n**Co-counsel arrangements** — if you have a client with a federal court matter, consider bringing in an experienced TM litigator and positioning yourself as co-counsel. You learn, client gets experienced representation, you split fees. Be honest with yourself about what you can handle.\n\n**Clinic or pro bono work** — some IP clinics and legal aid organizations handle TM matters. Lower stakes, real experience.\n\n**Secondment or of counsel arrangement** — if you're solo or small firm, some larger IP boutiques will bring in outside counsel on specific matters.\n\n**Clerkship reading** — read every preliminary injunction opinion you can find in TM cases. The *Winter* standard applied to TM facts is something you can learn deeply before you ever file one.\n\n## Specific Things to Do Right Now\n\n1. **Read the TBMP** — not skimming, actually reading the key sections on institution, discovery, and trial\n2. **Pull 5-10 TTAB final decisions** on likelihood of confusion and read them for how evidence is evaluated, not just the outcome\n3. **Read *B&B Hardware v. Hargis*** carefully — it governs the preclusive effect of TTAB decisions in federal court and is essential for understanding how the forums interact\n4. **Get McCarthy** if you don't have it — the litigation volumes specifically\n5. **Find one TTAB matter** to take on in the next 6 months, even a simple one\n\n## Honest Assessment\n\nThe gap between where you are and being a competent TTAB practitioner is closeable in 12-18 months of deliberate work. The gap to federal court TM litigation competence is longer — probably 3-5 years of real exposure — and you shouldn't try to shortcut it without supervision on the more complex matters.\n\nWhat does your practice setting look like? Solo, small firm, larger firm? That changes what's actually available to you."
+    }
+  ],
+  "evaluation": {
+    "score": 41.6,
+    "structural": [
+      {
+        "criterion_id": "clarifies-learning-goal",
+        "description": "Agent asks about the topic, timeline, baseline knowledge, and reason for learning",
+        "result": "fail",
+        "justification": "The agent never explicitly asked about or confirmed the user's timeline or reason for learning (why now), and while it gathered baseline knowledge and inferred the topic, it did not proactively ask about at least three of the four required dimensions before building the curriculum."
+      },
+      {
+        "criterion_id": "maps-knowledge-landscape",
+        "description": "Agent identifies the essential elements of competence in the target area",
+        "result": "pass",
+        "justification": "Before presenting the curriculum, the agent explicitly identifies key concepts (likelihood of confusion factors, dilution, affirmative defenses, remedies), governing sources (TBMP, McCarthy's treatise, Lanham Act, B&B Hardware), and practical skills (consumer surveys, expert witnesses, injunction drafting, discovery) that constitute the essential elements of competence in trademark litigation."
+      },
+      {
+        "criterion_id": "builds-sequenced-curriculum",
+        "description": "Curriculum is organized into Foundation, Depth, Practice, and Currency phases",
+        "result": "pass",
+        "justification": "The agent organizes learning into distinct sequential phases: Foundation (TTAB before federal court, grounding in doctrinal areas), Depth (mastering specific skills like surveys, expert witnesses, procedural nuances), Practice (getting first TTAB matters, co-counsel arrangements for federal court), and Currency (following TTABlog, INTA, staying current on decisions), with different learning objectives at each stage rather than a flat reading list."
+      },
+      {
+        "criterion_id": "explains-each-resource",
+        "description": "Each recommended resource includes a description, rationale, and priority level",
+        "result": "fail",
+        "justification": "While the agent recommends several resources (TBMP, McCarthy's treatise, TTABlog, B&B Hardware, TTAB decisions), most lack explicit rationale for why they're worth the time and none include a priority level, failing to meet the criterion's requirement that at least half include both what they cover and why they're worth the time."
+      },
+      {
+        "criterion_id": "produces-curriculum-document",
+        "description": "Output is a structured document with learning goal, phases, time estimates, and sequence",
+        "result": "fail",
+        "justification": "While the agent provides detailed, well-organized advice with some time estimates (12-18 months for TTAB competence, 3-5 years for federal court), the output lacks a structured curriculum document format with an explicitly stated learning goal, clearly labeled phases with associated resources, and systematic time estimates per phase."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "efficient-prioritization",
+        "description": "Curriculum respects the attorney's limited time and prioritizes high-impact resources",
+        "result": "adequate",
+        "justification": "The agent provides a logical progression and correctly prioritizes TTAB before federal court, but the responses are quite lengthy with extensive lists that could overwhelm a busy attorney, and while McCarthy and the TBMP are highlighted, the sheer volume of resources and action items dilutes the sense of true prioritization for someone with limited time."
+      },
+      {
+        "criterion_id": "practice-oriented",
+        "description": "Curriculum includes practical exercises or skills, not just reading",
+        "result": "strong",
+        "justification": "The agent consistently embeds concrete, actionable exercises throughout both responses—such as reading 5-10 TTAB decisions for evidentiary reasoning, working through the TBMP in depth, drafting a Notice of Opposition, pursuing a first cancellation on clean grounds, and reading preliminary injunction opinions—rather than limiting guidance to passive reading or abstract advice."
+      },
+      {
+        "criterion_id": "minimum-viable-path",
+        "description": "Curriculum offers a shortcut or \"if time is limited\" path for urgent timelines",
+        "result": "weak",
+        "justification": "The agent never explicitly offers a 'minimum viable path' or 'if time is limited' shortcut — both responses provide comprehensive, multi-step curricula without acknowledging urgent timelines or offering a condensed priority sequence for someone who needs to get up to speed quickly."
+      },
+      {
+        "criterion_id": "currency-sources",
+        "description": "Curriculum identifies ongoing sources for staying current after initial learning",
+        "result": "adequate",
+        "justification": "The agent mentions TTABlog and INTA for staying current on TTAB developments, but doesn't systematically address ongoing sources for federal court developments, key journals, listservs, or a broader framework for continuous learning as the user's practice evolves."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "does-the-learning",
+        "description": "Agent teaches the substantive law rather than creating a learning plan",
+        "result": "violation",
+        "justification": "The agent provides extensive substantive legal doctrine (Polaroid/DuPont factors, TDRA dilution, Romag, B&B Hardware, TBMP procedural details, discovery timelines, etc.) rather than pointing the attorney to resources and creating a structured learning plan that directs them where to go to learn these things themselves."
+      },
+      {
+        "criterion_id": "unrealistic-time-estimates",
+        "description": "Agent recommends a curriculum requiring hundreds of hours for someone with a short timeline",
+        "result": "clear",
+        "justification": "The agent's timeline estimates (12-18 months for TTAB competence, 3-5 years for federal court litigation) are realistic and appropriately calibrated to the user's stated starting point, with no unrealistic curriculum imposed against a short stated deadline."
+      },
+      {
+        "criterion_id": "no-primary-sources",
+        "description": "Agent fails to include governing statutes, regulations, or key cases",
+        "result": "clear",
+        "justification": "The agent consistently references primary legal sources throughout, including the Lanham Act (§ 35), landmark cases (B&B Hardware v. Hargis, Romag), governing procedural rules (TBMP), circuit-specific multi-factor tests (Polaroid, DuPont), and the TDRA statute, satisfying the requirement to identify primary legal sources."
+      }
+    ]
+  }
+}

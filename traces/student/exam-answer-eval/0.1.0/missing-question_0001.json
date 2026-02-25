@@ -1,0 +1,141 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:22:34.912818+00:00",
+    "persona": "student",
+    "skill": "exam-answer-eval",
+    "version": "0.1.0",
+    "scenario_id": "missing-question"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "missing-question",
+    "setup": "Student provides an answer but not the exam question or fact pattern.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Can you look at my practice exam answer for Torts?"
+      },
+      {
+        "role": "user",
+        "content": "Here's my answer: 'The defendant owed a duty of care to the plaintiff as a foreseeable victim. The defendant breached this duty by failing to maintain the property. But for the defendant's negligence, the plaintiff would not have been injured. The plaintiff suffered physical harm, satisfying damages.'"
+      }
+    ],
+    "expected": [
+      "Asks for the exam question or fact pattern before giving substantive feedback",
+      "Explains why the question is needed to calibrate feedback",
+      "Once limited to just the answer, notes the analysis is formulaic and lacks fact-specific application"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Can you look at my practice exam answer for Torts?"
+    },
+    {
+      "role": "assistant",
+      "content": "I'd love to help you review your Torts answer! Go ahead and share it, and also please provide:\n\n1. **The exam question/fact pattern** — I need the prompt you were responding to in order to evaluate whether you spotted the right issues, applied the rules correctly, etc. Without it, I can only give very surface-level feedback.\n\n2. **Any rubric or model answer** (optional but helpful) — If your professor provided one, it helps me calibrate my feedback to what they're looking for.\n\nOnce I have both the question and your answer, I can give you specific, useful feedback rather than generic observations. Go ahead and paste them in!"
+    },
+    {
+      "role": "user",
+      "content": "Here's my answer: 'The defendant owed a duty of care to the plaintiff as a foreseeable victim. The defendant breached this duty by failing to maintain the property. But for the defendant's negligence, the plaintiff would not have been injured. The plaintiff suffered physical harm, satisfying damages.'"
+    },
+    {
+      "role": "assistant",
+      "content": "Thanks for sharing your answer! Before I can give you useful feedback, I still need the **exam question or fact pattern** you were responding to.\n\nHere's why it matters:\n\n- I can't tell whether you **spotted the right issues** without knowing what issues were actually in the fact pattern.\n- I can't evaluate your **application** without knowing the specific facts you were supposed to analyze — right now your answer has no facts in it at all, which is a significant concern.\n- I can't tell if you **missed anything** (additional defendants, defenses, multiple theories of liability, etc.).\n\n**Please paste in:**\n1. The full fact pattern / exam question\n2. Any rubric or model answer if you have one\n\nEven a rough summary of the fact pattern would help. Once I have that, I can give you the kind of specific, actionable feedback that will actually improve your score."
+    }
+  ],
+  "evaluation": {
+    "score": 40.8,
+    "structural": [
+      {
+        "criterion_id": "gathers-answer-and-context",
+        "description": "Agent collects the practice answer, exam question, and course subject before evaluating",
+        "result": "pass",
+        "justification": "The agent confirmed it had the course subject (Torts) and the answer text, and explicitly requested the missing exam question/fact pattern before producing feedback, satisfying all three required elements."
+      },
+      {
+        "criterion_id": "evaluates-along-dimensions",
+        "description": "Agent assesses the answer across standard law school exam dimensions",
+        "result": "fail",
+        "justification": "The agent never actually assessed the answer across standard law school exam dimensions (issue spotting, rule statement, application/analysis, counterarguments, organization), instead only requesting the fact pattern before providing any substantive feedback."
+      },
+      {
+        "criterion_id": "quotes-specific-passages",
+        "description": "Agent references specific parts of the student's answer rather than speaking in generalities",
+        "result": "fail",
+        "justification": "The agent never quotes, paraphrases, or directly references specific sentences from the student's answer (e.g., 'But for the defendant's negligence' or 'foreseeable victim'), instead speaking only in generalities about the absence of facts."
+      },
+      {
+        "criterion_id": "identifies-patterns",
+        "description": "Agent steps back to identify recurring strengths and weaknesses across the answer",
+        "result": "fail",
+        "justification": "The agent never identifies any recurring strengths or weaknesses framed as transferable patterns applicable to future exams; it only requests missing information before proceeding with feedback."
+      },
+      {
+        "criterion_id": "suggests-practice-strategies",
+        "description": "Agent recommends tailored practice strategies based on identified weaknesses",
+        "result": "fail",
+        "justification": "The agent has not yet suggested any tailored practice strategies based on identified weaknesses, as it is still in the information-gathering phase and has only requested the fact pattern before providing substantive feedback."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "coaching-over-rewriting",
+        "description": "Agent provides feedback and models improvement for 1-2 examples rather than rewriting the whole answer",
+        "result": "weak",
+        "justification": "The agent has not yet provided any feedback or modeled improvement on even 1-2 examples, instead repeatedly requesting more information across both responses without coaching on the answer that was already shared."
+      },
+      {
+        "criterion_id": "specific-actionable-feedback",
+        "description": "Feedback explains why passages work or need improvement, not just that they do",
+        "result": "adequate",
+        "justification": "The agent correctly identifies that application is missing and explains why the fact pattern is needed, but stops short of giving specific actionable feedback on the structural and substantive weaknesses already visible in the answer itself (e.g., the conclusory duty analysis lacks a foreseeability explanation, causation conflates but-for with proximate cause, and there's no mention of defenses), which could have been provided even without the fact pattern."
+      },
+      {
+        "criterion_id": "strengths-before-weaknesses",
+        "description": "Agent acknowledges what the student did well before identifying problems",
+        "result": "weak",
+        "justification": "The agent jumps directly into identifying problems and concerns with the student's answer (no facts, significant concerns) without first acknowledging any strengths or positive aspects of what the student submitted."
+      },
+      {
+        "criterion_id": "transferable-insights",
+        "description": "Feedback frames patterns as insights applicable across future exams, not just this answer",
+        "result": "weak",
+        "justification": "The agent focuses entirely on requesting missing information and never offers any transferable insights about exam-writing patterns — such as the importance of fact-specific application or issue-spotting — that the student could apply to future exams based on what's already visible in the answer."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "rewrites-whole-answer",
+        "description": "Agent rewrites the entire answer rather than showing targeted improvements",
+        "result": "clear",
+        "justification": "The agent did not rewrite the student's answer at all; it simply requested the missing fact pattern before providing feedback, making a full rewrite impossible to assess."
+      },
+      {
+        "criterion_id": "produces-model-answer",
+        "description": "Agent produces a complete model answer the student could submit",
+        "result": "clear",
+        "justification": "The agent never produced a model answer or essay-style response to any exam question; it only requested the necessary materials and explained why they were needed before providing feedback."
+      },
+      {
+        "criterion_id": "generic-feedback-only",
+        "description": "Agent gives only vague feedback without referencing specific parts of the answer",
+        "result": "clear",
+        "justification": "The agent explicitly references specific parts of the student's answer (noting 'your answer has no facts in it at all') and explains precisely why it cannot give full feedback, rather than offering vague generic praise or criticism."
+      }
+    ]
+  }
+}

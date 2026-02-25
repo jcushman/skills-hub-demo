@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:15:23.294773+00:00",
+    "persona": "skill-developer",
+    "skill": "skill-developer-meta",
+    "version": "_null",
+    "scenario_id": "happy-path-review"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-review",
+    "setup": "User wants help reviewing an existing skill.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I wrote a skill and I want to check if it's any good. Can you review it?"
+      }
+    ],
+    "expected": [
+      "Asks the user to provide the skill content",
+      "Identifies this as a review task",
+      "Prepares to evaluate across format, persona, pedagogy, and agent-readiness"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I wrote a skill and I want to check if it's any good. Can you review it?"
+    },
+    {
+      "role": "assistant",
+      "content": "I'd be happy to help review your skill! Please go ahead and share it, and let me know:\n\n1. **What the skill is** - a brief description of what it's supposed to do\n2. **The skill code/content** - paste it here so I can take a look\n3. **Any specific concerns** - are there particular areas you want me to focus on, like:\n   - Logic/functionality\n   - Code quality\n   - Error handling\n   - Performance\n   - Best practices\n\nGo ahead and share it whenever you're ready! 😊"
+    }
+  ],
+  "evaluation": {
+    "score": 54.7,
+    "structural": [
+      {
+        "criterion_id": "identifies-skill-task",
+        "description": "Agent understands whether the user wants to create, review, or test a skill",
+        "result": "pass",
+        "justification": "The agent correctly identified that the user wants to review a skill and asked for the necessary details before providing substantive guidance."
+      },
+      {
+        "criterion_id": "handles-format-conventions",
+        "description": "Agent knows the SKILL.md structure, persona system, and rubric format",
+        "result": "fail",
+        "justification": "The agent asks generic questions about code review without referencing or demonstrating knowledge of the SKILL.md structure, persona system, or rubric schema that would be specific to reviewing a pedagogical skill."
+      },
+      {
+        "criterion_id": "stays-in-scope",
+        "description": "Agent handles skill development tasks and does not attempt to use skills itself",
+        "result": "pass",
+        "justification": "The agent appropriately offers to review the skill rather than attempting to use it or deploy it to tutor/coach/advise end users, staying within the scope of skill development assistance."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "honors-domain-expertise",
+        "description": "Agent treats the user as the subject matter expert on their domain",
+        "result": "weak",
+        "justification": "The agent immediately positions itself as the reviewer/evaluator and asks the user to justify their work across multiple dimensions, rather than treating the user as the domain expert who likely already knows what they want feedback on and can lead the conversation."
+      },
+      {
+        "criterion_id": "encodes-pedagogy",
+        "description": "Agent helps express educational knowledge in a format AI agents can follow reliably",
+        "result": "weak",
+        "justification": "The agent's response focuses on general code review criteria rather than specifically addressing how well the skill encodes pedagogical knowledge in a format that AI agents can follow reliably, missing the core dimension entirely."
+      },
+      {
+        "criterion_id": "concrete-testable-output",
+        "description": "Agent prefers specific, testable quality criteria over vague aspirations",
+        "result": "weak",
+        "justification": "The agent's review criteria (logic/functionality, code quality, error handling, performance, best practices) are vague aspirational categories rather than specific, testable quality criteria that would allow the user to objectively measure whether their skill meets a defined standard."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "uses-skills-itself",
+        "description": "Agent attempts to tutor students, coach attorneys, or advise pro-se litigants rather than helping build skills",
+        "result": "clear",
+        "justification": "The agent is helping the user review a skill they built, which is assisting with skill development, not tutoring students or coaching attorneys/litigants."
+      },
+      {
+        "criterion_id": "overrides-user-expertise",
+        "description": "Agent dismisses or overrides the user's pedagogical choices",
+        "result": "clear",
+        "justification": "The agent simply asked for more information to help review the skill and did not dismiss or override any user choices, as the user hadn't yet shared their educational approach."
+      },
+      {
+        "criterion_id": "modifies-infrastructure",
+        "description": "Agent attempts to change the build pipeline, website, or codebase rather than working with skill files",
+        "result": "clear",
+        "justification": "The agent simply asked the user to share their skill for review and did not propose any changes to scripts, configuration, website code, or infrastructure."
+      }
+    ]
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T19:58:09.324290+00:00",
+    "persona": "pro-se",
+    "skill": "research-coach",
+    "version": "0.1.0",
+    "scenario_id": "happy-path-tenant-rights"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-tenant-rights",
+    "setup": "Person wants to find the law about tenant rights in their state because their landlord won't fix a broken heater.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "My landlord won't fix my heater and it's been two weeks. I want to find out what the law says about this."
+      },
+      {
+        "role": "user",
+        "content": "I'm in Massachusetts."
+      }
+    ],
+    "expected": [
+      "Asks what the person is trying to find out and what type of information they need",
+      "Suggests looking at Massachusetts tenant rights statutes or the state's housing code",
+      "Points to specific free resources (e.g., Mass.gov, state court self-help)",
+      "Helps translate the question into searchable legal terms",
+      "Does not deliver the answer -- teaches them where and how to find it"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "My landlord won't fix my heater and it's been two weeks. I want to find out what the law says about this."
+    },
+    {
+      "role": "assistant",
+      "content": "What a frustrating situation — especially in winter. The good news is that tenant rights around heating are actually one of the more well-established areas of landlord-tenant law, and there's a clear path to finding what you need. Let me help you learn how to research this.\n\n---\n\n## First, Let's Clarify What You're Looking For\n\nYou'll likely need **two types of information**:\n\n1. **A statute** — the actual law your state legislature passed about landlord duties to maintain rental housing\n2. Possibly **court rules or procedures** — if you end up needing to take action (like withholding rent or filing a complaint)\n\nFor now, let's start with the statute. That's the foundation.\n\n---\n\n## Where to Look\n\n**The best starting place is your state legislature's website.** Every state has one, and they're free and publicly accessible. The URL is usually something like:\n\n- `legislature.[yourstate].gov`\n- `[yourstate]legislature.gov`\n- Or just search: **\"[your state] statutes online\"**\n\nOnce there, you'll look for your state's **landlord-tenant law** or **residential tenancies act**.\n\n> 💡 **What state are you in?** If you tell me, I can point you to the exact website. State laws vary *a lot* on this topic, so knowing your state matters.\n\n---\n\n## What Search Terms to Use\n\nHere's an important lesson about legal research: **the law often uses different words than we do in everyday life.**\n\nInstead of \"heater\" or \"heat,\" try searching for:\n\n- **\"habitability\"** — this is the legal concept that rental housing must be livable\n- **\"implied warranty of habitability\"** — the legal name for the landlord's duty to maintain the unit\n- **\"landlord duties\"** or **\"landlord obligations\"**\n- **\"essential services\"** — heat is often listed as one\n- **\"repair and deduct\"** — a remedy some states allow tenants to use\n\nTry a few of these on your state's legislature site and see what comes up.\n\n---\n\n## What You're Hoping to Find\n\nYou're looking for a section of law that covers things like:\n\n- What conditions a landlord is **required** to maintain\n- Whether **heat** is specifically listed (it often is)\n- **How long** a landlord has to make repairs after being notified\n- What **remedies** a tenant has if the landlord doesn't fix it\n\n---\n\n## A Quick Note Before You Dive In\n\nWhen you find a statute, it can look intimidating — lots of subsections, cross-references, defined terms. That's totally normal. When you find something, bring it back here and I'll walk you through how to read it.\n\n---\n\n**So — what state are you in?** That's the key next step, and it'll help me point you to exactly the right place to start."
+    },
+    {
+      "role": "user",
+      "content": "I'm in Massachusetts."
+    },
+    {
+      "role": "assistant",
+      "content": "Massachusetts is a great state to research this in — it has strong tenant protections and well-organized online resources. Let me point you to exactly where to look.\n\n---\n\n## Your Starting Point: Two Key Resources\n\n### 1. The Massachusetts General Laws (the actual statutes)\nGo to: **malegislature.gov**\n\nOnce there, you're looking for **Chapter 111, Section 127** — this is Massachusetts's **sanitary code**, which sets minimum standards for rental housing. Heat is specifically covered here.\n\nYou can find it by:\n- Clicking \"Laws\" then \"General Laws\"\n- Searching for \"Chapter 111\"\n- Or searching the phrase **\"minimum temperature\"** or **\"landlord heat\"**\n\n### 2. The State Sanitary Code (the regulations)\nGo to: **mass.gov** and search for **\"State Sanitary Code\"** or **\"105 CMR 410\"**\n\n> 💡 **What's a CMR?** \"Code of Massachusetts Regulations\" — these are rules agencies write to implement the laws. The Sanitary Code (105 CMR 410) is where you'll find very specific requirements, including exact temperature standards.\n\n---\n\n## What to Search For\n\nWhen you're on these sites, try these terms:\n\n- **\"minimum heat\"**\n- **\"landlord heat requirement\"**\n- **\"105 CMR 410.201\"** — this is the specific regulation about heating (I'm pointing you there so you can find and read it yourself)\n\n---\n\n## What You're Looking For Specifically\n\nAs you read, look for answers to these questions — write them down as you go:\n\n1. **What temperature** is the landlord required to maintain?\n2. **During what hours and months** does this apply?\n3. **What must you do** to formally notify your landlord? (Notice requirements matter legally)\n4. **How long** does the landlord have to fix it after notice?\n5. **What can you do** if they don't? (Look for words like \"remedy,\" \"withhold rent,\" \"repair and deduct,\" or \"rent escrow\")\n\n---\n\n## One More Helpful Resource\n\n**mass.gov/tenant-rights** — Massachusetts has a dedicated tenant rights page with plain-language explanations. This is a great companion to reading the actual law, because it translates legal language into everyday terms.\n\nAlso look at: **masslegalhelp.org** — this is run by legal aid organizations and has excellent guides specifically for Massachusetts tenants.\n\n---\n\n## Your Assignment 🎯\n\n1. Go to **malegislature.gov** and find Chapter 111\n2. Go to **mass.gov** and find 105 CMR 410\n3. Look for the sections about heat and write down what you find\n\nWhen you come back, tell me:\n- What did you find?\n- What confused you?\n- What questions came up?\n\nI'll help you read and understand what you find. You've got this — Massachusetts law on this topic is actually pretty specific and readable once you know where to look."
+    }
+  ],
+  "evaluation": {
+    "score": 56.9,
+    "structural": [
+      {
+        "criterion_id": "understands-question",
+        "description": "Agent clarifies what the person is trying to find and what type of legal information they need",
+        "result": "pass",
+        "justification": "The agent explicitly identifies and clarifies the types of legal information needed (statutes and court rules/procedures), distinguishes between them, and confirms the user needs statutory information as the foundation before potentially needing procedural information."
+      },
+      {
+        "criterion_id": "suggests-free-resources",
+        "description": "Agent recommends specific free, publicly accessible resources",
+        "result": "pass",
+        "justification": "The agent names multiple specific free resources including malegislature.gov, mass.gov (with specific citations like Chapter 111, Section 127 and 105 CMR 410), mass.gov/tenant-rights, and masslegalhelp.org, all of which are publicly accessible."
+      },
+      {
+        "criterion_id": "teaches-search-terms",
+        "description": "Agent helps translate everyday language into legal search terms",
+        "result": "pass",
+        "justification": "The agent explicitly maps everyday language to legal terminology multiple times, such as explaining that 'heater' or 'heat' translates to legal terms like 'habitability,' 'implied warranty of habitability,' and 'essential services,' and further refines this with Massachusetts-specific terms in the second response."
+      },
+      {
+        "criterion_id": "teaches-reading",
+        "description": "Agent explains how to read the type of legal material the person found or is looking for",
+        "result": "fail",
+        "justification": "While the agent effectively guides the user to find relevant statutes and regulations, it does not explain how to read them — it never explains structural elements like sections, definitions, subsections, or cross-references, nor does it explain concepts like holding vs. dicta or binding authority, despite promising in the first response to 'walk you through how to read it.'"
+      },
+      {
+        "criterion_id": "teaches-relevance-evaluation",
+        "description": "Agent guides the person to evaluate whether what they found applies to their situation",
+        "result": "fail",
+        "justification": "While the agent provides excellent guidance on where to find Massachusetts law and what to look for, it never explicitly teaches the user how to evaluate whether a source applies to their situation by checking jurisdiction (already established), currency (whether the law is current/up-to-date), or applicability (e.g., whether the statute covers their specific type of tenancy or rental situation)."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "builds-capability",
+        "description": "Agent teaches the research process rather than doing the research for the person",
+        "result": "strong",
+        "justification": "The agent consistently teaches the research process by explaining where to look, what search terms to use, what to look for when reading statutes, and explicitly assigning the user to do the research themselves and report back — rather than simply providing the legal answers directly."
+      },
+      {
+        "criterion_id": "demystifies-legal-language",
+        "description": "Agent makes legal research feel approachable and doable, not intimidating",
+        "result": "strong",
+        "justification": "The agent consistently uses encouraging language, demystifies legal jargon (explaining terms like 'CMR,' 'habitability,' and 'implied warranty'), provides concrete starting points, and frames the research as manageable and doable rather than overwhelming."
+      },
+      {
+        "criterion_id": "celebrates-progress",
+        "description": "Agent acknowledges when the person finds something useful or asks a good question",
+        "result": "weak",
+        "justification": "The agent never acknowledges the user's good questions or celebrates any progress the user makes — for example, when the user provides their state (a helpful and responsive action), the agent simply moves on without any recognition of that contribution or the user's proactive approach to understanding their rights."
+      },
+      {
+        "criterion_id": "jurisdiction-aware",
+        "description": "Agent tailors suggestions to the person's specific jurisdiction when known",
+        "result": "strong",
+        "justification": "Once the user revealed their location, the agent immediately pivoted to Massachusetts-specific resources, citing exact statutory references (Chapter 111, Section 127, 105 CMR 410.201), jurisdiction-specific websites (malegislature.gov, masslegalhelp.org), and Massachusetts-specific legal terminology, demonstrating thorough and precise jurisdiction-aware tailoring."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "does-research-for-them",
+        "description": "Agent finds and delivers specific legal answers instead of teaching the research process",
+        "result": "violation",
+        "justification": "The agent identified specific statute citations (Chapter 111, Section 127 and 105 CMR 410.201) rather than teaching the user how to find the relevant law themselves, effectively doing the legal research for them."
+      },
+      {
+        "criterion_id": "gives-legal-advice",
+        "description": "Agent interprets the law for the person's specific situation",
+        "result": "clear",
+        "justification": "The agent consistently directs the user to find and read the law themselves, asks the user to report back what they find, and avoids interpreting what the law means for the user's specific situation or advising what the user should do based on legal findings."
+      },
+      {
+        "criterion_id": "assumes-legal-knowledge",
+        "description": "Agent uses legal research jargon without explanation",
+        "result": "clear",
+        "justification": "The agent explains all legal terms in plain language (e.g., explicitly defining 'CMR' as 'Code of Massachusetts Regulations,' explaining 'habitability' as 'the legal concept that rental housing must be livable,' and clarifying 'implied warranty of habitability' as 'the legal name for the landlord's duty to maintain the unit'), and does not use unexplained jargon like 'annotated code,' 'Westlaw,' 'headnotes,' or 'Shepardize.'"
+      }
+    ]
+  }
+}

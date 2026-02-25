@@ -1,0 +1,143 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:15:31.090966+00:00",
+    "persona": "skill-developer",
+    "skill": "skill-reviewer",
+    "version": "_null",
+    "scenario_id": "happy-path-good-skill"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-good-skill",
+    "setup": "User submits a well-written student skill with minor issues -- good structure but a slightly vague step and a description that could be more specific.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Can you review this skill for me? It's a student skill for legal writing feedback."
+      },
+      {
+        "role": "user",
+        "content": "---\nname: writing-feedback\ndescription: Helps with legal writing\nmetadata:\n  version: 0.1.0\n---\n# Legal Writing Feedback\nYou help law students improve their legal writing.\n## Tone\nEncouraging and constructive.\n## Step 1: Read the Draft\nRead the student's draft carefully.\n## Step 2: Give Feedback\nHelp the student improve their writing by giving feedback on structure, analysis, and clarity.\n## Step 3: Suggest Next Steps\nSuggest what the student should work on next.\n"
+      }
+    ],
+    "expected": [
+      "Acknowledges the basic structure is correct before identifying issues",
+      "Flags the description as too vague to trigger reliably",
+      "Notes that Steps 2 and 3 lack specificity (what kind of feedback? how?)",
+      "Checks persona compliance (student persona -- does it avoid producing work product?)",
+      "Provides specific suggestions for each issue, not just \"make it better\""
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Can you review this skill for me? It's a student skill for legal writing feedback."
+    },
+    {
+      "role": "assistant",
+      "content": "I'd be happy to review your student skill for legal writing feedback! Please go ahead and share it, and I'll take a look at the structure, clarity, and any areas that might need improvement."
+    },
+    {
+      "role": "user",
+      "content": "---\nname: writing-feedback\ndescription: Helps with legal writing\nmetadata:\n  version: 0.1.0\n---\n# Legal Writing Feedback\nYou help law students improve their legal writing.\n## Tone\nEncouraging and constructive.\n## Step 1: Read the Draft\nRead the student's draft carefully.\n## Step 2: Give Feedback\nHelp the student improve their writing by giving feedback on structure, analysis, and clarity.\n## Step 3: Suggest Next Steps\nSuggest what the student should work on next.\n"
+    },
+    {
+      "role": "assistant",
+      "content": "Here's my review of your skill:\n\n---\n\n**Overall Impression**\nGood foundation — the structure is clean, the tone guidance is appropriate, and the three-step flow makes logical sense for a feedback skill.\n\n---\n\n**Specific Issues**\n\n**Description is too vague**\n> *\"Helps with legal writing\"*\n\nThis doesn't tell a student what to expect. Consider something more specific like:\n> *\"Provides structured feedback on law student writing, covering argument structure, legal analysis, and clarity\"*\n\n**Step 2 needs more guidance**\n> *\"Help the student improve their writing by giving feedback on structure, analysis, and clarity\"*\n\nThis is broad enough that the AI could interpret it very differently each time. Consider specifying:\n- Should feedback be prioritized? (e.g., most critical issues first)\n- Should it quote specific passages from the draft?\n- Are there legal writing conventions it should reference? (e.g., IRAC, citation format)\n\n**Step 1 is slightly redundant**\nReading the draft is implied behavior, not really a distinct step. You could fold it into Step 2 or remove it to tighten the skill.\n\n---\n\n**Quick Wins**\n- Sharpen the description\n- Add 2-3 concrete criteria to Step 2\n- Consider whether Step 1 earns its place\n\nOverall this is a solid starting point — just needs a bit more specificity to be consistently useful. Would you like help rewriting any of these sections?"
+    }
+  ],
+  "evaluation": {
+    "score": 58.4,
+    "structural": [
+      {
+        "criterion_id": "obtains-skill",
+        "description": "Agent asks for the skill content and identifies the persona",
+        "result": "fail",
+        "justification": "The agent asked the user to share the skill but never asked which persona it belongs to before beginning the review, satisfying only half of the criterion."
+      },
+      {
+        "criterion_id": "reviews-format",
+        "description": "Agent checks format compliance (frontmatter, structure, step quality)",
+        "result": "pass",
+        "justification": "The agent evaluates at least two format elements, explicitly reviewing the description quality ('too vague') and step structure quality (Step 2 lacking specificity, Step 1 being redundant), satisfying the criterion of checking at least two format elements."
+      },
+      {
+        "criterion_id": "reviews-persona-alignment",
+        "description": "Agent evaluates whether the skill respects its persona's constraints",
+        "result": "fail",
+        "justification": "The agent reviewed the skill for clarity and structure but never explicitly assessed whether the skill's instructions comply with the persona's pedagogical objective and constraints (e.g., whether the feedback approach supports learning rather than just providing answers, or whether it aligns with educational best practices for law students)."
+      },
+      {
+        "criterion_id": "reviews-pedagogical-quality",
+        "description": "Agent evaluates the skill as a pedagogical design",
+        "result": "fail",
+        "justification": "The agent reviews the skill for clarity and specificity but does not assess it across at least two pedagogical dimensions such as learning sequence, active learning, concrete outputs, or pitfall handling from a pedagogical design perspective."
+      },
+      {
+        "criterion_id": "produces-structured-review",
+        "description": "Output follows the structured review format with distinct sections",
+        "result": "fail",
+        "justification": "The agent's response lacks a clearly structured review format with distinct labeled sections; it uses 'Overall Impression' and 'Specific Issues' but does not include at least two of the four required sections (format, persona alignment, pedagogy, agent-readiness) as specified in the criterion."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "constructive-tone",
+        "description": "Agent names what works well before identifying problems",
+        "result": "strong",
+        "justification": "The agent explicitly leads with positive observations ('Good foundation — the structure is clean, the tone guidance is appropriate, and the three-step flow makes logical sense') before transitioning to specific problems, and closes with another affirmation ('solid starting point'), consistently naming strengths before weaknesses throughout the review."
+      },
+      {
+        "criterion_id": "specific-improvements",
+        "description": "Every critique comes with a concrete suggestion for how to fix it",
+        "result": "strong",
+        "justification": "Every critique is paired with a concrete fix: the vague description gets a rewritten example, Step 2's broadness gets specific sub-questions to address, and Step 1's redundancy gets a clear resolution (fold it in or remove it)."
+      },
+      {
+        "criterion_id": "distinguishes-severity",
+        "description": "Agent separates must-fix issues from nice-to-have improvements",
+        "result": "weak",
+        "justification": "The agent groups all issues together without distinguishing which are critical must-fix problems versus optional nice-to-have improvements, leaving the user without clear prioritization guidance."
+      },
+      {
+        "criterion_id": "holistic-assessment",
+        "description": "Review considers multiple dimensions (format, persona, pedagogy, agent-readiness), not just one",
+        "result": "adequate",
+        "justification": "The agent covers format (structure, description clarity) and some pedagogical considerations (feedback specificity, IRAC), but largely focuses on content/wording improvements without meaningfully addressing persona consistency, agent-readiness/reliability concerns, or metadata/versioning dimensions."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "vague-feedback",
+        "description": "Agent gives feedback like \"needs improvement\" without specifics",
+        "result": "clear",
+        "justification": "The agent's feedback is specific throughout, citing exact quoted passages from the skill and providing concrete suggestions such as example rewrites, specific criteria to add (IRAC, citation format, prioritization), and actionable quick wins rather than vague statements."
+      },
+      {
+        "criterion_id": "format-only-review",
+        "description": "Agent only checks format compliance without evaluating pedagogy or persona alignment",
+        "result": "clear",
+        "justification": "The agent's review goes well beyond format compliance, addressing pedagogical quality issues such as vague guidance, inconsistent AI interpretation, and the need for domain-specific conventions like IRAC, while also evaluating whether the skill structure serves its educational purpose effectively."
+      },
+      {
+        "criterion_id": "rewrites-without-asking",
+        "description": "Agent rewrites the skill without the user's permission",
+        "result": "clear",
+        "justification": "The agent provided a thorough review with specific feedback and ended by asking permission before offering to rewrite any sections, rather than producing a full revised SKILL.md unprompted."
+      }
+    ]
+  }
+}

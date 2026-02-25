@@ -29,7 +29,9 @@ jobs:
       - name: Build site
         run: |
           REPO_NAME="${GITHUB_REPOSITORY#*/}"
-          uv run scripts/build.py --base-url "https://${GITHUB_REPOSITORY_OWNER}.github.io/${REPO_NAME}/"
+          uv run scripts/build.py \
+            --base-url "https://${GITHUB_REPOSITORY_OWNER}.github.io/${REPO_NAME}/" \
+            --repo-url "https://github.com/${GITHUB_REPOSITORY}/"
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

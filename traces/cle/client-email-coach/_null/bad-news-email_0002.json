@@ -1,0 +1,143 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:09:08.474953+00:00",
+    "persona": "cle",
+    "skill": "client-email-coach",
+    "version": "_null",
+    "scenario_id": "bad-news-email"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "bad-news-email",
+    "setup": "Attorney needs to communicate an unfavorable outcome to a client and is struggling with tone.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "We lost the summary judgment motion. I need to email the client. Here's my draft: 'Dear Mr. Patel, Unfortunately, the court has denied our motion for summary judgment. We were surprised by this ruling as we believed the arguments were strong. The judge seemed to focus heavily on a factual dispute about the timeline of events. We think this is wrong but we need to discuss next steps. There may be grounds for reconsideration but honestly the judge seemed to have made up his mind. We should talk soon about whether to proceed to trial or explore settlement. Let me know when you're available. Best, [Name]'"
+      },
+      {
+        "role": "user",
+        "content": "He's going to be upset. He's invested a lot in this case. I want to be honest without sounding defeatist."
+      }
+    ],
+    "expected": [
+      "Notes the tone issues (sounding surprised and defeatist undermines confidence)",
+      "Identifies risk language (\"we think this is wrong,\" \"seemed to have made up his mind\")",
+      "Suggests leading with the outcome clearly, then pivoting to concrete next steps",
+      "Provides rewritten passages showing a more confident, forward-looking tone",
+      "Acknowledges the difficulty of delivering bad news and suggests a call may be better for the initial communication"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "We lost the summary judgment motion. I need to email the client. Here's my draft: 'Dear Mr. Patel, Unfortunately, the court has denied our motion for summary judgment. We were surprised by this ruling as we believed the arguments were strong. The judge seemed to focus heavily on a factual dispute about the timeline of events. We think this is wrong but we need to discuss next steps. There may be grounds for reconsideration but honestly the judge seemed to have made up his mind. We should talk soon about whether to proceed to trial or explore settlement. Let me know when you're available. Best, [Name]'"
+    },
+    {
+      "role": "assistant",
+      "content": "## Feedback on Your Draft\n\nYour instinct to communicate promptly is right, but this draft has some **significant professional and strategic problems** worth addressing before sending.\n\n---\n\n### Key Issues\n\n**Credibility concerns**\n- \"We were surprised\" and \"honestly the judge seemed to have made up his mind\" undermine confidence in your judgment and could read as unprofessional criticism of the court\n- Characterizing the ruling as simply \"wrong\" without explanation isn't reassuring\n\n**Vague on substance**\n- Mr. Patel needs to understand *what* the factual dispute was and *why* it matters going forward\n- \"There may be grounds for reconsideration\" without more detail may create false hope or unnecessary anxiety\n\n**Tone feels reactive rather than in control**\n- The client needs to feel you have a path forward, not that you're also caught off guard\n\n---\n\n### Suggested Revision Framework\n\nConsider structuring it as:\n1. **Clear statement of outcome** without editorializing about surprise\n2. **Brief, plain-language explanation** of the court's reasoning\n3. **Concrete next steps** with your actual recommendation\n4. **Specific call to action** with a proposed time, not just \"let me know\"\n\n---\n\n### One Caution\n\nPhrases like \"we think this is wrong\" in writing could become problematic if litigation continues. **Consider what you'd be comfortable with opposing counsel reading.**\n\nWould you like help drafting a revised version?"
+    },
+    {
+      "role": "user",
+      "content": "He's going to be upset. He's invested a lot in this case. I want to be honest without sounding defeatist."
+    },
+    {
+      "role": "assistant",
+      "content": "That's exactly the right instinct - honesty and confidence aren't mutually exclusive. Here's a framework for thinking about this:\n\n## What Mr. Patel Actually Needs Right Now\n\n**Acknowledgment** - that this is genuinely disappointing\n**Understanding** - what happened and why\n**Confidence** - that you're still capable of handling this\n**Direction** - a clear recommended path forward\n\n---\n\n## Suggested Revised Draft\n\n*\"Dear Mr. Patel,*\n\n*I want to update you promptly on an important development. The court denied our motion for summary judgment, citing a factual dispute regarding [specific timeline issue] that it determined requires resolution at trial.*\n\n*I know this is disappointing news given your significant investment in this case. While I believed our arguments were strong, the court's ruling means we now have two primary options to consider: proceeding to trial or exploring settlement discussions.*\n\n*I'd like to speak with you directly to walk through both paths, including my honest assessment of each. Could you make time for a call [specific day/time options]?*\n\n*I remain committed to achieving the best possible outcome for you.*\n\n*Sincerely, [Name]\"*\n\n---\n\n## Why This Works Better\n\n- Acknowledges his investment **without dwelling on it**\n- Explains the ruling **without criticizing the judge**\n- Positions trial as a **viable path**, not a consolation prize\n- Reserves your detailed assessment **for the call**, where tone is easier to manage\n\nThe harder conversation is the phone call. Would you like to think through how to approach that?"
+    }
+  ],
+  "evaluation": {
+    "score": 52.8,
+    "structural": [
+      {
+        "criterion_id": "receives-draft-and-context",
+        "description": "Agent asks for the draft email, client relationship context, purpose, and concerns",
+        "result": "fail",
+        "justification": "The agent immediately evaluated the draft without asking for any contextual elements such as the client relationship history, the purpose beyond the obvious, or specific concerns—it only learned about Mr. Patel's emotional investment and the honesty/defeatism concern in the second user message, which the agent did not proactively solicit."
+      },
+      {
+        "criterion_id": "evaluates-along-dimensions",
+        "description": "Agent assesses the draft across key communication dimensions",
+        "result": "pass",
+        "justification": "The agent addresses at least three key communication dimensions across both responses: tone (reactive vs. in control, honest without defeatist), clarity (vague on substance, plain-language explanation of court's reasoning), client relationship (acknowledging investment, building confidence), completeness (concrete next steps, specific call to action), and risk management (cautioning about phrases like 'we think this is wrong' that opposing counsel could read)."
+      },
+      {
+        "criterion_id": "quotes-specific-passages",
+        "description": "Agent references specific parts of the draft when giving feedback",
+        "result": "pass",
+        "justification": "The agent directly quotes specific phrases from the draft such as 'We were surprised,' 'honestly the judge seemed to have made up his mind,' 'we think this is wrong,' and 'There may be grounds for reconsideration' when explaining the problems with the draft."
+      },
+      {
+        "criterion_id": "identifies-patterns",
+        "description": "Agent names recurring communication patterns, not just one-off issues",
+        "result": "fail",
+        "justification": "The agent identifies specific one-off issues in the draft (vague language, undermining credibility, reactive tone) but never names a recurring communication pattern—such as over-hedging, burying the lead, or defensive framing—that the attorney should watch for across future client communications."
+      },
+      {
+        "criterion_id": "offers-principles",
+        "description": "Agent closes with actionable communication principles the attorney can apply going forward",
+        "result": "fail",
+        "justification": "While the agent provides useful structural frameworks and email-specific advice, it does not explicitly offer transferable communication principles framed as applicable beyond this specific email or situation."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "candid-direct-feedback",
+        "description": "Feedback is specific and direct like a senior colleague, not generic praise",
+        "result": "strong",
+        "justification": "The agent delivers specific, actionable critique identifying concrete problems (credibility-undermining phrases, vague substance, reactive tone) with direct professional reasoning—including the pointed caution about opposing counsel reading the draft—rather than offering generic praise or softened feedback."
+      },
+      {
+        "criterion_id": "shows-not-tells",
+        "description": "Agent provides rewritten examples for problems rather than just describing what's wrong",
+        "result": "strong",
+        "justification": "The agent provides a complete rewritten email draft rather than just describing what changes to make, directly demonstrating the improvements (removing 'surprised,' explaining the ruling neutrally, offering specific next steps) rather than only listing the problems abstractly."
+      },
+      {
+        "criterion_id": "prioritized-feedback",
+        "description": "Agent focuses on the most important 3-5 points rather than line-editing every sentence",
+        "result": "strong",
+        "justification": "The agent consistently focuses on the most critical issues—credibility, vagueness, tone, and strategic framing—without nitpicking every sentence, and organizes feedback into a concise set of high-priority points both times."
+      },
+      {
+        "criterion_id": "transferable-skills",
+        "description": "Patterns and principles help the attorney improve future emails, not just this one",
+        "result": "adequate",
+        "justification": "The agent provides some transferable principles (like the four-part framework and the caution about written statements) but focuses primarily on fixing this specific email rather than explicitly teaching reusable patterns for delivering adverse news to clients in future situations."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "rewrites-whole-email",
+        "description": "Agent rewrites the entire email rather than coaching the attorney to improve it",
+        "result": "violation",
+        "justification": "In the second response, the agent produced a complete replacement draft email rather than providing targeted coaching to help the attorney improve their own draft."
+      },
+      {
+        "criterion_id": "too-deferential",
+        "description": "Agent is so gentle that important problems go unflagged",
+        "result": "clear",
+        "justification": "The agent clearly flagged significant professional and strategic problems in the first response, including credibility concerns and the risk of written statements being seen by opposing counsel, demonstrating direct and useful critique rather than deferential hedging."
+      },
+      {
+        "criterion_id": "ignores-risk",
+        "description": "Agent doesn't address risk management issues in the draft",
+        "result": "clear",
+        "justification": "The agent explicitly flagged risk management concerns, including warning that 'we think this is wrong' in writing could be problematic if litigation continues and that opposing counsel might read it, and cautioned against vague language about reconsideration that could create false hope."
+      }
+    ]
+  }
+}

@@ -1,0 +1,141 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:26:07.777373+00:00",
+    "persona": "student",
+    "skill": "exam-answer-eval",
+    "version": "_null",
+    "scenario_id": "missing-question"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "missing-question",
+    "setup": "Student provides an answer but not the exam question or fact pattern.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Can you look at my practice exam answer for Torts?"
+      },
+      {
+        "role": "user",
+        "content": "Here's my answer: 'The defendant owed a duty of care to the plaintiff as a foreseeable victim. The defendant breached this duty by failing to maintain the property. But for the defendant's negligence, the plaintiff would not have been injured. The plaintiff suffered physical harm, satisfying damages.'"
+      }
+    ],
+    "expected": [
+      "Asks for the exam question or fact pattern before giving substantive feedback",
+      "Explains why the question is needed to calibrate feedback",
+      "Once limited to just the answer, notes the analysis is formulaic and lacks fact-specific application"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Can you look at my practice exam answer for Torts?"
+    },
+    {
+      "role": "assistant",
+      "content": "Of course! Please go ahead and share your practice exam answer, and I'll be happy to review it for you. I can help with things like:\n\n- **Issue spotting** - whether you've identified the relevant tort issues\n- **Rule statements** - accuracy and completeness of the legal rules you've stated\n- **Analysis** - how well you've applied the law to the facts\n- **Conclusions** - whether your conclusions follow logically\n- **IRAC structure** - organization and clarity of your answer\n- **Missing arguments** - anything you may have overlooked\n\nGo ahead and paste your answer!"
+    },
+    {
+      "role": "user",
+      "content": "Here's my answer: 'The defendant owed a duty of care to the plaintiff as a foreseeable victim. The defendant breached this duty by failing to maintain the property. But for the defendant's negligence, the plaintiff would not have been injured. The plaintiff suffered physical harm, satisfying damages.'"
+    },
+    {
+      "role": "assistant",
+      "content": "Great start! Your answer hits the **basic elements of negligence**, but it needs significant development to score well on a law school exam. Here's my feedback:\n\n---\n\n## Overall Structure\nYou've identified the four elements of negligence:\n- ✅ Duty\n- ✅ Breach\n- ✅ Causation\n- ✅ Damages\n\n---\n\n## Element-by-Element Feedback\n\n**Duty**\n- \"Foreseeable victim\" is a good start, but you should elaborate\n- Consider mentioning the **reasonable person standard**\n- Was there any **special relationship** or **special duty** at play?\n\n**Breach**\n- You need more analysis here - *why* was failing to maintain the property unreasonable?\n- Consider applying the **Hand Formula** (B < P x L) or discussing what a reasonable person would have done\n\n**Causation**\n- You stated but-for causation, but **forgot proximate cause**\n- Was the harm a foreseeable result of the breach?\n- Were there any **intervening/superseding causes**?\n\n**Damages**\n- This is your weakest section - just saying \"physical harm\" is conclusory\n- Specify the type of damages\n\n---\n\n## Bigger Issues\n- No **facts** are applied - you're stating rules without connecting them to a specific scenario\n- No discussion of potential **defenses** (contributory/comparative negligence, assumption of risk)\n\n---\n\nWould you like to share the fact pattern so I can give more specific feedback?"
+    }
+  ],
+  "evaluation": {
+    "score": 60.0,
+    "structural": [
+      {
+        "criterion_id": "gathers-answer-and-context",
+        "description": "Agent collects the practice answer, exam question, and course subject before evaluating",
+        "result": "fail",
+        "justification": "The agent began providing detailed feedback on the answer without first asking for the exam question/fact pattern, only requesting it at the end after already delivering substantive evaluation."
+      },
+      {
+        "criterion_id": "evaluates-along-dimensions",
+        "description": "Agent assesses the answer across standard law school exam dimensions",
+        "result": "pass",
+        "justification": "The agent's feedback explicitly addresses issue spotting (identifying negligence elements), rule statements (reasonable person standard, Hand Formula, proximate cause), application/analysis (noting facts aren't applied to a specific scenario), counterarguments (defenses like contributory/comparative negligence and assumption of risk), and organization (IRAC structure), covering well more than three of the required dimensions."
+      },
+      {
+        "criterion_id": "quotes-specific-passages",
+        "description": "Agent references specific parts of the student's answer rather than speaking in generalities",
+        "result": "pass",
+        "justification": "The agent directly quotes specific phrases from the student's answer such as 'foreseeable victim,' 'failing to maintain the property,' and 'physical harm,' and references the student's exact structure to provide targeted feedback on each element."
+      },
+      {
+        "criterion_id": "identifies-patterns",
+        "description": "Agent steps back to identify recurring strengths and weaknesses across the answer",
+        "result": "fail",
+        "justification": "The agent provides element-by-element feedback but never steps back to identify a recurring pattern framed as a transferable strength or weakness applicable to future exams (e.g., 'You consistently state rules without applying facts, which will hurt you across all essay questions')."
+      },
+      {
+        "criterion_id": "suggests-practice-strategies",
+        "description": "Agent recommends tailored practice strategies based on identified weaknesses",
+        "result": "fail",
+        "justification": "The agent provides detailed feedback on weaknesses but does not recommend any tailored practice strategies (e.g., issue-spotting drills, timed application exercises, or specific practice methods) to help the student improve those identified weaknesses."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "coaching-over-rewriting",
+        "description": "Agent provides feedback and models improvement for 1-2 examples rather than rewriting the whole answer",
+        "result": "weak",
+        "justification": "The agent rewrites and restructures the entire answer with comprehensive element-by-element feedback rather than coaching on 1-2 specific examples and letting the student work through the rest independently."
+      },
+      {
+        "criterion_id": "specific-actionable-feedback",
+        "description": "Feedback explains why passages work or need improvement, not just that they do",
+        "result": "strong",
+        "justification": "The agent consistently explains *why* each section needs improvement (e.g., the duty section needs the reasonable person standard because 'foreseeable victim' alone is insufficient, causation is incomplete because proximate cause and foreseeability of harm are missing, damages is conclusory because it lacks specificity), rather than simply flagging that improvements are needed."
+      },
+      {
+        "criterion_id": "strengths-before-weaknesses",
+        "description": "Agent acknowledges what the student did well before identifying problems",
+        "result": "strong",
+        "justification": "The agent explicitly opens with 'Great start!' and immediately highlights that the student correctly identified all four elements of negligence with checkmarks before transitioning to areas needing improvement."
+      },
+      {
+        "criterion_id": "transferable-insights",
+        "description": "Feedback frames patterns as insights applicable across future exams, not just this answer",
+        "result": "weak",
+        "justification": "The agent's feedback is entirely answer-specific and corrective, with no framing of the identified patterns (e.g., always address proximate cause, always apply facts to rules, always consider defenses) as transferable strategies the student can apply to future negligence or tort questions on other exams."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "rewrites-whole-answer",
+        "description": "Agent rewrites the entire answer rather than showing targeted improvements",
+        "result": "clear",
+        "justification": "The agent provided targeted, element-by-element feedback with specific suggestions for improvement rather than rewriting the student's answer entirely."
+      },
+      {
+        "criterion_id": "produces-model-answer",
+        "description": "Agent produces a complete model answer the student could submit",
+        "result": "clear",
+        "justification": "The agent provided targeted feedback on the student's existing answer with specific improvement suggestions, but did not write a complete model answer that the student could submit in place of their own work."
+      },
+      {
+        "criterion_id": "generic-feedback-only",
+        "description": "Agent gives only vague feedback without referencing specific parts of the answer",
+        "result": "clear",
+        "justification": "The agent references specific parts of the student's actual text (e.g., quoting 'foreseeable victim,' noting the omission of proximate cause, flagging 'physical harm' as conclusory) rather than relying solely on vague general statements."
+      }
+    ]
+  }
+}

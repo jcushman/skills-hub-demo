@@ -1,0 +1,143 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:17:44.648468+00:00",
+    "persona": "cle",
+    "skill": "topic-curriculum",
+    "version": "_null",
+    "scenario_id": "happy-path-data-privacy"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-data-privacy",
+    "setup": "Attorney at a mid-size firm transitioning into data privacy practice. Has a few months to build competence. General litigation background but no privacy-specific experience.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I'm a 5th-year litigator and my firm wants me to start handling data privacy matters. I need to get up to speed."
+      },
+      {
+        "role": "user",
+        "content": "I have about 3 months before the first matters come in. I know nothing about privacy law beyond what I read in the news. No GDPR, no CCPA, nothing."
+      }
+    ],
+    "expected": [
+      "Asks about the specific areas of privacy law the firm expects (US state laws, GDPR, sectoral regs)",
+      "Builds a phased curriculum starting with foundational overview",
+      "Includes primary sources (CCPA, GDPR, key regulations)",
+      "Includes practical components (sample privacy assessments, drafting exercises)",
+      "Fits within the 3-month timeline with realistic time estimates"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I'm a 5th-year litigator and my firm wants me to start handling data privacy matters. I need to get up to speed."
+    },
+    {
+      "role": "assistant",
+      "content": "# Getting Up to Speed in Data Privacy: A Practical Roadmap\n\nGiven your litigation background, you actually have more transferable skills than you might think - but there are real knowledge gaps to close systematically.\n\n## Honest Assessment First\n\n**Your advantages:**\n- Reading complex statutes and regulations\n- Spotting litigation risk in documents\n- Client counseling under uncertainty\n- Deadline management and procedure\n\n**Your gaps to close:**\n- Technical concepts (encryption, data flows, breach mechanics)\n- Regulatory framework landscape\n- Privacy-specific compliance vocabulary\n- Incident response procedures\n\n---\n\n## Priority 1: Core Legal Frameworks (First 4-6 Weeks)\n\n**Start with these statutes - read the actual text, not just summaries:**\n\n- **CCPA/CPRA** (California) - most litigated U.S. consumer privacy law\n- **HIPAA** - if your firm has healthcare clients, non-negotiable\n- **GLBA** - financial sector clients\n- **COPPA** - if any clients touch children's data\n- **TCPA** - heavily litigated, overlaps with privacy practice\n\n**Federal landscape:**\n- FTC Act Section 5 - the FTC's primary enforcement tool\n- Understand there is currently **no comprehensive federal privacy law** - this shapes everything\n\n---\n\n## Priority 2: Understand the Regulatory Bodies\n\n| Agency | Primary Role |\n|--------|-------------|\n| FTC | Unfair/deceptive practices, breach enforcement |\n| HHS OCR | HIPAA enforcement |\n| State AGs | CCPA, state breach notification |\n| CFPB | Financial data |\n\n**Key point:** Most U.S. privacy enforcement is currently **state-driven**, not federal.\n\n---\n\n## Priority 3: State Law Landscape\n\nYou need a working map of the patchwork:\n\n**Comprehensive privacy laws now in effect:**\n- California (CPRA), Virginia (VCDPA), Colorado, Connecticut, Texas, Florida, and growing\n\n**Breach notification:** All 50 states have laws - they differ on timing, scope, and who gets notified.\n\n**Practical move:** Get or bookmark the IAPP's state law comparison chart. Don't memorize - know how to find differences fast.\n\n---\n\n## Priority 4: Technical Literacy (Don't Skip This)\n\nYou don't need to be an engineer, but you need enough to:\n- Ask clients the right questions\n- Understand what a breach actually involves\n- Not get lost talking to a CISO\n\n**Concepts to understand functionally:**\n- Encryption at rest vs. in transit\n- What \"personal data\" vs. \"sensitive data\" means technically\n- How data mapping works\n- Basic network architecture (enough to understand breach narratives)\n- What logs are and why they matter in litigation\n\n**Resource:** NIST Cybersecurity Framework - read the executive summary level\n\n---\n\n## Priority 5: The Incident Response Side\n\nThis is where litigators get pulled in fast - often before you feel ready.\n\n**The basic IR timeline you need to know:**\n1. Detection/confirmation\n2. Containment\n3. Forensic investigation\n4. Notification obligations triggered\n5. Regulatory reporting deadlines\n6. Litigation hold considerations\n\n**Critical concept:** Attorney-client privilege and work product protection in breach investigations is genuinely complex and actively litigated. Read *In re Target* and understand the *Wengui v. Clark Hill* line of cases.\n\n**Notification deadlines vary dramatically:**\n- HIPAA: 60 days from discovery\n- Some states: 30 days\n- EU GDPR (if relevant): 72 hours to regulator\n\n---\n\n## Priority 6: If International Matters Are Possible\n\n**GDPR basics you need:**\n- Lawful basis for processing\n- Data subject rights (access, deletion, portability)\n- Controller vs. processor distinction\n- Cross-border transfer mechanisms (SCCs, adequacy decisions)\n\nDon't go deep here initially unless your clients have EU operations - it's a significant additional layer.\n\n---\n\n## Recommended Resources\n\n**Certifications worth considering:**\n- **CIPP/US** (IAPP) - the credential that signals competence to clients; 2-3 months of study\n- Honestly worth doing within your first 6 months\n\n**Reading:**\n- IAPP's *Privacy Law Fundamentals* textbook\n- Steptoe & Johnson, Covington, and Hunton Andrews Kurth publish good free privacy law updates\n- *The Privacy Advisor* (IAPP publication)\n\n**Newsletters to subscribe to now:**\n- IAPP Daily Dashboard\n- Hunton Privacy Blog\n- Kelley Drye Ad Law Access (if TCPA relevant)\n\n---\n\n## Practical Steps in Parallel\n\n**Find a technical partner:**\n- Identify 2-3 forensic/IR firms your firm uses or could use\n- Have introductory calls - understand what they do in an investigation\n- You'll need to work with them under pressure\n\n**Build your document templates:**\n- Breach notification letters (state-specific)\n- Litigation hold notices for data incidents\n- Client intake questionnaire for privacy matters\n\n**Talk to your firm's existing clients:**\n- Ask what privacy concerns keep them up at night\n- Their industries will tell you where to focus\n\n---\n\n## Realistic Timeline\n\n| Timeframe | Goal |\n|-----------|------|\n| Month 1 | CCPA/CPRA, HIPAA basics, breach notification overview |\n| Month 2 | Remaining state laws, FTC enforcement, start CIPP/US prep |\n| Month 3 | CIPP/US exam, IR process, technical literacy |\n| Month 4-6 | Handle matters with supervision, build templates, deepen weak areas |\n\n---\n\n## One Honest Caution\n\nPrivacy law moves **very fast** - new state laws, FTC rulemaking, court decisions on standing and damages. Build a habit of weekly reading now, not just initial cramming. The lawyers who stay current have a real edge over those who learned it once.\n\nWhat types of clients does your firm primarily serve? That would help me point you toward the most relevant specific areas to prioritize first."
+    },
+    {
+      "role": "user",
+      "content": "I have about 3 months before the first matters come in. I know nothing about privacy law beyond what I read in the news. No GDPR, no CCPA, nothing."
+    },
+    {
+      "role": "assistant",
+      "content": "Good - three months with zero assumptions is actually a cleaner starting point than someone with half-formed misconceptions. Let me give you a more focused plan.\n\n## Recalibrate the Goal\n\n**You don't need to be an expert in 3 months. You need to be:**\n- Competent enough to not harm clients\n- Able to identify issues you don't know\n- Credible to clients\n- Supported by good research habits and resources\n\nThat's achievable. Full expertise takes years.\n\n---\n\n## What You Actually Need to Learn First\n\nBefore frameworks and statutes, understand the **conceptual architecture** of privacy law. Everything else hangs on this.\n\n### The Three Core Questions Privacy Law Always Asks\n\n1. **What data was collected?**\n2. **What was done with it?**\n3. **Was the person whose data it is told, and did they consent?**\n\nAlmost every privacy legal issue reduces to some version of these.\n\n### The Two Main Practice Areas You'll Encounter\n\n**Compliance/Counseling**\n- Helping clients build privacy programs\n- Reviewing policies and contracts\n- Advising on data practices before problems arise\n\n**Incident Response / Litigation**\n- Responding to breaches\n- Regulatory investigations\n- Class action defense\n\nAs a litigator, you'll likely get pulled into the second category first. Plan accordingly.\n\n---\n\n## Month 1: Build the Foundation\n\n### Week 1-2: Orientation\n\n**Do these in order:**\n\n1. Read the IAPP's *Introduction to Privacy* - it's short and gives you the conceptual vocabulary\n2. Read the FTC's *Privacy and Security Update* reports (annual, publicly available) - shows you what enforcement actually looks like\n3. Read one real breach class action complaint - PACER, search recent settlements. Read it like a litigator. What did plaintiff allege? What data? What harm?\n\n**Why this order:** You need the vocabulary before statutes make sense, and you need to see what litigation looks like before you study the law that drives it.\n\n### Week 3-4: Core Statutes\n\nRead these in this order, for these reasons:\n\n| Statute | Why First |\n|---------|-----------|\n| Your state's breach notification law | You'll need it immediately |\n| CCPA/CPRA | Most litigated, most clients affected |\n| HIPAA basics | Enormous client base, severe penalties |\n| FTC Act Section 5 | Underlies most federal enforcement |\n\n**How to read them:** Don't just read the statute. For each one, find:\n- The actual statutory text\n- A good practitioner summary (IAPP has these)\n- One enforcement action or case\n\nYou're building a three-dimensional picture, not memorizing rules.\n\n### Technical Vocabulary You Need by End of Month 1\n\nYou don't need to understand these deeply. You need to not look confused when a client says them:\n\n- Personal information / PII / sensitive data\n- Data controller vs. data processor\n- Data mapping / data inventory\n- Encryption at rest vs. in transit\n- Breach vs. security incident\n- Covered entity vs. business associate (HIPAA)\n- Opt-in vs. opt-out consent\n\n---\n\n## Month 2: Go Deeper Where It Matters\n\n### The Breach Response Process\n\nThis is your highest-priority practical skill because it's time-pressured and you'll face it first.\n\n**Learn this sequence cold:**\n\n1. Client calls - there's been an incident\n2. You need to immediately assess: is this a \"breach\" triggering legal obligations?\n3. Preserve privilege over the investigation\n4. Engage forensics\n5. Determine what data was affected\n6. Identify which notification laws apply\n7. Meet notification deadlines\n8. Manage regulatory inquiries\n9. Prepare for litigation\n\n**Each step has legal landmines.** Focus your Month 2 reading here.\n\n**Specific things to understand:**\n\n*Privilege protection in breach investigations*\nThis is genuinely contested and important. The basic issue: if you hire a forensic firm to investigate a breach, is that work product protected? Courts have split on this. Read:\n- *In re Target* litigation\n- *Wengui v. Clark Hill*\n- Understand why you should be the one retaining forensics, not the client directly\n\n*Notification deadlines*\nBuild yourself a reference chart. They vary wildly:\n\n| Law | Deadline | To Whom |\n|-----|----------|---------|\n| HIPAA | 60 days from discovery | HHS + individuals |\n| GDPR | 72 hours | Supervisory authority |\n| Most state laws | 30-60 days | Individuals + AG |\n| NY SHIELD | \"In the most expedient time\" | Individuals + AG |\n\n*What triggers notification*\nNot every security incident is a notifiable breach. Learn the definitions. Most laws require:\n- Unauthorized access to\n- Unencrypted personal information\n- That creates risk of harm\n\nThe \"risk of harm\" analysis is where lawyers add value.\n\n### Contracts\n\nPrivacy-related contract provisions you'll encounter constantly:\n\n- Data Processing Agreements (DPAs)\n- Business Associate Agreements (BAAs) under HIPAA\n- Vendor contracts with data security requirements\n- Indemnification provisions related to breaches\n\nYou don't need to draft these from scratch yet. You need to review them intelligently. Get sample forms from your firm's files or standard form books.\n\n### Start CIPP/US Prep\n\nThe IAPP's Certified Information Privacy Professional (US) exam is the baseline credential. Start the official study materials in Month 2.\n\n**Why it matters:**\n- Clients recognize it\n- The study process is itself a structured curriculum\n- It forces you to learn things you'd otherwise skip\n\n**Realistic timeline:** 6-8 weeks of study, exam in Month 3.\n\n---\n\n## Month 3: Consolidate and Prepare\n\n### Take the CIPP/US Exam\n\nDo it before matters arrive. You won't feel ready. Take it anyway.\n\n### Build Your Practice Infrastructure\n\nThings to have ready before your first matter:\n\n**Reference materials:**\n- State breach notification law comparison (IAPP has one, so does BakerHostetler's Data Breach Charts - free online)\n- HIPAA covered entity/business associate flowchart\n- Your firm's preferred forensic vendors and their contact information\n\n**Document templates:**\n- Breach notification letter (generic, to be customized)\n- Litigation hold notice specific to data incidents\n- Client intake questionnaire for new privacy matters\n\n**Relationships:**\n- Meet the forensic IR firms your firm uses\n- Identify a more senior privacy lawyer you can call when you're stuck - at your firm, at a firm you trust, or through IAPP\n\n### Simulate a Matter\n\nFind a public breach - a recent one with regulatory filings and litigation. Walk through it as if you were counsel:\n- What laws applied?\n- What were the deadlines?\n- What did they do right or wrong?\n- What would you have advised?\n\nThis is the closest thing to a practice run you'll get.\n\n---\n\n## Resources, Prioritized\n\n**Buy or access:**\n- IAPP CIPP/US study materials (official)\n- *Privacy Law Fundamentals* by Solove & Schwartz - the practitioner textbook\n\n**Free and essential:**\n- BakerHostetler Data Breach Industry Forecast (annual, free)\n- Hunton Andrews Kurth Privacy Blog\n- IAPP Daily Dashboard newsletter - subscribe now, read every day\n\n**Free and useful:**\n- FTC enforcement actions (ftc.gov) - read 5-10 actual complaints\n- HHS OCR resolution agreements (hhs.gov) - same exercise for HIPAA\n\n---\n\n## What to Do This Week\n\nConcretely, before anything else:\n\n1. Subscribe to IAPP Daily Dashboard today\n2. Order CIPP/US study materials\n3. Pull one recent breach class action complaint from PACER and read it\n4. Find out what forensic IR firms your firm has relationships with\n5. Ask your firm if there are any existing privacy clients or matters you can review for context\n\n---\n\n## One Realistic Warning\n\nThree months is enough to be competent and careful. It is not enough to be confident. **That's fine.** The lawyers who get in trouble are the ones who don't know what they don't know.\n\nBuild the habit now of saying \"let me confirm that\" rather than answering off the top of your head. Your litigation instincts about when to hedge are an asset here.\n\nWhat kinds of clients is your firm expecting to bring you? Healthcare, tech, retail, financial? That would let me tell you where to weight your time."
+    }
+  ],
+  "evaluation": {
+    "score": 68.8,
+    "structural": [
+      {
+        "criterion_id": "clarifies-learning-goal",
+        "description": "Agent asks about the topic, timeline, baseline knowledge, and reason for learning",
+        "result": "fail",
+        "justification": "The agent never proactively asked about topic, timeline, baseline knowledge, or reason for learning before building the curriculum; it only asked about client types at the end of each response, and the user had to volunteer the timeline and baseline information themselves in the second message."
+      },
+      {
+        "criterion_id": "maps-knowledge-landscape",
+        "description": "Agent identifies the essential elements of competence in the target area",
+        "result": "pass",
+        "justification": "Before presenting the curriculum, the agent explicitly identifies the essential elements of competence—naming key concepts (data controller/processor, encryption, breach vs. incident), governing sources (CCPA/CPRA, HIPAA, FTC Act, state breach notification laws), regulatory bodies (FTC, HHS OCR, state AGs), and practical skills (incident response, privilege protection, contract review)—thereby mapping the knowledge landscape the user must navigate."
+      },
+      {
+        "criterion_id": "builds-sequenced-curriculum",
+        "description": "Curriculum is organized into Foundation, Depth, Practice, and Currency phases",
+        "result": "pass",
+        "justification": "The agent organizes learning into at least three distinct sequential phases with different objectives: Month 1 (Foundation - conceptual architecture and core statutes), Month 2 (Depth - breach response process, contracts, and CIPP/US prep), and Month 3 (Practice/Currency - exam, infrastructure building, and matter simulation), each with clearly differentiated learning goals rather than a flat reading list."
+      },
+      {
+        "criterion_id": "explains-each-resource",
+        "description": "Each recommended resource includes a description, rationale, and priority level",
+        "result": "pass",
+        "justification": "The agent consistently provides descriptions of what resources cover and explicit rationale for why they're worth the time across well more than half the recommended resources—for example, CIPP/US study materials are described with what they cover and why ('clients recognize it,' 'structured curriculum,' 'forces you to learn things you'd otherwise skip'), BakerHostetler Data Breach Charts are described as free reference tools for notification law comparison, FTC enforcement actions are recommended with a specific exercise explaining their value, and the Solove & Schwartz textbook is labeled 'the practitioner textbook.'"
+      },
+      {
+        "criterion_id": "produces-curriculum-document",
+        "description": "Output is a structured document with learning goal, phases, time estimates, and sequence",
+        "result": "pass",
+        "justification": "Both responses, and especially the second, include a clearly stated learning goal (competent to handle privacy matters in 3 months), phased resources organized by month/week, and explicit time estimates (Month 1, Month 2, Month 3 with weekly breakdowns), satisfying all elements of a structured curriculum document."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "efficient-prioritization",
+        "description": "Curriculum respects the attorney's limited time and prioritizes high-impact resources",
+        "result": "strong",
+        "justification": "The agent consistently prioritizes high-impact resources for a time-constrained attorney, sequencing statutes by immediate relevance, recommending the CIPP/US credential as a structured forcing function, pointing to free practitioner-grade references like BakerHostetler's breach charts, and explicitly deferring lower-priority areas like GDPR unless client needs demand it."
+      },
+      {
+        "criterion_id": "practice-oriented",
+        "description": "Curriculum includes practical exercises or skills, not just reading",
+        "result": "strong",
+        "justification": "The agent consistently embeds practical exercises throughout—reading actual breach complaints like a litigator, simulating a matter using a real public breach, building document templates, making introductory calls to forensic firms, and completing the CIPP/US exam—rather than limiting guidance to passive reading or conceptual learning."
+      },
+      {
+        "criterion_id": "minimum-viable-path",
+        "description": "Curriculum offers a shortcut or \"if time is limited\" path for urgent timelines",
+        "result": "adequate",
+        "justification": "The agent provides a clear 3-month timeline that functions as a structured path, but never explicitly frames a 'minimum viable' or 'if time is even more limited' shortcut—for instance, it doesn't tell the user what to prioritize if they only had 4 weeks or one week before an unexpected early matter arrives."
+      },
+      {
+        "criterion_id": "currency-sources",
+        "description": "Curriculum identifies ongoing sources for staying current after initial learning",
+        "result": "strong",
+        "justification": "The agent explicitly identifies multiple ongoing sources for staying current—IAPP Daily Dashboard, Hunton Privacy Blog, BakerHostetler annual reports, FTC enforcement actions—and even warns that 'privacy law moves very fast' and that building 'a habit of weekly reading now, not just initial cramming' is essential for long-term competence."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "does-the-learning",
+        "description": "Agent teaches the substantive law rather than creating a learning plan",
+        "result": "violation",
+        "justification": "The agent repeatedly provides detailed substantive legal analysis—explaining breach notification timelines, privilege doctrine in breach investigations, specific statutory frameworks, technical concepts, and regulatory body roles—rather than simply pointing the attorney to resources and creating a high-level learning plan."
+      },
+      {
+        "criterion_id": "unrealistic-time-estimates",
+        "description": "Agent recommends a curriculum requiring hundreds of hours for someone with a short timeline",
+        "result": "clear",
+        "justification": "The agent's curriculum is well-calibrated to the user's 3-month timeline, explicitly recalibrating goals to competence rather than expertise, and the recommended activities (reading key statutes, CIPP/US prep and exam, building reference materials) are realistically achievable within that timeframe."
+      },
+      {
+        "criterion_id": "no-primary-sources",
+        "description": "Agent fails to include governing statutes, regulations, or key cases",
+        "result": "clear",
+        "justification": "The agent consistently identifies specific primary legal sources throughout both responses, including statutes (CCPA/CPRA, HIPAA, GLBA, COPPA, TCPA, FTC Act Section 5, NY SHIELD Act), regulations, landmark cases (In re Target, Wengui v. Clark Hill), and regulatory enforcement actions from FTC and HHS OCR."
+      }
+    ]
+  }
+}

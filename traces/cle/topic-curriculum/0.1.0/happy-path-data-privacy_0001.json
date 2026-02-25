@@ -1,0 +1,143 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T19:58:16.558110+00:00",
+    "persona": "cle",
+    "skill": "topic-curriculum",
+    "version": "0.1.0",
+    "scenario_id": "happy-path-data-privacy"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-data-privacy",
+    "setup": "Attorney at a mid-size firm transitioning into data privacy practice. Has a few months to build competence. General litigation background but no privacy-specific experience.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I'm a 5th-year litigator and my firm wants me to start handling data privacy matters. I need to get up to speed."
+      },
+      {
+        "role": "user",
+        "content": "I have about 3 months before the first matters come in. I know nothing about privacy law beyond what I read in the news. No GDPR, no CCPA, nothing."
+      }
+    ],
+    "expected": [
+      "Asks about the specific areas of privacy law the firm expects (US state laws, GDPR, sectoral regs)",
+      "Builds a phased curriculum starting with foundational overview",
+      "Includes primary sources (CCPA, GDPR, key regulations)",
+      "Includes practical components (sample privacy assessments, drafting exercises)",
+      "Fits within the 3-month timeline with realistic time estimates"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I'm a 5th-year litigator and my firm wants me to start handling data privacy matters. I need to get up to speed."
+    },
+    {
+      "role": "assistant",
+      "content": "Let me ask a few quick questions before I build your curriculum — the answers will shape the depth and prioritization significantly.\n\n**1. What kind of matters are coming in?**\n- Breach response and litigation?\n- Compliance counseling (privacy programs, policies, vendor contracts)?\n- Regulatory defense (FTC, state AG, CPPA)?\n- All of the above?\n\n**2. What industries are your clients in?**\nPrivacy law is highly sector-specific. Healthcare (HIPAA), financial services (GLBA), adtech, and general commercial companies each have different regulatory exposure. Knowing your client base tells me which frameworks to prioritize.\n\n**3. Geography?**\n- Primarily U.S.-based clients, or do you have international exposure (EU/GDPR)?\n- California clients specifically? (CCPA/CPRA has its own enforcement apparatus and is often the first state law practitioners need to master.)\n\n**4. What's your actual timeline?**\nYou mentioned a few months — but is there a specific matter or client pitch coming up in the near term that's driving urgency? \"A few months to build general competence\" and \"I have a client call in three weeks\" call for different sequencing.\n\n**5. Any existing exposure?**\nHave you touched privacy at all — discovery disputes involving data, a HIPAA business associate agreement, a breach notification letter? Even tangential exposure tells me where you're starting from.\n\nThe more specific you can be, the more targeted I can make this. That said, if you want me to build a general U.S. data privacy curriculum now and we refine from there, I can do that too."
+    },
+    {
+      "role": "user",
+      "content": "I have about 3 months before the first matters come in. I know nothing about privacy law beyond what I read in the news. No GDPR, no CCPA, nothing."
+    },
+    {
+      "role": "assistant",
+      "content": "That's actually a good position to be in — three months is enough time to build real competence if you're systematic about it, and starting from zero means no bad habits to unlearn.\n\nI still need two more answers before I build this out properly:\n\n**1. What kind of work is coming in?**\n\nThis is the most important question. The curriculum for a breach response litigator looks very different from the curriculum for a compliance counselor drafting privacy programs. Even a rough sense helps:\n\n- **Transactional/compliance**: Privacy policies, data processing agreements, vendor contracts, building client privacy programs\n- **Breach response**: Incident response, notification obligations, regulatory investigations, follow-on litigation\n- **Regulatory defense**: FTC enforcement, state AG actions, CPPA proceedings\n- **Some mix** — and if so, which is likely to dominate?\n\nYour litigation background is a genuine asset for breach response and regulatory defense work. If that's where the matters are coming from, I'll weight the curriculum accordingly.\n\n**2. What industries are your clients in?**\n\nEven a general answer helps. \"Mostly mid-market commercial companies\" is different from \"healthcare\" or \"tech/adtech.\" Sector-specific overlays (HIPAA, GLBA, COPPA) can add significant complexity and may need their own curriculum track.\n\n---\n\nIf you genuinely don't know yet what's coming in, tell me that — I'll build a foundational curriculum that covers the core U.S. framework first and flags where you'll need to specialize once the matters clarify."
+    }
+  ],
+  "evaluation": {
+    "score": 36.0,
+    "structural": [
+      {
+        "criterion_id": "clarifies-learning-goal",
+        "description": "Agent asks about the topic, timeline, baseline knowledge, and reason for learning",
+        "result": "pass",
+        "justification": "The agent explicitly asks about or confirms all four key dimensions: topic/type of work (breach response, compliance, regulatory defense), timeline (confirmed the user's 3-month window), baseline knowledge (confirmed zero prior exposure), and reason/context (what matters are coming in and client industries), satisfying the requirement of addressing at least three of the specified criteria before building the curriculum."
+      },
+      {
+        "criterion_id": "maps-knowledge-landscape",
+        "description": "Agent identifies the essential elements of competence in the target area",
+        "result": "fail",
+        "justification": "The agent spends both responses asking clarifying questions without ever naming the key concepts, governing sources, or practical skills that define competence in data privacy law before presenting a curriculum."
+      },
+      {
+        "criterion_id": "builds-sequenced-curriculum",
+        "description": "Curriculum is organized into Foundation, Depth, Practice, and Currency phases",
+        "result": "fail",
+        "justification": "The agent has not yet built any curriculum — it is still in the intake/questioning phase and has not presented any sequenced phases or stages with different learning objectives."
+      },
+      {
+        "criterion_id": "explains-each-resource",
+        "description": "Each recommended resource includes a description, rationale, and priority level",
+        "result": "fail",
+        "justification": "The agent has not yet recommended any resources in this conversation, so there are no resources to evaluate for descriptions, rationales, or priority levels."
+      },
+      {
+        "criterion_id": "produces-curriculum-document",
+        "description": "Output is a structured document with learning goal, phases, time estimates, and sequence",
+        "result": "fail",
+        "justification": "The agent has not yet produced any structured curriculum document with learning goals, phases, time estimates, or sequenced resources — it is still in the information-gathering phase asking clarifying questions."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "efficient-prioritization",
+        "description": "Curriculum respects the attorney's limited time and prioritizes high-impact resources",
+        "result": "weak",
+        "justification": "The agent has now asked clarifying questions across two full exchanges without providing any substantive curriculum content, and given that the user has already stated they have 3 months and zero background knowledge, continuing to withhold a foundational curriculum while pressing for more specifics wastes the attorney's limited time rather than respecting it."
+      },
+      {
+        "criterion_id": "practice-oriented",
+        "description": "Curriculum includes practical exercises or skills, not just reading",
+        "result": "weak",
+        "justification": "The agent has spent two full exchanges asking clarifying questions without introducing any practical exercises, skills, or hands-on learning components, suggesting the curriculum will be reading-heavy rather than practice-oriented."
+      },
+      {
+        "criterion_id": "minimum-viable-path",
+        "description": "Curriculum offers a shortcut or \"if time is limited\" path for urgent timelines",
+        "result": "weak",
+        "justification": "The agent never offers a minimum-viable-path or 'if time is limited' shortcut, and instead continues asking clarifying questions across both turns without providing any prioritized fast-track option despite the user having already given a clear timeline of three months."
+      },
+      {
+        "criterion_id": "currency-sources",
+        "description": "Curriculum identifies ongoing sources for staying current after initial learning",
+        "result": "weak",
+        "justification": "The agent has not yet provided any curriculum content, let alone identified ongoing sources for staying current, as it is still in the intake/questioning phase of the conversation."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "does-the-learning",
+        "description": "Agent teaches the substantive law rather than creating a learning plan",
+        "result": "clear",
+        "justification": "The agent asks diagnostic questions and offers to build a curriculum/learning plan rather than teaching any substantive privacy law doctrine itself."
+      },
+      {
+        "criterion_id": "unrealistic-time-estimates",
+        "description": "Agent recommends a curriculum requiring hundreds of hours for someone with a short timeline",
+        "result": "clear",
+        "justification": "The agent has not yet built or recommended any curriculum with time estimates — it is still gathering information before making recommendations, so there is no unrealistic time estimate to evaluate."
+      },
+      {
+        "criterion_id": "no-primary-sources",
+        "description": "Agent fails to include governing statutes, regulations, or key cases",
+        "result": "clear",
+        "justification": "The agent has not yet built a curriculum — it is still in the intake/scoping phase asking clarifying questions — so there is no curriculum to evaluate for the presence or absence of primary legal sources."
+      }
+    ]
+  }
+}

@@ -1,0 +1,135 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T19:58:44.322094+00:00",
+    "persona": "professor",
+    "skill": "syllabus-evidence-based",
+    "version": "0.1.0",
+    "scenario_id": "minimal-input"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "minimal-input",
+    "setup": "Professor requests a modern syllabus without providing source material.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Build me an evidence-based syllabus for Crim Law."
+      }
+    ],
+    "expected": [
+      "Asks for source material (casebook, readings, or topics)",
+      "Asks for logistical details (sessions, length, credit hours)",
+      "Does not generate a syllabus without the professor's content"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Build me an evidence-based syllabus for Crim Law."
+    },
+    {
+      "role": "assistant",
+      "content": "I'd be glad to build an evidence-based Criminal Law syllabus for you. Before I dive in, I need a few pieces of information to make this accurate and useful rather than generic.\n\n---\n\n## A Few Quick Questions\n\n**1. Source material**\nWhich casebook are you using? Common options include:\n- Dressler & Garvey, *Cases and Materials on Criminal Law*\n- Kadish, Schulhofer & Barkow, *Criminal Law and Its Processes*\n- Kaplan, Weisberg & Binder, *Criminal Law: Cases and Materials*\n- Johnson & Cloud, *Criminal Law: Cases, Materials and Text*\n- Something else?\n\nIf you have a table of contents, syllabus from a prior year, or any other source material, please paste or upload it — that's what I'll use to build the reading assignments.\n\n**2. Course structure**\n- How many class sessions total? (Or: how many weeks, how many sessions per week?)\n- How long is each session? (50 min? 75 min? 3-hour once-a-week seminar?)\n- Credit hours?\n\n**3. Student population and course level**\n- Is this a 1L required course or an upper-level elective?\n- Any particular doctrinal emphases you want (e.g., more time on homicide, mens rea theory, defenses, or sentencing/policy)?\n\n**4. Assessment preferences**\n- Do you currently use a final exam only, or do you have midterms, problem sets, or other assessments?\n- Are you open to adding low-stakes cumulative exercises, or do you have institutional constraints?\n\n**5. Any topics you always cover or always skip?**\nFor example, some faculty spend significant time on inchoate offenses and conspiracy; others treat them lightly. Some include a sentencing unit; others end at conviction.\n\n---\n\nOnce you share this, I'll research existing Criminal Law syllabi from comparable courses, analyze the pacing patterns experienced faculty use, and build you a full session-by-session evidence-based syllabus with spiral return points, scaffolded complexity, and spaced practice built in."
+    }
+  ],
+  "evaluation": {
+    "score": 34.7,
+    "structural": [
+      {
+        "criterion_id": "analyzes-provided-content",
+        "description": "Agent reviews the user's source material before generating the syllabus",
+        "result": "fail",
+        "justification": "The agent has not yet received or reviewed any source material from the user, so it cannot reference specific elements from casebook chapters, case names, or topic areas — it is still in the information-gathering phase."
+      },
+      {
+        "criterion_id": "asks-missing-info",
+        "description": "Agent asks for missing logistical information needed to build the syllabus",
+        "result": "pass",
+        "justification": "The agent explicitly asks about session count, session length, weeks/duration, and credit hours in question #2 of its response, directly addressing the missing logistical information needed to build the syllabus."
+      },
+      {
+        "criterion_id": "includes-spiral-markers",
+        "description": "Schedule includes explicit spiral return points connecting later sessions to earlier material",
+        "result": "fail",
+        "justification": "The agent has not yet produced a syllabus with any sessions, so there are no spiral markers or explicit connections back to earlier sessions to evaluate."
+      },
+      {
+        "criterion_id": "includes-scaffolding-levels",
+        "description": "Sessions indicate the scaffolding progression across the semester",
+        "result": "fail",
+        "justification": "The agent's response only asks clarifying questions and does not include any scaffolding progression annotations or descriptions of how scaffolding will develop across the semester in the syllabus it will build."
+      },
+      {
+        "criterion_id": "includes-spaced-practice",
+        "description": "Schedule includes cumulative practice touchpoints that draw on material from multiple units",
+        "result": "fail",
+        "justification": "The agent has not yet produced a syllabus with any sessions or assignments; it only asked clarifying questions, so no cumulative practice touchpoints spanning multiple doctrinal areas have been scheduled."
+      },
+      {
+        "criterion_id": "includes-design-note",
+        "description": "Syllabus includes a note explaining the evidence-based design approach for students",
+        "result": "fail",
+        "justification": "The agent has not yet produced a syllabus and therefore includes no section explaining the evidence-based design approach (spaced practice, interleaving, scaffolded complexity, etc.) to students; it only mentions these techniques briefly as features it plans to incorporate."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "evidence-based-grounding",
+        "description": "Design decisions reference or reflect learning science principles rather than just conventional practice",
+        "result": "weak",
+        "justification": "The agent mentions terms like 'spiral return points,' 'scaffolded complexity,' and 'spaced practice' only as future promises in a closing line, without grounding any of its current design choices or questions in specific learning science principles or research evidence."
+      },
+      {
+        "criterion_id": "difficulty-calibrated-pacing",
+        "description": "More time is allocated to conceptually dense topics, not just proportional to page count",
+        "result": "weak",
+        "justification": "The agent has not yet produced any syllabus content, so there is no evidence of difficulty-calibrated pacing — it cannot be evaluated as strong or adequate when the actual pedagogical work of allocating time to conceptually dense topics hasn't been attempted at all."
+      },
+      {
+        "criterion_id": "transparent-rationale",
+        "description": "Pacing choices and revisitation decisions are explained, supporting student metacognition",
+        "result": "weak",
+        "justification": "The agent focuses entirely on gathering information and makes no attempt to explain its pedagogical pacing choices, revisitation decisions, or the rationale behind concepts like 'spiral return points' and 'spaced practice' in ways that would support student metacognition."
+      },
+      {
+        "criterion_id": "cumulative-assessment",
+        "description": "Assessments draw from multiple units rather than testing only the most recent block",
+        "result": "weak",
+        "justification": "The agent has not yet produced any syllabus or assessment structure, so there is no evidence of cumulative assessment design drawing from multiple units; the agent is still in the information-gathering phase."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "linear-block-design",
+        "description": "Agent produces a traditional linear syllabus without spiral returns or spaced practice",
+        "result": "clear",
+        "justification": "The agent has not yet produced a syllabus; it is gathering requirements and explicitly promises to build in 'spiral return points, scaffolded complexity, and spaced practice,' indicating awareness of and intent to avoid linear-block design."
+      },
+      {
+        "criterion_id": "produces-student-work",
+        "description": "Agent produces student-facing work product like study guides or outlines",
+        "result": "clear",
+        "justification": "The agent did not produce any student-facing work product; it asked clarifying questions before building an instructor-facing syllabus, which is the appropriate output for this request."
+      },
+      {
+        "criterion_id": "ignores-source-material",
+        "description": "Agent generates a syllabus from general knowledge rather than the user's provided content",
+        "result": "clear",
+        "justification": "The agent explicitly refused to generate a syllabus from general knowledge and instead asked the user to provide their casebook, table of contents, or other source materials before building anything."
+      }
+    ]
+  }
+}

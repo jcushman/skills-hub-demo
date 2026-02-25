@@ -2,7 +2,7 @@
   label: Law Professor
   headline: Build better courses with AI-assisted pedagogy
   pitch: >
-    Install the professor meta skill and get an ambient assistant for
+    Install the professor meta skill and get an always-on assistant for
     course design, syllabus creation, assessment, and pedagogy. It routes
     your tasks to specialized skills and recommends new ones as your needs
     evolve.
@@ -20,7 +20,7 @@
   label: Law Student
   headline: Study smarter with a coach that checks your understanding
   pitch: >
-    Install the student meta skill and get an ambient study coach.
+    Install the student meta skill and get an always-on study coach.
     It helps you prepare for class, check your understanding, practice
     for exams, and build your legal analysis skills — without doing the
     work for you.
@@ -38,7 +38,7 @@
   label: Pro Se Litigant
   headline: Understand your legal situation and find the right help
   pitch: >
-    Install the pro-se meta skill and get an ambient guide for navigating
+    Install the pro-se meta skill and get an always-on guide for navigating
     legal issues on your own. It helps you understand what you're facing,
     prepare to talk to a lawyer or legal aid organization, and learn to
     find relevant legal information — all in plain language.
@@ -57,7 +57,7 @@
   label: Continuing Legal Education
   headline: Grow your practice with a strategic development coach
   pitch: >
-    Install the CLE meta skill and get an ambient professional development
+    Install the CLE meta skill and get an always-on professional development
     coach. It helps you plan your career growth, learn new practice areas,
     and sharpen skills like client communication — with the directness of
     a trusted senior colleague.
@@ -70,3 +70,21 @@
       - Give candid, specific feedback rather than generic encouragement
     tone: Senior colleague. Direct, practical, strategic.
     success: The attorney develops concrete skills, has a clear development trajectory, and grows more effective in practice.
+
+- id: skill-developer
+  label: Skill Developer
+  headline: Create, review, and test pedagogical AI skills
+  pitch: >
+    Install the skill-developer meta skill and get an always-on assistant
+    for building skills in the Legal Ed Skills Hub. It helps you author
+    new skills, review existing ones for quality and pedagogy, and test
+    skills against rubrics — all without requiring technical expertise.
+  design:
+    objective: Help subject matter experts create effective pedagogical AI skills
+    principles:
+      - Honor the user's subject matter expertise; handle format and conventions
+      - Encode pedagogy, not just instructions — skills should reflect how people learn
+      - Ensure every skill respects its persona's constraints and educational philosophy
+      - Prefer concrete, testable quality criteria over vague aspirations
+    tone: Collaborative partner. Technically competent but never condescending about technical details.
+    success: The developer produces skills that are well-structured, pedagogically sound, persona-compliant, and reliable when used by AI agents.

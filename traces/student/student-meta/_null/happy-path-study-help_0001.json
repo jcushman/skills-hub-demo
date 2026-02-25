@@ -1,0 +1,123 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:22:40.121795+00:00",
+    "persona": "student",
+    "skill": "student-meta",
+    "version": "_null",
+    "scenario_id": "happy-path-study-help"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-study-help",
+    "setup": "2L student wants help studying for a Contracts final.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I need help studying for my Contracts exam. Where should I start?"
+      },
+      {
+        "role": "user",
+        "content": "We covered formation, consideration, defenses, breach, and remedies. I feel OK about formation but shaky on everything else."
+      }
+    ],
+    "expected": [
+      "Asks about the course coverage or what the student feels confident vs. shaky on",
+      "Suggests a study approach rather than producing a study guide",
+      "Coaches the student to prioritize and plan rather than doing it for them"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I need help studying for my Contracts exam. Where should I start?"
+    },
+    {
+      "role": "assistant",
+      "content": "Great! Let's get you prepared for your Contracts final. Here's a good way to approach studying:\n\n## Start with the Big Picture Framework\n\nContracts law generally flows through these core questions:\n\n1. **Was a contract formed?** (offer, acceptance, consideration)\n2. **Is it enforceable?** (defenses like fraud, duress, unconscionability, Statute of Frauds)\n3. **What are the terms?** (interpretation, implied terms, parol evidence)\n4. **Was it performed or breached?** (conditions, material breach, excuse doctrines)\n5. **What are the remedies?** (expectation, reliance, restitution damages)\n\n## Good Starting Points\n\n- **Review your syllabus** - see what topics your professor emphasized\n- **Look at past exams** if available - your professor's style matters a lot\n- **Know your sources of law** - common law vs. UCC Article 2 (goods) is frequently tested\n\n## What Helps Most for Exams\n\n- Practice **issue spotting** with hypotheticals\n- Know the **elements** of each doctrine cold\n- Understand the **policy reasons** behind rules\n- Be able to apply **both sides** of arguments\n\n## Where Do You Want to Start?\n\nTell me:\n- **What topics feel weakest?**\n- **What does your exam format look like?**\n- **Any specific areas your professor stressed?**\n\nI can help you work through specific doctrines, practice hypos, or build an outline!"
+    },
+    {
+      "role": "user",
+      "content": "We covered formation, consideration, defenses, breach, and remedies. I feel OK about formation but shaky on everything else."
+    },
+    {
+      "role": "assistant",
+      "content": "Great, that's helpful! Let's build a plan and then dive in systematically.\n\n## Suggested Study Order\n\nGiven what you said, I'd suggest tackling things in this order:\n\n1. **Consideration** - foundational, and it connects to defenses\n2. **Defenses** - lots of distinct doctrines to keep straight\n3. **Breach** (conditions, material breach, excuse) - often heavily tested\n4. **Remedies** - saves the most complex calculations for last\n\n## A Few Questions Before We Dive In\n\n- **Did you cover UCC Article 2** alongside common law, or mostly common law?\n- **Did your professor emphasize any particular cases** or restatement sections?\n- **What's your exam format** - issue spotter essays, multiple choice, or both?\n\n## How I'd Suggest We Work\n\nRather than just reviewing rules, I think you'll retain things better if we:\n- Go through the **key rules and elements** for each topic\n- Then **test you with a hypo** so you can practice applying them\n- Identify any **gaps** and fill them in\n\n---\n\n**Want to start with consideration?** It's a good place because it's deceptively tricky - students often think they understand it and then get surprised on exams.\n\nOr if there's a specific topic that's really worrying you, we can jump there first. What do you think?"
+    }
+  ],
+  "evaluation": {
+    "score": 74.7,
+    "structural": [
+      {
+        "criterion_id": "asks-before-acting",
+        "description": "Agent gathers context about the student's task before diving into substantive help",
+        "result": "pass",
+        "justification": "Before providing substantive guidance, the agent asked clarifying questions about the student's weak areas, exam format, and professor's emphasis, and continued gathering context in the second response by asking about UCC coverage, case emphasis, and exam format."
+      },
+      {
+        "criterion_id": "maintains-coaching-stance",
+        "description": "Agent asks questions and prompts the student to think rather than delivering answers",
+        "result": "fail",
+        "justification": "The agent primarily delivers information and structured content (frameworks, study plans, rules) rather than asking questions to prompt the student's own thinking and reasoning about the material."
+      },
+      {
+        "criterion_id": "stays-in-scope",
+        "description": "Agent handles law student academic tasks and does not drift into unrelated areas",
+        "result": "pass",
+        "justification": "The agent's responses are entirely focused on helping the user prepare for their Contracts law exam, covering study strategies, topic organization, and exam preparation techniques relevant to a law student's academic needs."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "coaching-over-telling",
+        "description": "Agent pushes students to articulate their own reasoning rather than lecturing",
+        "result": "weak",
+        "justification": "The agent consistently lectures by presenting organized frameworks, rules, and study plans rather than asking the student to articulate what they already know or understand about the shaky topics, missing opportunities to diagnose and build on the student's own reasoning."
+      },
+      {
+        "criterion_id": "encouraging-tone",
+        "description": "Agent is supportive and encouraging while remaining honest about what needs work",
+        "result": "strong",
+        "justification": "The agent consistently uses encouraging language ('Great!', 'that's helpful!'), validates the student's self-assessment, frames challenges positively ('deceptively tricky' rather than 'you probably don't understand it'), and maintains honesty about difficulty while keeping a supportive, collaborative tone throughout."
+      },
+      {
+        "criterion_id": "builds-capability",
+        "description": "Agent builds the student's analytical skills and study habits rather than creating dependency",
+        "result": "strong",
+        "justification": "The agent consistently prioritizes building the student's own analytical framework—suggesting they review their syllabus and past exams, proposing a structured study order with rationale, emphasizing active practice through hypos and issue-spotting over passive rule delivery, and asking diagnostic questions to empower the student to direct their own learning rather than simply providing answers."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-work-product",
+        "description": "Agent writes papers, memos, briefs, outlines, or exam answers for the student",
+        "result": "clear",
+        "justification": "The agent provides a study framework and pedagogical guidance but does not write any papers, essays, outlines, or exam answers the student could submit as their own work."
+      },
+      {
+        "criterion_id": "does-thinking-for-student",
+        "description": "Agent provides complete analysis without requiring the student to engage",
+        "result": "clear",
+        "justification": "The agent provides organizational frameworks and study guidance rather than complete legal analysis, and consistently asks the student questions and invites them to engage before diving into substantive doctrine."
+      },
+      {
+        "criterion_id": "dismissive-tone",
+        "description": "Agent is cold, authoritative, or discouraging rather than coaching",
+        "result": "clear",
+        "justification": "The agent consistently uses encouraging, supportive language throughout, offering structured guidance, asking collaborative questions, and framing challenges positively without any condescension or dismissiveness."
+      }
+    ]
+  }
+}

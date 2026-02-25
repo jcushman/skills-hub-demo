@@ -1,0 +1,142 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:15:31.983460+00:00",
+    "persona": "skill-developer",
+    "skill": "skill-reviewer",
+    "version": "_null",
+    "scenario_id": "persona-violation"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "persona-violation",
+    "setup": "User submits a skill that subtly violates its persona's constraints.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Review this pro-se skill I wrote."
+      },
+      {
+        "role": "user",
+        "content": "---\nname: court-form-helper\ndescription: Helps self-represented people fill out court forms correctly.\nmetadata:\n  version: 0.1.0\n---\n# Court Form Helper\nYou help pro-se litigants complete court forms.\n## Step 1: Identify the Form\nAsk what form they need to fill out.\n## Step 2: Fill in the Fields\nGuide them through each field, explaining what information goes where. For legal arguments sections, suggest what to write based on their situation.\n## Step 3: Review\nReview the completed form for accuracy and completeness.\n"
+      }
+    ],
+    "expected": [
+      "Identifies that Step 2's \"suggest what to write based on their situation\" potentially constitutes legal advice",
+      "Flags this as a must-fix persona violation for the pro-se persona",
+      "Distinguishes this from minor format issues",
+      "Suggests a revision that helps the person understand what each field asks without advising what to write"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Review this pro-se skill I wrote."
+    },
+    {
+      "role": "assistant",
+      "content": "Sure, I'd be happy to review your pro-se skill! Please go ahead and share it, and I'll take a look."
+    },
+    {
+      "role": "user",
+      "content": "---\nname: court-form-helper\ndescription: Helps self-represented people fill out court forms correctly.\nmetadata:\n  version: 0.1.0\n---\n# Court Form Helper\nYou help pro-se litigants complete court forms.\n## Step 1: Identify the Form\nAsk what form they need to fill out.\n## Step 2: Fill in the Fields\nGuide them through each field, explaining what information goes where. For legal arguments sections, suggest what to write based on their situation.\n## Step 3: Review\nReview the completed form for accuracy and completeness.\n"
+    },
+    {
+      "role": "assistant",
+      "content": "This is a helpful concept, but there's a significant issue worth flagging:\n\n## Core Problem: Unauthorized Practice of Law (UPL)\n\n**Step 2 crosses a line.** Specifically this part:\n\n> *\"For legal arguments sections, suggest what to write based on their situation.\"*\n\nSuggesting legal arguments based on someone's specific situation is **legal advice**, not form-filling assistance. This distinction matters enormously:\n\n- ✅ **Allowed:** Explaining what a field *means* (\"This field asks for the date you were served\")\n- ✅ **Allowed:** Describing what *type* of information goes in a field\n- ❌ **Problematic:** Crafting legal arguments tailored to their facts\n\nEven framed as a skill/tool, generating strategic legal arguments for a specific person's case could expose users to harm if the advice is wrong, and may constitute UPL depending on jurisdiction.\n\n## Suggested Fixes\n\n1. **Narrow Step 2** to procedural/definitional guidance only\n2. **Add a clear disclaimer** that the skill doesn't provide legal advice\n3. **Add a referral step** pointing users to legal aid organizations, law libraries, or self-help centers\n4. **Scope the persona explicitly:** \"I explain what fields mean, but I don't advise on what legal arguments to make\"\n\n## What's Working Well\n- The step structure is clear\n- The target audience is well-defined\n- The intent is genuinely helpful\n\nWant help rewriting the problematic section?"
+    }
+  ],
+  "evaluation": {
+    "score": 58.4,
+    "structural": [
+      {
+        "criterion_id": "obtains-skill",
+        "description": "Agent asks for the skill content and identifies the persona",
+        "result": "fail",
+        "justification": "The agent never asked for or confirmed the SKILL.md content before reviewing it, nor did it ask which persona the skill belongs to — it simply proceeded directly to reviewing the content the user pasted."
+      },
+      {
+        "criterion_id": "reviews-format",
+        "description": "Agent checks format compliance (frontmatter, structure, step quality)",
+        "result": "fail",
+        "justification": "The agent focused almost entirely on the UPL legal concern and only briefly noted 'the step structure is clear' and 'target audience is well-defined,' without evaluating at least two format elements such as frontmatter field completeness, step structure quality, agent addressing/persona definition, or description quality."
+      },
+      {
+        "criterion_id": "reviews-persona-alignment",
+        "description": "Agent evaluates whether the skill respects its persona's constraints",
+        "result": "fail",
+        "justification": "The agent evaluates the skill's legal and ethical issues (UPL) thoroughly but never explicitly assesses whether the skill's instructions comply with the persona's pedagogical objective and constraints, as the criterion requires."
+      },
+      {
+        "criterion_id": "reviews-pedagogical-quality",
+        "description": "Agent evaluates the skill as a pedagogical design",
+        "result": "fail",
+        "justification": "The agent reviews the skill primarily through a legal/ethical lens (UPL concerns) and does not assess at least two pedagogical dimensions such as learning sequence, active learning, specificity, concrete outputs, or pitfall handling."
+      },
+      {
+        "criterion_id": "produces-structured-review",
+        "description": "Output follows the structured review format with distinct sections",
+        "result": "pass",
+        "justification": "The agent's response includes a clear summary of the core issue and contains at least two distinct sections (Core Problem, Suggested Fixes, and What's Working Well), satisfying the structured review format requirement."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "constructive-tone",
+        "description": "Agent names what works well before identifying problems",
+        "result": "weak",
+        "justification": "The agent leads with the problem ('Core Problem') and only mentions what works well at the end under a brief 'What's Working Well' section, inverting the constructive-tone principle of naming strengths before identifying issues."
+      },
+      {
+        "criterion_id": "specific-improvements",
+        "description": "Every critique comes with a concrete suggestion for how to fix it",
+        "result": "strong",
+        "justification": "Every critique is paired with a concrete fix: the UPL concern comes with four numbered actionable suggestions including narrowing Step 2, adding a disclaimer, adding a referral step, and rewriting the persona scope, plus an offer to help rewrite the problematic section directly."
+      },
+      {
+        "criterion_id": "distinguishes-severity",
+        "description": "Agent separates must-fix issues from nice-to-have improvements",
+        "result": "strong",
+        "justification": "The agent clearly separates the must-fix issue (the UPL problem in Step 2, marked with ❌) from the nice-to-have improvements (adding disclaimers, referral steps, explicit persona scoping) and explicitly calls out what's already working well, giving the user a clear hierarchy of priorities."
+      },
+      {
+        "criterion_id": "holistic-assessment",
+        "description": "Review considers multiple dimensions (format, persona, pedagogy, agent-readiness), not just one",
+        "result": "strong",
+        "justification": "The agent's review addresses multiple dimensions including the skill's persona scope, legal/ethical risks (UPL), structural format quality, user safety, and practical remediation steps, demonstrating a genuinely holistic assessment rather than focusing on any single aspect."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "vague-feedback",
+        "description": "Agent gives feedback like \"needs improvement\" without specifics",
+        "result": "clear",
+        "justification": "The agent cited a specific passage from the skill ('For legal arguments sections, suggest what to write based on their situation'), explained precisely why it was problematic (UPL/legal advice distinction), and offered concrete fixes including narrowing Step 2, adding a disclaimer, adding a referral step, and rewriting the persona scope."
+      },
+      {
+        "criterion_id": "format-only-review",
+        "description": "Agent only checks format compliance without evaluating pedagogy or persona alignment",
+        "result": "clear",
+        "justification": "The agent's review goes well beyond format compliance, substantively evaluating the pedagogical and ethical implications of the skill's guidance (specifically the UPL concern in Step 2) and providing persona-scoping recommendations, demonstrating genuine pedagogical and content-level analysis."
+      },
+      {
+        "criterion_id": "rewrites-without-asking",
+        "description": "Agent rewrites the skill without the user's permission",
+        "result": "clear",
+        "justification": "The agent presented its review and concerns first, then ended by explicitly asking 'Want help rewriting the problematic section?' before producing any revised version."
+      }
+    ]
+  }
+}

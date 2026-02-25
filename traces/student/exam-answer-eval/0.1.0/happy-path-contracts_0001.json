@@ -1,0 +1,143 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T19:59:33.364717+00:00",
+    "persona": "student",
+    "skill": "exam-answer-eval",
+    "version": "0.1.0",
+    "scenario_id": "happy-path-contracts"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-contracts",
+    "setup": "2L student in Contracts who wrote a practice essay on consideration. The answer correctly identifies the bargained-for exchange but misses promissory estoppel and has weak application to the facts.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Can you evaluate my practice exam answer? It's for Contracts."
+      },
+      {
+        "role": "user",
+        "content": "Here's the question: 'Alice promised to pay Bob $5,000 for painting her house. Bob began painting but Alice revoked her promise after Bob was halfway done. Discuss Bob's potential claims.' And here's my answer: 'The main issue is whether there was valid consideration. Consideration requires a bargained-for exchange where each party gives something of value. Here, Alice promised $5,000 and Bob promised to paint, so there is consideration and a valid contract. Alice breached by revoking her promise. Bob can sue for breach of contract and recover the $5,000.'"
+      }
+    ],
+    "expected": [
+      "Acknowledges what the answer gets right (identifying consideration, bargained-for exchange)",
+      "Notes the answer misses promissory estoppel or detrimental reliance as an alternative theory",
+      "Points out the application is conclusory -- states a conclusion without working through the analysis",
+      "Suggests how a stronger version would apply the facts more deeply for 1-2 examples",
+      "Does not rewrite the entire answer"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Can you evaluate my practice exam answer? It's for Contracts."
+    },
+    {
+      "role": "assistant",
+      "content": "I'd be happy to evaluate your Contracts practice answer! To give you useful, specific feedback, I need a few things from you:\n\n1. **Your practice answer** — paste the full text of what you wrote.\n\n2. **The exam question/fact pattern** — paste or summarize the question you were answering. I can't assess your issue-spotting without knowing what issues were actually there to find.\n\n3. **Any rubric or model answer** — if your professor provided one, share it and I'll use it to calibrate my feedback. If not, no worries.\n\nOnce I have the question and your answer, I can give you detailed feedback on issue spotting, rule statements, application, counterarguments, and organization — with specific examples from your writing.\n\nGo ahead and paste everything when you're ready!"
+    },
+    {
+      "role": "user",
+      "content": "Here's the question: 'Alice promised to pay Bob $5,000 for painting her house. Bob began painting but Alice revoked her promise after Bob was halfway done. Discuss Bob's potential claims.' And here's my answer: 'The main issue is whether there was valid consideration. Consideration requires a bargained-for exchange where each party gives something of value. Here, Alice promised $5,000 and Bob promised to paint, so there is consideration and a valid contract. Alice breached by revoking her promise. Bob can sue for breach of contract and recover the $5,000.'"
+    },
+    {
+      "role": "assistant",
+      "content": "Great — I have everything I need. Here's my feedback.\n\n---\n\n## Overall Impression\n\nYou've got a solid foundation here. You correctly identified consideration as a central issue, stated the rule accurately, and reached a reasonable conclusion on breach. That's real credit on an exam. But this answer is leaving significant points on the table — both by missing a major doctrine and by not fully developing the analysis you did start. Let's dig in.\n\n---\n\n## Dimension-by-Dimension Feedback\n\n### 1. Issue Spotting — Needs Work\n\n**What you got right:** Consideration and breach of contract are legitimate issues and you were right to raise them.\n\n**What you missed:** The biggest gap is **promissory estoppel**. This fact pattern is practically a textbook promissory estoppel hypo. Ask yourself: what happens if a court finds the contract *wasn't* fully formed, or if Alice argues the offer was revocable before completion? Bob *relied* on Alice's promise by beginning performance — he's now halfway through a job and out the time and resources he spent. Restatement (Second) of Contracts § 90 exists precisely for situations like this.\n\nOn an issue-spotter, your job is to identify *every viable theory of recovery*, not just the strongest one. A strong answer would discuss:\n- Breach of contract (you got this)\n- **Promissory estoppel** (you missed this)\n- Potentially **quasi-contract/unjust enrichment** — Bob conferred a partial benefit on Alice; she may be unjustly enriched if she keeps a half-painted house without paying anything\n\nMissing promissory estoppel on this fact pattern would likely cost you significant points on most rubrics.\n\n---\n\n### 2. Rule Statement — Adequate, But Thin\n\nYour consideration rule is correct: *\"a bargained-for exchange where each party gives something of value.\"* That's a fine core definition.\n\nBut it could be sharper. Consider adding that the exchange must be **sought by the promisor in exchange for the promise**, and that **performance or a return promise** can both qualify as consideration. This matters here because Bob's *performance* (painting) — not just a promise to paint — is what he's exchanging.\n\n**A stronger rule statement might read:**\n> *\"Consideration requires a bargained-for exchange in which each party's promise or performance is sought by the other as the price of their own commitment. A promise is supported by consideration if the promisee's act, forbearance, or return promise is bargained for and given in exchange for the promisor's promise.\"*\n\nThat's not dramatically longer — but it's more precise and signals doctrinal fluency.\n\n---\n\n### 3. Application — This Is the Weakest Part\n\nThis is where your answer needs the most work. You state the rule and jump almost immediately to a conclusion. Look at this passage:\n\n> *\"Alice promised $5,000 and Bob promised to paint, so there is consideration and a valid contract.\"*\n\nThis is **conclusory**. You're telling the reader the answer without showing the reasoning. On a law school exam, the analysis *is* the grade. A professor wants to see you **connect the facts to the rule elements explicitly**.\n\n**Here's what a stronger application looks like for just the consideration issue:**\n> *\"Alice's promise to pay $5,000 was made in exchange for Bob's painting her house. Bob's act of painting — beginning performance — was the very thing Alice sought when she made her promise. Bob, in turn, began painting in reliance on Alice's promise of payment. Each party's commitment was thus bargained for and given in exchange for the other's, satisfying the consideration requirement.\"*\n\nNotice the difference: the stronger version **names the facts**, **ties them to each element**, and **explains why** the element is satisfied. That's the habit you want to build.\n\n---\n\n### 4. Counterarguments — Missing\n\nYou don't engage with any counterarguments. For example:\n\n- Could Alice argue the contract was an **offer for a unilateral contract** (paint the house, *then* I'll pay), which she could revoke before completion? This is a classic issue — and the **Restatement § 45** answer is that once performance begins, the offer becomes irrevocable. That's worth raising and resolving.\n- On promissory estoppel, Alice might argue Bob's reliance wasn't reasonable or that injustice doesn't require enforcement. Addressing and rebutting that strengthens your answer.\n\nYou don't need to write a brief for both sides — but acknowledging and disposing of the strongest counterargument shows analytical sophistication.\n\n---\n\n### 5. Organization and Clarity — Functional, But Could Be Stronger\n\nYour answer is readable and logical. That's genuinely good — many students write confusingly. But right now it reads as one undifferentiated paragraph. On a multi-issue exam answer, **use headings or clear transitions** to signal when you're moving to a new issue. Something as simple as:\n\n> **I. Breach of Contract**\n> **II. Promissory Estoppel**\n> **III. Unjust Enrichment**\n\n...tells the grader you've organized your thinking and makes it easy to award you points for each issue.\n\n---\n\n## Recurring Patterns to Watch\n\n**Strength to build on:** You move efficiently and write clearly. You don't ramble. That's a real asset — many students bury their analysis in unnecessary throat-clearing. Keep that.\n\n**Pattern to fix — conclusory analysis:** The jump from rule → conclusion without working through the facts is the single most common reason strong students lose points on law school exams. Every time you write a conclusion, ask yourself: *\"Did I show my work?\"* If you can't point to a sentence that connects a specific fact to a specific element, you skipped a step.\n\n**Pattern to fix — single-theory thinking:** You found one valid claim and stopped. Train yourself to ask: *\"What if this theory fails? What else does the plaintiff have?\"* Plaintiffs' lawyers plead in the alternative for a reason.\n\n---\n\n## Suggested Practice Strategies\n\nGiven what I'm seeing, here's what I'd focus on next:\n\n1. **Promissory estoppel drill:** Pull 3–4 fact patterns and practice spotting when § 90 is in play. The triggers are: a clear promise, foreseeable reliance, actual reliance, and injustice without enforcement. Quiz yourself on whether each element is present before writing anything.\n\n2. **Application practice — the \"because\" exercise:** After every conclusion you write, force yourself to write the word *\"because\"* and finish the sentence using specific facts. If you can't, you haven't applied the rule yet.\n\n3. **Issue checklist:** Before you write your next exam answer, spend 2–3 minutes listing every possible claim or defense. Only then start writing. This separates issue-spotting from drafting and helps you catch what you'd otherwise miss under time pressure.\n\n4. **Re-answer this question:** Try rewriting this answer incorporating the feedback above — especially adding promissory estoppel and deepening your consideration application. Comparing your two drafts is one of the most effective ways to internalize the feedback.\n\n---\n\nYou're building on a real foundation here. The core instincts are right — now it's about developing the depth and completeness that separates a good answer from a great one. Nice work getting a practice answer on paper; that's how you improve."
+    }
+  ],
+  "evaluation": {
+    "score": 90.4,
+    "structural": [
+      {
+        "criterion_id": "gathers-answer-and-context",
+        "description": "Agent collects the practice answer, exam question, and course subject before evaluating",
+        "result": "pass",
+        "justification": "Before evaluating, the agent explicitly requested the practice answer, the exam question/fact pattern, and confirmed the course subject (Contracts), and only proceeded after the user provided all three elements."
+      },
+      {
+        "criterion_id": "evaluates-along-dimensions",
+        "description": "Agent assesses the answer across standard law school exam dimensions",
+        "result": "pass",
+        "justification": "The agent explicitly addresses all five standard law school exam dimensions—issue spotting, rule statement, application/analysis, counterarguments, and organization—each in clearly labeled sections with detailed feedback."
+      },
+      {
+        "criterion_id": "quotes-specific-passages",
+        "description": "Agent references specific parts of the student's answer rather than speaking in generalities",
+        "result": "pass",
+        "justification": "The agent directly quotes specific passages from the student's answer multiple times, such as 'Alice promised $5,000 and Bob promised to paint, so there is consideration and a valid contract' and 'a bargained-for exchange where each party gives something of value,' using these quotes as anchors for targeted feedback rather than speaking in generalities."
+      },
+      {
+        "criterion_id": "identifies-patterns",
+        "description": "Agent steps back to identify recurring strengths and weaknesses across the answer",
+        "result": "pass",
+        "justification": "The agent explicitly names transferable patterns under 'Recurring Patterns to Watch,' identifying 'conclusory analysis' and 'single-theory thinking' as weaknesses framed as broadly applicable habits to fix on future exams, and 'efficient, clear writing' as a transferable strength to build on."
+      },
+      {
+        "criterion_id": "suggests-practice-strategies",
+        "description": "Agent recommends tailored practice strategies based on identified weaknesses",
+        "result": "pass",
+        "justification": "The agent recommends four specific, tailored practice strategies—promissory estoppel element drills, the 'because' exercise for application, an issue checklist before drafting, and rewriting the same answer—each directly addressing the weaknesses identified in the student's response rather than offering generic study advice."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "coaching-over-rewriting",
+        "description": "Agent provides feedback and models improvement for 1-2 examples rather than rewriting the whole answer",
+        "result": "weak",
+        "justification": "The agent rewrote multiple sections of the student's answer (consideration rule statement, application paragraph, organization structure) and provided exhaustive feedback across five dimensions plus four practice strategies, rather than coaching on 1-2 examples and letting the student do the revision work themselves."
+      },
+      {
+        "criterion_id": "specific-actionable-feedback",
+        "description": "Feedback explains why passages work or need improvement, not just that they do",
+        "result": "strong",
+        "justification": "The agent consistently explains *why* passages work or need improvement throughout—for example, explicitly labeling the student's consideration analysis as 'conclusory,' showing a revised version, and explaining that the stronger version 'names the facts, ties them to each element, and explains why the element is satisfied,' rather than simply noting the analysis was insufficient."
+      },
+      {
+        "criterion_id": "strengths-before-weaknesses",
+        "description": "Agent acknowledges what the student did well before identifying problems",
+        "result": "strong",
+        "justification": "The agent consistently and explicitly acknowledges strengths before weaknesses throughout the response, opening with 'You correctly identified consideration as a central issue, stated the rule accurately, and reached a reasonable conclusion on breach,' and repeating this pattern in each subsection (e.g., 'What you got right' before 'What you missed') and closing with affirmations of the student's clear writing and strong foundation."
+      },
+      {
+        "criterion_id": "transferable-insights",
+        "description": "Feedback frames patterns as insights applicable across future exams, not just this answer",
+        "result": "strong",
+        "justification": "The agent explicitly frames recurring patterns—conclusory analysis, single-theory thinking, and issue-spotting habits—as transferable skills with named exercises (the 'because' exercise, issue checklists, promissory estoppel drills) that students can apply systematically across future exams, not just to fix this specific answer."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "rewrites-whole-answer",
+        "description": "Agent rewrites the entire answer rather than showing targeted improvements",
+        "result": "clear",
+        "justification": "The agent provides targeted feedback across specific dimensions with illustrative examples of improved phrasing, but never produces a complete rewritten version of the student's full answer — it only shows short, focused sample sentences to illustrate particular improvements."
+      },
+      {
+        "criterion_id": "produces-model-answer",
+        "description": "Agent produces a complete model answer the student could submit",
+        "result": "clear",
+        "justification": "The agent provides targeted feedback, rule refinements, and illustrative snippets to teach the student how to improve, but never produces a complete, submittable model answer to the exam question."
+      },
+      {
+        "criterion_id": "generic-feedback-only",
+        "description": "Agent gives only vague feedback without referencing specific parts of the answer",
+        "result": "clear",
+        "justification": "The agent consistently cited specific passages from the student's answer (e.g., quoting 'Alice promised $5,000 and Bob promised to paint, so there is consideration and a valid contract' and labeling it conclusory) and tied every piece of feedback to concrete elements of the student's actual text rather than relying on vague general statements."
+      }
+    ]
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:08:07.850750+00:00",
+    "persona": "skill-developer",
+    "skill": "skill-tester",
+    "version": "0.1.0",
+    "scenario_id": "happy-path-create-rubric"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-create-rubric",
+    "setup": "User wants to create a rubric for the socratic-tutor skill. They provide the SKILL.md content.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I want to create a rubric for testing the socratic-tutor skill. Here's the SKILL.md."
+      },
+      {
+        "role": "user",
+        "content": "It's a student skill that does Socratic dialogue to prepare students for class. Steps are: gather the assignment, begin dialogue progressing in difficulty, follow up on weak answers, scaffold when stuck, and debrief."
+      }
+    ],
+    "expected": [
+      "Derives structural criteria from the skill's steps (e.g., gathers assignment, progresses in difficulty, scaffolds when stuck)",
+      "Defines pedagogical criteria reflecting the skill's coaching objectives",
+      "Includes anti-patterns from the student persona (no work product, no giving answers immediately)",
+      "Creates scenarios covering happy path, boundary test, and minimal input",
+      "Produces a complete rubric.yaml"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I want to create a rubric for testing the socratic-tutor skill. Here's the SKILL.md."
+    },
+    {
+      "role": "assistant",
+      "content": "Please share the SKILL.md content and I'll get started!"
+    },
+    {
+      "role": "user",
+      "content": "It's a student skill that does Socratic dialogue to prepare students for class. Steps are: gather the assignment, begin dialogue progressing in difficulty, follow up on weak answers, scaffold when stuck, and debrief."
+    },
+    {
+      "role": "assistant",
+      "content": "Thanks! That's a solid description to work from. Before I draft the rubric, a few quick questions:\n\n1. **Persona constraints**: Is there anything the student persona explicitly cannot do? For example, is the agent forbidden from just explaining the answer, writing content for the student, or doing the assignment for them?\n\n2. **Debrief format**: Does the debrief step produce a specific artifact -- like a summary of what the student understood well vs. struggled with -- or is it more of a conversational wrap-up?\n\n3. **Scope boundaries**: What kinds of requests should the skill gracefully decline or redirect? For example, if a student asks \"can you just tell me the answer?\" or brings a topic completely unrelated to their assignment?\n\n4. **Persona and skill IDs**: What's the persona ID and skill name I should use in the rubric header? (e.g., `persona: student`, `skill: socratic-tutor`)\n\nThese will help me write criteria and anti-patterns that reflect the actual skill design rather than generic tutoring assumptions."
+    }
+  ],
+  "evaluation": {
+    "score": 40.8,
+    "structural": [
+      {
+        "criterion_id": "understands-skill",
+        "description": "Agent obtains and reads the skill content before defining criteria",
+        "result": "fail",
+        "justification": "The agent asked the user to share the SKILL.md content but then, upon receiving only a summary description rather than the actual file content, proceeded to ask clarifying questions instead of requesting to read the actual SKILL.md document, meaning it never obtained or read the actual skill content before proceeding."
+      },
+      {
+        "criterion_id": "defines-structural-criteria",
+        "description": "Agent identifies concrete, checkable behaviors the agent should exhibit",
+        "result": "fail",
+        "justification": "The agent asks clarifying questions but does not propose any structural criteria with description and check statements, which is what the criterion requires."
+      },
+      {
+        "criterion_id": "defines-pedagogical-criteria",
+        "description": "Agent identifies subjective quality dimensions with weights",
+        "result": "fail",
+        "justification": "The agent asks clarifying questions but does not propose any pedagogical criteria with descriptions and weight levels (low/medium/high), which is required by the criterion."
+      },
+      {
+        "criterion_id": "defines-anti-patterns",
+        "description": "Agent identifies things the agent must never do",
+        "result": "fail",
+        "justification": "The agent asks clarifying questions about anti-patterns but does not itself propose any anti-patterns derived from the skill's constraints or boundaries."
+      },
+      {
+        "criterion_id": "creates-test-scenarios",
+        "description": "Agent designs test scenarios covering different interaction types",
+        "result": "fail",
+        "justification": "The agent only asks clarifying questions and does not propose any test scenarios with setup, messages, and expected behaviors."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "criteria-from-skill-steps",
+        "description": "Structural criteria derive from the skill's own defined steps and behaviors",
+        "result": "weak",
+        "justification": "The agent asks clarifying questions before drafting the rubric, but the skill's steps were already clearly described (gather assignment, dialogue with increasing difficulty, follow up on weak answers, scaffold when stuck, debrief), so the agent should have derived structural criteria directly from those defined steps rather than requesting additional information about them."
+      },
+      {
+        "criterion_id": "comprehensive-scenario-coverage",
+        "description": "Scenarios test different types of interactions (happy path, edge case, boundary, minimal input)",
+        "result": "weak",
+        "justification": "The agent asks clarifying questions rather than proposing any scenario coverage, and has not yet drafted or outlined rubric scenarios that would test happy path, edge cases, boundary conditions, or minimal inputs for the socratic-tutor skill."
+      },
+      {
+        "criterion_id": "testable-criteria",
+        "description": "Criteria are specific enough to evaluate consistently across different evaluators",
+        "result": "strong",
+        "justification": "The agent's clarifying questions target specific, evaluable design decisions—forbidden behaviors, debrief artifacts, out-of-scope handling, and identifiers—that would directly determine whether rubric criteria could be applied consistently by different evaluators rather than interpreted subjectively."
+      },
+      {
+        "criterion_id": "persona-grounded-anti-patterns",
+        "description": "Anti-patterns reflect the persona's constraints, not just generic quality concerns",
+        "result": "strong",
+        "justification": "The agent explicitly asks about persona-specific constraints (what the student persona cannot do), scope boundaries (what requests to decline), and persona/skill IDs to ensure anti-patterns reflect the actual skill design rather than generic tutoring assumptions."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "vague-criteria",
+        "description": "Agent defines criteria too vague to evaluate consistently",
+        "result": "clear",
+        "justification": "The agent asked clarifying questions to gather specific details before writing any criteria, demonstrating intent to define observable behaviors rather than vague standards."
+      },
+      {
+        "criterion_id": "insufficient-scenarios",
+        "description": "Agent creates only one test scenario or only happy-path scenarios",
+        "result": "clear",
+        "justification": "The agent has not yet produced any test scenarios — it is still in a clarifying questions phase before drafting the rubric, so the anti-pattern of creating insufficient or only happy-path scenarios cannot be assessed yet."
+      },
+      {
+        "criterion_id": "ignores-persona-constraints",
+        "description": "Anti-patterns don't reflect the persona's specific constraints",
+        "result": "clear",
+        "justification": "The agent explicitly asked about persona constraints, scope boundaries, and what the skill forbids before drafting any rubric, demonstrating a deliberate effort to avoid generic anti-patterns and instead ground criteria in the specific pedagogical design of the socratic-tutor skill."
+      }
+    ]
+  }
+}

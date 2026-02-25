@@ -1,0 +1,147 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T18:59:27.668918+00:00",
+    "persona": "student",
+    "skill": "understanding-check",
+    "version": "_null",
+    "scenario_id": "minimal-input"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "minimal-input",
+    "setup": "Student provides almost no context about their course or level.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Check my understanding"
+      },
+      {
+        "role": "user",
+        "content": "Property"
+      }
+    ],
+    "expected": [
+      "Asks follow-up questions to gather context before starting the diagnostic",
+      "Does not assume a level or specific topics -- asks what has been covered",
+      "Adapts once given the topic rather than refusing to proceed"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Check my understanding"
+    },
+    {
+      "role": "assistant",
+      "content": "I'd be happy to check your understanding! Please go ahead and share:\n\n- A concept you want to explain\n- A problem you've worked out\n- A summary of something you've learned\n- Or any questions you have\n\nWhat would you like me to check? 😊"
+    },
+    {
+      "role": "user",
+      "content": "Property"
+    },
+    {
+      "role": "assistant",
+      "content": "Could you be more specific? \"Property\" is a broad topic that appears in many subjects, such as:\n\n- **Math** - properties like commutative, associative, distributive\n- **Science** - physical or chemical properties of matter\n- **Law** - property rights, ownership\n- **Philosophy** - properties of objects\n- **Programming** - properties of objects/classes\n\nCould you tell me:\n1. **What subject** are you studying?\n2. **What you understand** about the property/properties you're referring to?\n\nThat way I can give you the most helpful feedback! 😊"
+    }
+  ],
+  "evaluation": {
+    "score": 44.7,
+    "structural": [
+      {
+        "criterion_id": "gathers-course-context",
+        "description": "Agent asks about the course, subject area, or topic before conducting the diagnostic",
+        "result": "pass",
+        "justification": "In the agent's second turn, it explicitly asks 'What subject are you studying?' which is a direct question about the course/subject area before conducting any diagnostic assessment."
+      },
+      {
+        "criterion_id": "gathers-progress-context",
+        "description": "Agent asks how far along the student is or what has been covered",
+        "result": "fail",
+        "justification": "The agent asks about the subject and what the student understands, but never asks how far along the student is, what topics have been covered, where they are in the semester, or what's coming next."
+      },
+      {
+        "criterion_id": "asks-for-own-words",
+        "description": "Agent asks the student to explain concepts in their own words rather than recite rules",
+        "result": "fail",
+        "justification": "The agent asks clarifying questions about subject and topic but does not ask the student to explain concepts in their own words using phrasing like 'explain', 'describe how', 'why does', or 'what happens when'."
+      },
+      {
+        "criterion_id": "probes-reasoning",
+        "description": "Agent follows up on student answers by probing for deeper reasoning",
+        "result": "fail",
+        "justification": "The agent has not yet received a student explanation or answer to probe for deeper reasoning, as the conversation is still in the clarification stage before any substantive student response."
+      },
+      {
+        "criterion_id": "produces-understanding-map",
+        "description": "Agent produces a structured understanding map at the end",
+        "result": "fail",
+        "justification": "The agent has not produced any structured understanding map with categorized sections for strong areas, areas needing work, and priorities, as the conversation has not progressed to a point where the agent has assessed the user's understanding."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "coaching-over-telling",
+        "description": "Agent asks questions and guides discovery rather than lecturing or providing answers directly",
+        "result": "strong",
+        "justification": "The agent consistently asks clarifying questions and prompts the user to share their own understanding rather than launching into explanations, effectively guiding discovery by requesting the user articulate what they know before providing any content."
+      },
+      {
+        "criterion_id": "celebrates-strengths",
+        "description": "Agent explicitly acknowledges what the student got right before addressing gaps",
+        "result": "weak",
+        "justification": "The agent has not yet had an opportunity to celebrate strengths because the student hasn't shared any understanding to evaluate—the agent is still in the clarification phase, so the dimension cannot be demonstrated."
+      },
+      {
+        "criterion_id": "specific-gap-identification",
+        "description": "When identifying gaps, agent quotes or paraphrases what the student said and explains specifically why it reveals a gap, rather than giving vague feedback",
+        "result": "weak",
+        "justification": "The agent has not yet identified any gaps because the student hasn't shared their understanding yet, so there is no opportunity to evaluate specific gap identification in this conversation."
+      },
+      {
+        "criterion_id": "actionable-suggestions",
+        "description": "Review suggestions point to specific cases, doctrines, or material sections rather than generic advice like \"study more\"",
+        "result": "weak",
+        "justification": "The agent has not yet provided any review suggestions, specific cases, doctrines, or material sections because the conversation is still in the clarification phase with no substantive content to evaluate."
+      },
+      {
+        "criterion_id": "appropriate-difficulty",
+        "description": "Diagnostic questions build from foundational to more advanced, matching the student's level",
+        "result": "weak",
+        "justification": "The agent has not yet asked any diagnostic questions to assess the student's level, so there is no evidence of questions building from foundational to advanced or matching the student's demonstrated knowledge."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-work-product",
+        "description": "Agent writes an outline, essay, memo, or other finished work product for the student",
+        "result": "clear",
+        "justification": "The agent did not produce any finished work product; instead, it asked clarifying questions to prompt the student to share their own understanding before providing feedback."
+      },
+      {
+        "criterion_id": "answers-own-questions",
+        "description": "Agent asks a diagnostic question then immediately answers it without waiting for the student",
+        "result": "clear",
+        "justification": "The agent asks clarifying questions but does not answer them itself; it waits for the student to provide more context about their subject and understanding."
+      },
+      {
+        "criterion_id": "dismissive-of-mistakes",
+        "description": "Agent tells the student they are wrong without encouragement or constructive framing",
+        "result": "clear",
+        "justification": "The agent did not correct or dismiss any student mistake; it simply asked clarifying questions to better understand what the student wanted to discuss."
+      }
+    ]
+  }
+}

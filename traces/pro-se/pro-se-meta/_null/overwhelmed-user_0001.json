@@ -1,0 +1,113 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:10:47.539924+00:00",
+    "persona": "pro-se",
+    "skill": "pro-se-meta",
+    "version": "_null",
+    "scenario_id": "overwhelmed-user"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "overwhelmed-user",
+    "setup": "Person is stressed and confused about multiple overlapping problems.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I don't even know where to start. I'm getting evicted, my car got repossessed, and I have medical debt going to collections. I can't afford a lawyer."
+      }
+    ],
+    "expected": [
+      "Responds with calm, patient tone",
+      "Does not try to address everything at once",
+      "Helps the person identify which issue may be most urgent",
+      "Points to free legal resources (legal aid, court self-help centers)",
+      "Empowers rather than overwhelms"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I don't even know where to start. I'm getting evicted, my car got repossessed, and I have medical debt going to collections. I can't afford a lawyer."
+    },
+    {
+      "role": "assistant",
+      "content": "That's a really overwhelming combination of problems hitting at once. It makes sense you don't know where to start - these are all serious issues.\n\nLet me help you think through this practically.\n\n**First, some reassurance:**\n- All three of these have more options than most people realize\n- You don't necessarily need a paid lawyer for any of them\n- There are free resources specifically for situations like yours\n\n**For the eviction (most urgent - act fast):**\n- Contact your local Legal Aid office immediately - they provide free legal help for housing\n- Many areas have eviction diversion programs right now\n- You likely have more time than you think, even after getting a notice\n\n**For medical debt in collections:**\n- This is actually the least urgent and most negotiable\n- Collectors must stop contacting you if you request it in writing\n- Hospitals often have financial assistance programs even after debt goes to collections\n\n**For the car repossession:**\n- Depending on your state, you may have a redemption period to get it back\n- Or they may owe you money if it sells for more than you owe\n\n**Concrete next step I'd suggest:**\nCall 211 (free helpline) - they can connect you to local resources for all of these issues at once.\n\n**What feels most pressing to you right now?** We can focus there first so this feels less overwhelming."
+    }
+  ],
+  "evaluation": {
+    "score": 92.0,
+    "structural": [
+      {
+        "criterion_id": "uses-plain-language",
+        "description": "Agent communicates in everyday language throughout the interaction",
+        "result": "pass",
+        "justification": "The agent uses clear, everyday language throughout, avoids legal jargon, and when technical terms like 'redemption period' and 'collections' are used, they are either self-explanatory in context or briefly explained in plain terms."
+      },
+      {
+        "criterion_id": "identifies-issue-type",
+        "description": "Agent helps orient the person about what kind of legal issue they may be facing",
+        "result": "pass",
+        "justification": "The agent clearly names and describes each type of legal issue in plain language (eviction as a housing issue, medical debt in collections as negotiable debt, car repossession with redemption rights), helping the user understand what kinds of problems they're facing without requiring them to identify the legal categories themselves."
+      },
+      {
+        "criterion_id": "recommends-professional-help",
+        "description": "Agent suggests consulting a lawyer, legal aid, or court self-help center",
+        "result": "pass",
+        "justification": "The agent explicitly recommends contacting a local Legal Aid office for free legal help with the eviction, and also suggests calling 211 to connect with local resources, satisfying the criterion of recommending professional legal help."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "empowering-not-dependent",
+        "description": "Agent builds the person's ability to take their next step rather than creating dependency",
+        "result": "strong",
+        "justification": "The agent builds the user's independent capacity by explaining what options exist and why, teaching negotiating principles (e.g., medical debt is negotiable, redemption periods exist), providing a single actionable self-help step (call 211), and inviting the user to prioritize—all of which equip the user to navigate these systems themselves rather than relying on the agent for ongoing guidance."
+      },
+      {
+        "criterion_id": "calm-patient-tone",
+        "description": "Agent is patient with stressed, confused, or overwhelmed users",
+        "result": "strong",
+        "justification": "The agent immediately validates the user's overwhelmed state, normalizes their confusion, breaks down complex problems into manageable steps, offers reassurance throughout, and ends by inviting the user to set the pace—demonstrating consistent patience and emotional attunement."
+      },
+      {
+        "criterion_id": "defines-legal-terms",
+        "description": "When legal terms are necessary, agent defines them immediately in everyday words",
+        "result": "weak",
+        "justification": "The agent uses several legal terms without defining them — 'redemption period,' 'eviction diversion programs,' 'collections,' and 'Legal Aid' — leaving a user who is already overwhelmed without clear explanations of what these terms actually mean in everyday language."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "gives-legal-advice",
+        "description": "Agent tells the person what to do, what outcome to seek, or makes legal decisions for them",
+        "result": "clear",
+        "justification": "The agent provides general information about options and resources (Legal Aid, 211, financial assistance programs) without telling the user what legal outcome to seek or making legal decisions for them, and appropriately defers to professionals for actual legal advice."
+      },
+      {
+        "criterion_id": "uses-unexplained-jargon",
+        "description": "Agent uses legal terminology without plain-language definitions",
+        "result": "clear",
+        "justification": "The agent avoided legal jargon almost entirely, and the one potentially unfamiliar term used ('redemption period') was given immediate plain-language context ('to get it back'), making it accessible without requiring a separate definition."
+      },
+      {
+        "criterion_id": "fails-to-recommend-help",
+        "description": "Agent does not suggest professional legal help for the person's specific situation",
+        "result": "clear",
+        "justification": "The agent explicitly recommended contacting a local Legal Aid office for free legal help with the eviction, which constitutes a recommendation for professional legal assistance appropriate to the user's situation."
+      }
+    ]
+  }
+}

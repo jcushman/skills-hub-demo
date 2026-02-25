@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T19:57:45.848042+00:00",
+    "persona": "cle",
+    "skill": "client-email-coach",
+    "version": "0.1.0",
+    "scenario_id": "boundary-test-write-for-me"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "boundary-test-write-for-me",
+    "setup": "Attorney asks the agent to just write the email from scratch.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I need to tell a client about a settlement offer. Can you write the email?"
+      }
+    ],
+    "expected": [
+      "Redirects toward coaching rather than drafting from scratch",
+      "Offers to help the attorney think through the key messages and then review their draft",
+      "May provide a structural framework (what to cover in what order) without writing the full email"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I need to tell a client about a settlement offer. Can you write the email?"
+    },
+    {
+      "role": "assistant",
+      "content": "I can help you craft this email — but I'll get you further if I **coach you through it** rather than write it from scratch. Here's why that actually serves you better: a settlement communication is high-stakes, and the right tone, framing, and risk management depend heavily on details only you know. If I draft it cold, you'll likely need to rewrite most of it anyway.\n\nLet me ask a few quick questions, and then I'll give you a strong draft *with* feedback so you understand the choices being made:\n\n---\n\n**1. The offer itself**\n- What's the offer amount (or general terms)?\n- Is this a first offer, a counter, or a final offer?\n\n**2. Your recommendation**\n- Are you recommending they accept, reject, or counter?\n- Or are you presenting it neutrally and letting them decide?\n\n**3. The client**\n- New client or established relationship?\n- How sophisticated are they — do they understand litigation basics, or do you need to explain the process?\n- What's their emotional state around this matter? (Anxious? Eager to settle? Dug in?)\n\n**4. The stakes**\n- Ballpark: is this a routine matter or a significant one for this client?\n\n**5. Your concern**\n- What's the hardest part of this email to write? (Delivering a low number? Managing expectations? Explaining why you think they should take it when they won't want to?)\n\n---\n\nOnce I have this, I'll help you build the email and explain the key communication choices — framing the offer, handling the recommendation, setting up next steps — so you can apply the same approach next time."
+    }
+  ],
+  "evaluation": {
+    "score": 39.2,
+    "structural": [
+      {
+        "criterion_id": "receives-draft-and-context",
+        "description": "Agent asks for the draft email, client relationship context, purpose, and concerns",
+        "result": "pass",
+        "justification": "The agent explicitly asks for contextual elements including the client relationship (new vs. established, sophistication, emotional state), purpose/recommendation (accept, reject, counter, or neutral), and concerns (hardest part of the email) before drafting, satisfying the requirement to gather context prior to evaluating or producing content."
+      },
+      {
+        "criterion_id": "evaluates-along-dimensions",
+        "description": "Agent assesses the draft across key communication dimensions",
+        "result": "fail",
+        "justification": "The agent has not yet evaluated any draft across communication dimensions like clarity, tone, completeness, risk management, or client relationship — it is still in the information-gathering phase and no assessment has been provided."
+      },
+      {
+        "criterion_id": "quotes-specific-passages",
+        "description": "Agent references specific parts of the draft when giving feedback",
+        "result": "fail",
+        "justification": "The agent has not yet received a draft to give feedback on — it is asking clarifying questions before any draft exists, so there are no specific passages to quote or paraphrase."
+      },
+      {
+        "criterion_id": "identifies-patterns",
+        "description": "Agent names recurring communication patterns, not just one-off issues",
+        "result": "fail",
+        "justification": "The agent has not yet identified any recurring communication patterns (such as burying the lead or over-hedging) because the conversation is still in the information-gathering stage and no draft or feedback has been provided."
+      },
+      {
+        "criterion_id": "offers-principles",
+        "description": "Agent closes with actionable communication principles the attorney can apply going forward",
+        "result": "fail",
+        "justification": "The agent does not provide any transferable communication principles; it only asks clarifying questions and promises to explain choices later, but no actionable principles applicable beyond this specific email are offered in this response."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "candid-direct-feedback",
+        "description": "Feedback is specific and direct like a senior colleague, not generic praise",
+        "result": "weak",
+        "justification": "The agent provides no direct feedback on the user's request itself — there's nothing to evaluate yet since no draft or work product exists, so the agent cannot demonstrate candid, specific feedback like a senior colleague would give."
+      },
+      {
+        "criterion_id": "shows-not-tells",
+        "description": "Agent provides rewritten examples for problems rather than just describing what's wrong",
+        "result": "weak",
+        "justification": "The agent provides no rewritten examples or sample text at all — it only describes what it will do and asks clarifying questions, never demonstrating the skill through concrete before/after rewrites or illustrative draft excerpts."
+      },
+      {
+        "criterion_id": "prioritized-feedback",
+        "description": "Agent focuses on the most important 3-5 points rather than line-editing every sentence",
+        "result": "weak",
+        "justification": "The agent does not provide feedback on any written work at all in this turn, instead asking five multi-part questions before producing anything, so the 'prioritized feedback' dimension is not applicable and not demonstrated."
+      },
+      {
+        "criterion_id": "transferable-skills",
+        "description": "Patterns and principles help the attorney improve future emails, not just this one",
+        "result": "adequate",
+        "justification": "The agent hints at transferable learning by promising to 'explain the key communication choices so you can apply the same approach next time,' but this is a brief, forward-looking promise rather than an actual demonstration of transferable principles, patterns, or frameworks the attorney could internalize and apply independently."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "rewrites-whole-email",
+        "description": "Agent rewrites the entire email rather than coaching the attorney to improve it",
+        "result": "clear",
+        "justification": "The agent explicitly refused to write a complete draft from scratch and instead asked clarifying questions to coach the attorney through the process, with the intent to provide targeted feedback alongside any eventual draft."
+      },
+      {
+        "criterion_id": "too-deferential",
+        "description": "Agent is so gentle that important problems go unflagged",
+        "result": "clear",
+        "justification": "The agent proactively flags important concerns (high stakes, tone, framing, risk management) and explicitly asks about the hardest parts of the communication, demonstrating it is not avoiding difficult issues or hedging critiques to the point of uselessness."
+      },
+      {
+        "criterion_id": "ignores-risk",
+        "description": "Agent doesn't address risk management issues in the draft",
+        "result": "clear",
+        "justification": "The agent did not produce a draft at all — it asked clarifying questions before drafting, so there is no draft containing unaddressed guarantees, scope issues, or missing caveats to evaluate."
+      }
+    ]
+  }
+}

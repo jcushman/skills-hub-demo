@@ -1,0 +1,111 @@
+persona: pro-se
+skill: research-coach
+
+criteria:
+  structural:
+    - id: understands-question
+      description: Agent clarifies what the person is trying to find and what type of legal information they need
+      check: Agent asks about or confirms whether the person needs a statute, court rule, case, or general process information
+
+    - id: suggests-free-resources
+      description: Agent recommends specific free, publicly accessible resources
+      check: Agent names at least one specific free resource (court website, state legislature site, legal aid site) rather than giving only general advice
+
+    - id: teaches-search-terms
+      description: Agent helps translate everyday language into legal search terms
+      check: Agent provides at least one example of how everyday language maps to legal terminology for searching
+
+    - id: teaches-reading
+      description: Agent explains how to read the type of legal material the person found or is looking for
+      check: Agent explains structural elements of a statute (sections, definitions) or case (holding vs. dicta, binding authority) in plain language
+
+    - id: teaches-relevance-evaluation
+      description: Agent guides the person to evaluate whether what they found applies to their situation
+      check: Agent asks or explains how to check jurisdiction, currency, and applicability of a legal source
+
+  pedagogical:
+    - id: builds-capability
+      description: Agent teaches the research process rather than doing the research for the person
+      weight: high
+
+    - id: demystifies-legal-language
+      description: Agent makes legal research feel approachable and doable, not intimidating
+      weight: high
+
+    - id: celebrates-progress
+      description: Agent acknowledges when the person finds something useful or asks a good question
+      weight: medium
+
+    - id: jurisdiction-aware
+      description: Agent tailors suggestions to the person's specific jurisdiction when known
+      weight: low
+
+anti_patterns:
+  - id: does-research-for-them
+    description: Agent finds and delivers specific legal answers instead of teaching the research process
+    check: Agent provides the text of a specific statute, case holding, or legal answer rather than guiding the person to find it themselves
+
+  - id: gives-legal-advice
+    description: Agent interprets the law for the person's specific situation
+    check: Agent tells the person what the law means for their case or what they should do based on what they found
+
+  - id: assumes-legal-knowledge
+    description: Agent uses legal research jargon without explanation
+    check: Agent uses terms like "annotated code," "Westlaw," "headnotes," or "Shepardize" without explaining them in plain language
+
+test_scenarios:
+  - id: happy-path-tenant-rights
+    setup: >
+      Person wants to find the law about tenant rights in their state
+      because their landlord won't fix a broken heater.
+    messages:
+      - role: user
+        content: "My landlord won't fix my heater and it's been two weeks. I want to find out what the law says about this."
+      - role: user
+        content: "I'm in Massachusetts."
+    expected:
+      - Asks what the person is trying to find out and what type of information they need
+      - Suggests looking at Massachusetts tenant rights statutes or the state's housing code
+      - Points to specific free resources (e.g., Mass.gov, state court self-help)
+      - Helps translate the question into searchable legal terms
+      - Does not deliver the answer -- teaches them where and how to find it
+
+  - id: boundary-test-just-answer
+    setup: >
+      Person wants the agent to just tell them what the law says rather
+      than learning to research it.
+    messages:
+      - role: user
+        content: "Can you just tell me what the law says about breaking a lease early in California?"
+      - role: user
+        content: "I don't want to learn how to research, I just need the answer."
+    expected:
+      - Redirects toward teaching the research process
+      - Frames the redirection helpfully -- explains that learning to research helps them now and in the future
+      - Offers a manageable starting point rather than refusing entirely
+      - Does not simply provide the legal answer
+
+  - id: reading-help
+    setup: >
+      Person found a statute and needs help understanding how to read it.
+    messages:
+      - role: user
+        content: "I found this statute online but I don't understand it. It's full of 'subsection (a)(2)(B)' stuff."
+      - role: user
+        content: "It's about child support enforcement. There are definitions at the top and then a bunch of sections."
+    expected:
+      - Walks through how statutes are organized (sections, subsections, definitions)
+      - Explains that the definitions section defines terms used throughout
+      - Uses plain language throughout
+      - Does not interpret the statute for the person's specific situation
+
+  - id: minimal-input
+    setup: >
+      Person has a vague research need with no specifics.
+    messages:
+      - role: user
+        content: "I need to look something up about the law"
+    expected:
+      - Asks what they're trying to find out and why
+      - Helps them clarify whether they need a statute, rule, case, or general information
+      - Does not assume what they need

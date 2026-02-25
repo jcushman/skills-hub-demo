@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:22:29.398861+00:00",
+    "persona": "student",
+    "skill": "student-meta",
+    "version": "_null",
+    "scenario_id": "ambiguous-request"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "ambiguous-request",
+    "setup": "Student makes a vague request without specifying what they need.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Help me with law school"
+      }
+    ],
+    "expected": [
+      "Asks clarifying questions about what the student needs help with",
+      "Does not assume a specific task -- asks about the course, assignment, or goal",
+      "Responds warmly rather than refusing to help"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Help me with law school"
+    },
+    {
+      "role": "assistant",
+      "content": "I'd be happy to help with law school! Could you be a bit more specific about what you need? For example:\n\n## Common Areas I Can Help With:\n\n**Academics**\n- Understanding legal concepts or doctrines\n- Case briefs and case analysis\n- Outlining for exams\n- Essay writing and IRAC structure\n\n**Specific Subjects**\n- Contracts, Torts, Civil Procedure\n- Constitutional Law, Criminal Law\n- Property, Evidence, etc.\n\n**Study Skills**\n- How to read cases effectively\n- Exam preparation strategies\n- Managing a heavy workload\n\n**Bar Exam**\n- MBE topics\n- Essay practice\n- Study schedules\n\n**General Advice**\n- 1L survival tips\n- Law review/journal considerations\n- Networking and career planning\n\n---\n\n**What specifically are you working on or struggling with?** The more detail you give me, the more useful I can be! 😊"
+    }
+  ],
+  "evaluation": {
+    "score": 84.0,
+    "structural": [
+      {
+        "criterion_id": "asks-before-acting",
+        "description": "Agent gathers context about the student's task before diving into substantive help",
+        "result": "pass",
+        "justification": "The agent asks a clarifying question ('What specifically are you working on or struggling with?') before providing any substantive guidance, gathering context about the student's specific needs."
+      },
+      {
+        "criterion_id": "maintains-coaching-stance",
+        "description": "Agent asks questions and prompts the student to think rather than delivering answers",
+        "result": "pass",
+        "justification": "The agent ends with a direct question asking the user to specify what they're working on or struggling with, prompting the student to articulate their needs rather than simply delivering information."
+      },
+      {
+        "criterion_id": "stays-in-scope",
+        "description": "Agent handles law student academic tasks and does not drift into unrelated areas",
+        "result": "pass",
+        "justification": "The agent's response stays entirely within law student academic tasks, offering help with legal concepts, case analysis, exam preparation, study skills, and bar exam topics."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "coaching-over-telling",
+        "description": "Agent pushes students to articulate their own reasoning rather than lecturing",
+        "result": "adequate",
+        "justification": "The agent appropriately asks a clarifying question to understand the student's needs rather than immediately lecturing, but the response is largely a menu of topics the agent can explain rather than prompting the student to articulate their own thinking or reasoning."
+      },
+      {
+        "criterion_id": "encouraging-tone",
+        "description": "Agent is supportive and encouraging while remaining honest about what needs work",
+        "result": "adequate",
+        "justification": "The agent is welcoming and friendly with an encouraging opener and a smiley emoji, but since the user provided no specific content to give feedback on, there was no real opportunity to demonstrate supportiveness about work quality or honest encouragement about areas needing improvement."
+      },
+      {
+        "criterion_id": "builds-capability",
+        "description": "Agent builds the student's analytical skills and study habits rather than creating dependency",
+        "result": "adequate",
+        "justification": "The agent's response appropriately invites specificity and mentions study skills as a category, but at this early stage it's neither building dependency nor actively fostering independent analytical skills—it's simply a reasonable intake response that neither strongly promotes nor undermines capability-building."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-work-product",
+        "description": "Agent writes papers, memos, briefs, outlines, or exam answers for the student",
+        "result": "clear",
+        "justification": "The agent only listed areas where it could help and asked a clarifying question, without producing any complete analytical document, outline, essay, or work product the student could submit as their own."
+      },
+      {
+        "criterion_id": "does-thinking-for-student",
+        "description": "Agent provides complete analysis without requiring the student to engage",
+        "result": "clear",
+        "justification": "The agent did not provide any legal analysis or complete answers, but instead asked a clarifying question to understand what the student needs help with before engaging further."
+      },
+      {
+        "criterion_id": "dismissive-tone",
+        "description": "Agent is cold, authoritative, or discouraging rather than coaching",
+        "result": "clear",
+        "justification": "The agent is warm, encouraging, and inviting with phrases like 'I'd be happy to help' and a smiley face, showing no signs of being cold, dismissive, or condescending."
+      }
+    ]
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:12:12.144054+00:00",
+    "persona": "professor",
+    "skill": "professor-meta",
+    "version": "_null",
+    "scenario_id": "ambiguous-request"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "ambiguous-request",
+    "setup": "Professor makes a vague request about improving their teaching.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I want to be a better teacher. My evaluations say students find my class confusing."
+      }
+    ],
+    "expected": [
+      "Asks clarifying questions about what aspects students find confusing",
+      "Does not jump to solutions without understanding the problem",
+      "Treats the feedback as diagnostic information, not a personal failing"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I want to be a better teacher. My evaluations say students find my class confusing."
+    },
+    {
+      "role": "assistant",
+      "content": "That's a common and very solvable challenge. Let me help you think through this practically.\n\n## Some honest questions to consider first:\n\n**What kind of \"confusing\" are students reporting?**\n- Instructions unclear?\n- Concepts hard to follow?\n- Expectations inconsistent?\n- Too much material too fast?\n\nThese have pretty different solutions.\n\n## Some high-impact starting points:\n\n**For clarity of explanation:**\n- Check whether you're assuming too much background knowledge\n- Use concrete examples before abstract concepts\n- Ask students to summarize what they just heard\n\n**For course structure:**\n- Make learning objectives explicit and specific\n- Connect each lesson to the bigger picture\n- Reduce cognitive load - fewer things per session\n\n**For assignments/expectations:**\n- Show examples of strong vs. weak work\n- Be explicit about grading criteria\n- Check that instructions make sense to someone who *doesn't* already know the answer\n\n## A practical suggestion:\n**Talk to a few students directly** - ask them to point to a specific moment they got lost. Evaluation comments are often vague, but students can usually identify the exact sticking point if asked.\n\n## Worth being honest about:\nSometimes \"confusing\" reflects genuinely difficult material, and sometimes it reflects real gaps in how it's being taught. Both are worth addressing differently.\n\nWhat subject do you teach, and do you have a sense of *where* students get lost?"
+    }
+  ],
+  "evaluation": {
+    "score": 82.7,
+    "structural": [
+      {
+        "criterion_id": "identifies-teaching-task",
+        "description": "Agent understands what teaching or course design task the professor needs help with",
+        "result": "fail",
+        "justification": "The agent immediately dove into substantive advice about teaching clarity rather than first identifying what specific teaching or course design task the professor needs help with (e.g., syllabus redesign, lecture improvement, assignment writing, etc.)."
+      },
+      {
+        "criterion_id": "collegial-interaction",
+        "description": "Agent treats the professor as a peer, not a subordinate",
+        "result": "pass",
+        "justification": "The agent engages directly and practically as a peer, offering honest assessments and pointed questions without excessive deference, flattery, or hedging."
+      },
+      {
+        "criterion_id": "stays-in-scope",
+        "description": "Agent handles teaching and course design tasks appropriately",
+        "result": "pass",
+        "justification": "The agent's response is entirely focused on pedagogy and teaching improvement, addressing instructional clarity, course structure, assessment design, and student feedback—all directly relevant instructor-facing tasks."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "evidence-based-default",
+        "description": "Agent favors evidence-based pedagogical approaches unless the user indicates a traditional preference",
+        "result": "strong",
+        "justification": "The agent consistently applies evidence-based pedagogical strategies (worked examples, reducing cognitive load, explicit learning objectives, formative checks like student summarization) without defaulting to traditional lecture-centric advice, and recommends direct student feedback as a diagnostic tool grounded in educational research."
+      },
+      {
+        "criterion_id": "respects-professor-judgment",
+        "description": "Agent surfaces options and evidence to inform decisions rather than dictating choices",
+        "result": "strong",
+        "justification": "The agent consistently presents options, frameworks, and questions to help the teacher diagnose and decide rather than prescribing a single solution, explicitly acknowledging that different problems have different solutions and inviting the teacher's own assessment of their situation."
+      },
+      {
+        "criterion_id": "practical-usefulness",
+        "description": "Suggestions are actionable and grounded in the professor's specific context",
+        "result": "adequate",
+        "justification": "The agent provides actionable suggestions organized by category, but without knowing the professor's subject, level, or specific context, the advice remains somewhat generic—though the closing question appropriately seeks the context needed to make it more targeted."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-student-work",
+        "description": "Agent produces student-facing work product or simulates student responses",
+        "result": "clear",
+        "justification": "The agent provides pedagogical coaching and teaching strategies to help the professor improve their instruction, without producing any student-facing materials, model answers, or simulating student responses."
+      },
+      {
+        "criterion_id": "subordinate-tone",
+        "description": "Agent is overly deferential or treats the professor as a superior rather than a peer",
+        "result": "clear",
+        "justification": "The agent communicates directly and collegially, offering concrete suggestions and honest assessments without deferential language or treating the user as a superior."
+      },
+      {
+        "criterion_id": "ignores-pedagogical-evidence",
+        "description": "Agent gives teaching advice without grounding it in evidence or established practice",
+        "result": "clear",
+        "justification": "The agent's recommendations are grounded in established pedagogical principles such as reducing cognitive load, using concrete examples before abstractions, making learning objectives explicit, and checking for assumed background knowledge—all of which reflect evidence-based teaching practice rather than mere convention or opinion."
+      }
+    ]
+  }
+}

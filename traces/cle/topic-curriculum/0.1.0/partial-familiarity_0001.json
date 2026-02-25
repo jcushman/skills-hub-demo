@@ -1,0 +1,142 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:06:40.324244+00:00",
+    "persona": "cle",
+    "skill": "topic-curriculum",
+    "version": "0.1.0",
+    "scenario_id": "partial-familiarity"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "partial-familiarity",
+    "setup": "Attorney with some background in the area who wants to deepen expertise.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I've been doing some trademark work for a couple years -- prosecution mostly. I want to build real depth in trademark litigation specifically."
+      },
+      {
+        "role": "user",
+        "content": "I handle office actions and registrations fine, but I've never done a TTAB proceeding or a Lanham Act case in federal court."
+      }
+    ],
+    "expected": [
+      "Acknowledges existing prosecution competence and builds from there",
+      "Skips foundation-level trademark overview",
+      "Focuses curriculum on TTAB practice and federal litigation specifics",
+      "Includes practical resources like sample briefs and procedural guides"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I've been doing some trademark work for a couple years -- prosecution mostly. I want to build real depth in trademark litigation specifically."
+    },
+    {
+      "role": "assistant",
+      "content": "Let me get the context right before building this out.\n\n**A few quick questions:**\n\n1. **Why now?** Are you moving toward a litigation role at your current firm, targeting a lateral move, or building toward handling your own matters? This affects whether I emphasize the procedural/tactical side or the business development/positioning side.\n\n2. **Timeline?** Do you have a specific matter or opportunity driving this, or is this a longer-term build over months?\n\n3. **Litigation baseline?** Have you done any civil litigation work — even in other areas? Or is trademark prosecution essentially your entire litigation exposure? (Knowing whether you need to layer in general federal civil procedure or can skip that matters a lot here.)\n\n4. **Prosecution depth?** Since you've been doing prosecution for a couple years, I'll assume solid familiarity with the TTAB, likelihood of confusion analysis, the Lanham Act basics, and the prosecution lifecycle. Anything you feel notably weak on within prosecution that might affect the litigation curriculum?\n\n5. **Scope?** Any particular flavor of trademark litigation you're most interested in — infringement/counterfeiting, TTAB inter partes proceedings (oppositions/cancellations), domain name disputes (UDRP), or all of the above?\n\nThe answers will let me calibrate whether this is a \"get ready for a matter in six weeks\" curriculum or a \"build a litigation practice over a year\" curriculum — very different documents."
+    },
+    {
+      "role": "user",
+      "content": "I handle office actions and registrations fine, but I've never done a TTAB proceeding or a Lanham Act case in federal court."
+    },
+    {
+      "role": "assistant",
+      "content": "A few more quick ones and then I'll build this out:\n\n1. **Why now / what's driving this?** A specific matter coming in, a firm push to expand services, personal career goal? Knowing whether there's a deadline shaping this changes the prioritization significantly.\n\n2. **Timeline?** Weeks, a few months, or is this a longer-term build?\n\n3. **Civil litigation background?** Have you handled any federal court litigation in other areas — even as a junior associate doing discovery or briefing? Or is your litigation exposure essentially zero outside of prosecution? This determines whether I need to build in federal civil procedure resources or can assume you have that foundation.\n\n4. **Scope priority?** Given that you've never done either TTAB proceedings or federal court Lanham Act work, which is the higher priority — or do you want both covered in parallel? TTAB inter partes is a natural bridge from prosecution; federal court litigation is a bigger jump but higher stakes. Some attorneys build toward federal court by starting with TTAB oppositions and cancellations.\n\n5. **Firm context?** Solo/small firm, mid-size, BigLaw? This affects what resources you have access to (Westlaw/Lexis practice guides, PLI, etc.) and whether you'll be handling matters independently or with supervision.\n\nThe TTAB-to-federal-court progression is a natural one given your prosecution background — I want to make sure the curriculum reflects your actual path."
+    }
+  ],
+  "evaluation": {
+    "score": 36.0,
+    "structural": [
+      {
+        "criterion_id": "clarifies-learning-goal",
+        "description": "Agent asks about the topic, timeline, baseline knowledge, and reason for learning",
+        "result": "pass",
+        "justification": "The agent explicitly asks about all four key dimensions—topic (trademark litigation, TTAB vs. federal court, scope), timeline (weeks vs. months vs. long-term), baseline knowledge (civil litigation background, prosecution depth), and reason for learning (why now, career goal, specific matter)—across both turns, satisfying the requirement to confirm at least three before building the curriculum."
+      },
+      {
+        "criterion_id": "maps-knowledge-landscape",
+        "description": "Agent identifies the essential elements of competence in the target area",
+        "result": "fail",
+        "justification": "The agent has asked multiple rounds of clarifying questions but has not yet identified or named the key concepts, governing sources, or practical skills that constitute competence in trademark litigation before presenting a curriculum."
+      },
+      {
+        "criterion_id": "builds-sequenced-curriculum",
+        "description": "Curriculum is organized into Foundation, Depth, Practice, and Currency phases",
+        "result": "fail",
+        "justification": "The agent has not yet built any curriculum — it has only asked clarifying questions across both turns, so there are no phases, stages, or learning objectives present to evaluate."
+      },
+      {
+        "criterion_id": "explains-each-resource",
+        "description": "Each recommended resource includes a description, rationale, and priority level",
+        "result": "fail",
+        "justification": "The agent has not recommended any resources in either response — it has only asked clarifying questions — so there are no resources to evaluate against the criterion."
+      },
+      {
+        "criterion_id": "produces-curriculum-document",
+        "description": "Output is a structured document with learning goal, phases, time estimates, and sequence",
+        "result": "fail",
+        "justification": "The agent has only asked clarifying questions across both turns and has not produced any structured curriculum document with a learning goal, phases, time estimates, or sequenced resources."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "efficient-prioritization",
+        "description": "Curriculum respects the attorney's limited time and prioritizes high-impact resources",
+        "result": "weak",
+        "justification": "The agent asked nearly identical clarifying questions across two consecutive turns without advancing the curriculum at all, wasting the user's time by repeating questions about timeline, civil litigation background, and scope that were already partially answered, demonstrating poor respect for the attorney's limited time."
+      },
+      {
+        "criterion_id": "practice-oriented",
+        "description": "Curriculum includes practical exercises or skills, not just reading",
+        "result": "weak",
+        "justification": "After two rounds of questioning, the agent has not introduced any practical exercises, skills practice, or hands-on components whatsoever — the conversation consists entirely of intake questions with no curriculum, exercises, or practice-oriented content delivered yet."
+      },
+      {
+        "criterion_id": "minimum-viable-path",
+        "description": "Curriculum offers a shortcut or \"if time is limited\" path for urgent timelines",
+        "result": "weak",
+        "justification": "The agent has asked multiple rounds of clarifying questions across two turns without ever offering a minimum viable path or shortcut for urgent timelines, despite explicitly acknowledging in the first turn that timeline matters for calibration."
+      },
+      {
+        "criterion_id": "currency-sources",
+        "description": "Curriculum identifies ongoing sources for staying current after initial learning",
+        "result": "weak",
+        "justification": "The agent has asked multiple rounds of clarifying questions but has not yet provided any curriculum content, let alone identified ongoing sources for staying current after initial learning."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "does-the-learning",
+        "description": "Agent teaches the substantive law rather than creating a learning plan",
+        "result": "clear",
+        "justification": "The agent asks clarifying questions to build a learning plan rather than providing any substantive legal analysis or doctrinal explanations about trademark litigation."
+      },
+      {
+        "criterion_id": "unrealistic-time-estimates",
+        "description": "Agent recommends a curriculum requiring hundreds of hours for someone with a short timeline",
+        "result": "clear",
+        "justification": "The agent has not yet provided any curriculum or time estimates — it is still gathering context through clarifying questions before building anything out."
+      },
+      {
+        "criterion_id": "no-primary-sources",
+        "description": "Agent fails to include governing statutes, regulations, or key cases",
+        "result": "clear",
+        "justification": "The agent has not yet produced a curriculum — it is still in the intake/scoping phase asking clarifying questions — so there is no curriculum to evaluate for the presence or absence of primary legal sources."
+      }
+    ]
+  }
+}

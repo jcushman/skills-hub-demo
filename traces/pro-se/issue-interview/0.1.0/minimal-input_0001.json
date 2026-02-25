@@ -1,0 +1,141 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:06:46.456516+00:00",
+    "persona": "pro-se",
+    "skill": "issue-interview",
+    "version": "0.1.0",
+    "scenario_id": "minimal-input"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "minimal-input",
+    "setup": "Person provides almost no information about their situation.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I need legal help"
+      },
+      {
+        "role": "user",
+        "content": "It's about my ex"
+      }
+    ],
+    "expected": [
+      "Asks gentle follow-up questions to understand the situation",
+      "Does not assume what the issue is (could be custody, property, restraining order, etc.)",
+      "Meets the person where they are without frustration"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I need legal help"
+    },
+    {
+      "role": "assistant",
+      "content": "I'm glad you reached out. I'm here to help you understand your situation and prepare you to get the right kind of help.\n\nI want to be upfront: **I can provide educational information to help you understand what's going on — but this isn't legal advice.** For advice specific to your situation, you'll want to speak with a lawyer or legal aid organization. I'll help you get ready for that conversation.\n\nLet's start simply:\n\n**Can you tell me, in your own words, what's going on?**\n\nThere's no wrong way to answer — just describe what happened or what's worrying you. For example:\n- Did you receive a letter, notice, or court papers?\n- Did something happen with a landlord, employer, family member, or someone else?\n- Are you dealing with a debt, a dispute, or something else entirely?\n\nTake your time. I'll ask follow-up questions to help us figure out what kind of legal issue this might be and what to do next."
+    },
+    {
+      "role": "user",
+      "content": "It's about my ex"
+    },
+    {
+      "role": "assistant",
+      "content": "Thank you for sharing that. Situations involving an ex can cover a lot of different ground, so I want to make sure I understand what's happening for you.\n\n**Can you tell me a little more about what's going on with your ex?**\n\nFor example:\n- Is this about **children** — like custody, visitation, or child support?\n- Is it about **money or property** — like dividing assets, a shared home, or debt?\n- Is it about **safety** — like harassment or threats?\n- Or something else entirely?\n\nAgain, there's no wrong answer — just tell me what's on your mind."
+    }
+  ],
+  "evaluation": {
+    "score": 61.6,
+    "structural": [
+      {
+        "criterion_id": "conducts-structured-intake",
+        "description": "Agent asks about what happened, who is involved, deadlines, and documents",
+        "result": "fail",
+        "justification": "The agent only asks about what happened and who is involved (events and parties), but never inquires about deadlines or documents, covering only 2 of the 4 required intake areas."
+      },
+      {
+        "criterion_id": "asks-incrementally",
+        "description": "Agent asks one or two questions at a time rather than overwhelming with a long list",
+        "result": "pass",
+        "justification": "The agent asks one focused question at a time (first asking what's going on, then asking for more detail about the ex situation), with clarifying examples provided as guidance rather than separate questions."
+      },
+      {
+        "criterion_id": "identifies-legal-issues",
+        "description": "Agent identifies likely legal issues and explains them in plain language",
+        "result": "fail",
+        "justification": "The agent has not yet identified any legal issues because the user has only provided minimal information ('It's about my ex'), and the agent is still in the information-gathering phase without naming or explaining any specific legal issues."
+      },
+      {
+        "criterion_id": "flags-deadlines",
+        "description": "Agent prominently flags any time-sensitive matters",
+        "result": "fail",
+        "justification": "The agent has not yet encountered any time-sensitive information to flag, but more importantly, it missed an opportunity to proactively ask whether any deadlines, notices, or court dates are involved when the user mentioned needing legal help, which is a common and critical concern in legal matters."
+      },
+      {
+        "criterion_id": "produces-summary",
+        "description": "Agent provides a plain-language summary the person can take to a lawyer",
+        "result": "fail",
+        "justification": "The conversation is still in the information-gathering phase and the agent has not yet produced any wrap-up summary, questions to ask a lawyer, or suggested next steps."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "plain-language-throughout",
+        "description": "All explanations use everyday language; legal terms are defined immediately when used",
+        "result": "strong",
+        "justification": "The agent consistently uses plain, everyday language throughout both responses, avoids legal jargon entirely, and frames all questions in accessible terms that a non-expert can easily understand."
+      },
+      {
+        "criterion_id": "empowering-not-overwhelming",
+        "description": "Agent builds the person's confidence and understanding without making them feel lost",
+        "result": "strong",
+        "justification": "The agent consistently uses accessible language, provides clear examples to guide the user without overwhelming them, sets honest expectations about its role, and creates a psychologically safe space that builds confidence through reassurance ('there's no wrong answer') and structured but gentle prompting."
+      },
+      {
+        "criterion_id": "connects-to-professional-help",
+        "description": "Agent recommends specific types of professional help (legal aid, court self-help, bar referral, law school clinic)",
+        "result": "weak",
+        "justification": "The agent has not yet recommended any specific types of professional help such as legal aid, court self-help centers, bar referral services, or law school clinics, only vaguely mentioning 'a lawyer or legal aid organization' in passing without providing actionable specifics."
+      },
+      {
+        "criterion_id": "patient-pacing",
+        "description": "Agent allows the person to tell their story at their own pace without rushing",
+        "result": "strong",
+        "justification": "The agent consistently invites the user to share at their own pace with open-ended questions, explicit reassurance ('there's no wrong way to answer,' 'there's no wrong answer'), and patient follow-up that avoids pressuring the user to provide more than they're ready to share."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "gives-legal-advice",
+        "description": "Agent tells the person what to do, what outcome to seek, or what arguments to make",
+        "result": "clear",
+        "justification": "The agent only asks clarifying questions to understand the situation and explicitly disclaims that it is not providing legal advice, without recommending any course of action or legal strategy."
+      },
+      {
+        "criterion_id": "uses-unexplained-jargon",
+        "description": "Agent uses legal terminology without defining it in plain language",
+        "result": "clear",
+        "justification": "The agent uses no legal terminology or jargon in either response, instead asking open-ended questions in plain, everyday language to understand the user's situation."
+      },
+      {
+        "criterion_id": "dismisses-urgency",
+        "description": "Agent fails to flag clearly time-sensitive matters when the user describes deadlines or notices",
+        "result": "clear",
+        "justification": "The user has not described any deadline, notice, or upcoming court date in this conversation, so there is no urgency for the agent to flag."
+      }
+    ]
+  }
+}

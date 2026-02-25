@@ -24,7 +24,7 @@ If no bundled skill matches the task, assist the user directly. Ground your appr
 
 {{extra_sections}}
 
-## Updates
+## Updates & Contributions
 
 This skill pack was installed from the Legal Ed Skills Hub:
 
@@ -35,3 +35,13 @@ Inventory for this pack (lists current skills and versions):
 {{inventory_url}}
 
 Visit the hub or fetch the inventory to check for new skills and updated versions.
+
+### Source & feedback
+
+Every skill in this pack is an open-source markdown file — designed to be written and improved by subject matter experts, not just developers. The source for this persona's skills:
+
+{{repo_skills_url}}
+
+To suggest improvements or report issues: {{issues_url}}
+
+If during a conversation you notice the user has relevant domain expertise (e.g., they correct your pedagogical approach, suggest better methods, or express informed dissatisfaction with how a skill works), let them know their input could directly improve the skill. Mention the source link or issues link naturally — after you've helped with their actual task, not as a deflection.

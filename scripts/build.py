@@ -24,6 +24,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 SKILLS_DIR = PROJECT_ROOT / "skills"
 TEMPLATES_DIR = PROJECT_ROOT / "templates"
 WEBSITE_DIR = PROJECT_ROOT / "website"
+TRACES_DIR = PROJECT_ROOT / "traces"
 OUTPUT_DIR = PROJECT_ROOT / "_site"
 
 
@@ -187,7 +188,7 @@ def build_bundled_skills_text(skills: list[dict]) -> str:
     return "\n".join(lines)
 
 
-def build_inventory(personas: dict[str, dict], base_url: str) -> dict:
+def build_inventory(personas: dict[str, dict], base_url: str, repo_url: str = "") -> dict:
     """Generate per-persona inventories and the persona index.
 
     Inventory JSON is kept for the website even though meta skills no
@@ -208,6 +209,7 @@ def build_inventory(personas: dict[str, dict], base_url: str) -> dict:
                 "description": s["description"],
                 "install_url": f"{base_url}skills/{persona_id}/{s['name']}.skill",
                 "version": s["version"],
+                "source_path": f"skills/{persona_id}/{s['name']}",
             }
             if s["is_meta"]:
                 meta_skill = entry
@@ -235,12 +237,12 @@ def build_inventory(personas: dict[str, dict], base_url: str) -> dict:
         })
 
     return {
-        "personas": {"personas": persona_index},
+        "personas": {"personas": persona_index, "repo_url": repo_url},
         "inventories": inventories,
     }
 
 
-def build(base_url: str):
+def build(base_url: str, *, repo_url: str = ""):
     """Run the full build."""
     if OUTPUT_DIR.exists():
         shutil.rmtree(OUTPUT_DIR)
@@ -266,10 +268,14 @@ def build(base_url: str):
         # Zip meta skill bundled with all persona skills
         if meta_skill:
             sections = parse_meta_sections(meta_skill["dir"] / "SKILL.md")
+            repo_skills = f"{repo_url}tree/main/skills/{persona_id}" if repo_url else ""
+            issues = f"{repo_url}issues" if repo_url else ""
             rendered = render_meta_skill(meta_template, sections, {
                 "bundled_skills": build_bundled_skills_text(regular_skills),
                 "hub_url": base_url or "",
                 "inventory_url": f"{base_url}inventory/{persona_id}.json",
+                "repo_skills_url": repo_skills,
+                "issues_url": issues,
             })
             output_path = OUTPUT_DIR / "skills" / persona_id / f"{meta_skill['name']}.skill"
             zip_meta_skill(
@@ -280,7 +286,7 @@ def build(base_url: str):
             )
 
     # Generate inventories (still used by the website)
-    inv_data = build_inventory(personas, base_url)
+    inv_data = build_inventory(personas, base_url, repo_url)
 
     inv_dir = OUTPUT_DIR / "inventory"
     inv_dir.mkdir(parents=True, exist_ok=True)
@@ -294,8 +300,23 @@ def build(base_url: str):
         json.dumps(inv_data["personas"], indent=2, ensure_ascii=False), encoding="utf-8"
     )
 
-    # Copy website
+    # Copy website (includes website/traces/index.html)
     shutil.copytree(WEBSITE_DIR, OUTPUT_DIR, dirs_exist_ok=True)
+
+    # Copy trace data (JSON files) into _site/traces/, skipping the standalone
+    # viewer HTML since the website version already landed above.
+    if TRACES_DIR.is_dir():
+        traces_out = OUTPUT_DIR / "traces"
+        traces_out.mkdir(parents=True, exist_ok=True)
+        for item in TRACES_DIR.rglob("*"):
+            if not item.is_file():
+                continue
+            if item.name == "index.html":
+                continue
+            rel = item.relative_to(TRACES_DIR)
+            dest = traces_out / rel
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(item, dest)
 
     # Summary
     skill_count = sum(len(p["skills"]) for p in personas.values())
@@ -313,13 +334,24 @@ def main():
         help="Base URL prefix for all links (e.g. https://x.github.io/repo/). "
              "Defaults to BASE_URL from .env or empty string for relative paths.",
     )
+    parser.add_argument(
+        "--repo-url",
+        default=os.environ.get("REPO_URL", ""),
+        help="GitHub repo URL (e.g. https://github.com/org/repo/). "
+             "Used for 'edit' links on the website. "
+             "Defaults to REPO_URL from .env or empty string.",
+    )
     args = parser.parse_args()
 
     base = args.base_url
     if base and not base.endswith("/"):
         base += "/"
 
-    build(base)
+    repo = args.repo_url
+    if repo and not repo.endswith("/"):
+        repo += "/"
+
+    build(base, repo_url=repo)
 
 
 if __name__ == "__main__":

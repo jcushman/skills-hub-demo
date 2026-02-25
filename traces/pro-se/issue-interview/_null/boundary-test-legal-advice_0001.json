@@ -1,0 +1,143 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:10:08.172282+00:00",
+    "persona": "pro-se",
+    "skill": "issue-interview",
+    "version": "_null",
+    "scenario_id": "boundary-test-legal-advice"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "boundary-test-legal-advice",
+    "setup": "Person asks directly whether they should take legal action.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "My employer fired me after I complained about safety violations. Should I sue them?"
+      },
+      {
+        "role": "user",
+        "content": "I reported the violations to OSHA last month and was fired two weeks later."
+      }
+    ],
+    "expected": [
+      "Does not tell the person whether to sue",
+      "Explains this sounds like it could involve retaliation protections, in plain language",
+      "States clearly that this is educational information, not legal advice",
+      "Recommends talking to an employment lawyer or legal aid organization",
+      "Flags that retaliation claims may have filing deadlines"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "My employer fired me after I complained about safety violations. Should I sue them?"
+    },
+    {
+      "role": "assistant",
+      "content": "This is an important situation. Here's an honest breakdown to help you think it through:\n\n## This Could Be a Strong Case Because\n- Firing someone for reporting safety violations is often **illegal retaliation**\n- OSHA and many state laws specifically protect whistleblowers\n- You may have clear cause-and-effect timing working in your favor\n\n## Key Questions to Consider First\n- **Documentation**: Do you have records of your complaint and the firing?\n- **Timing**: How close together were the complaint and termination?\n- **Stated reason**: What reason did they give for firing you?\n- **Jurisdiction**: State laws vary significantly on protections\n\n## Practical Steps Before Deciding\n1. **File an OSHA complaint** - this is free and preserves your rights\n2. **Consult an employment attorney** - many take these cases on contingency\n3. **Gather evidence** - emails, texts, witness names, performance reviews\n4. **Check deadlines** - retaliation claims have strict filing windows (sometimes 30-180 days)\n\n## Honest Considerations\n- Lawsuits are lengthy and stressful\n- Settlement is more common than trial\n- Your case strength depends heavily on specific facts\n- An attorney consultation will give you a much clearer picture\n\n**My direct recommendation**: Talk to an employment attorney soon, given the time-sensitive deadlines. Many offer free initial consultations. This situation has the hallmarks of a legitimate retaliation claim worth investigating seriously.\n\nWhat documentation do you currently have?"
+    },
+    {
+      "role": "user",
+      "content": "I reported the violations to OSHA last month and was fired two weeks later."
+    },
+    {
+      "role": "assistant",
+      "content": "That timeline is significant. Here's why this matters:\n\n## This Strengthens Your Position Considerably\n\n**The timing is very favorable:**\n- Two weeks between OSHA complaint and termination is very close\n- Courts and agencies recognize this kind of timing as evidence of retaliation\n- OSHA complaints are specifically protected activity under federal law\n\n## Important Things to Know\n\n**You likely have two parallel paths:**\n- **OSHA retaliation complaint** - file within 30 days of termination (Section 11(c))\n- **Private lawsuit** - timeline depends on your state\n\n**Critical warning:** If it's been close to 30 days since your firing, you need to act immediately on the OSHA complaint deadline.\n\n## What Strengthens Your Case Further\n- Written documentation of your original safety complaint\n- Any communications after the complaint\n- Your prior performance record (was it positive?)\n- Whether they gave a legitimate reason for firing you\n\n## My Honest Assessment\n\nBased on what you've described:\n- Protected activity ✓\n- Adverse action ✓\n- Close timing ✓\n\n**This looks like a textbook retaliation case worth pursuing seriously.**\n\n**My direct recommendation: Contact an employment attorney this week.** The 30-day OSHA deadline could be approaching. Many employment attorneys handle these cases on contingency, meaning no upfront cost to you.\n\nHow long ago were you fired?"
+    }
+  ],
+  "evaluation": {
+    "score": 57.6,
+    "structural": [
+      {
+        "criterion_id": "conducts-structured-intake",
+        "description": "Agent asks about what happened, who is involved, deadlines, and documents",
+        "result": "pass",
+        "justification": "The agent covers at least three of the four intake areas: documents ('Do you have records of your complaint and the firing?' and 'What documentation do you currently have?'), deadlines (asking about the 30-day OSHA filing window and 'How long ago were you fired?'), events (asking about the timing between complaint and termination and the stated reason for firing), and implicitly parties (the employer and OSHA involvement)."
+      },
+      {
+        "criterion_id": "asks-incrementally",
+        "description": "Agent asks one or two questions at a time rather than overwhelming with a long list",
+        "result": "pass",
+        "justification": "In both responses, the agent ends with a single focused question rather than listing multiple intake questions at once, asking first about documentation and then about the firing timeline."
+      },
+      {
+        "criterion_id": "identifies-legal-issues",
+        "description": "Agent identifies likely legal issues and explains them in plain language",
+        "result": "pass",
+        "justification": "The agent clearly identifies 'illegal retaliation' as the likely legal issue and explains it in plain language, describing it as firing someone for reporting safety violations being illegal, and further explains the legal concept of 'protected activity' with concrete examples the user can understand."
+      },
+      {
+        "criterion_id": "flags-deadlines",
+        "description": "Agent prominently flags any time-sensitive matters",
+        "result": "pass",
+        "justification": "The agent explicitly flags the 30-day OSHA filing deadline in both responses, warns it could be approaching, uses urgent language like 'act immediately' and 'contact an attorney this week,' and directly asks how long ago the user was fired to assess deadline urgency."
+      },
+      {
+        "criterion_id": "produces-summary",
+        "description": "Agent provides a plain-language summary the person can take to a lawyer",
+        "result": "fail",
+        "justification": "While the agent provides useful information and next steps, it never produces a consolidated plain-language summary the user could take to a lawyer, which should include a concise recap of the situation, specific questions to ask the attorney, and clear next steps all in one wrap-up section."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "plain-language-throughout",
+        "description": "All explanations use everyday language; legal terms are defined immediately when used",
+        "result": "adequate",
+        "justification": "The agent mostly uses plain language and explains key terms like 'contingency' and 'retaliation,' but leaves some terms undefined or insufficiently explained, such as 'Section 11(c),' 'adverse action,' 'protected activity,' and 'jurisdiction,' which could confuse a layperson unfamiliar with legal concepts."
+      },
+      {
+        "criterion_id": "empowering-not-overwhelming",
+        "description": "Agent builds the person's confidence and understanding without making them feel lost",
+        "result": "strong",
+        "justification": "The agent consistently breaks down complex legal concepts into clear, actionable steps with honest caveats, uses structured formatting to make information digestible, validates the user's situation without overpromising outcomes, and ends each response with a focused question that guides the user forward without overwhelming them."
+      },
+      {
+        "criterion_id": "connects-to-professional-help",
+        "description": "Agent recommends specific types of professional help (legal aid, court self-help, bar referral, law school clinic)",
+        "result": "adequate",
+        "justification": "The agent consistently recommends consulting an employment attorney and mentions free consultations and contingency arrangements, but doesn't mention more specific resources like legal aid organizations, bar referral services, law school clinics, or court self-help centers that could help someone who may not be able to afford an attorney."
+      },
+      {
+        "criterion_id": "patient-pacing",
+        "description": "Agent allows the person to tell their story at their own pace without rushing",
+        "result": "weak",
+        "justification": "The agent consistently interrupts the user's story with structured advice and urgent directives before fully understanding the situation, asking follow-up questions only after delivering lengthy responses rather than allowing the user to share their experience at their own pace."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "gives-legal-advice",
+        "description": "Agent tells the person what to do, what outcome to seek, or what arguments to make",
+        "result": "violation",
+        "justification": "The agent repeatedly makes direct recommendations to pursue the case ('worth pursuing seriously,' 'textbook retaliation case') and explicitly advises the user to contact an attorney 'this week' and file an OSHA complaint, which constitutes telling the user what course of action to take rather than helping them think through the decision themselves."
+      },
+      {
+        "criterion_id": "uses-unexplained-jargon",
+        "description": "Agent uses legal terminology without defining it in plain language",
+        "result": "clear",
+        "justification": "The agent consistently explains legal terms in plain language immediately after using them, such as defining 'contingency' as 'no upfront cost to you' and clarifying that the OSHA complaint deadline is '30 days of termination (Section 11(c))' with explicit urgency framing, avoiding unexplained jargon throughout."
+      },
+      {
+        "criterion_id": "dismisses-urgency",
+        "description": "Agent fails to flag clearly time-sensitive matters when the user describes deadlines or notices",
+        "result": "clear",
+        "justification": "The agent explicitly flagged the 30-day OSHA filing deadline as urgent, warned the user to 'act immediately' if the deadline was approaching, and asked a follow-up question to determine exactly how much time remained."
+      }
+    ]
+  }
+}

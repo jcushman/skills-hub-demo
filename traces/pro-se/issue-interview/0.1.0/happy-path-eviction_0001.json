@@ -1,0 +1,155 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:22:51.225963+00:00",
+    "persona": "pro-se",
+    "skill": "issue-interview",
+    "version": "0.1.0",
+    "scenario_id": "happy-path-eviction"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-eviction",
+    "setup": "Person received an eviction notice from their landlord giving them 14 days to vacate. They don't know what to do and are scared.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "My landlord slid a paper under my door saying I have 14 days to leave. I don't know what to do."
+      },
+      {
+        "role": "user",
+        "content": "It says 'Notice to Quit' at the top. I've lived here 3 years and always paid rent on time. He says he wants to renovate."
+      },
+      {
+        "role": "user",
+        "content": "The paper is dated last Monday. So I guess I have about 10 days left."
+      }
+    ],
+    "expected": [
+      "Flags the deadline prominently and urges quick action",
+      "Explains what a \"Notice to Quit\" means in plain language",
+      "Asks follow-up questions about the lease and jurisdiction",
+      "Recommends contacting legal aid or a court self-help center",
+      "Provides a plain-language summary of the situation and next steps"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "My landlord slid a paper under my door saying I have 14 days to leave. I don't know what to do."
+    },
+    {
+      "role": "assistant",
+      "content": "That sounds really frightening, and it makes sense that you're scared. You're not alone in this situation, and there are people who can help you. Let's take this one step at a time.\n\nFirst, I want you to know: **receiving a notice does not automatically mean you have to leave.** There's usually a legal process involved, and you have rights. Let's figure out what's going on so you can get the right help quickly.\n\nCan I ask you a couple of questions to better understand your situation?\n\n---\n\n**1. What does the paper say?**\n\nDoes it give a reason for why you need to leave? For example, does it mention:\n- Unpaid rent?\n- A lease violation (like a pet, noise, or other rule)?\n- That your lease has ended?\n- No reason at all?\n\n**2. Do you have a written lease or rental agreement?**\n\nOr is your arrangement more informal — like a month-to-month or verbal agreement?\n\nTake your time — just tell me what you know, even if you're not sure of all the details. We'll work through it together."
+    },
+    {
+      "role": "user",
+      "content": "It says 'Notice to Quit' at the top. I've lived here 3 years and always paid rent on time. He says he wants to renovate."
+    },
+    {
+      "role": "assistant",
+      "content": "Thank you for sharing that. Three years of on-time rent and now this — I understand why you're upset and scared.\n\nHere's something important: **what you're describing may actually give you more rights, not fewer.** A landlord wanting to renovate is not always a valid legal reason to force someone out, depending on where you live. Let's learn a little more.\n\n---\n\n**What you're describing sounds like a \"No-Fault\" eviction notice.**\n\nThis means the landlord isn't saying you did anything wrong — they just want you to leave for their own reasons. Many places have specific rules about whether and how a landlord can do this, and some areas have strong protections for long-term tenants like you.\n\n---\n\nBefore I can help you understand this better, a couple more questions:\n\n**1. What city and state (or country) do you live in?**\n\nTenant protections vary *enormously* by location. Some cities have very strong protections against this kind of eviction. This is one of the most important pieces of information.\n\n**2. Does the notice mention anything about relocation assistance or compensation?**\n\nSome laws require landlords to pay tenants money when they're displaced for renovation reasons.\n\n**3. Is your building an apartment complex, or a smaller property like a house or duplex?**\n\n---\n\n⚠️ **One thing I want to flag right now:** You mentioned a **14-day deadline**. That clock may already be ticking. Once we understand your situation a little better, I'll help you figure out who to call — and you may need to act soon."
+    },
+    {
+      "role": "user",
+      "content": "The paper is dated last Monday. So I guess I have about 10 days left."
+    },
+    {
+      "role": "assistant",
+      "content": "Thank you for checking that date. I want to be direct with you:\n\n⚠️ **This is time-sensitive. You have approximately 10 days, and you should try to reach someone for help as soon as possible — ideally today or tomorrow.**\n\nThat said, please don't panic. **10 days is enough time to get help if you act quickly.** And remember — even after a notice period ends, a landlord typically cannot physically remove you without going through a court process. But you want to get ahead of this.\n\n---\n\nYou haven't mentioned your location yet, and that's really the key piece I need to help you understand your rights. So let me ask again:\n\n**What city and state do you live in?**\n\nThis matters enormously because:\n- Some cities (like New York, San Francisco, Los Angeles, and others) have strong **\"just cause\" eviction laws** — meaning a landlord can't evict you just because they want to renovate\n- Some states require landlords to **pay you relocation money** if they displace you for renovations\n- Some laws give **extra protections to long-term tenants** — and 3 years may qualify you\n\n---\n\nWhile you're thinking about that, here's what I'd like you to do **right now if possible:**\n\n1. **Find that notice and keep it somewhere safe.** Don't throw it away.\n2. **Look for your lease agreement** — even an old one.\n3. **Write down the date you moved in** and any records of rent payments you have.\n\nWhat city and state are you in?"
+    }
+  ],
+  "evaluation": {
+    "score": 46.4,
+    "structural": [
+      {
+        "criterion_id": "conducts-structured-intake",
+        "description": "Agent asks about what happened, who is involved, deadlines, and documents",
+        "result": "pass",
+        "justification": "The agent covers at least three of the four intake areas: events (what the notice says, renovation reason), parties (landlord-tenant relationship, 3-year tenancy), deadlines (14-day notice, 10 days remaining), and documents (the notice itself, lease agreement, rent payment records)."
+      },
+      {
+        "criterion_id": "asks-incrementally",
+        "description": "Agent asks one or two questions at a time rather than overwhelming with a long list",
+        "result": "fail",
+        "justification": "In the second response, the agent asks three questions but the third one about building type pushes the boundary, and more clearly in the first response the agent asks two questions which is acceptable, but the pattern across responses shows the agent sometimes bundles three questions together, with the second turn listing three distinct numbered questions at once, exceeding the one-to-two question guideline."
+      },
+      {
+        "criterion_id": "identifies-legal-issues",
+        "description": "Agent identifies likely legal issues and explains them in plain language",
+        "result": "pass",
+        "justification": "The agent clearly identifies 'no-fault eviction' as the likely legal issue and explains it in plain language as a situation where 'the landlord isn't saying you did anything wrong — they just want you to leave for their own reasons.'"
+      },
+      {
+        "criterion_id": "flags-deadlines",
+        "description": "Agent prominently flags any time-sensitive matters",
+        "result": "pass",
+        "justification": "The agent explicitly and repeatedly flags the time-sensitive nature of the situation, calling out the 14-day deadline in the second response with a warning symbol, then urgently emphasizing the 10-day remaining window in the third response, urging the user to seek help 'today or tomorrow.'"
+      },
+      {
+        "criterion_id": "produces-summary",
+        "description": "Agent provides a plain-language summary the person can take to a lawyer",
+        "result": "fail",
+        "justification": "The agent has not yet produced a wrap-up summary with a plain-language description of the situation, questions to ask a lawyer, or suggested next steps in a consolidated format that the person could take to a lawyer — the conversation is still in the information-gathering phase."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "plain-language-throughout",
+        "description": "All explanations use everyday language; legal terms are defined immediately when used",
+        "result": "adequate",
+        "justification": "The agent mostly uses plain language and explains terms like 'Notice to Quit' and 'no-fault eviction' when introduced, but phrases like 'just cause eviction laws,' 'relocation assistance,' and 'displaced' are used without immediate plain-language definitions, leaving some legal concepts potentially unclear to a frightened non-expert user."
+      },
+      {
+        "criterion_id": "empowering-not-overwhelming",
+        "description": "Agent builds the person's confidence and understanding without making them feel lost",
+        "result": "strong",
+        "justification": "The agent consistently reassures the user that they have rights and time to act, breaks information into digestible steps, avoids legal jargon, and frames each interaction as collaborative ('we'll work through it together') while giving concrete, manageable actions that build the user's sense of agency rather than overwhelm them."
+      },
+      {
+        "criterion_id": "connects-to-professional-help",
+        "description": "Agent recommends specific types of professional help (legal aid, court self-help, bar referral, law school clinic)",
+        "result": "weak",
+        "justification": "The agent repeatedly emphasizes urgency and asks for location to tailor advice, but across three responses has not yet recommended any specific types of professional help such as legal aid organizations, court self-help centers, bar referral services, or law school clinics, despite the time-sensitive nature of the situation."
+      },
+      {
+        "criterion_id": "patient-pacing",
+        "description": "Agent allows the person to tell their story at their own pace without rushing",
+        "result": "weak",
+        "justification": "The agent repeatedly interrupts the user's natural storytelling with multiple structured questions, urgent warnings, and action lists rather than allowing them to share their situation at their own pace, creating a rushed and pressured dynamic despite the user having only provided brief responses so far."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "gives-legal-advice",
+        "description": "Agent tells the person what to do, what outcome to seek, or what arguments to make",
+        "result": "clear",
+        "justification": "The agent consistently directs the user toward seeking professional legal help, explains general legal concepts, and asks clarifying questions without recommending a specific legal strategy, telling the user whether to fight the eviction, or advising what arguments to make."
+      },
+      {
+        "criterion_id": "uses-unexplained-jargon",
+        "description": "Agent uses legal terminology without defining it in plain language",
+        "result": "violation",
+        "justification": "The agent uses the term 'just cause' eviction laws in quotation marks but does not explain what 'just cause' means in plain language, and also references a 'court process' without clarifying what that entails for the user."
+      },
+      {
+        "criterion_id": "dismisses-urgency",
+        "description": "Agent fails to flag clearly time-sensitive matters when the user describes deadlines or notices",
+        "result": "clear",
+        "justification": "The agent consistently and explicitly flagged the time-sensitive nature of the 14-day notice, escalating urgency when the user revealed only 10 days remained, urging action 'today or tomorrow' and explaining the legal process timeline."
+      }
+    ]
+  }
+}

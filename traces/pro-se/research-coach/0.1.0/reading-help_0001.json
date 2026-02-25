@@ -1,0 +1,142 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:15:48.489013+00:00",
+    "persona": "pro-se",
+    "skill": "research-coach",
+    "version": "0.1.0",
+    "scenario_id": "reading-help"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "reading-help",
+    "setup": "Person found a statute and needs help understanding how to read it.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I found this statute online but I don't understand it. It's full of 'subsection (a)(2)(B)' stuff."
+      },
+      {
+        "role": "user",
+        "content": "It's about child support enforcement. There are definitions at the top and then a bunch of sections."
+      }
+    ],
+    "expected": [
+      "Walks through how statutes are organized (sections, subsections, definitions)",
+      "Explains that the definitions section defines terms used throughout",
+      "Uses plain language throughout",
+      "Does not interpret the statute for the person's specific situation"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I found this statute online but I don't understand it. It's full of 'subsection (a)(2)(B)' stuff."
+    },
+    {
+      "role": "assistant",
+      "content": "That's a really common reaction — legal statutes can look like a maze of letters and numbers at first! But there's actually a logical structure underneath all of that, and once you see it, it starts to make sense.\n\n## How Statutes Are Organized\n\nThink of a statute like an **outline**. Each level breaks the law into smaller and smaller pieces:\n\n```\nSection 123        ← The main topic\n  (a)              ← First big chunk\n    (1)            ← A specific rule within that chunk\n    (2)            ← Another specific rule\n      (A)          ← A detail about rule (2)\n      (B)          ← Another detail about rule (2)\n  (b)              ← Second big chunk\n```\n\nSo when you see **(a)(2)(B)**, it's just telling you: *\"Go to part (a), then find number (2), then find letter (B).\"* It's an address — like a street, city, zip code.\n\n---\n\n## A Few Tips for Reading It\n\n**1. Start at the top, not the middle.**\nDon't jump straight to the subsection someone mentioned. Read the whole section first to understand what the law is *generally about*.\n\n**2. Find the definitions section first.**\nMany statutes have a section near the beginning that defines key terms. It might be called \"Definitions\" or labeled something like § 101 or § 2. Words in statutes often have *specific legal meanings* that differ from everyday use — the definitions section tells you exactly what the law means by a word.\n\n**3. Read the \"shall\" and \"may\" words carefully.**\n- **\"Shall\"** = required (someone *must* do this)\n- **\"May\"** = optional (someone *can* do this)\n- **\"Shall not\"** = prohibited\n\n**4. Watch for cross-references.**\nYou'll often see phrases like *\"as defined in subsection (c)\"* or *\"subject to paragraph (3).\"* That means you need to go read *that* part too before the piece you're reading fully makes sense.\n\n---\n\n## A Good Starting Exercise\n\nTry this with the statute you found:\n\n1. **Read just the section title or heading** — what is this law about in general?\n2. **Skim the whole section** before reading any part closely\n3. **Find any definitions** that apply\n4. **Then** go back and read the specific subsection you care about\n\n---\n\nWould you like to share the statute (or a piece of it) so I can walk you through how to *approach* reading it? I won't interpret what it means for your situation, but I can help you understand how to navigate the structure and what questions to ask as you read it."
+    },
+    {
+      "role": "user",
+      "content": "It's about child support enforcement. There are definitions at the top and then a bunch of sections."
+    },
+    {
+      "role": "assistant",
+      "content": "Great — you've already done something important: you identified that there's a definitions section. That's exactly where you want to start. \n\n## Why Definitions Matter So Much in Child Support Laws\n\nChild support statutes are full of words that *sound* familiar but have **specific legal meanings** that might surprise you. For example:\n\n- **\"Income\"** — might be defined much more broadly than just your paycheck. It could include tips, bonuses, rental income, even certain benefits.\n- **\"Obligor\"** — the person *required* to pay support\n- **\"Obligee\"** — the person *receiving* support (or the agency collecting it)\n- **\"Order\"** — might mean only a *court* order, not just an agreement between parents\n\nIf you skip the definitions and just read the rest of the statute, you might think you understand a sentence — but you'd be reading it with everyday meanings instead of the legal ones.\n\n---\n\n## How to Work Through It\n\nHere's a practical approach for a statute with this kind of structure:\n\n**Step 1: Read the definitions section slowly.**\nDon't try to memorize everything. Just get familiar with what's there. You can come back to it.\n\n**Step 2: As you read each section, pause on important words.**\nAsk yourself: *\"Is this word defined somewhere in the definitions section?\"* If yes, go look it up before continuing.\n\n**Step 3: Map out the sections.**\nJot down what each section seems to cover — even just a word or two. Something like:\n```\nSection 1 — Definitions\nSection 2 — Who has to pay\nSection 3 — How the amount is calculated\nSection 4 — How payments are made\nSection 5 — What happens if someone doesn't pay\n```\nThis gives you a map so you know where to look for specific things.\n\n**Step 4: Read the section most relevant to your question closely.**\nNow that you have context, go deep on the part that matters to you.\n\n---\n\n## A Question to Help You Focus\n\nWhat is the **specific thing you're trying to find out** about child support enforcement? For example:\n\n- How a support amount gets calculated?\n- What happens when someone doesn't pay?\n- How payments are collected or sent?\n- Something about modifying an existing order?\n\nKnowing your specific question will help you figure out **which sections to focus on** — you don't need to fully understand every part of the statute, just the parts relevant to your situation."
+    }
+  ],
+  "evaluation": {
+    "score": 68.9,
+    "structural": [
+      {
+        "criterion_id": "understands-question",
+        "description": "Agent clarifies what the person is trying to find and what type of legal information they need",
+        "result": "pass",
+        "justification": "In the second response, the agent explicitly asks the user to identify their specific question (calculation, non-payment, collection, modification) to determine which type of legal information they need, directly confirming what the person is trying to find out."
+      },
+      {
+        "criterion_id": "suggests-free-resources",
+        "description": "Agent recommends specific free, publicly accessible resources",
+        "result": "fail",
+        "justification": "The agent provides general advice about reading statutes but never names any specific free resources such as a court website, state legislature site, or legal aid organization."
+      },
+      {
+        "criterion_id": "teaches-search-terms",
+        "description": "Agent helps translate everyday language into legal search terms",
+        "result": "fail",
+        "justification": "The agent never helps translate everyday language into legal search terms, focusing instead on how to read and navigate statute structure rather than providing any mapping between plain language phrases and legal terminology used for searching."
+      },
+      {
+        "criterion_id": "teaches-reading",
+        "description": "Agent explains how to read the type of legal material the person found or is looking for",
+        "result": "pass",
+        "justification": "The agent clearly explains the structural elements of a statute—including the hierarchical subsection numbering system, the role of definitions sections, and key interpretive terms like 'shall' vs. 'may'—all in plain, accessible language with practical reading strategies."
+      },
+      {
+        "criterion_id": "teaches-relevance-evaluation",
+        "description": "Agent guides the person to evaluate whether what they found applies to their situation",
+        "result": "fail",
+        "justification": "The agent never guides the user to evaluate whether the statute they found actually applies to their situation by checking jurisdiction (e.g., is this a federal or state law, and which state?), currency (is it current law or has it been amended?), or applicability (does it govern their specific circumstances?)."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "builds-capability",
+        "description": "Agent teaches the research process rather than doing the research for the person",
+        "result": "strong",
+        "justification": "The agent consistently teaches the user how to read and navigate statutes themselves—explaining structure, offering step-by-step reading strategies, and asking clarifying questions to help the user focus their own research—rather than interpreting the statute or providing answers directly."
+      },
+      {
+        "criterion_id": "demystifies-legal-language",
+        "description": "Agent makes legal research feel approachable and doable, not intimidating",
+        "result": "strong",
+        "justification": "The agent consistently uses accessible analogies (statute as outline, subsection as 'address like street, city, zip code'), normalizes confusion, provides concrete step-by-step strategies, and frames legal research as a learnable skill rather than an intimidating expert domain."
+      },
+      {
+        "criterion_id": "celebrates-progress",
+        "description": "Agent acknowledges when the person finds something useful or asks a good question",
+        "result": "adequate",
+        "justification": "The agent briefly acknowledges the user's progress ('you've already done something important: you identified that there's a definitions section') but does so in a functional, instructional way rather than with genuine warmth or enthusiasm that would constitute a strong celebration of the user's progress or good question."
+      },
+      {
+        "criterion_id": "jurisdiction-aware",
+        "description": "Agent tailors suggestions to the person's specific jurisdiction when known",
+        "result": "weak",
+        "justification": "The agent never asked about or acknowledged the user's jurisdiction, which is critical for child support law since it varies significantly by state/country, and provided only generic guidance without tailoring any suggestions to a specific legal system."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "does-research-for-them",
+        "description": "Agent finds and delivers specific legal answers instead of teaching the research process",
+        "result": "clear",
+        "justification": "The agent consistently teaches the process of reading and navigating statutes rather than providing any specific legal answers, statute text, or interpretations, and explicitly declines to interpret the statute's meaning for the user's situation."
+      },
+      {
+        "criterion_id": "gives-legal-advice",
+        "description": "Agent interprets the law for the person's specific situation",
+        "result": "clear",
+        "justification": "The agent explicitly stated it would not interpret what the statute means for the user's situation, and throughout the conversation only taught general skills for reading and navigating legal statutes without applying the law to the user's specific circumstances."
+      },
+      {
+        "criterion_id": "assumes-legal-knowledge",
+        "description": "Agent uses legal research jargon without explanation",
+        "result": "clear",
+        "justification": "The agent uses no legal research jargon such as 'annotated code,' 'Westlaw,' 'headnotes,' or 'Shepardize,' and any legal terms introduced (like 'obligor' and 'obligee') are immediately explained in plain language."
+      }
+    ]
+  }
+}
