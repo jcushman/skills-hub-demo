@@ -30,6 +30,7 @@ Skills are organized by **persona** -- the role someone occupies when using them
 | **Student** | Coach, encourage, and check understanding | Never produce finished work product the student would submit |
 | **Pro Se** | Orient and connect | Never give legal advice; teach, orient, and empower |
 | **CLE** | Coach and build skills | Build the attorney's own capabilities, not do work for them |
+| **Skill Developer** | Help SMEs create effective pedagogical AI skills | Honor domain expertise; handle format and conventions |
 
 The pedagogical objectives are design constraints, not labels. A pro-se skill should never do legal research *for* the user; it should teach them how to find relevant information and connect them with professional help. A student skill should coach rather than produce finished answers. These constraints are defined in `skills/personas.yaml` alongside design principles, tone guidance, and success criteria for each persona.
 
@@ -76,6 +77,12 @@ Each skill is a folder with a `SKILL.md` file and optional reference material. T
 - **Topic Curriculum** -- Builds a self-study curriculum for transitioning into a new practice area.
 - **Client Email Coach** -- Reviews draft client emails with specific feedback on clarity, tone, and risk management.
 
+### Skill Developer
+
+- **Skill Creator** -- Walks a subject matter expert through authoring a new SKILL.md, handling format and conventions while the user supplies the educational judgment.
+- **Skill Reviewer** -- Evaluates an existing skill for format compliance, persona alignment, pedagogical quality, and agent-readiness.
+- **Skill Tester** -- Helps define rubrics and test scenarios for a skill, and evaluates conversation traces against those rubrics.
+
 ## Development
 
 Requires Python 3.12+ and [uv](https://docs.astral.sh/uv/).
@@ -92,6 +99,53 @@ uv run python -m http.server -d _site
 ```
 
 The build script reads `skills/` and produces `_site/` containing `.skill` zip files, JSON inventories, and the static website. The website is deployed to GitHub Pages automatically on push to `main`.
+
+### Testing skills
+
+Skills are hard to evaluate with certainty -- the same skill, model, and prompt can produce different results on different runs, and "good pedagogy" is partly subjective. The test harness doesn't try to produce a definitive pass/fail. Instead, it builds up a log of scored conversations over time so you can see whether quality is roughly stable, improving, or regressing. Think of it as a progress log, not a gate.
+
+Each skill can include a `rubric.yaml` alongside its `SKILL.md` that defines:
+
+- **Structural criteria** -- concrete, checkable behaviors ("agent asks about context before diving in")
+- **Pedagogical criteria** -- subjective quality dimensions rated strong/adequate/weak ("agent coaches rather than tells")
+- **Anti-patterns** -- things that should never happen ("agent produces finished work product")
+- **Test scenarios** -- scripted user messages with expected behaviors
+
+The harness plays out each scenario against a model, then evaluates the conversation using an LLM judge that scores each criterion independently. Results are saved as JSON trace files in `traces/`, checked into version control as a quality record.
+
+```bash
+# Configure API access (edit .env with your key)
+echo "OPENROUTER_API_KEY=your-key-here" > .env
+
+# Run skill tests (with real-time logging)
+uv run pytest tests/ -v -s
+
+# Run in parallel (much faster — each scenario runs in its own worker)
+uv run pytest tests/ -v -n auto
+```
+
+Criterion evaluations within each scenario also run concurrently (each is an independent judge API call), so even a single-worker run is faster than fully sequential.
+
+**Traces are write-once by default.** If a trace already exists for a given (skill, version, scenario, model) combination, the test skips it. This keeps test runs cheap -- you only pay API costs for new scenarios or new skill versions. To force a fresh run of everything (e.g., to add another data point), pass `--rerun`:
+
+```bash
+uv run pytest tests/ -v -s --rerun
+```
+
+**Null baselines.** Every scenario also runs with no skill installed -- just a bare "You are a helpful assistant." prompt. These null traces (stored at version `_null`) show what the model does on its own, so you can see what value the skill is actually adding. Null baselines never fail the test suite; they're purely for comparison.
+
+Test configuration (models, API endpoint) is in `tests/test_config.yaml`.
+
+### Viewing traces
+
+Trace files accumulate in `traces/` with a `traces/index.json` manifest that the viewer reads. To browse them:
+
+```bash
+uv run python -m http.server -d traces
+# Open http://localhost:8000/viewer.html
+```
+
+The viewer groups traces by skill and scenario, shows sparkline score trends over time, and lets you click into any run to see the full conversation and per-criterion evaluations. Compare skilled vs. null runs to see where the skill is making a difference and where the bare model already does fine.
 
 ## License
 

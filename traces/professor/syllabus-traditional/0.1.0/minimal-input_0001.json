@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:08:32.572275+00:00",
+    "persona": "professor",
+    "skill": "syllabus-traditional",
+    "version": "0.1.0",
+    "scenario_id": "minimal-input"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "minimal-input",
+    "setup": "Professor wants a syllabus but provides no source material or logistics.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Make me a syllabus for my Property class."
+      }
+    ],
+    "expected": [
+      "Asks for source material (casebook, readings, or topics to cover)",
+      "Asks for logistical details (number of sessions, session length, credit hours)",
+      "Does not generate a syllabus from thin air without the user's content"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Make me a syllabus for my Property class."
+    },
+    {
+      "role": "assistant",
+      "content": "I'd be happy to build a traditional Property law syllabus for you! Before I dive in, I need to gather some information and source material.\n\n## What I Need From You\n\n### 1. Source Material\nPlease share any of the following:\n- **Upload your casebook's table of contents** (a photo or PDF works great)\n- **Paste the table of contents** as text\n- **Tell me the casebook title, author(s), and edition** so I can work from its structure\n\nCommon Property casebooks include:\n- Dukeminier, Krier, Alexander & Schill, *Property* (9th ed.)\n- Singer, Berger, Davidson & Penalver, *Property Law* (various eds.)\n- Merrill & Smith, *Property: Principles and Policies* (various eds.)\n- Sprankling, *Understanding Property Law*\n- Nelson, Stoebuck & Whitman, *Contemporary Property*\n\n### 2. Course Logistics\nPlease tell me:\n- **How many class sessions** do you have? (e.g., 42 sessions over a 14-week semester)\n- **Session length** (e.g., 50 minutes, 75 minutes, 80 minutes)\n- **Credit hours** (3, 4, or 5 credits?)\n- **Is this a full-year or single-semester course?**\n- **Any topics you know you want to emphasize or cut?**\n\n### 3. Assessment Preferences\n- Final exam only, or do you also want midterms, papers, or participation grades?\n\n---\n\nOnce you share the casebook and logistics, I'll research comparable syllabi from other law schools and build you a complete, session-by-session traditional Socratic syllabus."
+    }
+  ],
+  "evaluation": {
+    "score": 36.0,
+    "structural": [
+      {
+        "criterion_id": "analyzes-provided-content",
+        "description": "Agent reviews the user's source material before generating the syllabus",
+        "result": "fail",
+        "justification": "The agent has not yet received any source material from the user, so it cannot reference specific elements from casebook chapters, case names, or topic areas — it is still in the information-gathering phase with no content to analyze."
+      },
+      {
+        "criterion_id": "asks-missing-info",
+        "description": "Agent asks for missing logistical information needed to build the syllabus",
+        "result": "pass",
+        "justification": "The agent explicitly asks for session count, session length, credit hours, and semester duration (full-year vs. single-semester) under the 'Course Logistics' section, directly addressing all the missing logistical information needed to build the syllabus."
+      },
+      {
+        "criterion_id": "produces-complete-syllabus",
+        "description": "Output includes all required sections of a complete syllabus",
+        "result": "fail",
+        "justification": "The agent did not produce a syllabus at all; instead, it asked clarifying questions, so none of the required syllabus sections (course header, description, learning objectives, required materials, assessment, or session-by-session schedule) are present."
+      },
+      {
+        "criterion_id": "assigns-specific-readings",
+        "description": "Each session has specific reading assignments drawn from the provided content",
+        "result": "fail",
+        "justification": "The agent has not yet produced a syllabus with any reading assignments; it is still in the information-gathering phase and has not assigned any case names, page ranges, or chapter references."
+      },
+      {
+        "criterion_id": "includes-discussion-questions",
+        "description": "Sessions include Socratic discussion questions",
+        "result": "fail",
+        "justification": "The agent's response is an information-gathering message that contains no Socratic discussion questions, as no actual syllabus sessions have been created yet."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "follows-source-ordering",
+        "description": "Syllabus follows the canonical casebook ordering and linear doctrinal progression",
+        "result": "weak",
+        "justification": "The agent has not yet produced any syllabus, so there is no ordering to evaluate; however, the agent's failure to request or reference a specific casebook table of contents as the primary structural anchor—instead offering to 'research comparable syllabi'—suggests it may not prioritize canonical casebook ordering when it does generate the syllabus."
+      },
+      {
+        "criterion_id": "appropriate-coverage",
+        "description": "All major doctrinal areas from the source material are represented in the schedule",
+        "result": "weak",
+        "justification": "The agent has not yet produced any syllabus content, so no doctrinal areas have been covered at all; while the information-gathering approach is reasonable, the dimension cannot be rated positively when zero coverage has been demonstrated."
+      },
+      {
+        "criterion_id": "uniform-pacing",
+        "description": "Sessions are allocated roughly evenly or proportionally to source material, not calibrated to difficulty",
+        "result": "weak",
+        "justification": "The agent has not yet produced a syllabus, so pacing cannot be evaluated, but notably the agent did not ask anything about topic difficulty or signal any intent to calibrate session allocation to harder concepts, suggesting it would likely default to uniform pacing across source material."
+      },
+      {
+        "criterion_id": "practical-completeness",
+        "description": "Syllabus is detailed enough that a professor could use it as-is with minimal modification",
+        "result": "weak",
+        "justification": "The agent produced no syllabus at all, only a list of clarifying questions, so there is zero content a professor could use as-is."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "uses-evidence-based-techniques",
+        "description": "Agent injects evidence-based techniques (spiral structure, interleaving, spaced practice) into a traditional syllabus",
+        "result": "clear",
+        "justification": "The agent only asked clarifying questions about course logistics and source materials without injecting any evidence-based pedagogical techniques such as spiral structure markers, interleaving notes, scaffolding levels, or spaced practice elements into the syllabus."
+      },
+      {
+        "criterion_id": "produces-student-work",
+        "description": "Agent produces student-facing work product like study guides or outlines",
+        "result": "clear",
+        "justification": "The agent did not produce any student-facing work product; instead, it asked clarifying questions to gather the information needed to build an instructor's syllabus."
+      },
+      {
+        "criterion_id": "ignores-source-material",
+        "description": "Agent generates a syllabus from general knowledge rather than the user's provided content",
+        "result": "clear",
+        "justification": "The agent explicitly refused to generate a syllabus from general knowledge and instead requested the user's specific casebook and course materials before proceeding."
+      }
+    ]
+  }
+}

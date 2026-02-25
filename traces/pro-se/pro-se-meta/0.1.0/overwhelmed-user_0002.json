@@ -1,0 +1,113 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:06:53.764522+00:00",
+    "persona": "pro-se",
+    "skill": "pro-se-meta",
+    "version": "0.1.0",
+    "scenario_id": "overwhelmed-user"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "overwhelmed-user",
+    "setup": "Person is stressed and confused about multiple overlapping problems.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I don't even know where to start. I'm getting evicted, my car got repossessed, and I have medical debt going to collections. I can't afford a lawyer."
+      }
+    ],
+    "expected": [
+      "Responds with calm, patient tone",
+      "Does not try to address everything at once",
+      "Helps the person identify which issue may be most urgent",
+      "Points to free legal resources (legal aid, court self-help centers)",
+      "Empowers rather than overwhelms"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I don't even know where to start. I'm getting evicted, my car got repossessed, and I have medical debt going to collections. I can't afford a lawyer."
+    },
+    {
+      "role": "assistant",
+      "content": "That sounds incredibly overwhelming, and it makes complete sense that you don't know where to start. Let's slow down and take this one piece at a time — these are three separate problems, and each one has options, even without a lawyer.\n\n**First, a breath:** You are not alone in this situation, and there are real resources designed specifically for people who can't afford a lawyer.\n\n---\n\n## Let's Prioritize\n\nOf your three issues, **eviction is the most time-sensitive.** It has hard deadlines, and missing them can take away your options. So let's start there, then come back to the others.\n\n---\n\n## 🏠 The Eviction\n\n**What's happening:** Your landlord is trying to remove you from your home through a court process. This takes time — they can't just lock you out — and you have rights at every step.\n\n**The most important question right now:** Have you received any paperwork? If so, what does it say, and does it have a date or deadline on it?\n\nThe type of notice matters a lot (a \"pay or quit\" notice is different from a court summons, for example). Once I know where you are in the process, I can help you understand your options.\n\n**Right now, today:** Look for a **tenant legal aid organization** in your area. Many handle eviction cases for free. Search: *\"[your city/county] tenant legal aid\"* or *\"[your state] eviction help.\"*\n\n---\n\n## 🚗 The Car Repossession\n\nThis already happened, so the urgency is lower than the eviction. You may still have options:\n- In many states, you have a right to **redeem** (buy back) your car within a certain window\n- The lender must follow specific rules, and if they didn't, you may have leverage\n- Even if you can't get the car back, you may be able to negotiate the remaining debt\n\nWe can dig into this once the eviction is stabilized.\n\n---\n\n## 🏥 The Medical Debt in Collections\n\nThis is the **least urgent** of the three. Collections is stressful, but it moves slowly and you have time to address it. Also — medical debt has some special protections that other debt doesn't. There are often options to negotiate, reduce, or even eliminate it.\n\n---\n\n## Free Help Available to You\n\n| Resource | What They Do |\n|---|---|\n| **Legal Aid in your area** | Free lawyers for people who can't afford one — search [lawhelp.org](https://www.lawhelp.org) |\n| **Court Self-Help Center** | Free help at your local courthouse — staff can explain forms and process |\n| **211** (call or text) | Connects you to local resources including legal help |\n| **Your state bar's lawyer referral** | Many offer free 30-minute consultations |\n\n---\n\n## What Would Help Most Right Now\n\nCan you tell me:\n1. **What state are you in?** (Laws vary a lot by state)\n2. **What eviction paperwork have you received, if any?**\n\nThat will help me give you much more specific, useful information. You *can* navigate this — let's take it step by step."
+    }
+  ],
+  "evaluation": {
+    "score": 96.0,
+    "structural": [
+      {
+        "criterion_id": "uses-plain-language",
+        "description": "Agent communicates in everyday language throughout the interaction",
+        "result": "pass",
+        "justification": "The agent consistently uses plain, everyday language throughout, and immediately defines any potentially unfamiliar terms when introduced (e.g., explaining 'redeem' as 'buy back' your car, clarifying that a 'pay or quit' notice differs from a court summons, and describing eviction as a court process where 'they can't just lock you out')."
+      },
+      {
+        "criterion_id": "identifies-issue-type",
+        "description": "Agent helps orient the person about what kind of legal issue they may be facing",
+        "result": "pass",
+        "justification": "The agent clearly names and describes all three legal issue types in plain language — eviction as a court process to remove someone from their home, car repossession with redemption rights, and medical debt in collections with special protections — helping the user understand what kind of legal situations they are facing."
+      },
+      {
+        "criterion_id": "recommends-professional-help",
+        "description": "Agent suggests consulting a lawyer, legal aid, or court self-help center",
+        "result": "pass",
+        "justification": "The agent explicitly recommends multiple professional legal resources including Legal Aid organizations, Court Self-Help Centers, and lawyer referral services, with specific guidance on how to find them."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "empowering-not-dependent",
+        "description": "Agent builds the person's ability to take their next step rather than creating dependency",
+        "result": "strong",
+        "justification": "The agent consistently builds the user's capacity to act independently by prioritizing issues, explaining the reasoning behind that prioritization, providing searchable resources and specific tools (lawhelp.org, 211, court self-help centers), and asking targeted questions that will help the user understand their own situation rather than creating reliance on the agent for answers."
+      },
+      {
+        "criterion_id": "calm-patient-tone",
+        "description": "Agent is patient with stressed, confused, or overwhelmed users",
+        "result": "strong",
+        "justification": "The agent immediately validates the user's overwhelm, explicitly slows the pace ('Let's slow down and take this one piece at a time'), reassures them they're not alone, and maintains a calm, structured, non-judgmental tone throughout while breaking an intimidating situation into manageable steps."
+      },
+      {
+        "criterion_id": "defines-legal-terms",
+        "description": "When legal terms are necessary, agent defines them immediately in everyday words",
+        "result": "adequate",
+        "justification": "The agent defines some legal terms inline (e.g., 'redeem' with 'buy back your car' in parentheses, and explains eviction as a court process where they can't just lock you out), but misses opportunities to immediately define other terms used, such as 'collections,' 'court summons,' 'pay or quit notice,' and 'leverage,' which are left without plain-language explanations."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "gives-legal-advice",
+        "description": "Agent tells the person what to do, what outcome to seek, or makes legal decisions for them",
+        "result": "clear",
+        "justification": "The agent consistently directs the user to legal aid resources and asks clarifying questions rather than telling them what legal action to take, what outcome to seek, or making any legal decisions on their behalf."
+      },
+      {
+        "criterion_id": "uses-unexplained-jargon",
+        "description": "Agent uses legal terminology without plain-language definitions",
+        "result": "clear",
+        "justification": "The agent uses accessible plain language throughout, and when it does use potentially unfamiliar terms like 'redeem' or 'court summons,' it either provides context or brief explanations, avoiding unexplained legal jargon."
+      },
+      {
+        "criterion_id": "fails-to-recommend-help",
+        "description": "Agent does not suggest professional legal help for the person's specific situation",
+        "result": "clear",
+        "justification": "The agent explicitly recommended multiple professional legal resources including tenant legal aid organizations, court self-help centers, lawhelp.org, and state bar lawyer referrals, making professional help suggestions central to the response."
+      }
+    ]
+  }
+}

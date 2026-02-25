@@ -1,0 +1,142 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T19:57:53.604907+00:00",
+    "persona": "cle",
+    "skill": "development-plan",
+    "version": "0.1.0",
+    "scenario_id": "solo-practitioner"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "solo-practitioner",
+    "setup": "Solo practitioner with very different constraints than a firm attorney.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I'm a solo practitioner doing family law. Been at it 8 years. I feel like I'm stuck -- good at what I do but not growing."
+      },
+      {
+        "role": "user",
+        "content": "I want to expand into mediation but I also need to improve my practice management. I'm stretched thin doing everything myself."
+      }
+    ],
+    "expected": [
+      "Recognizes the unique constraints of solo practice (wearing all hats, limited time)",
+      "Helps prioritize between mediation expansion and practice management",
+      "Suggests actions that account for a solo practitioner's resource constraints",
+      "Plan is realistic for someone without a firm's infrastructure"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I'm a solo practitioner doing family law. Been at it 8 years. I feel like I'm stuck -- good at what I do but not growing."
+    },
+    {
+      "role": "assistant",
+      "content": "That \"stuck\" feeling after 8 years is actually a meaningful signal — it usually means you've mastered the fundamentals and your current work isn't stretching you anymore. That's a good problem to have, but it does need a deliberate response.\n\nBefore I build a plan, let me ask a few targeted questions:\n\n**On the \"stuck\" feeling:**\n- When you say not growing — is it more about *skills* (you want to be better at something specific), *business* (revenue, client base, reputation), or *satisfaction* (the work doesn't feel meaningful or challenging)?\n\n**On your practice:**\n- What's your current mix? (Divorce, custody, support, domestic violence, adoption, etc.)\n- Do you have a niche, or are you a general family law practitioner?\n- Are you at capacity, or do you have room to take more work?\n\n**On where you want to go:**\n- If your practice looked exactly right in 3 years, what would be different from today?\n- Is there anything you've been wanting to do but keep deprioritizing — a type of case, a skill, a reputation you want to build?\n\nYou don't have to answer all of these in order. Even a rough answer to \"what would different look like\" is a useful starting point."
+    },
+    {
+      "role": "user",
+      "content": "I want to expand into mediation but I also need to improve my practice management. I'm stretched thin doing everything myself."
+    },
+    {
+      "role": "assistant",
+      "content": "Two clear priorities — and they're actually related. Being stretched thin is partly a practice management problem, and solving it creates the bandwidth to build the mediation side. Let's address both.\n\nA few more questions to make the plan concrete:\n\n**On mediation:**\n- Are you thinking family mediation as a neutral (a separate revenue stream, mediating other people's cases), or using mediation skills in your own cases, or both?\n- Have you done any mediation training yet, or is this starting from zero?\n- Do you have a timeline in mind — is this a \"this year\" goal or a \"2-3 year\" build?\n\n**On practice management:**\n- Where does the time go? What tasks eat your day that shouldn't require you specifically? (Billing, scheduling, document drafting, client intake, court filings?)\n- Do you have any support staff or contractors, or are you truly solo?\n- What does your current tech stack look like? (Practice management software, billing system, document automation — or mostly manual?)\n\n**One framing question:**\n- When you imagine having this figured out in 3 years — are you still a solo, or have you grown into something bigger? Some solos want to stay lean and efficient; others want to build a small firm. That changes the plan significantly.\n\nThe answers will tell me whether we're solving a systems problem, a delegation problem, a technology problem, or some combination. Take a shot at whichever of these you can answer most easily."
+    }
+  ],
+  "evaluation": {
+    "score": 56.8,
+    "structural": [
+      {
+        "criterion_id": "gathers-context",
+        "description": "Agent asks about current role, practice area, firm type, and years of experience",
+        "result": "pass",
+        "justification": "The user provided role (solo practitioner), practice area (family law), and years of experience (8 years) in the opening message, and the agent confirmed these details and asked additional clarifying questions before building a plan, satisfying the requirement of addressing at least three of the four context dimensions."
+      },
+      {
+        "criterion_id": "assesses-position",
+        "description": "Agent explores strengths, areas to improve, feedback received, and career vision",
+        "result": "pass",
+        "justification": "The agent asks about the user's 3-year vision ('if your practice looked exactly right in 3 years, what would be different') and implicitly explores improvement areas (practice management, mediation skills) and current strengths/position, satisfying the requirement of addressing at least two of the specified dimensions."
+      },
+      {
+        "criterion_id": "categorizes-priorities",
+        "description": "Agent maps development needs into specific categories",
+        "result": "fail",
+        "justification": "While the agent identifies two priorities (mediation expansion and practice management), it does not organize them into named development categories; instead, it asks clarifying questions and mentions possible sub-types (systems, delegation, technology problems) only tentatively at the end without structuring them as a proper categorical framework."
+      },
+      {
+        "criterion_id": "produces-quarterly-plan",
+        "description": "Output includes quarterly milestones with specific action items",
+        "result": "fail",
+        "justification": "The agent has not produced any quarterly plan with milestones or action items; it has only asked clarifying questions across both responses without providing any structured timeline or deliverables."
+      },
+      {
+        "criterion_id": "includes-metrics",
+        "description": "Plan includes progress metrics and a check-in mechanism",
+        "result": "fail",
+        "justification": "The agent's responses consist entirely of clarifying questions and framing without presenting any actual plan, let alone progress metrics, feedback loops, self-assessment prompts, or check-in mechanisms."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "realistic-time-awareness",
+        "description": "Recommendations account for billable hour pressure and limited development time",
+        "result": "weak",
+        "justification": "The agent asks multiple rounds of clarifying questions without acknowledging the user's billable hour pressure or time constraints, showing no awareness that a stretched-thin solo practitioner has limited bandwidth to engage in lengthy planning exercises before receiving actionable guidance."
+      },
+      {
+        "criterion_id": "strategic-prioritization",
+        "description": "Agent helps narrow focus to 2-4 priorities rather than trying to address everything",
+        "result": "strong",
+        "justification": "The agent immediately identified and named exactly two clear priorities from the user's response, explicitly connected them to show their relationship, and structured the entire follow-up around only those two areas rather than expanding into additional concerns."
+      },
+      {
+        "criterion_id": "practical-specificity",
+        "description": "Action items are concrete and achievable, not aspirational generalities",
+        "result": "weak",
+        "justification": "The agent has asked multiple rounds of clarifying questions but has not yet provided any concrete, actionable steps the user can take — everything remains in the diagnostic/planning phase with no specific actions offered."
+      },
+      {
+        "criterion_id": "builds-attorney-capability",
+        "description": "Focus is on building the attorney's own skills, not producing work product for them",
+        "result": "adequate",
+        "justification": "The agent focuses on understanding the attorney's situation and goals through diagnostic questions rather than producing work product, but it hasn't yet demonstrated capability-building by teaching frameworks or skills—it's still in information-gathering mode, making it adequate rather than strong."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-work-product",
+        "description": "Agent produces client deliverables or legal work product instead of a development plan",
+        "result": "clear",
+        "justification": "The agent produced only diagnostic questions and framing guidance to build a development plan, not any legal work product such as memoranda, briefs, or client communications."
+      },
+      {
+        "criterion_id": "generic-career-advice",
+        "description": "Agent gives only generic advice without tailoring to the attorney's specific situation",
+        "result": "clear",
+        "justification": "The agent consistently tailors its questions and framing to the user's specific context — 8-year solo family law practitioner wanting to expand into mediation while stretched thin — rather than offering generic advice that could apply to any attorney."
+      },
+      {
+        "criterion_id": "ignores-constraints",
+        "description": "Agent recommends plans that are unrealistic given the attorney's time and resource constraints",
+        "result": "clear",
+        "justification": "The agent has not yet proposed any plan with time commitments — it is still in the information-gathering phase, asking clarifying questions before making any recommendations."
+      }
+    ]
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T19:57:54.044134+00:00",
+    "persona": "cle",
+    "skill": "cle-meta",
+    "version": "0.1.0",
+    "scenario_id": "ambiguous-request"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "ambiguous-request",
+    "setup": "Attorney makes a vague request about improvement.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I want to be a better lawyer."
+      }
+    ],
+    "expected": [
+      "Asks clarifying questions about what \"better\" means in their context",
+      "Probes for specific areas, not generic improvement",
+      "Does not produce a plan without understanding what the attorney actually wants to work on"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I want to be a better lawyer."
+    },
+    {
+      "role": "assistant",
+      "content": "That's a good instinct, but it's too broad to act on.\n\n**Let's narrow it down.** \"Better lawyer\" means different things depending on where you actually feel the gap. A few directions this could go:\n\n---\n\n**Craft** — Are you struggling with something specific? Depositions, drafting, oral argument, negotiation, managing complex matters?\n\n**Client relationships** — Communication, expectation-setting, difficult clients, business development?\n\n**Practice management** — Efficiency, delegation, systems, work-life sustainability?\n\n**Career trajectory** — Moving into a new practice area, making partner, going in-house, building a book of business?\n\n**Judgment** — The harder-to-name stuff: knowing when to push, when to settle, how to read a room, how to advise under uncertainty?\n\n---\n\nHere's a useful diagnostic: **Think about the last time you felt like you underperformed.** Not a bad outcome — outcomes are often outside your control — but a moment where you walked away thinking *I could have handled that better.*\n\nWhat was it? That's usually where the real development work is.\n\nWhat comes to mind?"
+    }
+  ],
+  "evaluation": {
+    "score": 92.0,
+    "structural": [
+      {
+        "criterion_id": "identifies-development-need",
+        "description": "Agent understands what professional development the attorney is seeking",
+        "result": "pass",
+        "justification": "The agent explicitly recognizes the request is too broad and asks targeted questions to identify the specific development area before providing any substantive guidance."
+      },
+      {
+        "criterion_id": "assumes-professional-competence",
+        "description": "Agent treats the user as a competent licensed attorney",
+        "result": "pass",
+        "justification": "The agent treats the user as a competent professional by using peer-level language, offering sophisticated practice-area categories (depositions, oral argument, book of business, going in-house), and focusing on professional development rather than explaining any basic legal concepts."
+      },
+      {
+        "criterion_id": "stays-in-scope",
+        "description": "Agent handles CLE and professional development tasks",
+        "result": "pass",
+        "justification": "The agent's response directly addresses professional development by helping the user identify specific areas for skill building and career improvement as a lawyer, covering craft, client relationships, practice management, career trajectory, and judgment."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "strategic-practical-tone",
+        "description": "Agent speaks as a direct, practical senior colleague",
+        "result": "strong",
+        "justification": "The agent immediately reframes the vague request like an experienced mentor would, cuts through the noise with a structured but conversational breakdown, and uses a sharp, practical diagnostic ('last time you felt like you underperformed') that a seasoned colleague would actually deploy."
+      },
+      {
+        "criterion_id": "builds-capability",
+        "description": "Agent focuses on building the attorney's own skills rather than doing work for them",
+        "result": "strong",
+        "justification": "The agent explicitly refuses to do work for the attorney and instead uses a diagnostic question ('think about the last time you felt like you underperformed') to develop the attorney's own self-awareness and reflective capacity, which is foundational to skill-building."
+      },
+      {
+        "criterion_id": "time-aware",
+        "description": "Agent acknowledges the realities of billable hour pressure and limited development time",
+        "result": "weak",
+        "justification": "The agent makes no acknowledgment of billable hour pressure, limited development time, or the practical constraints lawyers face in finding time for professional development."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-client-work",
+        "description": "Agent produces client deliverables or legal work product",
+        "result": "clear",
+        "justification": "The agent focuses entirely on professional development by asking diagnostic questions to identify skill gaps, rather than producing any legal work product, memos, briefs, or client deliverables."
+      },
+      {
+        "criterion_id": "treats-as-student",
+        "description": "Agent explains basic legal concepts or uses a law-student tutoring tone",
+        "result": "clear",
+        "justification": "The agent does not explain any legal concepts or doctrines; instead, it asks diagnostic questions to identify the user's specific development needs, treating them as a practicing professional."
+      },
+      {
+        "criterion_id": "generic-encouragement",
+        "description": "Agent gives only vague motivational advice without substance",
+        "result": "clear",
+        "justification": "The agent explicitly refused to give generic advice, instead providing a structured diagnostic framework with specific, concrete categories and a practical self-reflection exercise to identify the user's actual development needs."
+      }
+    ]
+  }
+}

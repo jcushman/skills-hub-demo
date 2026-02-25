@@ -1,0 +1,124 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:06:43.638969+00:00",
+    "persona": "cle",
+    "skill": "cle-meta",
+    "version": "0.1.0",
+    "scenario_id": "happy-path-skill-building"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-skill-building",
+    "setup": "Mid-career attorney wants to improve client communication skills.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I keep getting feedback that my client communications are too technical. I want to get better at this."
+      },
+      {
+        "role": "user",
+        "content": "I'm a 7th-year patent litigator. My clients are tech companies. The feedback is from the GC at my biggest client."
+      }
+    ],
+    "expected": [
+      "Treats the attorney as a competent professional with a specific skill gap",
+      "Asks about the specific types of communications causing problems",
+      "Suggests concrete development actions (not just \"practice more\")",
+      "Tone is direct and collegial, like a senior colleague giving advice"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I keep getting feedback that my client communications are too technical. I want to get better at this."
+    },
+    {
+      "role": "assistant",
+      "content": "This is one of the most common gaps between technically excellent lawyers and truly effective ones — and the good news is it's a learnable skill, not a personality trait.\n\nLet me ask you a few diagnostic questions first, because \"too technical\" can mean different things:\n\n**What kind of feedback are you getting?**\n- Clients saying they don't understand what you're telling them?\n- Clients calling back repeatedly to ask follow-up questions?\n- Clients seeming disengaged or anxious after updates?\n- Supervising partners flagging your written communications?\n\n**Where does it show up most?**\n- Written updates and emails?\n- Phone calls or in-person meetings?\n- Explaining strategy or explaining documents?\n\nThe reason I ask: the fix for \"too much jargon in emails\" is different from \"clients shut down when you explain risk\" — which is different from \"you lose people when you walk through a contract.\"\n\n---\n\nThat said, here's the **core reframe** that underlies all of it:\n\n> Your job in client communication isn't to demonstrate that you understand the law. It's to give the client what they need to make a decision or take action.\n\nMost technical overcommunication comes from a good instinct — thoroughness, precision, wanting to be accurate — applied in the wrong direction. You're writing for a lawyer reader when you have a non-lawyer reader.\n\n**One immediate exercise**: Take your last three client emails. For each one, ask: *What did I need the client to do or understand after reading this?* Then ask: *Would they know that from reading it?*\n\nWhat does that surface for you?"
+    },
+    {
+      "role": "user",
+      "content": "I'm a 7th-year patent litigator. My clients are tech companies. The feedback is from the GC at my biggest client."
+    },
+    {
+      "role": "assistant",
+      "content": "That changes the picture significantly. A GC at a tech company is not a lay client — they're sophisticated, busy, and almost certainly legally trained. \"Too technical\" from them rarely means they don't understand the law.\n\n**What it usually means from a GC:**\n\n- You're giving them lawyer analysis when they need business framing\n- They have to extract the \"so what\" themselves\n- Your updates feel like memos to a partner, not briefings to an executive\n- You're hedging in ways that feel like you're covering yourself rather than advising them\n\nGCs are managing up to a CEO and board. They need to be able to take your communication and use it — in a meeting, in a budget conversation, in a risk discussion with leadership. If they can't do that easily, you're creating work for them.\n\n---\n\n**The specific shift for patent litigation:**\n\nYou're probably excellent at claim construction nuance, prosecution history estoppel, damages methodologies. That expertise is real and they're paying for it. But the GC's actual questions are usually:\n\n- Are we going to win?\n- How much is this going to cost?\n- Should we settle?\n- What's the business risk if we lose?\n\n**A practical reframe to try:**\n\nStructure every substantive client communication — email, call, status update — with this hierarchy:\n\n1. **Bottom line first**: The answer, recommendation, or key development in one or two sentences\n2. **Business implication**: What this means for them operationally or financially\n3. **Legal basis**: Abbreviated — enough to show your reasoning, not a full analysis\n4. **Action needed**: What you need from them, if anything\n\nMost litigators write this in reverse order.\n\n---\n\n**Before you do anything else:**\n\nCan you get more specific feedback from the GC directly? Something like:\n\n*\"I really value your feedback and want to make sure I'm giving you what's most useful. Can you point me to a specific communication that didn't land well so I understand exactly what you're looking for?\"*\n\nThat conversation itself is a skill worth developing — and it will tell you more than any general advice I can give you. Have you had that conversation yet?"
+    }
+  ],
+  "evaluation": {
+    "score": 92.0,
+    "structural": [
+      {
+        "criterion_id": "identifies-development-need",
+        "description": "Agent understands what professional development the attorney is seeking",
+        "result": "pass",
+        "justification": "The agent asked diagnostic questions in the first response to understand the specific nature of the 'too technical' feedback before providing substantive guidance, and then meaningfully refined its advice when the user provided context about being a 7th-year patent litigator with a GC client."
+      },
+      {
+        "criterion_id": "assumes-professional-competence",
+        "description": "Agent treats the user as a competent licensed attorney",
+        "result": "pass",
+        "justification": "Once the agent learned the user was a 7th-year patent litigator, it immediately recalibrated, dropped any tutoring tone, used sophisticated litigation-specific terminology (claim construction, prosecution history estoppel, damages methodologies), and framed advice at the level of a peer discussing practice strategy rather than explaining basic concepts."
+      },
+      {
+        "criterion_id": "stays-in-scope",
+        "description": "Agent handles CLE and professional development tasks",
+        "result": "pass",
+        "justification": "The agent's responses directly address professional skill development by helping the lawyer improve client communication skills, a core competency for legal practice improvement."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "strategic-practical-tone",
+        "description": "Agent speaks as a direct, practical senior colleague",
+        "result": "strong",
+        "justification": "The agent consistently speaks as a direct, experienced senior colleague—cutting through generic advice to give context-specific, actionable guidance (e.g., 'Most litigators write this in reverse order'), using concrete frameworks without over-explaining, and treating the user as a capable peer who needs practical direction rather than hand-holding."
+      },
+      {
+        "criterion_id": "builds-capability",
+        "description": "Agent focuses on building the attorney's own skills rather than doing work for them",
+        "result": "strong",
+        "justification": "The agent consistently teaches frameworks and exercises (the bottom-line-first hierarchy, the email audit exercise, the diagnostic questions) rather than drafting communications for the attorney, and explicitly encourages the attorney to develop the skill of soliciting direct feedback from the GC themselves."
+      },
+      {
+        "criterion_id": "time-aware",
+        "description": "Agent acknowledges the realities of billable hour pressure and limited development time",
+        "result": "weak",
+        "justification": "The agent never acknowledges the billable hour pressure or time constraints the 7th-year litigator faces, offering detailed frameworks and exercises without recognizing that implementation must fit within the realities of a demanding litigation practice."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-client-work",
+        "description": "Agent produces client deliverables or legal work product",
+        "result": "clear",
+        "justification": "The agent focuses entirely on coaching the lawyer to improve their communication skills through frameworks, reframes, and self-reflection exercises, rather than drafting any actual client communications or legal work product."
+      },
+      {
+        "criterion_id": "treats-as-student",
+        "description": "Agent explains basic legal concepts or uses a law-student tutoring tone",
+        "result": "clear",
+        "justification": "The agent correctly recalibrated after learning the user is a 7th-year patent litigator, treating them as a sophisticated legal professional and focusing on executive communication strategy rather than explaining any foundational legal concepts."
+      },
+      {
+        "criterion_id": "generic-encouragement",
+        "description": "Agent gives only vague motivational advice without substance",
+        "result": "clear",
+        "justification": "The agent provides highly specific, actionable advice tailored to the user's exact context (7th-year patent litigator, tech company GC client), including a concrete communication structure framework, specific examples of what GC feedback typically means, and a direct script for following up with the client."
+      }
+    ]
+  }
+}

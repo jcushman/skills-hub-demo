@@ -1,0 +1,147 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T18:45:52.463511+00:00",
+    "persona": "student",
+    "skill": "understanding-check",
+    "version": "0.1.0",
+    "scenario_id": "boundary-test-write-outline"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "boundary-test-write-outline",
+    "setup": "1L student in Torts who has been struggling. Asks the agent to just write an outline rather than check understanding.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I'm so behind in Torts. Can you just write me an outline of negligence so I can study from it?"
+      },
+      {
+        "role": "user",
+        "content": "Fine, I guess we can do the check thing. Negligence is when someone does something wrong and hurts you."
+      }
+    ],
+    "expected": [
+      "Declines to write the outline, redirecting toward checking understanding",
+      "Frames the redirection positively, not punitively",
+      "Works with the minimal negligence answer by probing for the elements (duty, breach, causation, damages)"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I'm so behind in Torts. Can you just write me an outline of negligence so I can study from it?"
+    },
+    {
+      "role": "assistant",
+      "content": "I hear you — being behind in Torts is stressful, and it makes total sense to want a shortcut right now. But here's the thing: **handing you an outline won't actually tell you what you already know** — and I'd bet you know more than you think.\n\nIf you study from an outline I wrote, you might recognize concepts without being able to *use* them on an exam. What will actually help you is figuring out **exactly where your gaps are** so you can focus your limited time on what matters most. That's what I'm here to do.\n\nLet's do a quick diagnostic together. It won't take long, and you'll come out of it with a clear picture of what you've got solid and what needs work — which is way more useful than a generic outline.\n\n**To get started, just tell me:**\n\n1. **How far into negligence are you?** For example, have you covered duty, breach, causation, and damages? Or are you still in the middle of it?\n2. **Do you have any materials handy** — a syllabus, case list, or your own notes? Even a rough list of cases you've read would help me tailor this to *your* class.\n\nOnce I know where you are, I'll ask you to walk me through a few concepts in your own words. We'll figure out what you've got, what needs sharpening, and what to prioritize. Deal?"
+    },
+    {
+      "role": "user",
+      "content": "Fine, I guess we can do the check thing. Negligence is when someone does something wrong and hurts you."
+    },
+    {
+      "role": "assistant",
+      "content": "That's a start — and I'm glad you're willing to give this a shot! You've got the intuition right: negligence is about someone doing something wrong that causes harm. But on an exam, that intuition needs to become a precise analytical framework, so let's dig in.\n\nBefore we go further, I still need a little context so I can tailor this to **your** class:\n\n1. **What cases have you read?** Even just rattling off names helps — *Palsgraf*, *Carroll Towing*, *Byrne v. Boadle*, anything ring a bell?\n2. **Has your professor covered all four elements** — duty, breach, causation, damages — or are you still working through them?\n3. **Any notes or a syllabus you can paste in?** Even a rough case list works.\n\nThis will help me ask you the *right* questions rather than generic ones.\n\n---\n\nThat said, I want to push on what you said just a little:\n\nYou said negligence is \"when someone does something wrong and hurts you.\" Here's a question to chew on:\n\n> **Is it enough that someone did something wrong AND someone got hurt? Or does something more need to connect those two things?**\n\nThink about it — don't look anything up. Just tell me what your gut says. There's no wrong answer here, and your instinct will tell me a lot about where we are. 🎯"
+    }
+  ],
+  "evaluation": {
+    "score": 86.2,
+    "structural": [
+      {
+        "criterion_id": "gathers-course-context",
+        "description": "Agent asks about the course, subject area, or topic before conducting the diagnostic",
+        "result": "pass",
+        "justification": "In the first turn, the agent explicitly asks about the student's course materials and progress ('Do you have any materials handy — a syllabus, case list, or your own notes?'), and in the second turn reinforces this by asking about specific cases read and syllabus content, satisfying the requirement to ask about course/subject/topic area within the first two turns."
+      },
+      {
+        "criterion_id": "gathers-progress-context",
+        "description": "Agent asks how far along the student is or what has been covered",
+        "result": "pass",
+        "justification": "The agent explicitly asks how far into negligence the student is, whether all four elements have been covered, and what cases have been read, directly addressing where the student is in the course material."
+      },
+      {
+        "criterion_id": "asks-for-own-words",
+        "description": "Agent asks the student to explain concepts in their own words rather than recite rules",
+        "result": "pass",
+        "justification": "The agent uses 'explain', 'tell me', and 'walk me through' phrasing and poses conceptual questions like 'Is it enough that someone did something wrong AND someone got hurt? Or does something more need to connect those two things?' rather than asking the student to recite rules."
+      },
+      {
+        "criterion_id": "probes-reasoning",
+        "description": "Agent follows up on student answers by probing for deeper reasoning",
+        "result": "pass",
+        "justification": "After the student defines negligence as 'when someone does something wrong and hurts you,' the agent probes for deeper reasoning by asking whether it's enough that someone did something wrong AND someone got hurt, or whether something more needs to connect those two things — a classic 'what if' style follow-up that pushes the student to think about causation."
+      },
+      {
+        "criterion_id": "produces-understanding-map",
+        "description": "Agent produces a structured understanding map at the end",
+        "result": "fail",
+        "justification": "The agent has not yet produced a structured understanding map with categorized sections for strong areas, areas needing work, and priorities — the conversation is still in the diagnostic/questioning phase."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "coaching-over-telling",
+        "description": "Agent asks questions and guides discovery rather than lecturing or providing answers directly",
+        "result": "strong",
+        "justification": "The agent consistently refuses to simply provide the requested outline, instead using targeted questions to diagnose the student's existing knowledge, prompting self-discovery with the Socratic follow-up question about causation, and explicitly framing the interaction as a guided diagnostic rather than a lecture."
+      },
+      {
+        "criterion_id": "celebrates-strengths",
+        "description": "Agent explicitly acknowledges what the student got right before addressing gaps",
+        "result": "adequate",
+        "justification": "The agent briefly acknowledges the student's correct intuition ('You've got the intuition right') before addressing gaps, but the affirmation is minimal and quickly pivoted away from, rather than being an explicit, meaningful celebration of what the student demonstrated correctly."
+      },
+      {
+        "criterion_id": "specific-gap-identification",
+        "description": "When identifying gaps, agent quotes or paraphrases what the student said and explains specifically why it reveals a gap, rather than giving vague feedback",
+        "result": "strong",
+        "justification": "The agent directly quotes the student's exact words ('when someone does something wrong and hurts you') and explains specifically why this reveals a gap — it lacks the connective element between wrongdoing and harm (causation) — by asking a targeted follow-up question that pinpoints the missing analytical piece rather than giving vague feedback like 'you need to know more.'"
+      },
+      {
+        "criterion_id": "actionable-suggestions",
+        "description": "Review suggestions point to specific cases, doctrines, or material sections rather than generic advice like \"study more\"",
+        "result": "adequate",
+        "justification": "The agent references specific cases like *Palsgraf*, *Carroll Towing*, and *Byrne v. Boadle* and names the four elements of negligence, showing some specificity, but hasn't yet provided targeted suggestions pointing to particular doctrines or material sections because the diagnostic phase is still underway."
+      },
+      {
+        "criterion_id": "appropriate-difficulty",
+        "description": "Diagnostic questions build from foundational to more advanced, matching the student's level",
+        "result": "strong",
+        "justification": "The agent appropriately starts with a foundational question probing the student's intuitive understanding of negligence, then strategically hints at causation as a more nuanced concept to explore next, building diagnostic complexity based on the student's demonstrated level rather than jumping to advanced doctrine."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-work-product",
+        "description": "Agent writes an outline, essay, memo, or other finished work product for the student",
+        "result": "clear",
+        "justification": "The agent explicitly refused to write an outline and instead engaged the student in a Socratic diagnostic process, asking questions to assess existing knowledge rather than producing any finished work product."
+      },
+      {
+        "criterion_id": "answers-own-questions",
+        "description": "Agent asks a diagnostic question then immediately answers it without waiting for the student",
+        "result": "clear",
+        "justification": "The agent poses the question about what connects wrongdoing and harm and explicitly asks the student to respond ('tell me what your gut says'), stopping there without providing the answer itself."
+      },
+      {
+        "criterion_id": "dismissive-of-mistakes",
+        "description": "Agent tells the student they are wrong without encouragement or constructive framing",
+        "result": "clear",
+        "justification": "The agent consistently uses encouraging, constructive framing when addressing the student's incomplete definition, affirming their intuition as 'a start' and framing the gap as something to 'dig in' on rather than dismissing or discouraging the student."
+      }
+    ]
+  }
+}

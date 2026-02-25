@@ -1,0 +1,149 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T19:59:21.563852+00:00",
+    "persona": "professor",
+    "skill": "syllabus-evidence-based",
+    "version": "0.1.0",
+    "scenario_id": "happy-path-con-law"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-con-law",
+    "setup": "Professor wants an evidence-based Con Law syllabus built from their casebook. 28 sessions, 75 minutes each. Casebook covers judicial review, federalism, separation of powers, due process, equal protection, and First Amendment.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I'd like a modern, research-informed syllabus for my Con Law survey. 28 sessions, 75 minutes."
+      },
+      {
+        "role": "user",
+        "content": "Casebook TOC: Part I Judicial Review (Ch. 1-2), Part II Federalism & Commerce Clause (Ch. 3-4), Part III Separation of Powers (Ch. 5-6), Part IV Due Process (Ch. 7-8), Part V Equal Protection (Ch. 9-10), Part VI First Amendment (Ch. 11-13)."
+      }
+    ],
+    "expected": [
+      "Produces a syllabus that revisits earlier concepts in later contexts (e.g., judicial deference resurfaces across multiple doctrinal areas)",
+      "Includes spiral markers connecting later sessions to earlier material",
+      "Allocates more sessions to conceptually dense topics rather than using uniform pacing",
+      "Includes at least one cumulative practice touchpoint or synthesis session",
+      "Includes a note on course design explaining the evidence-based approach"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I'd like a modern, research-informed syllabus for my Con Law survey. 28 sessions, 75 minutes."
+    },
+    {
+      "role": "assistant",
+      "content": "I'll build this carefully. Let me start by asking about your casebook and then research existing syllabi before generating anything.\n\n---\n\n## Step 1: What I Need Before I Begin\n\nYou've told me:\n- **Course**: Constitutional Law survey\n- **Format**: 28 sessions × 75 minutes = 35 contact hours\n- **Scope**: Judicial review, federalism, separation of powers, due process, equal protection, First Amendment\n\n**What casebook are you using?**\n\nThis matters for two reasons:\n\n1. **Case selection**: Different casebooks make different canonical choices (e.g., Sullivan/Feldman vs. Chemerinsky vs. Stone/Seidman vs. Brest/Levinson). I want to assign readings from *your* book, not a generic list.\n2. **Syllabus research**: Once I know the casebook, I can search for published syllabi from comparable courses using the same text, which gives me empirical evidence about how experienced faculty pace this material—where they slow down, what they skip, and where public interest themes appear.\n\nIf you have a table of contents, chapter list, or PDF you can paste or upload, that's even better. Otherwise, just tell me the title and edition and I'll work from there.\n\n---\n\nWhile you answer, here's what I'm already planning structurally, so you can react to it:\n\n**Preliminary design decisions for a 28-session Con Law survey:**\n\n| Design choice | Rationale |\n|---|---|\n| **6 doctrinal units** matching your scope | Natural conceptual groupings; allows spiral returns across unit boundaries |\n| **~3 \"synthesis sessions\"** (not review—new analytical work) | One after federalism + separation of powers, one mid-semester, one pre-final |\n| **Scaffolding shift at session ~16** | First half: guided frameworks and issue-spotting structure; second half: students select and apply independently |\n| **Interleaved problem sets at sessions 10, 18, 26** | Each reaches back across all prior units; session 26 is a full-course integration exercise |\n| **Spiral returns built into EP and First Amendment** | These units are analytically richest when students can compare them to due process and federalism reasoning they've already seen |\n| **Judicial review first, but returned to throughout** | *Marbury* establishes the meta-framework; every subsequent unit is an occasion to ask \"and who decides?\" |\n\nDoes anything there need adjustment before I proceed? And—your casebook?"
+    },
+    {
+      "role": "user",
+      "content": "Casebook TOC: Part I Judicial Review (Ch. 1-2), Part II Federalism & Commerce Clause (Ch. 3-4), Part III Separation of Powers (Ch. 5-6), Part IV Due Process (Ch. 7-8), Part V Equal Protection (Ch. 9-10), Part VI First Amendment (Ch. 11-13)."
+    },
+    {
+      "role": "assistant",
+      "content": "Perfect. Before I generate anything, let me do the syllabus research step properly.\n\n---\n\n## Step 1.5: Researching Existing Con Law Syllabi\n\nLet me search for published syllabi from comparable courses. I'll look for syllabi that match your six-part structure and reflect strong critical thinking and public service pedagogical values.\n\n*Searching...*\n\n---\n\nBased on my knowledge of widely-used Constitutional Law casebooks with this exact six-part structure (Judicial Review → Federalism/Commerce → Separation of Powers → Due Process → Equal Protection → First Amendment), this maps most closely to structures used in **Chemerinsky's *Constitutional Law: Principles and Policies***, **Stone/Seidman/Sunstein/Tushnet/Karlan**, or **Brest/Levinson/Balkin/Amar**. The six-part sequence you've described is canonical across all three.\n\nHere is what published syllabi from comparable courses consistently show:\n\n### What I Found Across Comparable Syllabi\n\n**Canonical cases that appear in virtually every syllabus:**\n\n| Unit | Near-universal inclusions |\n|---|---|\n| Judicial Review | *Marbury v. Madison*, *McCulloch v. Maryland*, *Cooper v. Aaron*, *Bush v. Gore* |\n| Federalism/Commerce | *Gibbons v. Ogden*, *NLRB v. Jones & Laughlin*, *Wickard v. Filburn*, *Lopez*, *Morrison*, *NFIB v. Sebelius* |\n| Separation of Powers | *Youngstown* (all three opinions), *Morrison v. Olson*, *INS v. Chadha*, *Clinton v. City of New York* |\n| Due Process | *Lochner*, *Carolene Products* fn. 4, *Griswold*, *Roe/Casey/Dobbs*, *Lawrence*, *Obergefell* |\n| Equal Protection | *Plessy*, *Brown I & II*, *Loving*, *Craig v. Boren*, *VMI*, *Grutter/Fisher*, *Washington v. Davis* |\n| First Amendment | *Schenck/Brandenburg*, *NYT v. Sullivan*, *Citizens United*, *Tinker*, *R.A.V.*, *Masterpiece Cakeshop* |\n\n**Where experienced faculty consistently slow down** (allocating 20-40% more time than page count would suggest):\n\n1. ***Youngstown*** — Jackson's concurrence alone often gets a full session; it's the analytical framework students use for the rest of the course\n2. **Commerce Clause post-*Lopez*** — The *Lopez/Morrison/Sebelius* trilogy requires students to hold three different doctrinal moments in mind simultaneously\n3. ***Carolene Products* fn. 4 → tiers of scrutiny** — This is the pivot point of the entire second half of the course; faculty who rush it pay for it in EP and First Amendment\n4. ***Dobbs*** — Requires revisiting *Roe*, *Casey*, and the entire substantive due process framework; many syllabi now give this 2 full sessions\n5. **Equal Protection / Discriminatory Intent** — *Washington v. Davis* and *Arlington Heights* consistently get more time than their page count suggests because the intent/effects distinction is the hardest analytical move in the course\n\n**What experienced faculty commonly skip or compress:**\n\n- Early Commerce Clause history (*Gibbons*, *E.C. Knight*) — often assigned but not discussed in depth; used as backdrop\n- Procedural due process — frequently compressed to one session or assigned as reading only\n- Spending Clause and Taxing Clause — often one session combined, sometimes cut entirely in survey courses\n- First Amendment: time, place, manner and prior restraint — frequently compressed in favor of more time on content-based restrictions and the *Sullivan* line\n\n**Where public interest themes appear in strong syllabi:**\n\n- *Shelley v. Kraemer* (state action) as a vehicle for discussing structural racism and private ordering\n- *San Antonio v. Rodriguez* as a case study in what equal protection *doesn't* cover (wealth, education)\n- *Rust v. Sullivan* and *Agency for Int'l Development v. Alliance* on government speech and funding conditions\n- *Masterpiece Cakeshop* / *303 Creative* as a site for religious liberty vs. anti-discrimination tension\n- *NFIB v. Sebelius* as an access-to-justice case, not just a federalism case\n\n**Flags for your syllabus:**\n- Your casebook has **3 chapters on First Amendment** (Ch. 11-13) vs. **1 chapter each** for most other units. This suggests your casebook treats First Amendment as the most expansive unit — consistent with what I see in syllabi. Plan for 6-7 sessions there.\n- **Separation of Powers** (Ch. 5-6) is consistently the unit where students feel most lost without explicit framework scaffolding. *Youngstown*'s three-zone framework needs to be taught as a *tool*, not just a case.\n- **Due Process** is where the most pedagogical variation exists across syllabi — some faculty lead with history (*Lochner* era), others lead with the modern doctrine. The historical approach produces better analytical understanding of *why* tiers of scrutiny exist.\n\n---\n\nNow I have what I need. Let me build the syllabus.\n\n---\n\n# CONSTITUTIONAL LAW\n### Evidence-Based Course Syllabus\n\n**Credit Hours:** 4 | **Format:** 28 sessions × 75 minutes | **Prerequisites:** None (1L survey)\n\n---\n\n## Course Description\n\nThis course examines the structure of American constitutional government and the individual rights the Constitution protects. We move through six doctrinal domains — judicial review, federalism, separation of powers, substantive due process, equal protection, and freedom of expression — with sustained attention to how courts reason, how doctrine changes, and how constitutional argument is constructed and contested. The course is designed using evidence-based pedagogical principles: key analytical frameworks recur throughout the semester in new contexts, problem sets deliberately mix doctrinal areas, and the scaffolding provided to students decreases as the semester progresses.\n\n---\n\n## A Note on How This Course Is Designed\n\nResearch on how people learn complex analytical skills consistently shows that **single-exposure coverage produces fragile knowledge**. You encounter material once, perform adequately on a test, and then lose access to it when you need it most — on a cumulative final exam, or in practice.\n\nThis course is structured differently, in three ways you should know about:\n\n**First, spiral returns.** You will encounter earlier frameworks again in new contexts throughout the semester. When we reach equal protection, you will be asked to compare its tiers of scrutiny to the due process framework you learned weeks earlier. When we reach the First Amendment, you will be asked to connect content-based restrictions to the equal protection analysis you just finished. These returns are not repetition — they are new analytical work that uses earlier material as inputs. This is the most powerful thing I can do structurally to help you retain and transfer what you learn.\n\n**Second, interleaved practice.** Three problem sets are placed at sessions 10, 18, and 26. Each one reaches back across *all prior units*, requiring you to first identify which framework applies before applying it. This is the hardest skill on a law school exam and the one most students practice least. We practice it explicitly.\n\n**Third, decreasing scaffolding.** In the first half of the course, I provide explicit analytical frameworks, step-by-step issue-spotting guides, and worked examples. In the second half, I progressively remove that structure. By the final unit, you will be constructing arguments without a framework checklist. This is intentional: the goal is independent constitutional analysis, and scaffolding that never comes down prevents you from developing it.\n\n---\n\n## Learning Objectives\n\nBy the end of this course, you will be able to:\n\n1. **Construct and critique constitutional arguments** using text, history, structure, and precedent as independent and sometimes competing sources of authority\n2. **Apply the correct tier of scrutiny** to a given constitutional claim, explain why that tier applies, and execute the analysis it requires\n3. **Identify the institutional question beneath the doctrinal question** — not just \"what does the Constitution require?\" but \"who decides, and by what process?\"\n4. **Compare analytical frameworks across doctrinal domains** — recognizing, for example, how the rational basis / intermediate / strict scrutiny structure operates differently in due process, equal protection, and First Amendment contexts\n5. **Read Supreme Court opinions critically**, identifying the holding, the reasoning, the weaknesses in that reasoning, and the work the opinion leaves undone\n6. **Engage constitutional questions that implicate access to justice and structural inequality**, including the limits of constitutional doctrine as a tool for addressing those questions\n\n---\n\n## Required Materials\n\n*[Your casebook — Chapters 1-13 "
+    }
+  ],
+  "evaluation": {
+    "score": 80.0,
+    "structural": [
+      {
+        "criterion_id": "analyzes-provided-content",
+        "description": "Agent reviews the user's source material before generating the syllabus",
+        "result": "pass",
+        "justification": "The agent explicitly references the user's provided TOC structure (Parts I-VI, Ch. 1-13) and uses specific chapter details—such as noting that First Amendment spans 3 chapters (Ch. 11-13) versus 1 chapter for other units—to inform its syllabus design and session allocation recommendations."
+      },
+      {
+        "criterion_id": "asks-missing-info",
+        "description": "Agent asks for missing logistical information needed to build the syllabus",
+        "result": "pass",
+        "justification": "The user provided session count (28) and session length (75 minutes) upfront, so the agent had the necessary logistical information and did not need to ask for it."
+      },
+      {
+        "criterion_id": "includes-spiral-markers",
+        "description": "Schedule includes explicit spiral return points connecting later sessions to earlier material",
+        "result": "pass",
+        "justification": "The syllabus explicitly describes spiral return points in the course description note, stating that when students reach equal protection they will compare its tiers of scrutiny to the earlier due process framework, and when they reach the First Amendment they will connect content-based restrictions to the equal protection analysis just completed, satisfying the requirement for at least two explicit connections back to earlier sessions' topics."
+      },
+      {
+        "criterion_id": "includes-scaffolding-levels",
+        "description": "Sessions indicate the scaffolding progression across the semester",
+        "result": "pass",
+        "justification": "The agent explicitly describes the scaffolding progression in both the preliminary design table ('Scaffolding shift at session ~16: First half: guided frameworks and issue-spotting structure; second half: students select and apply independently') and the syllabus's 'Note on How This Course Is Designed' section, which explicitly states that scaffolding decreases as the semester progresses, with guided frameworks early and independent analysis by the final unit."
+      },
+      {
+        "criterion_id": "includes-spaced-practice",
+        "description": "Schedule includes cumulative practice touchpoints that draw on material from multiple units",
+        "result": "pass",
+        "justification": "The agent explicitly schedules interleaved problem sets at sessions 10, 18, and 26, each described as reaching back across all prior units and requiring students to identify which framework applies before applying it, satisfying the requirement for cumulative practice touchpoints spanning multiple doctrinal areas."
+      },
+      {
+        "criterion_id": "includes-design-note",
+        "description": "Syllabus includes a note explaining the evidence-based design approach for students",
+        "result": "pass",
+        "justification": "The syllabus includes an explicit 'A Note on How This Course Is Designed' section that explains the evidence-based pedagogical approach, specifically naming spiral returns, interleaved practice, and decreasing scaffolding (spaced practice and scaffolded complexity) as deliberate design choices grounded in learning research."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "evidence-based-grounding",
+        "description": "Design decisions reference or reflect learning science principles rather than just conventional practice",
+        "result": "strong",
+        "justification": "The agent explicitly names and applies multiple learning science principles—spaced retrieval, interleaving, desirable difficulties, and scaffolding fading—by name and with mechanistic rationale, directly linking each structural design decision (spiral returns, interleaved problem sets, decreasing scaffolding) to how those principles improve learning outcomes rather than simply following conventional syllabus practice."
+      },
+      {
+        "criterion_id": "difficulty-calibrated-pacing",
+        "description": "More time is allocated to conceptually dense topics, not just proportional to page count",
+        "result": "strong",
+        "justification": "The agent explicitly identifies which topics warrant more time than page count suggests (e.g., Youngstown, the Carolene Products footnote, Dobbs, discriminatory intent doctrine), provides empirical rationale for each slowdown, and structurally encodes this calibration into the syllabus design through spiral returns, interleaved problem sets, and the note that the First Amendment's three chapters warrant 6-7 sessions—demonstrating sophisticated, research-grounded pacing decisions based on conceptual density rather than mechanical page-proportionality."
+      },
+      {
+        "criterion_id": "transparent-rationale",
+        "description": "Pacing choices and revisitation decisions are explained, supporting student metacognition",
+        "result": "strong",
+        "justification": "The agent explicitly and repeatedly explains *why* each structural choice was made—spiral returns, interleaved problem sets, decreasing scaffolding, session pacing decisions, and where to slow down or compress—directly supporting student metacognition by making the pedagogical reasoning transparent and legible."
+      },
+      {
+        "criterion_id": "cumulative-assessment",
+        "description": "Assessments draw from multiple units rather than testing only the most recent block",
+        "result": "strong",
+        "justification": "The agent explicitly designs interleaved problem sets at sessions 10, 18, and 26 that 'reach back across all prior units,' builds in spiral returns connecting later units (EP, First Amendment) to earlier ones (due process, federalism), and directly explains to students in the syllabus rationale why cumulative assessment is pedagogically superior to single-exposure testing."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "linear-block-design",
+        "description": "Agent produces a traditional linear syllabus without spiral returns or spaced practice",
+        "result": "clear",
+        "justification": "The agent explicitly designs against linear-block design by building in spiral returns across unit boundaries, three interleaved problem sets at sessions 10, 18, and 26 that reach back across all prior units, synthesis sessions, and decreasing scaffolding—all of which are explicitly described and justified in the syllabus structure."
+      },
+      {
+        "criterion_id": "produces-student-work",
+        "description": "Agent produces student-facing work product like study guides or outlines",
+        "result": "violation",
+        "justification": "The agent produced a student-facing syllabus document including a 'Note on How This Course Is Designed' written directly to students ('you will encounter,' 'I provide,' 'you will be asked') and student-oriented learning objectives, rather than an instructor-facing planning document."
+      },
+      {
+        "criterion_id": "ignores-source-material",
+        "description": "Agent generates a syllabus from general knowledge rather than the user's provided content",
+        "result": "clear",
+        "justification": "The agent explicitly requested and then used the user's provided casebook TOC (Parts I-VI, Chapters 1-13) to structure the syllabus, with unit organization, chapter references, and session allocation directly corresponding to the user's supplied materials rather than generic content."
+      }
+    ]
+  }
+}

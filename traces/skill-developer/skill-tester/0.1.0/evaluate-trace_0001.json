@@ -1,0 +1,142 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:08:23.385082+00:00",
+    "persona": "skill-developer",
+    "skill": "skill-tester",
+    "version": "0.1.0",
+    "scenario_id": "evaluate-trace"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "evaluate-trace",
+    "setup": "User provides a conversation trace and wants it evaluated against a rubric.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I have a trace from testing the understanding-check skill. Can you evaluate it against the rubric?"
+      },
+      {
+        "role": "user",
+        "content": "The agent asked about the course, then asked the student to explain due process. The student said 'due process means fairness' and the agent said 'That's correct! Due process is about fundamental fairness. Let's move to equal protection.' Then it produced an understanding map."
+      }
+    ],
+    "expected": [
+      "Evaluates structural criteria (gathered context -- pass; asked for own words -- partial; probed reasoning -- fail)",
+      "Notes the agent accepted a shallow answer without probing",
+      "Flags that saying \"That's correct\" to an incomplete answer is pedagogically problematic",
+      "Produces a structured evaluation with pass/fail for structural and ratings for pedagogical criteria"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I have a trace from testing the understanding-check skill. Can you evaluate it against the rubric?"
+    },
+    {
+      "role": "assistant",
+      "content": "I'd be happy to evaluate the trace against the rubric! To get started, I'll need a couple of things from you:\n\n1. **The conversation trace** — the transcript of the interaction you want evaluated\n2. **The rubric** — either paste the `rubric.yaml` content, or if you don't have one yet, share the `SKILL.md` and we can work from that\n\nIf you have both ready, feel free to paste them and I'll get straight to the evaluation."
+    },
+    {
+      "role": "user",
+      "content": "The agent asked about the course, then asked the student to explain due process. The student said 'due process means fairness' and the agent said 'That's correct! Due process is about fundamental fairness. Let's move to equal protection.' Then it produced an understanding map."
+    },
+    {
+      "role": "assistant",
+      "content": "I can work with this trace, but I'm missing one key piece: **the rubric** (or the SKILL.md) for the understanding-check skill.\n\nCould you share either:\n- The `rubric.yaml` for this skill, or\n- The `SKILL.md` so I can evaluate against the skill's stated intent\n\nThat said, even without the formal rubric, this trace snippet raises an immediate concern I can flag now:\n\n---\n\n**Preliminary Observation — Likely Anti-Pattern Violation**\n\nThe student said *\"due process means fairness\"* — a vague, surface-level response. The agent replied *\"That's correct!\"* and moved on.\n\nThis looks like a **false positive confirmation**: the agent validated an incomplete answer rather than probing deeper. For an understanding-check skill, the whole point is to surface gaps in understanding, not to accept thin answers and advance. A response like \"due process means fairness\" doesn't demonstrate understanding of procedural vs. substantive due process, notice requirements, the Mathews balancing test, or any other meaningful content.\n\nThis is the kind of behavior an understanding-check rubric would almost certainly flag as an anti-pattern — **accepting surface-level answers as evidence of understanding**.\n\n---\n\nOnce you share the rubric or SKILL.md, I can give you a full structured evaluation with pass/fail on structural criteria, ratings on pedagogical criteria, and an overall assessment."
+    }
+  ],
+  "evaluation": {
+    "score": 52.0,
+    "structural": [
+      {
+        "criterion_id": "understands-skill",
+        "description": "Agent obtains and reads the skill content before defining criteria",
+        "result": "fail",
+        "justification": "The agent never asked for or read the SKILL.md content to identify the persona and key behaviors before proceeding with evaluation; it only requested the rubric and jumped into preliminary observations without first grounding itself in the skill's defined intent."
+      },
+      {
+        "criterion_id": "defines-structural-criteria",
+        "description": "Agent identifies concrete, checkable behaviors the agent should exhibit",
+        "result": "fail",
+        "justification": "The agent does not propose at least two structural criteria with both a description and a check statement; it only makes a preliminary observation about one anti-pattern without defining concrete, checkable behavioral criteria."
+      },
+      {
+        "criterion_id": "defines-pedagogical-criteria",
+        "description": "Agent identifies subjective quality dimensions with weights",
+        "result": "fail",
+        "justification": "The agent never proposes pedagogical criteria with descriptions and weight levels (low/medium/high); it only makes a preliminary observation about an anti-pattern and requests the rubric before proceeding."
+      },
+      {
+        "criterion_id": "defines-anti-patterns",
+        "description": "Agent identifies things the agent must never do",
+        "result": "pass",
+        "justification": "The agent explicitly identifies 'accepting surface-level answers as evidence of understanding' as an anti-pattern and labels it a 'false positive confirmation,' directly deriving it from the understanding-check skill's core constraint of surfacing gaps rather than validating thin responses."
+      },
+      {
+        "criterion_id": "creates-test-scenarios",
+        "description": "Agent designs test scenarios covering different interaction types",
+        "result": "fail",
+        "justification": "The agent never proposes any test scenarios with setup, messages, and expected behaviors; it only evaluates an existing trace and requests a rubric."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "criteria-from-skill-steps",
+        "description": "Structural criteria derive from the skill's own defined steps and behaviors",
+        "result": "strong",
+        "justification": "The agent explicitly grounds its preliminary evaluation in the skill's own stated purpose ('the whole point is to surface gaps in understanding') and identifies a specific anti-pattern ('accepting surface-level answers as evidence of understanding') that would derive from the skill's defined behaviors, while correctly noting it needs the formal rubric/SKILL.md to apply structural criteria fully."
+      },
+      {
+        "criterion_id": "comprehensive-scenario-coverage",
+        "description": "Scenarios test different types of interactions (happy path, edge case, boundary, minimal input)",
+        "result": "weak",
+        "justification": "The agent only evaluates a single happy-path-adjacent trace snippet and never tests or requests scenarios covering edge cases, boundary conditions, or minimal inputs, showing no awareness of comprehensive scenario coverage as an evaluation dimension."
+      },
+      {
+        "criterion_id": "testable-criteria",
+        "description": "Criteria are specific enough to evaluate consistently across different evaluators",
+        "result": "adequate",
+        "justification": "The agent identifies a specific, evaluable concern (accepting surface-level answers as evidence of understanding) but cannot apply consistent criteria without the rubric, making the preliminary observation useful but not fully testable across evaluators."
+      },
+      {
+        "criterion_id": "persona-grounded-anti-patterns",
+        "description": "Anti-patterns reflect the persona's constraints, not just generic quality concerns",
+        "result": "adequate",
+        "justification": "The agent identifies a genuine anti-pattern (false positive confirmation) that is plausibly grounded in the understanding-check skill's purpose, but without the rubric or SKILL.md it cannot anchor the critique to the persona's specific constraints, making the observation reasonable but not demonstrably persona-grounded."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "vague-criteria",
+        "description": "Agent defines criteria too vague to evaluate consistently",
+        "result": "clear",
+        "justification": "The agent's preliminary observation identifies a specific, observable behavior (accepting 'due process means fairness' without probing deeper) rather than using vague language like 'agent is helpful,' and it explicitly names the anti-pattern as 'false positive confirmation' with concrete reasoning about what deeper understanding would look like."
+      },
+      {
+        "criterion_id": "insufficient-scenarios",
+        "description": "Agent creates only one test scenario or only happy-path scenarios",
+        "result": "clear",
+        "justification": "The agent is evaluating a conversation trace, not creating test scenarios, so the insufficient-scenarios anti-pattern does not apply to this interaction."
+      },
+      {
+        "criterion_id": "ignores-persona-constraints",
+        "description": "Anti-patterns don't reflect the persona's specific constraints",
+        "result": "clear",
+        "justification": "The agent's preliminary observation is directly tied to the pedagogical constraints of an understanding-check skill, specifically flagging that accepting a surface-level answer violates the skill's core purpose of surfacing gaps in understanding, not generic rudeness or unrelated behavior."
+      }
+    ]
+  }
+}

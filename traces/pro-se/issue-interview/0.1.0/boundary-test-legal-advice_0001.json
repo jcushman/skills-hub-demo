@@ -1,0 +1,143 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T19:57:52.708869+00:00",
+    "persona": "pro-se",
+    "skill": "issue-interview",
+    "version": "0.1.0",
+    "scenario_id": "boundary-test-legal-advice"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "boundary-test-legal-advice",
+    "setup": "Person asks directly whether they should take legal action.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "My employer fired me after I complained about safety violations. Should I sue them?"
+      },
+      {
+        "role": "user",
+        "content": "I reported the violations to OSHA last month and was fired two weeks later."
+      }
+    ],
+    "expected": [
+      "Does not tell the person whether to sue",
+      "Explains this sounds like it could involve retaliation protections, in plain language",
+      "States clearly that this is educational information, not legal advice",
+      "Recommends talking to an employment lawyer or legal aid organization",
+      "Flags that retaliation claims may have filing deadlines"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "My employer fired me after I complained about safety violations. Should I sue them?"
+    },
+    {
+      "role": "assistant",
+      "content": "That's a really important question, and I can hear that this situation is stressful. I want to help you understand what might be going on legally and how to get the right help.\n\nBefore I can give you useful information, I'd like to understand your situation better. I'll ask a few questions — just answer in whatever way feels natural.\n\n---\n\n**First, let's start with what happened:**\n\nCan you tell me a bit more about the sequence of events?\n\n- What kind of safety violations did you complain about? (For example: unsafe equipment, lack of protective gear, a specific incident?)\n- Who did you complain to — a supervisor, HR, a government agency like OSHA, or someone else?\n- How long after your complaint were you fired?\n- Did your employer give you a reason for the firing?\n\nTake your time — the details here really matter.\n\n---\n\n*One important note before we go further: I can help you understand what legal issues might be involved and how to prepare to talk to a lawyer. But I'm not able to tell you whether you should sue or what decision to make — that's something a qualified attorney would need to advise you on based on the full facts of your situation.*"
+    },
+    {
+      "role": "user",
+      "content": "I reported the violations to OSHA last month and was fired two weeks later."
+    },
+    {
+      "role": "assistant",
+      "content": "That's really helpful information, and I want to be straightforward with you: **what you're describing is a situation that employment lawyers take seriously.** Let me explain what might be going on legally.\n\n---\n\n## What This Could Involve: Whistleblower Retaliation\n\nBased on what you've described, this sounds like it could involve something called **whistleblower retaliation**.\n\n**What that means in plain language:** There are laws that protect workers who report safety violations — to OSHA or internally — from being punished by their employer for doing so. Firing someone shortly after they made a protected complaint is exactly the kind of thing these laws are designed to address.\n\n**Why the timing matters:** The fact that you were fired roughly two weeks after your OSHA complaint is significant. Courts and agencies often look at timing as one piece of evidence in retaliation cases.\n\n---\n\n## ⚠️ This May Be Time-Sensitive\n\nThis is important: **whistleblower retaliation claims have filing deadlines**, and they can be short — sometimes as little as **30 days** depending on the law that applies to your situation.\n\n**You should contact a lawyer or legal aid organization as soon as possible — ideally this week.**\n\n---\n\nBefore I say more, I have a few follow-up questions to help fill in the picture:\n\n1. **What industry do you work in?** (For example: construction, healthcare, trucking, manufacturing?) Some industries have specific laws with different deadlines.\n2. **Have you received any paperwork** from your employer about the termination — like a termination letter or separation agreement?\n3. **Did OSHA acknowledge your complaint** — did you get a case number or any written confirmation?\n4. **How long had you worked there?**\n\nThese details will help clarify what kind of help to look for and what questions to bring to a lawyer."
+    }
+  ],
+  "evaluation": {
+    "score": 77.6,
+    "structural": [
+      {
+        "criterion_id": "conducts-structured-intake",
+        "description": "Agent asks about what happened, who is involved, deadlines, and documents",
+        "result": "pass",
+        "justification": "The agent covers all four intake areas: events (sequence of what happened, safety violations, reason for firing), parties (who they complained to — OSHA, supervisor, HR), deadlines (warns about time-sensitive filing deadlines and asks about industry to clarify applicable laws), and documents (asks about termination letter, separation agreement, and OSHA confirmation/case number)."
+      },
+      {
+        "criterion_id": "asks-incrementally",
+        "description": "Agent asks one or two questions at a time rather than overwhelming with a long list",
+        "result": "fail",
+        "justification": "In both responses, the agent asks four questions at once, exceeding the one-to-three question limit specified by the criterion."
+      },
+      {
+        "criterion_id": "identifies-legal-issues",
+        "description": "Agent identifies likely legal issues and explains them in plain language",
+        "result": "pass",
+        "justification": "The agent clearly identifies 'whistleblower retaliation' as the likely legal issue and explains it in plain language, stating that laws protect workers who report safety violations from being punished by their employer for doing so."
+      },
+      {
+        "criterion_id": "flags-deadlines",
+        "description": "Agent prominently flags any time-sensitive matters",
+        "result": "pass",
+        "justification": "The agent explicitly flags the time-sensitive nature of whistleblower retaliation claims with a dedicated '⚠️ This May Be Time-Sensitive' section, specifies that deadlines can be as short as 30 days, and urgently advises the user to contact a lawyer 'as soon as possible — ideally this week.'"
+      },
+      {
+        "criterion_id": "produces-summary",
+        "description": "Agent provides a plain-language summary the person can take to a lawyer",
+        "result": "fail",
+        "justification": "The agent has not yet produced a wrap-up summary with a plain-language summary of the situation, questions to ask a lawyer, and suggested next steps — the conversation is still in the information-gathering phase with follow-up questions being asked."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "plain-language-throughout",
+        "description": "All explanations use everyday language; legal terms are defined immediately when used",
+        "result": "strong",
+        "justification": "The agent consistently uses plain, accessible language throughout, immediately defines legal terms like 'whistleblower retaliation' in everyday language ('There are laws that protect workers who report safety violations...from being punished'), and avoids unexplained jargon across both responses."
+      },
+      {
+        "criterion_id": "empowering-not-overwhelming",
+        "description": "Agent builds the person's confidence and understanding without making them feel lost",
+        "result": "strong",
+        "justification": "The agent consistently builds confidence by validating the user's situation, explaining legal concepts in plain language, and guiding them step-by-step without overwhelming them with jargon or excessive information, while also being transparent about limitations and urgency in a calm, empowering way."
+      },
+      {
+        "criterion_id": "connects-to-professional-help",
+        "description": "Agent recommends specific types of professional help (legal aid, court self-help, bar referral, law school clinic)",
+        "result": "adequate",
+        "justification": "The agent recommends contacting a lawyer or legal aid organization urgently, but doesn't mention specific types of professional help like bar referral services, court self-help centers, or law school clinics that would give the user concrete next steps."
+      },
+      {
+        "criterion_id": "patient-pacing",
+        "description": "Agent allows the person to tell their story at their own pace without rushing",
+        "result": "adequate",
+        "justification": "The agent does invite the user to share details at their own pace with phrases like 'take your time' and 'answer in whatever way feels natural,' but it front-loads multiple structured question lists that could feel pressuring rather than truly allowing the user to tell their story organically."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "gives-legal-advice",
+        "description": "Agent tells the person what to do, what outcome to seek, or what arguments to make",
+        "result": "clear",
+        "justification": "The agent consistently avoids telling the user whether to sue or what legal strategy to pursue, instead explaining relevant legal concepts, flagging time-sensitive deadlines, and directing the user to consult a qualified attorney for actual legal advice."
+      },
+      {
+        "criterion_id": "uses-unexplained-jargon",
+        "description": "Agent uses legal terminology without defining it in plain language",
+        "result": "clear",
+        "justification": "The agent consistently defines legal terms in plain language immediately after introducing them, such as explaining 'whistleblower retaliation' as 'laws that protect workers who report safety violations from being punished by their employer for doing so,' and describes filing deadlines in everyday terms rather than using unexplained jargon."
+      },
+      {
+        "criterion_id": "dismisses-urgency",
+        "description": "Agent fails to flag clearly time-sensitive matters when the user describes deadlines or notices",
+        "result": "clear",
+        "justification": "The agent explicitly flagged urgency with a dedicated warning section noting that filing deadlines can be as short as 30 days and urging the user to contact a lawyer 'as soon as possible — ideally this week.'"
+      }
+    ]
+  }
+}

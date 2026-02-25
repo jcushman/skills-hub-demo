@@ -1,0 +1,173 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T18:57:46.943526+00:00",
+    "persona": "student",
+    "skill": "understanding-check",
+    "version": "_null",
+    "scenario_id": "happy-path-con-law"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-con-law",
+    "setup": "2L student studying Constitutional Law, midway through the semester. Has covered due process, equal protection, and the commerce clause. Wants to check understanding before the midterm.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Can you help me check if I understand the material for my Con Law midterm?"
+      },
+      {
+        "role": "user",
+        "content": "We've covered due process, equal protection, and the commerce clause so far. I'm a 2L."
+      },
+      {
+        "role": "user",
+        "content": "Due process means the government has to be fair when it takes away your rights. Like they need to give you a hearing before they can take your property. There's substantive and procedural -- procedural is about the process you get, and substantive is about whether the government has a good enough reason."
+      },
+      {
+        "role": "user",
+        "content": "Equal protection means the government can't treat people differently unless it has a reason. Strict scrutiny for race, rational basis for most things."
+      }
+    ],
+    "expected": [
+      "Asks about the course or what topics have been covered before jumping into questions",
+      "Asks the student to explain concepts in their own words",
+      "Probes the due process answer for depth -- e.g., asks about the relationship between substantive and procedural, or about the standard for substantive due process",
+      "Notes that the equal protection answer is partially correct but missing intermediate scrutiny",
+      "Produces an understanding map categorizing strengths and gaps"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Can you help me check if I understand the material for my Con Law midterm?"
+    },
+    {
+      "role": "assistant",
+      "content": "I'd be glad to help you review! Constitutional Law is a rich subject and it's smart to check your understanding before the midterm.\n\nGiven what you've covered, we could work through:\n\n- **Due Process** (substantive and procedural, fundamental rights, levels of scrutiny)\n- **Equal Protection** (classification types, rational basis, intermediate, strict scrutiny)\n- **Commerce Clause** (Lopez/Morrison framework, channels/instrumentalities/substantial effects)\n\n**A few ways we could approach this:**\n\n1. You explain a concept to me and I tell you what's solid and what needs refinement\n2. I ask you hypothetical questions like a professor might\n3. We work through specific cases you're uncertain about\n4. You share a practice question and we analyze it together\n\n**My honest suggestion** would be option 1 or 2, because *actively retrieving* the material will show you more clearly where your gaps are than just reading a summary would.\n\nWhat sounds most useful to you, and is there a particular area you feel least confident about? That's usually the best place to start."
+    },
+    {
+      "role": "user",
+      "content": "We've covered due process, equal protection, and the commerce clause so far. I'm a 2L."
+    },
+    {
+      "role": "assistant",
+      "content": "Thanks for the context! Since you're a 2L, I'll engage with you at that level - assuming you can handle doctrinal nuance and case-specific analysis rather than just surface definitions.\n\n**Where would you like to start?** A few options:\n\n- **Due Process** - this one has a lot of moving parts (substantive vs. procedural, the fundamental rights question, *Glucksberg* vs. *Obergefell* tension)\n- **Equal Protection** - particularly the scrutiny framework and tricky middle-ground cases\n- **Commerce Clause** - the *Lopez/Morrison/Raich* line and where Congress's power actually ends\n\n**My suggestion:** Start with whichever one feels *shakiest* to you. That's where checking your understanding will matter most before the midterm.\n\nYou could:\n1. **Explain a doctrine to me** and I'll push back where needed\n2. **Work through a hypo** together\n3. **Tell me a specific case or concept** you're unsure about\n\nWhat's it going to be?"
+    },
+    {
+      "role": "user",
+      "content": "Due process means the government has to be fair when it takes away your rights. Like they need to give you a hearing before they can take your property. There's substantive and procedural -- procedural is about the process you get, and substantive is about whether the government has a good enough reason."
+    },
+    {
+      "role": "assistant",
+      "content": "That's a solid foundation - you've got the core intuition right. Let me push on a few things to sharpen it:\n\n**What's strong:**\n- The procedural/substantive distinction is correct\n- The hearing example for procedural due process is good\n\n**Where I'd push you to be more precise:**\n\nOn procedural due process, your description is a bit incomplete. The key framework is actually a **two-step inquiry:**\n1. Is there a protected life, liberty, or **property interest** at stake?\n2. If yes, what process is due? (This is the *Mathews v. Eldridge* balancing test)\n\nCan you tell me what the three *Mathews* factors are?\n\n---\n\nOn substantive due process, \"good enough reason\" is vague in a way that could hurt you on an exam. The doctrine really turns on a **threshold question** before you even get to the government's reason:\n\n- Is the right **fundamental** or not?\n- That answer determines your scrutiny level\n\n**Here's a question that gets at something important:** How does a court decide whether a right is fundamental under substantive due process? This is where the doctrine gets contested - and where *Glucksberg* and *Obergefell* create real tension.\n\nWhat's your understanding there?"
+    },
+    {
+      "role": "user",
+      "content": "Equal protection means the government can't treat people differently unless it has a reason. Strict scrutiny for race, rational basis for most things."
+    },
+    {
+      "role": "assistant",
+      "content": "Good start - you've got the basic architecture. But this is an area where precision really matters on exams, so let me push you in a few directions:\n\n**What's solid:**\n- Correct that differential treatment needs justification\n- Correct on race/strict scrutiny and rational basis as the default\n\n**Where I'd sharpen things:**\n\nYou're missing a **middle tier entirely** - intermediate scrutiny. What classifications trigger it, and what's the standard?\n\n---\n\n**Also, your strict scrutiny description needs more precision.** Can you tell me:\n- What exactly does the government need to show under strict scrutiny?\n- And under rational basis?\n\nThe specific verbal formulations matter because they reflect **how hard it actually is** to win under each standard.\n\n---\n\n**Here's a deeper question worth thinking about:**\n\nRational basis is supposed to mean the government *can* treat people differently for almost any reason. But look at cases like *Romer v. Evans* or *City of Cleburne v. Cleburne Living Center* - the Court nominally applies rational basis but strikes down the law anyway.\n\nWhat's going on there doctrinally? Some people call it **rational basis with bite** - do you know what that means and when courts seem to apply it?\n\nThat's exactly the kind of nuance that separates strong exam answers from average ones."
+    }
+  ],
+  "evaluation": {
+    "score": 79.6,
+    "structural": [
+      {
+        "criterion_id": "gathers-course-context",
+        "description": "Agent asks about the course, subject area, or topic before conducting the diagnostic",
+        "result": "fail",
+        "justification": "The agent never asked about the course, subject area, or topic in its first two turns; instead, it immediately assumed the subject matter and jumped into offering review options without asking a clarifying question about what course or topic the user needed help with."
+      },
+      {
+        "criterion_id": "gathers-progress-context",
+        "description": "Agent asks how far along the student is or what has been covered",
+        "result": "pass",
+        "justification": "In the second turn, the agent explicitly acknowledges the user's context ('Thanks for the context! Since you're a 2L...') after the user volunteered that they had covered due process, equal protection, and the commerce clause, and the agent had implicitly invited this information in the first turn by asking about particular areas of confidence."
+      },
+      {
+        "criterion_id": "asks-for-own-words",
+        "description": "Agent asks the student to explain concepts in their own words rather than recite rules",
+        "result": "pass",
+        "justification": "The agent consistently uses explanatory phrasing like 'Can you tell me what the three Mathews factors are?', 'What's your understanding there?', 'What classifications trigger it?', and 'What's going on there doctrinally?' rather than asking students to recite rules, prompting the student to demonstrate conceptual understanding in their own words."
+      },
+      {
+        "criterion_id": "probes-reasoning",
+        "description": "Agent follows up on student answers by probing for deeper reasoning",
+        "result": "pass",
+        "justification": "The agent consistently probes for deeper reasoning after student explanations by asking follow-up questions like 'How does a court decide whether a right is fundamental?' and 'What's going on there doctrinally?' and requesting specific test formulations, pushing beyond surface-level answers."
+      },
+      {
+        "criterion_id": "produces-understanding-map",
+        "description": "Agent produces a structured understanding map at the end",
+        "result": "fail",
+        "justification": "The agent never produces a structured understanding map with categorized sections for strong areas, areas needing work, and priorities — it provides inline feedback during the conversation but the session ends mid-discussion without any synthesized summary or map."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "coaching-over-telling",
+        "description": "Agent asks questions and guides discovery rather than lecturing or providing answers directly",
+        "result": "adequate",
+        "justification": "The agent does ask questions to guide discovery and prompts the student to retrieve knowledge (Mathews factors, intermediate scrutiny, rational basis with bite), but it front-loads significant direct instruction and corrections before asking those questions, leaning more toward a lecture-then-ask pattern rather than pure Socratic coaching."
+      },
+      {
+        "criterion_id": "celebrates-strengths",
+        "description": "Agent explicitly acknowledges what the student got right before addressing gaps",
+        "result": "strong",
+        "justification": "In each response, the agent explicitly and specifically identifies what the student got right (e.g., 'What's strong:' sections with bullet points) before moving on to address gaps, consistently following the pattern of affirmation before correction."
+      },
+      {
+        "criterion_id": "specific-gap-identification",
+        "description": "When identifying gaps, agent quotes or paraphrases what the student said and explains specifically why it reveals a gap, rather than giving vague feedback",
+        "result": "strong",
+        "justification": "The agent consistently quotes or paraphrases the student's exact words (e.g., 'good enough reason is vague,' 'you're missing a middle tier entirely,' referencing the student's omission of intermediate scrutiny) and explains specifically why each gap matters for exam performance, rather than offering generic feedback."
+      },
+      {
+        "criterion_id": "actionable-suggestions",
+        "description": "Review suggestions point to specific cases, doctrines, or material sections rather than generic advice like \"study more\"",
+        "result": "strong",
+        "justification": "The agent consistently references specific cases (Mathews v. Eldridge, Romer v. Evans, City of Cleburne, Glucksberg, Obergefell, Lopez, Morrison, Raich), named doctrines (rational basis with bite, the two-step procedural due process inquiry, intermediate scrutiny), and precise doctrinal frameworks rather than offering generic study advice."
+      },
+      {
+        "criterion_id": "appropriate-difficulty",
+        "description": "Diagnostic questions build from foundational to more advanced, matching the student's level",
+        "result": "strong",
+        "justification": "The agent consistently builds from the student's stated understanding to progressively more demanding questions—starting with basic definitional accuracy, then pushing toward specific doctrinal tests (Mathews factors, fundamental rights analysis, scrutiny standards), and finally introducing sophisticated nuances like rational basis with bite and Glucksberg/Obergefell tension that are appropriately calibrated for a 2L preparing for a midterm."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-work-product",
+        "description": "Agent writes an outline, essay, memo, or other finished work product for the student",
+        "result": "clear",
+        "justification": "The agent consistently asks the student questions and pushes them to articulate doctrine themselves, rather than producing any complete analytical document the student could submit as their own work."
+      },
+      {
+        "criterion_id": "answers-own-questions",
+        "description": "Agent asks a diagnostic question then immediately answers it without waiting for the student",
+        "result": "clear",
+        "justification": "The agent asks questions and then waits for the student to respond before continuing, never answering its own diagnostic questions within the same turn."
+      },
+      {
+        "criterion_id": "dismissive-of-mistakes",
+        "description": "Agent tells the student they are wrong without encouragement or constructive framing",
+        "result": "clear",
+        "justification": "The agent consistently frames gaps in the student's understanding as opportunities for precision and deeper learning, using encouraging language like 'solid foundation,' 'what's strong,' and 'sharpen things' rather than discouraging language."
+      }
+    ]
+  }
+}

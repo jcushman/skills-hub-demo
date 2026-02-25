@@ -1,0 +1,149 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:13:07.518015+00:00",
+    "persona": "professor",
+    "skill": "syllabus-evidence-based",
+    "version": "_null",
+    "scenario_id": "happy-path-con-law"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-con-law",
+    "setup": "Professor wants an evidence-based Con Law syllabus built from their casebook. 28 sessions, 75 minutes each. Casebook covers judicial review, federalism, separation of powers, due process, equal protection, and First Amendment.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I'd like a modern, research-informed syllabus for my Con Law survey. 28 sessions, 75 minutes."
+      },
+      {
+        "role": "user",
+        "content": "Casebook TOC: Part I Judicial Review (Ch. 1-2), Part II Federalism & Commerce Clause (Ch. 3-4), Part III Separation of Powers (Ch. 5-6), Part IV Due Process (Ch. 7-8), Part V Equal Protection (Ch. 9-10), Part VI First Amendment (Ch. 11-13)."
+      }
+    ],
+    "expected": [
+      "Produces a syllabus that revisits earlier concepts in later contexts (e.g., judicial deference resurfaces across multiple doctrinal areas)",
+      "Includes spiral markers connecting later sessions to earlier material",
+      "Allocates more sessions to conceptually dense topics rather than using uniform pacing",
+      "Includes at least one cumulative practice touchpoint or synthesis session",
+      "Includes a note on course design explaining the evidence-based approach"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I'd like a modern, research-informed syllabus for my Con Law survey. 28 sessions, 75 minutes."
+    },
+    {
+      "role": "assistant",
+      "content": "# Constitutional Law Survey Syllabus\n## 28 Sessions × 75 Minutes | Evidence-Based Design\n\n---\n\n## Pedagogical Framework\n\nThis syllabus integrates four research-supported principles:\n\n| Principle | Application |\n|---|---|\n| **Spaced repetition** (Ebbinghaus; Kornell & Bjork, 2008) | Major themes revisited across units, not siloed |\n| **Interleaving** (Rohrer & Taylor, 2007) | Doctrine mixed with theory and application throughout |\n| **Retrieval practice** (Roediger & Karpicke, 2006) | Low-stakes quizzes open Sessions 3, 8, 14, 20, 26 |\n| **Desirable difficulty** (Bjork, 1994) | Cases assigned before lecture framework is provided |\n\n**Credit hours:** Assumes ~3 hours of preparation per session (reading + brief writing)\n**Assessment philosophy:** Frequent low-stakes work predicts exam performance better than one high-stakes final (McDaniel et al., 2007)\n\n---\n\n## Course Architecture at a Glance\n\n```\nUNIT 1: Foundations (Sessions 1–4)          UNIT 4: Equal Protection (Sessions 18–22)\nUNIT 2: Federalism (Sessions 5–10)          UNIT 5: First Amendment (Sessions 23–27)\nUNIT 3: Separation of Powers (Sessions 11–17)  UNIT 6: Synthesis (Session 28)\n```\n\n*Units are sequenced so structural constitution precedes rights — consistent with how courts reason about constitutional avoidance.*\n\n---\n\n## Unit 1: Foundations of Judicial Review\n### *The Counter-Majoritarian Difficulty and the Court's Legitimacy*\n\n---\n\n### Session 1 | The Constitution as Law — Orientation and Method\n**75-min breakdown:**\n- 0–10 min: Syllabus, expectations, cold-call protocol\n- 10–40 min: What kind of document is the Constitution? (text, structure, history, precedent, ethos — Bobbitt's modalities)\n- 40–65 min: Discussion — *Hylton v. United States* (1796) as the forgotten first judicial review moment\n- 65–75 min: Preview of *Marbury*; assign reading\n\n**Preparation:** Bobbitt excerpt on modalities; Constitution text (Articles I–III); casebook introduction\n\n**Pedagogical note:** Opening with interpretive method before *Marbury* gives students a framework *before* the canonical case, improving comprehension (Schwartz & Schwartz, 2019 on \"frame-first\" instruction)\n\n---\n\n### Session 2 | Marbury v. Madison and the Establishment of Judicial Review\n**75-min breakdown:**\n- 0–15 min: Cold call on facts and procedural posture\n- 15–45 min: Marshall's three questions — unpacking the rhetorical structure\n- 45–65 min: Small groups (3–4 students): Is Marshall's argument logically compelled, or politically constructed?\n- 65–75 min: Debrief; introduce departmentalism and popular constitutionalism as alternatives\n\n**Preparation:** *Marbury v. Madison* (1803); Kramer, *The People Themselves* (excerpt); Tushnet, *Taking the Constitution Away from the Courts* (excerpt)\n\n**Concept to master:** Judicial supremacy ≠ judicial review — students consistently conflate these\n\n---\n\n### Session 3 | Scope and Limits of Judicial Review\n**75-min breakdown:**\n- 0–10 min: **Retrieval quiz** — 3 short questions on Sessions 1–2 (ungraded; discuss answers immediately)\n- 10–35 min: Political question doctrine — *Baker v. Carr* (1962), the six-factor test\n- 35–60 min: Standing doctrine as a limit on review — *Lujan v. Defenders of Wildlife* (1992)\n- 60–75 min: Hypo workshop: Apply standing analysis to three modern fact patterns\n\n**Preparation:** *Baker v. Carr*; *Lujan*; casebook notes on justiciability\n\n**Writing assignment due:** 1-page brief of *Marbury* using IRAC\n\n---\n\n### Session 4 | Constitutional Interpretation — Theory and Method\n**75-min breakdown:**\n- 0–20 min: Originalism — varieties (original intent vs. original public meaning); Scalia's defense\n- 20–40 min: Living constitutionalism — Brennan's Georgetown speech; common-law constitutionalism (Strauss)\n- 40–65 min: Structured debate: Students assigned positions defend interpretive method applied to a single hypothetical amendment question\n- 65–75 min: Synthesis — why method matters for every case that follows\n\n**Preparation:** Scalia, *A Matter of Interpretation* (excerpt); Brennan, Georgetown Address (1985); Strauss, *The Living Constitution* (ch. 1)\n\n**Pedagogical note:** Assigning students to *defend* positions they may not hold activates deeper processing (Kuhn, 1991 on argumentation)\n\n---\n\n## Unit 2: Federalism\n### *The Vertical Distribution of Power*\n\n---\n\n### Session 5 | The Necessary and Proper Clause and Federal Power\n**75-min breakdown:**\n- 0–15 min: Structural overview — why federalism before rights?\n- 15–45 min: *McCulloch v. Maryland* (1819) — both holdings; Marshall's interpretive method\n- 45–65 min: *McCulloch* as a federalism case AND an interpretive case — connecting to Unit 1\n- 65–75 min: Preview Commerce Clause evolution\n\n**Preparation:** *McCulloch v. Maryland*; casebook notes on enumerated vs. implied powers\n\n**Spaced retrieval:** Students write one sentence connecting *McCulloch*'s interpretive method to *Marbury*'s\n\n---\n\n### Session 6 | The Commerce Clause — Classical and New Deal Eras\n**75-min breakdown:**\n- 0–20 min: The classical model — *E.C. Knight* (1895), channels/instrumentalities/substantial effects\n- 20–50 min: The New Deal transformation — *NLRB v. Jones & Laughlin* (1937); *Wickard v. Filburn* (1942)\n- 50–70 min: What changed? Political economy, Court-packing, and constitutional meaning\n- 70–75 min: Bridge to modern doctrine\n\n**Preparation:** *E.C. Knight*; *Wickard v. Filburn*; Cushman, *Rethinking the New Deal Court* (excerpt)\n\n---\n\n### Session 7 | The Commerce Clause — Modern Limits\n**75-min breakdown:**\n- 0–25 min: *United States v. Lopez* (1995) — the return of limits\n- 25–50 min: *United States v. Morrison* (2000) — gender violence and the commerce power\n- 50–70 min: Comparing *Lopez* and *Morrison*: What is the limiting principle?\n- 70–75 min: Introduce *Raich* for next session\n\n**Preparation:** *Lopez*; *Morrison*; casebook notes\n\n**Writing assignment due:** 2-page analysis — Is *Lopez* a principled limit or a political decision?\n\n---\n\n### Session 8 | Commerce Clause — Raich and the ACA\n**75-min breakdown:**\n- 0–10 min: **Retrieval quiz** — Commerce Clause doctrine from Sessions 6–7\n- 10–35 min: *Gonzales v. Raich* (2005) — aggregation and the comprehensive scheme\n- 35–60 min: *NFIB v. Sebelius* (2012) — the activity/inactivity distinction; the taxing power alternative\n- 60–75 min: Synthesis: Draw the Commerce Clause timeline on the board collaboratively\n\n**Preparation:** *Raich*; *NFIB v. Sebelius* (Roberts majority + Ginsburg concurrence + joint dissent)\n\n**Pedagogical note:** Timeline construction is a generative learning strategy that outperforms re-reading (Fiorella & Mayer, 2016)\n\n---\n\n### Session 9 | The Spending Power and Conditional Federalism\n**75-min breakdown:**\n- 0–20 min: *South Dakota v. Dole* (1987) — the five-part test\n- 20–45 "
+    },
+    {
+      "role": "user",
+      "content": "Casebook TOC: Part I Judicial Review (Ch. 1-2), Part II Federalism & Commerce Clause (Ch. 3-4), Part III Separation of Powers (Ch. 5-6), Part IV Due Process (Ch. 7-8), Part V Equal Protection (Ch. 9-10), Part VI First Amendment (Ch. 11-13)."
+    },
+    {
+      "role": "assistant",
+      "content": "# Constitutional Law Survey Syllabus\n## Calibrated to Your Casebook | 28 Sessions × 75 Minutes\n\n---\n\n## A Note on Calibration\n\nThe architecture below maps **directly onto your six-part casebook** while applying spacing, interleaving, and retrieval principles. Session counts per unit reflect both casebook depth (chapters allocated) and cognitive load research suggesting rights doctrine requires more processing time than structural doctrine.\n\n| Casebook Part | Chapters | Sessions Allocated | Rationale |\n|---|---|---|---|\n| I — Judicial Review | Ch. 1–2 | 4 | Foundational; every later unit depends on it |\n| II — Federalism & Commerce | Ch. 3–4 | 5 | Dense doctrine; high bar exam weight |\n| III — Separation of Powers | Ch. 5–6 | 5 | Conceptually abstract; needs extended application |\n| IV — Due Process | Ch. 7–8 | 5 | Substantive + procedural split; high complexity |\n| V — Equal Protection | Ch. 9–10 | 5 | Tiered scrutiny; most case-dense unit |\n| VI — First Amendment | Ch. 11–13 | **3 chapters → 4 sessions** | Three chapters warrant extra time |\n| Synthesis | — | 1 | Exam preparation + cross-unit integration |\n| **Total** | | **29 mapped → 28 delivered** | Session 28 absorbs one flex day |\n\n---\n\n## Recurring Structural Features\n\nEvery session follows this template, varied by activity type:\n\n```\n┌─────────────────────────────────────────────────────────────┐\n│  OPEN (0–10 min)    │ Retrieval prompt OR connecting question│\n│  CORE (10–55 min)   │ Case analysis + doctrine building      │\n│  APPLY (55–70 min)  │ Hypo, debate, or small-group problem   │\n│  CLOSE (70–75 min)  │ Exit synthesis + next session preview  │\n└─────────────────────────────────────────────────────────────┘\n```\n\n**Five formal retrieval quizzes** open Sessions 5, 10, 15, 20, and 25 — ungraded, answers discussed immediately. Research basis: Roediger & Karpicke (2006) show retrieval practice produces 40–50% better long-term retention than restudying.\n\n**Three short writing assignments** (2 pages each) due Sessions 4, 12, and 19 — designed to force synthesis before exams, not merely before them.\n\n---\n\n---\n\n# UNIT 1 | JUDICIAL REVIEW\n## Casebook Part I, Chapters 1–2 | Sessions 1–4\n\n**Unit throughline:** *Where does the Court's authority come from, and what constrains it?*\nThis question is never fully answered — and students should leave Unit 1 knowing why that is productive rather than troubling.\n\n---\n\n### Session 1 | The Constitution as Legal Text — Method Before Cases\n\n**Learning objectives:**\n- Distinguish Bobbitt's six modalities of constitutional argument\n- Identify which modality Marshall uses in *Marbury* (preview)\n- Articulate why interpretive method is a threshold question, not a technical one\n\n**75-minute plan:**\n\n| Time | Activity | Format |\n|---|---|---|\n| 0–10 | Orientation: syllabus, cold-call protocol, grading | Lecture |\n| 10–30 | What kind of document is the Constitution? Text vs. statute vs. common law | Discussion |\n| 30–55 | Bobbitt's modalities applied to a single clause (Necessary and Proper) | Small groups → report out |\n| 55–70 | *Hylton v. United States* (1796): the forgotten pre-*Marbury* review moment | Cold call |\n| 70–75 | Exit: Write one sentence — what would it mean for the Constitution to have *no* authoritative interpreter? | Individual writing |\n\n**Assigned reading:** Casebook Ch. 1 introduction; Constitution Arts. I–III; Bobbitt modalities excerpt (course packet)\n\n**Pedagogical note:** Opening with interpretive method *before* the canonical case gives students a cognitive scaffold that improves comprehension of *Marbury*'s rhetorical structure (Schwartz, 2019, on frame-first instruction in law teaching).\n\n---\n\n### Session 2 | *Marbury v. Madison* — Establishing Judicial Review\n\n**Learning objectives:**\n- Reconstruct Marshall's three-question structure and identify the logical move in each\n- Distinguish judicial review from judicial supremacy\n- Evaluate the political context as relevant or irrelevant to the opinion's authority\n\n**75-minute plan:**\n\n| Time | Activity | Format |\n|---|---|---|\n| 0–15 | Cold call: facts, procedural posture, Jefferson's dilemma | Socratic |\n| 15–40 | Marshall's three questions — unpacking the rhetorical architecture | Lecture + discussion |\n| 40–62 | Small groups: Is Marshall's argument logically compelled or politically constructed? Groups must take a position and defend it | Group work → debate |\n| 62–75 | Debrief: introduce departmentalism (Jefferson, Jackson) and popular constitutionalism (Kramer) as live alternatives | Lecture |\n\n**Assigned reading:** *Marbury v. Madison* (1803) [Ch. 1]; Kramer excerpt on popular constitutionalism (course packet)\n\n**Concept alert:** Students consistently conflate judicial review (courts can invalidate laws) with judicial supremacy (courts have final word on constitutional meaning). Flag this distinction explicitly — it recurs in Sessions 3, 11, and 28.\n\n---\n\n### Session 3 | Limits on Judicial Review — Justiciability\n\n**Learning objectives:**\n- Apply the *Baker v. Carr* political question factors\n- Analyze standing under *Lujan*'s three-part test\n- Explain why justiciability doctrines are themselves contested\n\n**75-minute plan:**\n\n| Time | Activity | Format |\n|---|---|---|\n| 0–15 | Cold call: What is the political question doctrine *for*? (elicit multiple answers) | Socratic |\n| 15–35 | *Baker v. Carr* (1962) — the six-factor test; which factors do real work? | Lecture + discussion |\n| 35–55 | *Lujan v. Defenders of Wildlife* (1992) — standing as a separation of powers tool | Case analysis |\n| 55–70 | Hypo workshop: Apply standing analysis to three modern fact patterns (environmental group, taxpayer, competitor) | Pairs |\n| 70–75 | Exit: Which justiciability limit is most susceptible to manipulation? One sentence. | Individual writing |\n\n**Assigned reading:** *Baker v. Carr* [Ch. 1]; *Lujan v. Defenders of Wildlife* [Ch. 1]; casebook notes on ripeness and mootness\n\n**Spaced connection:** Ask students explicitly how *Lujan*'s standing requirement relates to *Marbury*'s claim that courts only decide \"cases and controversies.\"\n\n---\n\n### Session 4 | Constitutional Interpretation — Theory and Stakes\n\n**Learning objectives:**\n- Compare originalism (original intent vs. original public meaning) and living constitutionalism\n- Apply competing methods to produce different outcomes on the same hypothetical\n- Articulate why interpretive choice is not merely academic\n\n**75-minute plan:**\n\n| Time | Activity | Format |\n|---|---|---|\n| 0–15 | Originalism: Scalia's defense; distinguish intent from public meaning | Lecture |\n| 15–30 | Living constitutionalism: Brennan's Georgetown Address; Strauss on common-law constitutionalism | Lecture |\n| 30–60 | Structured role-play: Four groups assigned interpretive methods; each applies their method to the same hypothetical (Does the 14th Amendment prohibit partisan gerrymandering?) | Group work → presentations |\n| 60–75 | Synthesis: Why does method matter for *every* case that follows? Map methods onto upcoming units | Full class |\n\n**Assigned reading:** Scalia, *A Matter of Interpretation* excerpt; Brennan, Georgetown Address (1985); Strauss, *The Living Constitution* Ch. 1 (course packet)\n\n**✏️ Writing Assignment 1 due this session:** 2 pages — *Marbury* brief using IRAC + one paragraph identifying which Bobbitt modality Marshall primarily employs and why it matters.\n\n**"
+    }
+  ],
+  "evaluation": {
+    "score": 86.7,
+    "structural": [
+      {
+        "criterion_id": "analyzes-provided-content",
+        "description": "Agent reviews the user's source material before generating the syllabus",
+        "result": "pass",
+        "justification": "After the user provided the casebook TOC, the agent explicitly mapped its syllabus to the six casebook parts (Ch. 1–2, 3–4, 5–6, 7–8, 9–10, 11–13) in a calibration table and labeled each session with the corresponding casebook chapters (e.g., 'Casebook Part I, Chapters 1–2'), directly referencing the user's provided content."
+      },
+      {
+        "criterion_id": "asks-missing-info",
+        "description": "Agent asks for missing logistical information needed to build the syllabus",
+        "result": "pass",
+        "justification": "The user explicitly provided both session count (28 sessions) and session length (75 minutes) in the first message, so the agent had all necessary logistical information and was not required to ask for anything missing."
+      },
+      {
+        "criterion_id": "includes-spiral-markers",
+        "description": "Schedule includes explicit spiral return points connecting later sessions to earlier material",
+        "result": "pass",
+        "justification": "The syllabus includes explicit spiral return points in at least two sessions: Session 3 contains a 'Spaced connection' explicitly linking *Lujan*'s standing requirement back to *Marbury* from Session 2, and Session 5 (referenced in the first response) includes a 'Spaced retrieval' prompt asking students to connect *McCulloch*'s interpretive method back to *Marbury*, with the Session 2 concept alert also noting that the judicial review/supremacy distinction 'recurs in Sessions 3, 11, and 28.'"
+      },
+      {
+        "criterion_id": "includes-scaffolding-levels",
+        "description": "Sessions indicate the scaffolding progression across the semester",
+        "result": "fail",
+        "justification": "The syllabus lacks explicit scaffolding progression annotations (e.g., 'Guided framework,' 'Structured practice,' 'Independent analysis') that indicate how student autonomy and support levels change across the semester's 28 sessions."
+      },
+      {
+        "criterion_id": "includes-spaced-practice",
+        "description": "Schedule includes cumulative practice touchpoints that draw on material from multiple units",
+        "result": "fail",
+        "justification": "While the syllabus mentions a 'Synthesis' session (Session 28) and retrieval quizzes at multiple points, no session or assignment is explicitly labeled as a cumulative problem set, connection class, or diagnostic that spans multiple doctrinal areas across units."
+      },
+      {
+        "criterion_id": "includes-design-note",
+        "description": "Syllabus includes a note explaining the evidence-based design approach for students",
+        "result": "pass",
+        "justification": "Both responses contain explicit sections explaining evidence-based design principles including spaced repetition, interleaving, retrieval practice, and desirable difficulty, with citations to supporting research (Kornell & Bjork, Rohrer & Taylor, Roediger & Karpicke, Bjork)."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "evidence-based-grounding",
+        "description": "Design decisions reference or reflect learning science principles rather than just conventional practice",
+        "result": "strong",
+        "justification": "The agent consistently grounds design decisions in named learning science research (Roediger & Karpicke on retrieval practice, Bjork on desirable difficulty, Fiorella & Mayer on generative learning, Kornell & Bjork on spacing, Rohrer & Taylor on interleaving) with specific citations and quantified outcomes, and explicitly connects each pedagogical choice—frame-first instruction, role-play for deeper processing, timeline construction, spaced retrieval prompts—to the underlying empirical rationale rather than merely asserting conventional best practices."
+      },
+      {
+        "criterion_id": "difficulty-calibrated-pacing",
+        "description": "More time is allocated to conceptually dense topics, not just proportional to page count",
+        "result": "strong",
+        "justification": "The syllabus explicitly justifies session allocation based on conceptual density rather than page count—noting that rights doctrine requires more processing time, giving First Amendment three chapters but four sessions, extending Separation of Powers due to abstraction, and providing detailed rationale for each unit's session count in the calibration table."
+      },
+      {
+        "criterion_id": "transparent-rationale",
+        "description": "Pacing choices and revisitation decisions are explained, supporting student metacognition",
+        "result": "strong",
+        "justification": "The agent consistently and explicitly explains the rationale behind pacing decisions, sequencing choices, and revisitation moments throughout—citing specific research, flagging recurring concepts across sessions, explaining why structural doctrine precedes rights, noting when and why retrieval quizzes are placed, and labeling spaced connections so students understand the pedagogical logic driving the course design."
+      },
+      {
+        "criterion_id": "cumulative-assessment",
+        "description": "Assessments draw from multiple units rather than testing only the most recent block",
+        "result": "strong",
+        "justification": "The syllabus explicitly builds cumulative assessment through retrieval quizzes that span multiple prior units (e.g., the quiz at Session 5 covers Sessions 1–4), writing assignments that require cross-unit synthesis (e.g., Writing Assignment 1 asks students to connect Bobbitt modalities to Marshall's reasoning), and recurring 'spaced connection' prompts that explicitly link new material to earlier doctrine across units."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "linear-block-design",
+        "description": "Agent produces a traditional linear syllabus without spiral returns or spaced practice",
+        "result": "clear",
+        "justification": "The agent explicitly integrates spaced retrieval quizzes at regular intervals, includes cross-unit connections (e.g., Session 5 connecting McCulloch to Marbury, Session 3 flagging recurrence in Sessions 11 and 28), and interleaves theory with application throughout, demonstrating deliberate spiral returns rather than a purely linear one-and-done topic coverage."
+      },
+      {
+        "criterion_id": "produces-student-work",
+        "description": "Agent produces student-facing work product like study guides or outlines",
+        "result": "clear",
+        "justification": "The agent produces an instructor-facing syllabus with pedagogical notes, learning objectives, session plans, and teaching rationale — not student-facing materials like study guides or outlines designed for student consumption."
+      },
+      {
+        "criterion_id": "ignores-source-material",
+        "description": "Agent generates a syllabus from general knowledge rather than the user's provided content",
+        "result": "clear",
+        "justification": "After the user provided the casebook TOC, the agent explicitly restructured the syllabus to map directly onto the six casebook parts (Ch. 1–2 Judicial Review, Ch. 3–4 Federalism, Ch. 5–6 Separation of Powers, Ch. 7–8 Due Process, Ch. 9–10 Equal Protection, Ch. 11–13 First Amendment), with session assignments and readings tied to those specific chapters rather than generated from general knowledge alone."
+      }
+    ]
+  }
+}

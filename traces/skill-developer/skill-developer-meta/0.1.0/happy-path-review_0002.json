@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:07:06.997231+00:00",
+    "persona": "skill-developer",
+    "skill": "skill-developer-meta",
+    "version": "0.1.0",
+    "scenario_id": "happy-path-review"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-review",
+    "setup": "User wants help reviewing an existing skill.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I wrote a skill and I want to check if it's any good. Can you review it?"
+      }
+    ],
+    "expected": [
+      "Asks the user to provide the skill content",
+      "Identifies this as a review task",
+      "Prepares to evaluate across format, persona, pedagogy, and agent-readiness"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I wrote a skill and I want to check if it's any good. Can you review it?"
+    },
+    {
+      "role": "assistant",
+      "content": "Absolutely, I'd love to help you review it. Go ahead and paste the skill content here, and I'll take a look.\n\nAs I review it, I'll be thinking about things like:\n\n- **Structure**: Does it follow the SKILL.md format correctly?\n- **Pedagogy**: Does it reflect how people actually learn, not just what the agent should say?\n- **Clarity**: Are the instructions clear enough that an AI agent will follow them reliably?\n- **Boundaries**: Are the scope and limits well-defined?\n\nPaste it whenever you're ready."
+    }
+  ],
+  "evaluation": {
+    "score": 80.0,
+    "structural": [
+      {
+        "criterion_id": "identifies-skill-task",
+        "description": "Agent understands whether the user wants to create, review, or test a skill",
+        "result": "pass",
+        "justification": "The agent correctly identified that the user wants to review a skill and immediately proceeded to invite the skill content, demonstrating clear understanding of the task before providing substantive guidance."
+      },
+      {
+        "criterion_id": "handles-format-conventions",
+        "description": "Agent knows the SKILL.md structure, persona system, and rubric format",
+        "result": "pass",
+        "justification": "The agent explicitly references the SKILL.md format as a structural criterion for review, demonstrating awareness of the format conventions."
+      },
+      {
+        "criterion_id": "stays-in-scope",
+        "description": "Agent handles skill development tasks and does not attempt to use skills itself",
+        "result": "pass",
+        "justification": "The agent is clearly assisting with reviewing a skill rather than attempting to tutor students or perform the skill's function itself, staying appropriately within the scope of skill development support."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "honors-domain-expertise",
+        "description": "Agent treats the user as the subject matter expert on their domain",
+        "result": "weak",
+        "justification": "The agent immediately positions itself as the evaluator with its own framework for what makes a good skill, rather than treating the user as the domain expert who likely has their own criteria and intentions for the skill they wrote."
+      },
+      {
+        "criterion_id": "encodes-pedagogy",
+        "description": "Agent helps express educational knowledge in a format AI agents can follow reliably",
+        "result": "strong",
+        "justification": "The agent explicitly frames its review criteria around encoding pedagogy effectively for AI agents, highlighting clarity, structure, and reliable instruction-following as key evaluation dimensions."
+      },
+      {
+        "criterion_id": "concrete-testable-output",
+        "description": "Agent prefers specific, testable quality criteria over vague aspirations",
+        "result": "weak",
+        "justification": "The agent lists vague, aspirational criteria ('clear enough,' 'well-defined,' 'reflects how people actually learn') without specifying any concrete, testable standards that could objectively determine whether the skill passes or fails each dimension."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "uses-skills-itself",
+        "description": "Agent attempts to tutor students, coach attorneys, or advise pro-se litigants rather than helping build skills",
+        "result": "clear",
+        "justification": "The agent is helping the user review and improve a skill they wrote, which is exactly the kind of skill development assistance the pedagogical skill is meant to support, not tutoring students or coaching litigants."
+      },
+      {
+        "criterion_id": "overrides-user-expertise",
+        "description": "Agent dismisses or overrides the user's pedagogical choices",
+        "result": "clear",
+        "justification": "The agent simply offered to review the skill using standard criteria without dismissing or overriding any pedagogical choices the user has made."
+      },
+      {
+        "criterion_id": "modifies-infrastructure",
+        "description": "Agent attempts to change the build pipeline, website, or codebase rather than working with skill files",
+        "result": "clear",
+        "justification": "The agent only asks the user to paste their skill content for review and describes evaluation criteria focused on SKILL.md format and pedagogy, with no attempt to modify build pipelines, scripts, configuration, or website code."
+      }
+    ]
+  }
+}

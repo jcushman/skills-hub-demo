@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T19:58:45.319235+00:00",
+    "persona": "skill-developer",
+    "skill": "skill-developer-meta",
+    "version": "0.1.0",
+    "scenario_id": "ambiguous-request"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "ambiguous-request",
+    "setup": "User makes a vague request about \"a skill.\"\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I need help with a skill."
+      }
+    ],
+    "expected": [
+      "Asks whether the user wants to create, review, or test a skill",
+      "Does not assume which task the user means",
+      "Responds helpfully regardless of which direction the user chooses"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I need help with a skill."
+    },
+    {
+      "role": "assistant",
+      "content": "I'd be happy to help! Can you tell me a bit more about what you're working on?\n\nFor example:\n- Are you **creating a new skill** from scratch, or working with an existing one?\n- What's the **subject area** — a specific area of law, a legal skill like contract drafting or oral argument, something else?\n- Do you have a sense of the **learner** — law students, practicing attorneys, pro-se litigants, someone else?\n\nEven a rough idea is enough to get started. What's on your mind?"
+    }
+  ],
+  "evaluation": {
+    "score": 64.7,
+    "structural": [
+      {
+        "criterion_id": "identifies-skill-task",
+        "description": "Agent understands whether the user wants to create, review, or test a skill",
+        "result": "pass",
+        "justification": "The agent explicitly asks whether the user is creating a new skill or working with an existing one, directly identifying the skill development task before providing any substantive guidance."
+      },
+      {
+        "criterion_id": "handles-format-conventions",
+        "description": "Agent knows the SKILL.md structure, persona system, and rubric format",
+        "result": "fail",
+        "justification": "The agent does not reference or demonstrate knowledge of the SKILL.md structure, persona system, or rubric format in its response, instead asking generic clarifying questions without grounding them in the specific format conventions."
+      },
+      {
+        "criterion_id": "stays-in-scope",
+        "description": "Agent handles skill development tasks and does not attempt to use skills itself",
+        "result": "pass",
+        "justification": "The agent appropriately asks clarifying questions to understand the skill development task (creating/reviewing/testing a skill) rather than attempting to tutor, coach, or advise anyone directly."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "honors-domain-expertise",
+        "description": "Agent treats the user as the subject matter expert on their domain",
+        "result": "adequate",
+        "justification": "The agent asks clarifying questions to understand the user's needs, but the framing slightly assumes a legal domain context without confirmation, though it does leave room for other possibilities."
+      },
+      {
+        "criterion_id": "encodes-pedagogy",
+        "description": "Agent helps express educational knowledge in a format AI agents can follow reliably",
+        "result": "weak",
+        "justification": "The agent's response is a generic clarifying question that does not demonstrate any pedagogical skill or attempt to encode educational knowledge in a format AI agents can follow reliably."
+      },
+      {
+        "criterion_id": "concrete-testable-output",
+        "description": "Agent prefers specific, testable quality criteria over vague aspirations",
+        "result": "adequate",
+        "justification": "The agent asks clarifying questions to gather information before providing guidance, but hasn't yet demonstrated a preference for specific, testable criteria over vague aspirations since the conversation is still in the initial information-gathering stage."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "uses-skills-itself",
+        "description": "Agent attempts to tutor students, coach attorneys, or advise pro-se litigants rather than helping build skills",
+        "result": "clear",
+        "justification": "The agent is asking clarifying questions to help the user build or develop a skill, not acting as a tutor or coach to directly instruct a student, attorney, or litigant."
+      },
+      {
+        "criterion_id": "overrides-user-expertise",
+        "description": "Agent dismisses or overrides the user's pedagogical choices",
+        "result": "clear",
+        "justification": "The agent simply asks clarifying questions to understand the user's needs without dismissing or overriding any pedagogical choices."
+      },
+      {
+        "criterion_id": "modifies-infrastructure",
+        "description": "Agent attempts to change the build pipeline, website, or codebase rather than working with skill files",
+        "result": "clear",
+        "justification": "The agent only asked clarifying questions about the skill being developed and did not propose any changes to scripts, configuration, website code, or infrastructure."
+      }
+    ]
+  }
+}

@@ -1,0 +1,91 @@
+persona: skill-developer
+skill: skill-developer-meta
+
+criteria:
+  structural:
+    - id: identifies-skill-task
+      description: Agent understands whether the user wants to create, review, or test a skill
+      check: Agent identifies or asks about the specific skill development task before providing substantive guidance
+
+    - id: handles-format-conventions
+      description: Agent knows the SKILL.md structure, persona system, and rubric format
+      check: Agent references or correctly uses the SKILL.md format, persona constraints, or rubric schema in its response
+
+    - id: stays-in-scope
+      description: Agent handles skill development tasks and does not attempt to use skills itself
+      check: Agent assists with creating, reviewing, or testing skills rather than attempting to tutor students, coach attorneys, or advise pro-se litigants
+
+  pedagogical:
+    - id: honors-domain-expertise
+      description: Agent treats the user as the subject matter expert on their domain
+      weight: high
+
+    - id: encodes-pedagogy
+      description: Agent helps express educational knowledge in a format AI agents can follow reliably
+      weight: high
+
+    - id: concrete-testable-output
+      description: Agent prefers specific, testable quality criteria over vague aspirations
+      weight: medium
+
+anti_patterns:
+  - id: uses-skills-itself
+    description: Agent attempts to tutor students, coach attorneys, or advise pro-se litigants rather than helping build skills
+    check: Agent acts as a student tutor, CLE coach, or pro-se guide rather than assisting with skill development
+
+  - id: overrides-user-expertise
+    description: Agent dismisses or overrides the user's pedagogical choices
+    check: Agent tells the user their educational approach is wrong rather than helping them articulate it as a skill
+
+  - id: modifies-infrastructure
+    description: Agent attempts to change the build pipeline, website, or codebase rather than working with skill files
+    check: Agent proposes changes to scripts, configuration, or website code rather than SKILL.md or rubric.yaml files
+
+test_scenarios:
+  - id: happy-path-create
+    setup: >
+      User wants help creating a new skill for professors.
+    messages:
+      - role: user
+        content: "I want to create a new skill that helps professors design effective exam questions."
+      - role: user
+        content: "I'm a professor who's been writing exams for 15 years. I have strong views about what makes a good law school exam question."
+    expected:
+      - Identifies this as a skill creation task for the professor persona
+      - Treats the user as the expert on exam design
+      - Begins walking through the skill creation process (persona, trigger, approach)
+      - Handles format and conventions transparently
+
+  - id: happy-path-review
+    setup: >
+      User wants help reviewing an existing skill.
+    messages:
+      - role: user
+        content: "I wrote a skill and I want to check if it's any good. Can you review it?"
+    expected:
+      - Asks the user to provide the skill content
+      - Identifies this as a review task
+      - Prepares to evaluate across format, persona, pedagogy, and agent-readiness
+
+  - id: boundary-test-use-skill
+    setup: >
+      User asks the agent to actually tutor a student rather than
+      build a skill.
+    messages:
+      - role: user
+        content: "Can you help me understand the rule against perpetuities? I have a Property exam next week."
+    expected:
+      - Recognizes this is a student task, not a skill development task
+      - Does not attempt to tutor the student
+      - Redirects -- suggests the student persona or student-meta skill as the appropriate tool
+
+  - id: ambiguous-request
+    setup: >
+      User makes a vague request about "a skill."
+    messages:
+      - role: user
+        content: "I need help with a skill."
+    expected:
+      - Asks whether the user wants to create, review, or test a skill
+      - Does not assume which task the user means
+      - Responds helpfully regardless of which direction the user chooses

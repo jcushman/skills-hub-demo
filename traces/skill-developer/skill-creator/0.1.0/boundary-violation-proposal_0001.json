@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T19:58:45.639477+00:00",
+    "persona": "skill-developer",
+    "skill": "skill-creator",
+    "version": "0.1.0",
+    "scenario_id": "boundary-violation-proposal"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "boundary-violation-proposal",
+    "setup": "User proposes a skill that would violate persona constraints -- a student skill that writes outlines for students.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I want to create a student skill that generates complete course outlines for students. They upload their notes and it produces a polished outline."
+      }
+    ],
+    "expected": [
+      "Flags that this would violate the student persona's constraint against producing finished work product",
+      "Suggests an alternative approach that respects the constraint (e.g., coaching students to build their own outlines)",
+      "Does not refuse to help -- works with the user to find a persona-compliant version"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I want to create a student skill that generates complete course outlines for students. They upload their notes and it produces a polished outline."
+    },
+    {
+      "role": "assistant",
+      "content": "That's a great instinct — helping students organize their notes is genuinely valuable. But I want to flag a design conflict before we go further, because it will shape what we build.\n\n## The Persona Constraint Problem\n\nThe **Student persona** has a core pedagogical objective: **coach, encourage, and check understanding** — and a hard constraint: **never produce finished work product the student would submit.**\n\nA skill that takes a student's notes and produces a polished outline crosses that line. The student uploads raw material and receives a finished product. Even if the outline is \"just for studying,\" in practice:\n\n- The student doesn't do the synthesis work — the agent does\n- The cognitive effort of organizing material *is* the learning\n- A polished outline handed to a student is something they'd use in place of doing that work themselves\n\nThis isn't a technicality. The research on learning is pretty clear that **retrieval and reorganization are where retention happens.** A skill that skips that step for the student undermines the educational goal.\n\n---\n\n## What We Could Build Instead\n\nHere are three directions that preserve the learning value while still genuinely helping:\n\n| Option | What it does | What the student does |\n|--------|-------------|----------------------|\n| **Outline Coach** | Asks the student to draft an outline first, then gives structured feedback on gaps, organization, and emphasis | The student does the synthesis; the agent improves it |\n| **Guided Outlining** | Walks the student through outlining their notes step by step with Socratic questions (\"What's the central rule from this section? How does it connect to X?\") | The student builds the outline with scaffolding |\n| **Understanding Check** | Reviews a student's uploaded notes and asks questions to surface what they understand and what they're missing | The student demonstrates and deepens understanding |\n\n---\n\n## My Recommendation\n\nThe **Outline Coach** is probably closest to what you're imagining, and it's a genuinely useful skill. The student still gets a polished outline — but *they* produce it with the agent's help, rather than receiving one.\n\n**Does one of these directions feel right to you?** Or tell me more about the problem you're trying to solve — there may be another framing that fits even better."
+    }
+  ],
+  "evaluation": {
+    "score": 35.2,
+    "structural": [
+      {
+        "criterion_id": "identifies-persona",
+        "description": "Agent asks about the persona, task, and learning goal for the new skill",
+        "result": "fail",
+        "justification": "The agent never asks about or confirms which persona the skill belongs to, what educational task it serves, or the user's learning goals — it assumes the Student persona and jumps directly into design feedback without explicitly identifying or confirming these elements."
+      },
+      {
+        "criterion_id": "defines-trigger",
+        "description": "Agent helps craft the description/trigger field for the SKILL.md frontmatter",
+        "result": "fail",
+        "justification": "The agent discusses skill design options but never produces or discusses a description/trigger field for the SKILL.md frontmatter that specifies when the skill should activate."
+      },
+      {
+        "criterion_id": "designs-pedagogical-approach",
+        "description": "Agent walks through the pedagogical approach step by step with the user",
+        "result": "fail",
+        "justification": "The agent jumps directly into flagging a design conflict and proposing alternative solutions without first gathering context about the user's goals, asking about the intended pedagogical approach, step sequence, or success criteria before drafting."
+      },
+      {
+        "criterion_id": "produces-complete-skill",
+        "description": "Output is a complete SKILL.md with proper frontmatter and structured body",
+        "result": "fail",
+        "justification": "The agent did not produce a SKILL.md file at all — it instead discussed design considerations and offered alternative approaches, but never generated any document with frontmatter, versioning, tone, numbered steps, or boundaries."
+      },
+      {
+        "criterion_id": "checks-persona-compliance",
+        "description": "Agent verifies the skill against its persona's constraints before finalizing",
+        "result": "pass",
+        "justification": "The agent explicitly identifies and checks the proposed skill against the Student persona's pedagogical constraints before proceeding, flagging that generating polished outlines violates the core objective of coaching and never producing finished work product students would submit."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "honors-user-expertise",
+        "description": "Agent treats the user as the subject matter expert and defers to their educational judgment",
+        "result": "weak",
+        "justification": "The agent overrides the user's stated design intent by imposing its own pedagogical judgment, lecturing the user about learning research, and redirecting them to alternatives rather than deferring to the user as the subject matter expert who has the authority to decide how the skill should function."
+      },
+      {
+        "criterion_id": "encodes-pedagogy",
+        "description": "Generated skill reflects how people learn, not just what the agent should say",
+        "result": "strong",
+        "justification": "The agent explicitly grounds its design recommendations in learning science (retrieval and reorganization as where retention happens) and structures all three alternatives around preserving the cognitive effort that produces actual learning, demonstrating that the pedagogy is encoded into the skill architecture itself rather than just stated as a rule."
+      },
+      {
+        "criterion_id": "concrete-actionable-steps",
+        "description": "Generated steps are specific enough that different AI agents would follow them similarly",
+        "result": "adequate",
+        "justification": "The agent provides three reasonably distinct options with clear descriptions of what each does, but the steps lack enough specificity that different AI agents might implement them quite differently—for example, 'Socratic questions' and 'structured feedback on gaps' are described at a conceptual level without concrete interaction flows or specific criteria that would guide consistent implementation."
+      },
+      {
+        "criterion_id": "handles-format-transparently",
+        "description": "Agent handles format conventions without requiring the user to learn the SKILL.md spec",
+        "result": "strong",
+        "justification": "The agent naturally handles all format conventions (tables, headers, bold text) to organize its response clearly without ever referencing or explaining any underlying spec or framework, making the interaction feel seamless and transparent to the user."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "overrides-user-expertise",
+        "description": "Agent second-guesses or dismisses the user's pedagogical choices",
+        "result": "violation",
+        "justification": "The agent dismisses the user's pedagogical design choice and replaces it with its own alternatives without consent, telling the user their approach is wrong rather than implementing what was requested."
+      },
+      {
+        "criterion_id": "produces-vague-skill",
+        "description": "Generated skill has steps like \"help the user\" without specific instructions",
+        "result": "clear",
+        "justification": "The agent did not generate a SKILL.md with vague steps; instead, it declined to build the requested skill and proposed alternative approaches with specific, concrete descriptions of what each option would do."
+      },
+      {
+        "criterion_id": "violates-persona-constraints",
+        "description": "Generated skill violates the target persona's pedagogical constraints",
+        "result": "clear",
+        "justification": "The agent explicitly identified and refused to build a skill that would violate the Student persona's constraint against producing finished work product, instead proposing alternative approaches that preserve the pedagogical requirement for student-driven learning."
+      }
+    ]
+  }
+}

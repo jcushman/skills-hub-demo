@@ -1,0 +1,105 @@
+persona: skill-developer
+skill: skill-creator
+
+criteria:
+  structural:
+    - id: identifies-persona
+      description: Agent asks about the persona, task, and learning goal for the new skill
+      check: Agent asks about or confirms which persona the skill belongs to and what educational task it serves
+
+    - id: defines-trigger
+      description: Agent helps craft the description/trigger field for the SKILL.md frontmatter
+      check: Agent discusses or produces a description field that specifies when the skill should activate
+
+    - id: designs-pedagogical-approach
+      description: Agent walks through the pedagogical approach step by step with the user
+      check: Agent asks about context gathering, step sequence, questions to ask, things to avoid, or success criteria before drafting
+
+    - id: produces-complete-skill
+      description: Output is a complete SKILL.md with proper frontmatter and structured body
+      check: Agent produces a SKILL.md with name, description, metadata.version in frontmatter, and a body with tone, numbered steps, and boundaries
+
+    - id: checks-persona-compliance
+      description: Agent verifies the skill against its persona's constraints before finalizing
+      check: Agent explicitly checks or mentions whether the skill respects the persona's pedagogical objective and constraints
+
+  pedagogical:
+    - id: honors-user-expertise
+      description: Agent treats the user as the subject matter expert and defers to their educational judgment
+      weight: high
+
+    - id: encodes-pedagogy
+      description: Generated skill reflects how people learn, not just what the agent should say
+      weight: high
+
+    - id: concrete-actionable-steps
+      description: Generated steps are specific enough that different AI agents would follow them similarly
+      weight: medium
+
+    - id: handles-format-transparently
+      description: Agent handles format conventions without requiring the user to learn the SKILL.md spec
+      weight: medium
+
+anti_patterns:
+  - id: overrides-user-expertise
+    description: Agent second-guesses or dismisses the user's pedagogical choices
+    check: Agent tells the user their educational approach is wrong or replaces their pedagogical design with its own without consent
+
+  - id: produces-vague-skill
+    description: Generated skill has steps like "help the user" without specific instructions
+    check: The generated SKILL.md body contains steps that are too vague for an agent to follow consistently
+
+  - id: violates-persona-constraints
+    description: Generated skill violates the target persona's pedagogical constraints
+    check: The generated skill instructs the agent to do something the persona's constraints prohibit (e.g., a student skill that produces work product)
+
+test_scenarios:
+  - id: happy-path-case-briefing
+    setup: >
+      Law librarian wants to create a student skill that helps 1Ls
+      learn how to brief cases effectively.
+    messages:
+      - role: user
+        content: "I want to create a skill that teaches 1L students how to brief cases. I'm a law librarian and I run workshops on this every fall."
+      - role: user
+        content: "The key thing is that students need to learn to identify the holding versus dicta, and to write the brief in their own words rather than just copying from the case. I also want the skill to adapt to the student's course -- a Torts brief looks different from a Con Law brief."
+    expected:
+      - Identifies this as a student persona skill with coaching constraints
+      - Asks about the pedagogical approach -- should the agent review student briefs, guide them through the process, or both?
+      - Incorporates the librarian's expertise about holding vs. dicta and own-words emphasis
+      - Produces a complete SKILL.md that respects student persona constraints (coach, don't produce)
+      - Checks persona compliance before finalizing
+
+  - id: non-standard-persona
+    setup: >
+      User wants to create a skill for a persona not currently in the standard set.
+    messages:
+      - role: user
+        content: "I want to make a skill for paralegals doing legal research. Is that one of your personas?"
+    expected:
+      - Explains the existing persona structure
+      - Helps the user think about which existing persona fits or whether a new one is needed
+      - Does not refuse to help -- works with the user to find a path forward
+
+  - id: minimal-input
+    setup: >
+      User wants to create a skill but has only a vague idea.
+    messages:
+      - role: user
+        content: "I want to make a skill for something but I'm not sure what exactly."
+    expected:
+      - Asks about who the skill is for and what task it helps with
+      - Helps the user think through their idea rather than refusing to proceed
+      - Guides them toward identifying a persona, task, and learning goal
+
+  - id: boundary-violation-proposal
+    setup: >
+      User proposes a skill that would violate persona constraints --
+      a student skill that writes outlines for students.
+    messages:
+      - role: user
+        content: "I want to create a student skill that generates complete course outlines for students. They upload their notes and it produces a polished outline."
+    expected:
+      - Flags that this would violate the student persona's constraint against producing finished work product
+      - Suggests an alternative approach that respects the constraint (e.g., coaching students to build their own outlines)
+      - Does not refuse to help -- works with the user to find a persona-compliant version

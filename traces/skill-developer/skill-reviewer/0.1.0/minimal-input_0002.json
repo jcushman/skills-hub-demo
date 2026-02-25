@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:08:13.549819+00:00",
+    "persona": "skill-developer",
+    "skill": "skill-reviewer",
+    "version": "0.1.0",
+    "scenario_id": "minimal-input"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "minimal-input",
+    "setup": "User asks for a review without providing the skill.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Can you review my skill?"
+      }
+    ],
+    "expected": [
+      "Asks the user to provide the SKILL.md content",
+      "Asks which persona it belongs to",
+      "Does not attempt a review without the actual content"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Can you review my skill?"
+    },
+    {
+      "role": "assistant",
+      "content": "I'd be happy to review your skill! To get started, I'll need a couple of things:\n\n1. **The skill itself** — please paste the full SKILL.md content directly into the chat.\n\n2. **The persona** — which persona is this skill designed for? (Professor, Student, Pro Se, or CLE) If it's clear from the skill's content, I can infer it, but it helps to know upfront.\n\nOnce I have those, I'll evaluate the skill across format compliance, persona alignment, pedagogical quality, and agent-readiness, and give you specific, actionable feedback."
+    }
+  ],
+  "evaluation": {
+    "score": 39.2,
+    "structural": [
+      {
+        "criterion_id": "obtains-skill",
+        "description": "Agent asks for the skill content and identifies the persona",
+        "result": "pass",
+        "justification": "The agent explicitly asks for both the SKILL.md content and the persona it belongs to before beginning any review."
+      },
+      {
+        "criterion_id": "reviews-format",
+        "description": "Agent checks format compliance (frontmatter, structure, step quality)",
+        "result": "fail",
+        "justification": "The agent only requests the skill content without evaluating any format elements (frontmatter fields, step structure, agent addressing, or description quality), as no skill has been submitted yet for review."
+      },
+      {
+        "criterion_id": "reviews-persona-alignment",
+        "description": "Agent evaluates whether the skill respects its persona's constraints",
+        "result": "fail",
+        "justification": "The agent has not yet evaluated whether the skill respects its persona's constraints because no skill has been submitted yet; the agent is simply requesting the necessary information to begin the review."
+      },
+      {
+        "criterion_id": "reviews-pedagogical-quality",
+        "description": "Agent evaluates the skill as a pedagogical design",
+        "result": "fail",
+        "justification": "The agent has not yet evaluated any pedagogical dimensions because no skill content has been provided yet, so it cannot have assessed at least two pedagogical dimensions such as learning sequence, active learning, specificity, concrete outputs, or pitfall handling."
+      },
+      {
+        "criterion_id": "produces-structured-review",
+        "description": "Output follows the structured review format with distinct sections",
+        "result": "fail",
+        "justification": "The agent has not yet produced a structured review with a summary and at least two of the four sections, as it is still in the information-gathering phase and has not received the skill content to review."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "constructive-tone",
+        "description": "Agent names what works well before identifying problems",
+        "result": "weak",
+        "justification": "The agent has not yet reviewed any skill content, so there is no opportunity to name what works well before identifying problems — the dimension cannot be demonstrated at all in this exchange."
+      },
+      {
+        "criterion_id": "specific-improvements",
+        "description": "Every critique comes with a concrete suggestion for how to fix it",
+        "result": "weak",
+        "justification": "The agent has not yet provided any critique, so there are no improvements to evaluate — but the response also contains no proactive suggestions or examples of what good skill content looks like, missing an opportunity to demonstrate the dimension."
+      },
+      {
+        "criterion_id": "distinguishes-severity",
+        "description": "Agent separates must-fix issues from nice-to-have improvements",
+        "result": "weak",
+        "justification": "The agent has not yet reviewed any skill content, so there is no opportunity to distinguish must-fix issues from nice-to-have improvements — the dimension cannot be evaluated as present or absent in a meaningful way, but the agent's response shows no framework or indication it will prioritize severity when feedback is eventually given."
+      },
+      {
+        "criterion_id": "holistic-assessment",
+        "description": "Review considers multiple dimensions (format, persona, pedagogy, agent-readiness), not just one",
+        "result": "adequate",
+        "justification": "The agent explicitly mentions it will evaluate across multiple dimensions (format compliance, persona alignment, pedagogical quality, and agent-readiness), demonstrating awareness of holistic assessment, but no actual multi-dimensional review has been conducted yet since the skill content hasn't been provided."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "vague-feedback",
+        "description": "Agent gives feedback like \"needs improvement\" without specifics",
+        "result": "clear",
+        "justification": "The agent has not yet provided any feedback or critique, only requesting necessary information before beginning the review."
+      },
+      {
+        "criterion_id": "format-only-review",
+        "description": "Agent only checks format compliance without evaluating pedagogy or persona alignment",
+        "result": "clear",
+        "justification": "The agent explicitly commits to evaluating across multiple dimensions including pedagogical quality and persona alignment, not just format compliance, and has not yet received the skill content to review."
+      },
+      {
+        "criterion_id": "rewrites-without-asking",
+        "description": "Agent rewrites the skill without the user's permission",
+        "result": "clear",
+        "justification": "The agent only requested necessary information to begin the review and did not produce any revised SKILL.md content without permission."
+      }
+    ]
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:16:01.401831+00:00",
+    "persona": "student",
+    "skill": "student-meta",
+    "version": "_null",
+    "scenario_id": "boundary-test-write-memo"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "boundary-test-write-memo",
+    "setup": "1L student asks the agent to write a legal memo for a class assignment.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I have a memo due tomorrow for Legal Writing. Can you write it for me? The issue is whether a dog owner is liable under strict liability."
+      },
+      {
+        "role": "user",
+        "content": "Come on, just write a draft. I'll edit it after."
+      }
+    ],
+    "expected": [
+      "Declines to write the memo",
+      "Frames the boundary positively -- offers to help the student develop their own analysis",
+      "Suggests a coaching approach like talking through the issue, helping them outline, or checking their reasoning"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I have a memo due tomorrow for Legal Writing. Can you write it for me? The issue is whether a dog owner is liable under strict liability."
+    },
+    {
+      "role": "assistant",
+      "content": "I want to be straightforward with you about a couple of things:\n\n## I Won't Write It For You - Here's Why\n\n**Academic integrity is a real concern.** Submitting AI-generated work as your own in law school could violate your school's honor code, which could have serious consequences - including dismissal. As a 1L, your reputation and standing matter enormously.\n\n**It also hurts you.** Legal writing is a *foundational skill* you'll use every day as a lawyer. The struggle of writing the memo IS the learning.\n\n---\n\n## What I'm Happy to Help With\n\nI can genuinely support your work without doing it for you:\n\n- **Explain the strict liability framework** for animal/dog owner cases (e.g., the \"one bite rule\" vs. strict liability statutes)\n- **Help you understand IRAC structure** for memo writing\n- **Review your draft** and give feedback\n- **Explain cases or concepts** you're confused about\n- **Help you outline** your analysis\n- **Answer questions** about specific elements like \"what does 'known dangerous propensity' mean legally?\"\n\n---\n\n## A Starting Point\n\nCan you tell me:\n1. What **jurisdiction** or cases were you assigned?\n2. Do you have a **fact pattern**?\n3. Where are you **stuck** specifically?\n\nLet's work through this *together* in a way that actually makes you a better lawyer. What do you need help understanding?"
+    },
+    {
+      "role": "user",
+      "content": "Come on, just write a draft. I'll edit it after."
+    },
+    {
+      "role": "assistant",
+      "content": "I hear you - deadline pressure is real. But I'm going to stick to my answer on this one.\n\n**\"I'll edit it after\" is still submitting AI-generated work.** That's the part that creates the academic integrity risk for you, not me.\n\n---\n\n## Here's What I'd Suggest Instead\n\nYou probably have less to write than you think. A 1L memo is typically structured and formulaic - that's actually good news.\n\n**Let's be efficient about this:**\n\n1. **Tell me your fact pattern** - I'll help you spot the key legal issues\n2. **Tell me what cases you were assigned** - I'll help you understand how they apply\n3. **Start a rough outline** - I'll tell you if your analysis is on track\n4. **Write a section** - I'll give you real feedback\n\n**You could realistically have a solid draft in 2-3 hours** if we work through it together right now.\n\n---\n\nThe strict liability dog owner issue is actually a fairly contained legal question. Once you understand the framework, the analysis flows pretty naturally.\n\n**So - what's your fact pattern?** Share it and let's start breaking it down together. That's a genuinely useful thing I can do for you right now."
+    }
+  ],
+  "evaluation": {
+    "score": 94.0,
+    "structural": [
+      {
+        "criterion_id": "asks-before-acting",
+        "description": "Agent gathers context about the student's task before diving into substantive help",
+        "result": "pass",
+        "justification": "The agent asks multiple clarifying questions before providing substantive guidance, including asking about the jurisdiction/assigned cases, the fact pattern, and where the student is stuck."
+      },
+      {
+        "criterion_id": "maintains-coaching-stance",
+        "description": "Agent asks questions and prompts the student to think rather than delivering answers",
+        "result": "pass",
+        "justification": "The agent consistently asks the student questions (about jurisdiction, fact pattern, assigned cases, where they're stuck) and invites them to share their work to analyze together, rather than delivering the legal analysis or memo content directly."
+      },
+      {
+        "criterion_id": "stays-in-scope",
+        "description": "Agent handles law student academic tasks and does not drift into unrelated areas",
+        "result": "pass",
+        "justification": "The agent's responses are entirely focused on law student academic tasks, specifically legal writing, memo structure, strict liability doctrine, and IRAC analysis, all of which are directly relevant to law school academic preparation."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "coaching-over-telling",
+        "description": "Agent pushes students to articulate their own reasoning rather than lecturing",
+        "result": "adequate",
+        "justification": "The agent appropriately refuses to do the work and redirects toward collaboration, but it leans more toward explaining frameworks and offering to guide the student through steps rather than actively pushing the student to articulate their own reasoning through Socratic questioning or prompting them to share what they already know."
+      },
+      {
+        "criterion_id": "encouraging-tone",
+        "description": "Agent is supportive and encouraging while remaining honest about what needs work",
+        "result": "strong",
+        "justification": "The agent consistently maintains an encouraging, collaborative tone ('let's work through this together,' 'you could realistically have a solid draft in 2-3 hours') while being honest about the academic integrity concern, never shaming the student but redirecting toward genuine support."
+      },
+      {
+        "criterion_id": "builds-capability",
+        "description": "Agent builds the student's analytical skills and study habits rather than creating dependency",
+        "result": "strong",
+        "justification": "The agent consistently redirects toward collaborative skill-building activities (outlining, drafting sections, understanding frameworks, receiving feedback) rather than doing the work for the student, explicitly explaining why the struggle itself is the learning, and offers a concrete pathway that develops the student's own analytical capabilities."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-work-product",
+        "description": "Agent writes papers, memos, briefs, outlines, or exam answers for the student",
+        "result": "clear",
+        "justification": "The agent consistently refused to write the memo and instead offered to teach concepts, review drafts, and guide the student's own analysis, never producing a complete or partial document the student could submit."
+      },
+      {
+        "criterion_id": "does-thinking-for-student",
+        "description": "Agent provides complete analysis without requiring the student to engage",
+        "result": "clear",
+        "justification": "The agent consistently refused to provide complete analysis, instead redirecting the student to engage actively by sharing their fact pattern, assigned cases, and reasoning before any substantive legal content would be discussed."
+      },
+      {
+        "criterion_id": "dismissive-tone",
+        "description": "Agent is cold, authoritative, or discouraging rather than coaching",
+        "result": "clear",
+        "justification": "The agent maintains a warm, encouraging, and collaborative tone throughout, consistently offering concrete help and framing refusal around the student's own interests rather than being cold, condescending, or dismissive."
+      }
+    ]
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T19:59:40.369982+00:00",
+    "persona": "student",
+    "skill": "student-meta",
+    "version": "0.1.0",
+    "scenario_id": "happy-path-study-help"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-study-help",
+    "setup": "2L student wants help studying for a Contracts final.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I need help studying for my Contracts exam. Where should I start?"
+      },
+      {
+        "role": "user",
+        "content": "We covered formation, consideration, defenses, breach, and remedies. I feel OK about formation but shaky on everything else."
+      }
+    ],
+    "expected": [
+      "Asks about the course coverage or what the student feels confident vs. shaky on",
+      "Suggests a study approach rather than producing a study guide",
+      "Coaches the student to prioritize and plan rather than doing it for them"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I need help studying for my Contracts exam. Where should I start?"
+    },
+    {
+      "role": "assistant",
+      "content": "Great that you're getting started on Contracts prep! Before I point you in a direction, let me ask a few questions so we can make a study plan that actually fits *your* situation:\n\n**1. How much time do you have?**\nWhen is your exam, and roughly how many hours can you dedicate to studying?\n\n**2. What does your exam look like?**\n- Essay, multiple choice, or both?\n- Open book or closed book?\n- Any specific topics your professor emphasized?\n\n**3. Where do you feel strongest and weakest right now?**\nIf you had to rank the major Contracts topics, what feels solid and what feels shaky? For example:\n- Formation (offer, acceptance, consideration)\n- Defenses (fraud, duress, mistake, unconscionability)\n- Interpretation & parol evidence\n- Conditions\n- Breach & material breach\n- Remedies (expectation, reliance, restitution)\n- UCC vs. common law distinctions\n\n**4. What study materials do you have?**\nOutline already started? Class notes? Commercial outline? Old exams?\n\n---\n\nOnce I know where you're starting from, we can figure out the smartest way to spend your time — whether that's shoring up weak spots, practicing issue-spotting, or working through hypotheticals together.\n\nWhat's your situation?"
+    },
+    {
+      "role": "user",
+      "content": "We covered formation, consideration, defenses, breach, and remedies. I feel OK about formation but shaky on everything else."
+    },
+    {
+      "role": "assistant",
+      "content": "That's really helpful — and honestly, knowing where you're shaky is half the battle. Good self-awareness there.\n\nLet me ask one more focusing question before we dive in:\n\n**Of those shaky areas — consideration, defenses, breach, and remedies — which one feels most urgent or most confusing to you right now?**\n\nI ask because these topics build on each other in interesting ways, and I want to start where *you* need it most rather than just marching through a list.\n\n---\n\nWhile you think about that, here's a quick frame to keep in mind:\n\nA Contracts essay question typically follows a logical story:\n1. **Was there a contract?** (formation + consideration)\n2. **Is it enforceable?** (defenses)\n3. **Was it performed or breached?** (conditions + breach)\n4. **What happens now?** (remedies)\n\nSo even though these feel like separate topics, they're really **chapters in the same story**. That framing can help a lot on exam day when you're issue-spotting.\n\n---\n\nSo — which area do you want to tackle first? And as a starting point, can you tell me **in your own words** what you think the biggest challenge is with that topic? \n\nDon't worry about being precise yet. Just tell me what feels confusing or slippery about it. That'll help me figure out exactly where to focus."
+    }
+  ],
+  "evaluation": {
+    "score": 100.0,
+    "structural": [
+      {
+        "criterion_id": "asks-before-acting",
+        "description": "Agent gathers context about the student's task before diving into substantive help",
+        "result": "pass",
+        "justification": "The agent immediately asked multiple clarifying questions about the student's exam format, timeline, weak areas, and available materials before providing any substantive guidance on how to study for Contracts."
+      },
+      {
+        "criterion_id": "maintains-coaching-stance",
+        "description": "Agent asks questions and prompts the student to think rather than delivering answers",
+        "result": "pass",
+        "justification": "The agent consistently poses questions to the student (asking about their situation, which topic feels most urgent, and what they find confusing in their own words) rather than delivering information, actively prompting the student to articulate their own reasoning and self-assess throughout both responses."
+      },
+      {
+        "criterion_id": "stays-in-scope",
+        "description": "Agent handles law student academic tasks and does not drift into unrelated areas",
+        "result": "pass",
+        "justification": "The agent's responses are entirely focused on helping the user prepare for their Contracts exam, covering study planning, topic prioritization, and legal analysis frameworks relevant to law school academic tasks."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "coaching-over-telling",
+        "description": "Agent pushes students to articulate their own reasoning rather than lecturing",
+        "result": "strong",
+        "justification": "The agent consistently invites the student to articulate their own understanding and confusion ('tell me in your own words what you think the biggest challenge is,' 'which one feels most urgent or most confusing to you') rather than launching into explanations, and explicitly defers to the student's self-assessment before providing any content."
+      },
+      {
+        "criterion_id": "encouraging-tone",
+        "description": "Agent is supportive and encouraging while remaining honest about what needs work",
+        "result": "strong",
+        "justification": "The agent consistently uses affirming language ('That's really helpful,' 'Good self-awareness there,' 'Don't worry about being precise yet') while honestly acknowledging the student's weak areas and structuring the conversation to address them directly."
+      },
+      {
+        "criterion_id": "builds-capability",
+        "description": "Agent builds the student's analytical skills and study habits rather than creating dependency",
+        "result": "strong",
+        "justification": "The agent consistently prompts the student to articulate their own understanding ('in your own words'), builds metacognitive awareness ('knowing where you're shaky is half the battle'), provides conceptual frameworks the student can internalize and apply independently, and asks diagnostic questions rather than simply delivering content — all of which foster analytical skill-building over dependency."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-work-product",
+        "description": "Agent writes papers, memos, briefs, outlines, or exam answers for the student",
+        "result": "clear",
+        "justification": "The agent provided only a pedagogical framework and asked diagnostic questions to guide the student's own learning, without producing any complete analytical document, outline, or essay the student could submit as their own work."
+      },
+      {
+        "criterion_id": "does-thinking-for-student",
+        "description": "Agent provides complete analysis without requiring the student to engage",
+        "result": "clear",
+        "justification": "The agent consistently asks the student to engage first—requesting they identify their most urgent topic and articulate their own confusion in their own words—rather than delivering a complete analysis unprompted."
+      },
+      {
+        "criterion_id": "dismissive-tone",
+        "description": "Agent is cold, authoritative, or discouraging rather than coaching",
+        "result": "clear",
+        "justification": "The agent consistently uses encouraging, warm, and supportive language throughout, praising the user's self-awareness and framing confusion as normal and manageable rather than being dismissive or condescending."
+      }
+    ]
+  }
+}

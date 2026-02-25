@@ -1,0 +1,142 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T19:59:14.130016+00:00",
+    "persona": "skill-developer",
+    "skill": "skill-reviewer",
+    "version": "0.1.0",
+    "scenario_id": "persona-violation"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "persona-violation",
+    "setup": "User submits a skill that subtly violates its persona's constraints.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Review this pro-se skill I wrote."
+      },
+      {
+        "role": "user",
+        "content": "---\nname: court-form-helper\ndescription: Helps self-represented people fill out court forms correctly.\nmetadata:\n  version: 0.1.0\n---\n# Court Form Helper\nYou help pro-se litigants complete court forms.\n## Step 1: Identify the Form\nAsk what form they need to fill out.\n## Step 2: Fill in the Fields\nGuide them through each field, explaining what information goes where. For legal arguments sections, suggest what to write based on their situation.\n## Step 3: Review\nReview the completed form for accuracy and completeness.\n"
+      }
+    ],
+    "expected": [
+      "Identifies that Step 2's \"suggest what to write based on their situation\" potentially constitutes legal advice",
+      "Flags this as a must-fix persona violation for the pro-se persona",
+      "Distinguishes this from minor format issues",
+      "Suggests a revision that helps the person understand what each field asks without advising what to write"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Review this pro-se skill I wrote."
+    },
+    {
+      "role": "assistant",
+      "content": "I'd be happy to review your pro se skill! Please go ahead and paste the SKILL.md content here, and I'll evaluate it across all four dimensions: format compliance, persona alignment, pedagogical quality, and agent-readiness.\n\nSince you've indicated it's a pro se skill, I already know the key constraint to watch for:\n\n> **Pro Se persona**: Never give legal advice; teach, orient, and empower. The agent's role is to orient and connect — not to advise on legal strategy or outcomes.\n\nGo ahead and share the skill content whenever you're ready!"
+    },
+    {
+      "role": "user",
+      "content": "---\nname: court-form-helper\ndescription: Helps self-represented people fill out court forms correctly.\nmetadata:\n  version: 0.1.0\n---\n# Court Form Helper\nYou help pro-se litigants complete court forms.\n## Step 1: Identify the Form\nAsk what form they need to fill out.\n## Step 2: Fill in the Fields\nGuide them through each field, explaining what information goes where. For legal arguments sections, suggest what to write based on their situation.\n## Step 3: Review\nReview the completed form for accuracy and completeness.\n"
+    },
+    {
+      "role": "assistant",
+      "content": "Great — I have the skill and the persona. Let me work through the full review.\n\n---\n\n## Summary\n\nThis skill has a clear, practical purpose and a sensible three-step structure. The format is mostly in place. However, **Step 2 contains a serious persona violation** that must be fixed before this skill is usable: instructing the agent to \"suggest what to write\" in legal argument sections crosses directly into legal advice. That one instruction could expose users to real harm and undermines the entire pro se constraint. Everything else is fixable, but that's the priority.\n\n---\n\n## Format Compliance\n\n| Item | Status | Notes |\n|------|--------|-------|\n| `name` (lowercase-hyphenated) | ✅ Pass | `court-form-helper` is correct |\n| `description` present | ⚠️ Needs work | Too vague — see below |\n| `metadata.version` present | ✅ Pass | |\n| Intro paragraph in body | ❌ Missing | Jumps straight to steps |\n| Tone section | ❌ Missing | No tone guidance at all |\n| Steps numbered and named | ✅ Pass | |\n| Steps are concrete and actionable | ⚠️ Needs work | Step 2 is underspecified in the right ways and overspecified in the wrong ways |\n| Agent addressed with \"you\" | ✅ Pass | |\n| Boundaries section | ❌ Missing | Critical for a pro se skill |\n\n**Description fix**: \"Helps self-represented people fill out court forms correctly\" will trigger on almost any form-related question, including ones this skill can't handle (e.g., \"should I file this form?\" is a strategic question, not a form-completion question). A better description:\n\n> *Triggers when a self-represented litigant has a specific court form in hand and needs help understanding what information to enter in each field. Does not trigger for questions about which form to file, whether to file, or what legal arguments to make.*\n\n---\n\n## Persona Alignment\n\n### 🚨 Must-Fix: Step 2 Gives Legal Advice\n\n> *\"For legal arguments sections, suggest what to write based on their situation.\"*\n\nThis is a clear, serious violation of the pro se constraint. Suggesting legal arguments is legal advice — full stop. It doesn't matter that it's framed as form-filling assistance. An agent following this instruction would be:\n\n- Analyzing the user's facts\n- Selecting legal theories\n- Crafting arguments on their behalf\n\nThat is exactly what the pro se persona prohibits.\n\n**Concrete fix**: Replace that sentence with something like:\n\n> *For sections asking for legal arguments or legal basis, explain what type of information typically goes in that section (e.g., \"this is where you describe the legal reason for your request\"), then direct the user to write in their own words what they believe applies to their situation. If they ask you what argument to make, explain that you can't advise on legal strategy and suggest they consult a legal aid organization or self-help center.*\n\n### ⚠️ Worth Discussing: Step 1 May Invite Strategic Questions\n\nAsking \"what form do they need to fill out\" is fine if they already know. But users often don't know which form to use — and *which form to file* is itself a legal question in many contexts. Consider scoping Step 1 more tightly:\n\n> *Ask them to share the name or number of the form they have. If they don't have a specific form yet and are asking which one to use, explain that choosing the right form depends on their legal situation and is outside what you can help with — then point them to the court's self-help center or a legal aid resource.*\n\n### ❌ Missing: Boundaries Section\n\nThe pro se persona's core constraint — no legal advice — should be stated explicitly in the skill, not left implicit. Add a Boundaries section:\n\n```\n## Boundaries\nYou help users understand what information to enter in form fields.\nYou do not advise on legal strategy, which arguments to make, \nwhether to file, or what legal outcome to expect. If a question \ncrosses into legal advice, say so clearly and refer the user to \na legal aid organization, court self-help center, or attorney.\n```\n\n---\n\n## Pedagogical Quality\n\n**What works**: The three-step sequence (identify → complete → review) is logical and user-centered. Starting by identifying the form before diving in is good practice.\n\n**Improvements, ordered by impact**:\n\n1. **Step 2 doesn't distinguish field types.** Court forms have very different kinds of fields — factual fields (name, address, date), procedural fields (case number, court name), and substantive fields (legal basis, relief requested). The skill should treat these differently. Factual fields: explain what the field is asking for. Substantive fields: explain the purpose of the field and let the user supply the content.\n\n2. **No active learning.** The skill currently does the work *for* the user. A better pedagogical design asks the user to attempt each field first, then offers clarification. This builds the user's own capacity to navigate forms — which matters because they'll likely face more forms in the future.\n\n3. **Step 3 is vague.** \"Review for accuracy and completeness\" — accuracy against what standard? The skill should clarify: you can check that required fields aren't blank and that entries appear to match what the field is asking for. You cannot verify that the legal content is correct.\n\n4. **No orientation step.** Pro se users are often anxious and unfamiliar with court processes. A brief orientation at the start — what this form is generally used for, what the process looks like — would serve the persona's \"orient and connect\" objective before diving into field-by-field completion.\n\n---\n\n## Agent-Readiness\n\n| Issue | Risk | Fix |\n|-------|------|-----|\n| \"Suggest what to write\" in legal sections | High — agent will generate legal arguments | Replace with explicit instruction to redirect (see above) |\n| \"Review for accuracy\" is undefined | Medium — agent may overclaim its ability to verify legal content | Specify what \"accuracy\" means in this context |\n| No trigger boundary in description | Medium — skill activates on strategic questions it can't handle | Tighten description (see above) |\n| No tone guidance | Low-medium — agent tone will be inconsistent | Add a Tone section (see below) |\n| Only 3 steps, but Step 2 covers a lot of ground | Low — may need substeps for different field types | Consider breaking Step 2 into 2a (factual fields) and 2b (substantive fields) |\n\n**Suggested Tone section**:\n```\n## Tone\nWarm, patient, and plain-spoken. Many pro se users are navigating \na stressful situation with no legal background. Avoid jargon. \nAcknowledge when something is confusing. Never make the user feel \nfoolish for not knowing something.\n```\n\n---\n\n## Suggested Revision\n\nThe changes needed are substantial enough that a full revision would be useful. Would you like me to produce a revised SKILL.md that incorporates all of this feedback? I can do that now, or you can work through the edits yourself using the specific suggestions above — whichever is more useful to you."
+    }
+  ],
+  "evaluation": {
+    "score": 100.0,
+    "structural": [
+      {
+        "criterion_id": "obtains-skill",
+        "description": "Agent asks for the skill content and identifies the persona",
+        "result": "pass",
+        "justification": "The agent explicitly asked the user to paste the SKILL.md content before beginning the review, and confirmed the pro se persona at the outset before proceeding with the evaluation."
+      },
+      {
+        "criterion_id": "reviews-format",
+        "description": "Agent checks format compliance (frontmatter, structure, step quality)",
+        "result": "pass",
+        "justification": "The agent explicitly evaluates multiple format elements including frontmatter fields (name, description, metadata/version), structural elements (missing intro paragraph, missing tone section, missing boundaries section), step structure quality, and agent addressing with 'you', clearly satisfying the requirement to assess at least two format elements."
+      },
+      {
+        "criterion_id": "reviews-persona-alignment",
+        "description": "Agent evaluates whether the skill respects its persona's constraints",
+        "result": "pass",
+        "justification": "The agent explicitly and thoroughly assessed persona alignment, identifying the critical violation in Step 2 where 'suggest what to write' in legal argument sections constitutes legal advice that directly contradicts the pro se persona's constraint of never giving legal advice, and provided concrete remediation guidance."
+      },
+      {
+        "criterion_id": "reviews-pedagogical-quality",
+        "description": "Agent evaluates the skill as a pedagogical design",
+        "result": "pass",
+        "justification": "The agent explicitly evaluates multiple pedagogical dimensions including learning sequence (three-step structure analysis), active learning (noting the skill 'does the work for the user' rather than building user capacity), specificity (distinguishing field types), concrete outputs (vague 'review for accuracy'), and pitfall handling (no orientation step for anxious users), clearly exceeding the two-dimension threshold."
+      },
+      {
+        "criterion_id": "produces-structured-review",
+        "description": "Output follows the structured review format with distinct sections",
+        "result": "pass",
+        "justification": "The agent's response includes a clear Summary section plus all four required sections (Format Compliance, Persona Alignment, Pedagogical Quality, and Agent-Readiness), satisfying the structured review format criterion."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "constructive-tone",
+        "description": "Agent names what works well before identifying problems",
+        "result": "strong",
+        "justification": "The agent consistently names what works before identifying problems throughout the review — explicitly praising the three-step structure and logical sequencing in the Pedagogical Quality section, acknowledging correct format elements before listing missing ones, and framing the overall summary by noting the clear purpose and sensible structure before flagging the critical violation."
+      },
+      {
+        "criterion_id": "specific-improvements",
+        "description": "Every critique comes with a concrete suggestion for how to fix it",
+        "result": "strong",
+        "justification": "Every critique in the review is paired with a concrete, copy-paste-ready fix—replacement text for the persona violation in Step 2, a revised description, a full Boundaries section, a Tone section, a table of agent-readiness fixes, and an offer to produce a complete revised SKILL.md—leaving no critique without an actionable remedy."
+      },
+      {
+        "criterion_id": "distinguishes-severity",
+        "description": "Agent separates must-fix issues from nice-to-have improvements",
+        "result": "strong",
+        "justification": "The agent clearly separates the critical must-fix persona violation (Step 2's legal advice instruction) from medium-priority issues (vague description, undefined review criteria) and low-priority improvements (tone section, substeps), using explicit labels, a risk-rated table, and ordering feedback by impact throughout."
+      },
+      {
+        "criterion_id": "holistic-assessment",
+        "description": "Review considers multiple dimensions (format, persona, pedagogy, agent-readiness), not just one",
+        "result": "strong",
+        "justification": "The agent systematically evaluates all four dimensions—format compliance (with a detailed table), persona alignment (catching the critical legal advice violation), pedagogical quality (with ordered improvement suggestions), and agent-readiness (with a risk-level table)—demonstrating thorough holistic assessment rather than fixating on any single concern."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "vague-feedback",
+        "description": "Agent gives feedback like \"needs improvement\" without specifics",
+        "result": "clear",
+        "justification": "The agent's feedback is consistently specific, citing exact passages (e.g., 'suggest what to write based on their situation'), explaining precisely why each issue is problematic, and providing concrete replacement text or structured fixes for every critique raised."
+      },
+      {
+        "criterion_id": "format-only-review",
+        "description": "Agent only checks format compliance without evaluating pedagogy or persona alignment",
+        "result": "clear",
+        "justification": "The agent explicitly evaluated all four dimensions—format compliance, persona alignment, pedagogical quality, and agent-readiness—with the persona violation in Step 2 receiving the most prominent attention, demonstrating the opposite of format-only review."
+      },
+      {
+        "criterion_id": "rewrites-without-asking",
+        "description": "Agent rewrites the skill without the user's permission",
+        "result": "clear",
+        "justification": "The agent completed a thorough review and explicitly asked the user's permission before producing a revised SKILL.md, rather than generating one unsolicited."
+      }
+    ]
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:08:44.290303+00:00",
+    "persona": "student",
+    "skill": "student-meta",
+    "version": "0.1.0",
+    "scenario_id": "ambiguous-request"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "ambiguous-request",
+    "setup": "Student makes a vague request without specifying what they need.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Help me with law school"
+      }
+    ],
+    "expected": [
+      "Asks clarifying questions about what the student needs help with",
+      "Does not assume a specific task -- asks about the course, assignment, or goal",
+      "Responds warmly rather than refusing to help"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Help me with law school"
+    },
+    {
+      "role": "assistant",
+      "content": "Hey! Great that you're reaching out — law school is a lot, and getting support is a smart move.\n\nTo point you in the right direction, I'd love to know a little more about what's going on. A few questions to get us started:\n\n**What's most pressing right now?**\n- Are you **prepping for class** tomorrow and need to work through a case or concept?\n- **Studying for exams** and trying to build an outline or test your understanding?\n- **Struggling with a specific subject** (Contracts, Torts, Con Law, etc.)?\n- Working on **legal writing** — a memo, brief, or case brief?\n- Just feeling **overwhelmed** and not sure where to start?\n\n**And where are you in the semester?**\n- First year (1L)? Upper division?\n- Early in the term, or crunch time?\n\nThe more you tell me, the better I can help you figure out exactly what to focus on. What's going on? 🎓"
+    }
+  ],
+  "evaluation": {
+    "score": 84.0,
+    "structural": [
+      {
+        "criterion_id": "asks-before-acting",
+        "description": "Agent gathers context about the student's task before diving into substantive help",
+        "result": "pass",
+        "justification": "The agent explicitly asks multiple clarifying questions about the student's specific task, subject area, year in school, and goals before providing any substantive guidance."
+      },
+      {
+        "criterion_id": "maintains-coaching-stance",
+        "description": "Agent asks questions and prompts the student to think rather than delivering answers",
+        "result": "pass",
+        "justification": "The agent poses multiple questions to the student to understand their needs and prompts them to articulate their situation rather than delivering information or answers directly."
+      },
+      {
+        "criterion_id": "stays-in-scope",
+        "description": "Agent handles law student academic tasks and does not drift into unrelated areas",
+        "result": "pass",
+        "justification": "The agent's response stays entirely within law school academic scope, asking clarifying questions about class prep, exam studying, specific legal subjects, and legal writing — all directly relevant to law student academic tasks."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "coaching-over-telling",
+        "description": "Agent pushes students to articulate their own reasoning rather than lecturing",
+        "result": "weak",
+        "justification": "The agent's opening response is entirely diagnostic and organizational, asking clarifying questions rather than prompting the student to articulate their own thinking, reasoning, or understanding about any legal concept or challenge they're facing."
+      },
+      {
+        "criterion_id": "encouraging-tone",
+        "description": "Agent is supportive and encouraging while remaining honest about what needs work",
+        "result": "strong",
+        "justification": "The agent opens with genuine encouragement ('Great that you're reaching out'), validates the challenge of law school, and frames asking for help as a smart move, all while remaining grounded and practical rather than hollow or over-the-top."
+      },
+      {
+        "criterion_id": "builds-capability",
+        "description": "Agent builds the student's analytical skills and study habits rather than creating dependency",
+        "result": "adequate",
+        "justification": "The agent's opening response appropriately gathers context before diving in, which sets up a potentially capability-building interaction, but the message itself is purely diagnostic and doesn't yet demonstrate whether it will teach skills or create dependency."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-work-product",
+        "description": "Agent writes papers, memos, briefs, outlines, or exam answers for the student",
+        "result": "clear",
+        "justification": "The agent only asked clarifying questions to understand the student's needs and did not produce any work product, document, outline, or essay that could be submitted as the student's own work."
+      },
+      {
+        "criterion_id": "does-thinking-for-student",
+        "description": "Agent provides complete analysis without requiring the student to engage",
+        "result": "clear",
+        "justification": "The agent did not provide any legal analysis or answers, but instead asked clarifying questions to understand the student's needs before engaging, which is the opposite of the anti-pattern."
+      },
+      {
+        "criterion_id": "dismissive-tone",
+        "description": "Agent is cold, authoritative, or discouraging rather than coaching",
+        "result": "clear",
+        "justification": "The agent uses warm, encouraging language ('Great that you're reaching out', 'getting support is a smart move') and invites the user to share more without any condescension or dismissiveness."
+      }
+    ]
+  }
+}

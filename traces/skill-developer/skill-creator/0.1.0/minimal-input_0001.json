@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:15:44.757501+00:00",
+    "persona": "skill-developer",
+    "skill": "skill-creator",
+    "version": "0.1.0",
+    "scenario_id": "minimal-input"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "minimal-input",
+    "setup": "User wants to create a skill but has only a vague idea.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I want to make a skill for something but I'm not sure what exactly."
+      }
+    ],
+    "expected": [
+      "Asks about who the skill is for and what task it helps with",
+      "Helps the user think through their idea rather than refusing to proceed",
+      "Guides them toward identifying a persona, task, and learning goal"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I want to make a skill for something but I'm not sure what exactly."
+    },
+    {
+      "role": "assistant",
+      "content": "That's a great place to start — a lot of good skills begin with a vague instinct that something *should* exist. Let's figure out what you're actually trying to build.\n\nA few questions to help us get oriented:\n\n**1. Who are you thinking about?**\nIs there a particular person or role in mind — a law student, a professor designing a course, someone representing themselves in court, a practicing attorney? Or maybe someone else entirely?\n\n**2. What's the frustration or gap?**\nIs there something you've noticed people struggling with, or a task that feels like it *should* have better support? Even something like \"students always get stuck on X\" or \"I keep having to explain Y over and over\" is a useful starting point.\n\n**3. Any sparks?**\nSometimes people come in with a half-formed idea — \"something about oral argument\" or \"helping people understand contracts\" or \"I want students to actually think instead of just getting answers.\" Does anything like that resonate?\n\nYou don't need to have answers to all of these. Even one thread is enough to pull on. What's on your mind?"
+    }
+  ],
+  "evaluation": {
+    "score": 42.4,
+    "structural": [
+      {
+        "criterion_id": "identifies-persona",
+        "description": "Agent asks about the persona, task, and learning goal for the new skill",
+        "result": "pass",
+        "justification": "The agent explicitly asks about who the skill is for (persona), what frustration or gap it addresses (task), and what the user is trying to build (learning goal), directly satisfying the criterion of asking about persona, task, and learning goal."
+      },
+      {
+        "criterion_id": "defines-trigger",
+        "description": "Agent helps craft the description/trigger field for the SKILL.md frontmatter",
+        "result": "fail",
+        "justification": "The agent is still in early discovery mode, asking clarifying questions about what skill to build, and has not yet discussed or produced any description/trigger field for SKILL.md frontmatter."
+      },
+      {
+        "criterion_id": "designs-pedagogical-approach",
+        "description": "Agent walks through the pedagogical approach step by step with the user",
+        "result": "fail",
+        "justification": "The agent jumps directly into gathering context about the skill topic rather than walking through the pedagogical approach itself — asking about context gathering, step sequence, questions to ask, things to avoid, or success criteria before drafting the skill."
+      },
+      {
+        "criterion_id": "produces-complete-skill",
+        "description": "Output is a complete SKILL.md with proper frontmatter and structured body",
+        "result": "fail",
+        "justification": "The agent has not produced any SKILL.md file; it is only asking clarifying questions and has not generated any output with frontmatter, tone, numbered steps, or boundaries."
+      },
+      {
+        "criterion_id": "checks-persona-compliance",
+        "description": "Agent verifies the skill against its persona's constraints before finalizing",
+        "result": "fail",
+        "justification": "The agent does not explicitly check or mention whether any skill being developed would respect the persona's pedagogical objectives and constraints — it only asks exploratory questions without referencing persona compliance."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "honors-user-expertise",
+        "description": "Agent treats the user as the subject matter expert and defers to their educational judgment",
+        "result": "weak",
+        "justification": "The agent takes a leading, consultative role by structuring the conversation with its own framework of questions rather than deferring to the user's judgment or expertise about what they want to build, positioning itself as the guide rather than treating the user as the subject matter expert."
+      },
+      {
+        "criterion_id": "encodes-pedagogy",
+        "description": "Generated skill reflects how people learn, not just what the agent should say",
+        "result": "weak",
+        "justification": "The agent is focused on gathering information about what skill to build rather than demonstrating or applying any pedagogical principles — it's not encoding how people learn into its responses, it's simply asking clarifying questions about scope and topic."
+      },
+      {
+        "criterion_id": "concrete-actionable-steps",
+        "description": "Generated steps are specific enough that different AI agents would follow them similarly",
+        "result": "weak",
+        "justification": "The agent asks open-ended discovery questions rather than providing concrete, actionable steps, so there are no steps present to evaluate for specificity or consistency across agents."
+      },
+      {
+        "criterion_id": "handles-format-transparently",
+        "description": "Agent handles format conventions without requiring the user to learn the SKILL.md spec",
+        "result": "strong",
+        "justification": "The agent engages the user in natural skill-discovery conversation without mentioning SKILL.md, format specifications, or any technical implementation details, keeping the interaction focused entirely on the user's intent."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "overrides-user-expertise",
+        "description": "Agent second-guesses or dismisses the user's pedagogical choices",
+        "result": "clear",
+        "justification": "The agent asks open-ended questions to help the user discover their own direction without imposing any pedagogical framework or dismissing the user's choices."
+      },
+      {
+        "criterion_id": "produces-vague-skill",
+        "description": "Generated skill has steps like \"help the user\" without specific instructions",
+        "result": "clear",
+        "justification": "The agent did not generate a SKILL.md file at all — it asked clarifying questions to understand what skill to build, so there are no vague steps to evaluate."
+      },
+      {
+        "criterion_id": "violates-persona-constraints",
+        "description": "Generated skill violates the target persona's pedagogical constraints",
+        "result": "clear",
+        "justification": "The agent is simply asking clarifying questions to help the user identify what skill to build, and has not instructed the agent to violate any persona constraints."
+      }
+    ]
+  }
+}

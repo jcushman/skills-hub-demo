@@ -1,0 +1,130 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:09:54.633580+00:00",
+    "persona": "cle",
+    "skill": "topic-curriculum",
+    "version": "_null",
+    "scenario_id": "urgent-timeline"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "urgent-timeline",
+    "setup": "Attorney needs to advise a client on an unfamiliar area in a matter of days.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I just got a new client matter involving ERISA and I know almost nothing about it. The initial call is in 4 days."
+      }
+    ],
+    "expected": [
+      "Recognizes the urgency and provides a minimum viable learning path",
+      "Prioritizes ruthlessly -- what does the attorney need to know for the initial call, not full competence",
+      "Suggests specific resources that can be consumed quickly",
+      "Notes the limitations and suggests deeper learning after the immediate need"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I just got a new client matter involving ERISA and I know almost nothing about it. The initial call is in 4 days."
+    },
+    {
+      "role": "assistant",
+      "content": "# ERISA Crash Course for New Client Matter\n\nHere's a practical framework to get you oriented quickly.\n\n---\n\n## What ERISA Is (The 30-Second Version)\n\nThe Employee Retirement Income Security Act of 1974 is a **federal law governing most private employer benefit plans** — retirement plans (401k, pension) and welfare benefit plans (health, disability, life insurance). It sets standards for:\n- Fiduciary duties\n- Reporting/disclosure\n- Claims and appeals\n- Preemption of state law\n\n---\n\n## First: Identify What TYPE of Matter This Is\n\nThis determines everything. The main categories are:\n\n### 🔹 Benefit Claim Disputes\n- Employee denied benefits (disability, health, retirement)\n- Most common litigation matter\n- Key issue: **standard of review** (de novo vs. abuse of discretion)\n\n### 🔹 Fiduciary Breach\n- Plan administrator or employer mismanaged plan assets\n- High-stakes, often class actions (think 401k fee cases)\n\n### 🔹 Plan Administration/Compliance\n- Employer-side: plan documents, amendments, compliance failures\n- ERISA requires specific plan document language\n\n### 🔹 Retaliation/Interference\n- Section 510 claims — employer fired someone to prevent benefits vesting\n\n---\n\n## Critical Concepts to Know Before the Call\n\n### Preemption — ERISA's \"Nuclear Weapon\"\n- ERISA **preempts virtually all state law claims** relating to employee benefit plans\n- This means: no state tort claims, no breach of contract under state law\n- **Remedies are very limited** — this is often the biggest shock to clients\n- Exception: insurance regulation (the \"saving clause\")\n\n### Limited Remedies\nUnder ERISA §502(a), plaintiffs can typically only recover:\n- The **benefit itself** (not consequential damages)\n- **No punitive damages** in most circuits\n- Attorney's fees (discretionary)\n- This is a major client counseling point\n\n### The Administrative Record Rule\n- In benefit denial cases, courts usually **only review the record before the plan administrator**\n- Discovery is very limited\n- You must **exhaust administrative remedies first**\n\n### Fiduciary Duty Standard\n- Higher than corporate law in some respects\n- Duty of loyalty, prudence, diversification, following plan documents\n\n---\n\n## Immediate Intake Questions for the Client Call\n\n**Identify the plan:**\n- What type of plan? (retirement, health, disability, life insurance)\n- Is it a single-employer or multiemployer (union) plan?\n- Is there a plan document? (Get it immediately)\n- Who is the plan administrator?\n\n**Identify the dispute:**\n- Was a claim filed and denied?\n- What was the reason for denial?\n- What stage is the appeals process at?\n\n**Critical deadlines:**\n- When was the denial issued?\n- Have internal appeals been exhausted?\n- **Statute of limitations** — varies by plan and circuit, can be very short\n\n**The employer side:**\n- Is your client the employer or the employee/participant?\n- This completely changes your role and analysis\n\n---\n\n## Statute of Limitations — Flag Immediately\n\n- ERISA has **no uniform federal statute of limitations**\n- Courts look to the plan document (often 3 years from denial)\n- Some plans have **very short contractual limitations periods** (as short as 180 days after final denial)\n- **Check this on day one** — it may be your most urgent issue\n\n---\n\n## Key Documents to Request Immediately\n\n- [ ] Summary Plan Description (SPD)\n- [ ] Full Plan Document\n- [ ] All denial letters\n- [ ] The complete claims file (participants have a right to this)\n- [ ] Any correspondence with the plan administrator\n\n---\n\n## The Landscape of Who You Might Be Representing\n\n| Client | Likely Issues |\n|--------|--------------|\n| Employee/participant | Benefit denial, retaliation, breach of fiduciary duty |\n| Employer | Plan compliance, fiduciary exposure, defense of claims |\n| Plan administrator | Fiduciary duties, claims procedures |\n\n---\n\n## Resources to Get Smart Fast\n\n**Primary sources:**\n- 29 U.S.C. §§ 1001–1461 (the statute)\n- DOL regulations at 29 C.F.R.\n\n**Practical resources:**\n- **Westlaw/Lexis ERISA practice guides** — get one pulled today\n- *Employee Benefits Law* (BNA) — the standard treatise\n- Your circuit's leading ERISA cases on standard of review\n\n**DOL website:**\n- dol.gov/agencies/ebsa — surprisingly useful for plan documents and participant rights\n\n---\n\n## What to Tell the Client on the Call (Manage Expectations)\n\n1. ERISA is **highly technical and federal** — state law remedies likely don't apply\n2. Remedies may be **more limited than they expect**\n3. The **administrative record matters enormously** — what's in the file now may be all you get\n4. Deadlines may be **very tight** — you need documents immediately\n5. You will need to **review the plan document** before giving substantive advice\n\n---\n\n## Your 4-Day Prep Plan\n\n| Day | Task |\n|-----|------|\n| Today | Read this overview; pull your circuit's key ERISA cases on standard of review; identify the claim type |\n| Day 2 | Read a practice guide chapter on your specific issue; pull the plan documents if possible |\n| Day 3 | Research statute of limitations issue; identify any immediate deadlines |\n| Day 4 | Prepare intake questions; outline issues; identify what you need from client |\n\n---\n\n**Bottom line for the call:** Listen carefully, ask the intake questions above, get all documents, and **do not give substantive advice** until you've reviewed the plan document and confirmed there are no immediate deadline issues.\n\nWould you like me to go deeper on any specific area — benefit denials, fiduciary claims, preemption, or the employer-side perspective?"
+    }
+  ],
+  "evaluation": {
+    "score": 52.8,
+    "structural": [
+      {
+        "criterion_id": "clarifies-learning-goal",
+        "description": "Agent asks about the topic, timeline, baseline knowledge, and reason for learning",
+        "result": "fail",
+        "justification": "The agent immediately launched into a comprehensive ERISA curriculum without first asking clarifying questions to confirm the user's baseline knowledge, specific reason for learning beyond the surface-level context, or any details beyond the implied timeline (4 days), satisfying fewer than three of the required criteria before building the curriculum."
+      },
+      {
+        "criterion_id": "maps-knowledge-landscape",
+        "description": "Agent identifies the essential elements of competence in the target area",
+        "result": "pass",
+        "justification": "Before presenting the curriculum, the agent explicitly names the essential elements of ERISA competence—key concepts (preemption, limited remedies, standard of review, administrative record rule, fiduciary duties), governing sources (29 U.S.C. §§ 1001–1461, DOL regulations, circuit case law, plan documents), and practical skills (intake questioning, deadline identification, document gathering)—thereby mapping the knowledge landscape of the topic area."
+      },
+      {
+        "criterion_id": "builds-sequenced-curriculum",
+        "description": "Curriculum is organized into Foundation, Depth, Practice, and Currency phases",
+        "result": "fail",
+        "justification": "The agent provides a comprehensive flat reference guide with a 4-day prep plan, but does not organize learning into distinct Foundation, Depth, Practice, and Currency phases with different learning objectives for each phase."
+      },
+      {
+        "criterion_id": "explains-each-resource",
+        "description": "Each recommended resource includes a description, rationale, and priority level",
+        "result": "fail",
+        "justification": "The resources listed (Westlaw/Lexis practice guides, BNA treatise, DOL website, primary statutes) lack descriptions of what they cover, rationale for why they're worth the time, or priority levels — they are presented as bare bullet points without any explanatory context."
+      },
+      {
+        "criterion_id": "produces-curriculum-document",
+        "description": "Output is a structured document with learning goal, phases, time estimates, and sequence",
+        "result": "pass",
+        "justification": "The agent's response includes a clear learning goal (getting oriented on ERISA before a client call in 4 days), phased resources organized by topic and day, a structured 4-day prep plan with time-sequenced tasks, and estimated time commitments implicit in the day-by-day breakdown, satisfying all elements of the criterion."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "efficient-prioritization",
+        "description": "Curriculum respects the attorney's limited time and prioritizes high-impact resources",
+        "result": "strong",
+        "justification": "The agent directly addresses the 4-day constraint with a concrete day-by-day prep plan, front-loads the most critical concepts (preemption, limited remedies, statute of limitations), and explicitly prioritizes immediate actions like checking deadlines and pulling key documents, demonstrating clear awareness of the attorney's time pressure throughout."
+      },
+      {
+        "criterion_id": "practice-oriented",
+        "description": "Curriculum includes practical exercises or skills, not just reading",
+        "result": "strong",
+        "justification": "The agent provides multiple practical exercises including a structured 4-day prep plan with specific daily tasks, a checklist of documents to request immediately, concrete intake questions to use on the call, and a comparison table of client types — all of which are actionable skills rather than purely informational reading."
+      },
+      {
+        "criterion_id": "minimum-viable-path",
+        "description": "Curriculum offers a shortcut or \"if time is limited\" path for urgent timelines",
+        "result": "strong",
+        "justification": "The agent explicitly provides a structured 4-day prep plan tailored to the user's exact timeline, clearly prioritizes the most urgent tasks (statute of limitations check 'on day one'), and frames the entire response around what's minimally necessary for the client call rather than comprehensive ERISA mastery."
+      },
+      {
+        "criterion_id": "currency-sources",
+        "description": "Curriculum identifies ongoing sources for staying current after initial learning",
+        "result": "adequate",
+        "justification": "The agent provides some resources for ongoing learning (DOL website, BNA treatise, Westlaw/Lexis practice guides) but frames them primarily as immediate crash-course tools rather than ongoing sources for staying current with ERISA developments such as regulatory updates, new DOL guidance, circuit court developments, or professional organizations that track the field over time."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "does-the-learning",
+        "description": "Agent teaches the substantive law rather than creating a learning plan",
+        "result": "violation",
+        "justification": "The agent provides extensive substantive ERISA doctrine (preemption rules, remedy limitations, standard of review, fiduciary duties, statute of limitations analysis, etc.) rather than directing the attorney to resources and creating a structured learning plan to acquire that knowledge independently."
+      },
+      {
+        "criterion_id": "unrealistic-time-estimates",
+        "description": "Agent recommends a curriculum requiring hundreds of hours for someone with a short timeline",
+        "result": "clear",
+        "justification": "The agent provided a focused, realistic 4-day prep plan with targeted daily tasks appropriate for the attorney's timeline, rather than recommending hundreds of hours of study."
+      },
+      {
+        "criterion_id": "no-primary-sources",
+        "description": "Agent fails to include governing statutes, regulations, or key cases",
+        "result": "clear",
+        "justification": "The agent explicitly identifies primary legal sources including the governing statute (29 U.S.C. §§ 1001–1461), DOL regulations (29 C.F.R.), specific statutory provisions (ERISA §502(a), Section 510), and directs the attorney to pull circuit-level case law on standard of review."
+      }
+    ]
+  }
+}

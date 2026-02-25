@@ -1,0 +1,124 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:15:35.219370+00:00",
+    "persona": "skill-developer",
+    "skill": "skill-developer-meta",
+    "version": "_null",
+    "scenario_id": "happy-path-create"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-create",
+    "setup": "User wants help creating a new skill for professors.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I want to create a new skill that helps professors design effective exam questions."
+      },
+      {
+        "role": "user",
+        "content": "I'm a professor who's been writing exams for 15 years. I have strong views about what makes a good law school exam question."
+      }
+    ],
+    "expected": [
+      "Identifies this as a skill creation task for the professor persona",
+      "Treats the user as the expert on exam design",
+      "Begins walking through the skill creation process (persona, trigger, approach)",
+      "Handles format and conventions transparently"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I want to create a new skill that helps professors design effective exam questions."
+    },
+    {
+      "role": "assistant",
+      "content": "# Exam Question Design Skill for Professors\n\nGreat idea! Here's a structured framework to help professors design effective exam questions:\n\n---\n\n## Core Components of the Skill\n\n### 1. **Question Type Selection**\nHelp professors choose the right format:\n- Multiple choice\n- Short answer\n- Essay\n- Problem-solving\n- Case study analysis\n\n### 2. **Bloom's Taxonomy Alignment**\nMap questions to cognitive levels:\n| Level | Action Verbs | Example |\n|-------|-------------|---------|\n| Remember | Define, List | \"Define osmosis\" |\n| Understand | Explain, Summarize | \"Explain the water cycle\" |\n| Apply | Solve, Use | \"Calculate the derivative\" |\n| Analyze | Compare, Examine | \"Compare two theories\" |\n| Evaluate | Justify, Critique | \"Evaluate this argument\" |\n| Create | Design, Construct | \"Design an experiment\" |\n\n### 3. **Key Design Principles**\n- ✅ Clear and unambiguous wording\n- ✅ Single concept per question\n- ✅ Appropriate difficulty level\n- ✅ Aligned with learning objectives\n- ✅ Avoid trick questions\n\n---\n\n## Would You Like Me To Help With:\n1. **Building a question bank template?**\n2. **Creating a rubric design guide?**\n3. **Developing a step-by-step question writing process?**\n4. **Specific subject area examples?**\n\nWhat aspect would you like to **develop further**?"
+    },
+    {
+      "role": "user",
+      "content": "I'm a professor who's been writing exams for 15 years. I have strong views about what makes a good law school exam question."
+    },
+    {
+      "role": "assistant",
+      "content": "That's really valuable expertise! With 15 years of experience in law school exam design specifically, you likely have insights that go well beyond general frameworks.\n\n---\n\n## I'd Love to Learn From Your Experience\n\nRather than me presenting generic principles, it would be much more useful to **build this skill around your expertise**.\n\n### Some Questions to Draw Out Your Knowledge:\n\n**About Question Design:**\n- What distinguishes a *great* law school exam question from a merely adequate one?\n- What are the most common mistakes you see in poorly designed law exam questions?\n\n**About Law School Specifically:**\n- How do you think about issue-spotting vs. analysis vs. application?\n- How does your approach differ across 1L vs. upper-level courses?\n\n**About Your Philosophy:**\n- What should a law school exam actually *measure*?\n- How do you balance testing doctrine vs. legal reasoning?\n\n**About Practical Craft:**\n- How do you construct a fact pattern that's rich but not unfair?\n- How do you calibrate difficulty?\n\n---\n\n## My Goal Here\n\nI want to **capture your mental model** so we can build a skill that reflects:\n- ✅ Real practitioner wisdom\n- ✅ Law school-specific nuance\n- ✅ Your actual decision-making process\n\n**Where would you like to start?**"
+    }
+  ],
+  "evaluation": {
+    "score": 72.7,
+    "structural": [
+      {
+        "criterion_id": "identifies-skill-task",
+        "description": "Agent understands whether the user wants to create, review, or test a skill",
+        "result": "pass",
+        "justification": "In the first response, the agent immediately understood the user wanted to create a skill and began providing substantive guidance toward that goal, and in the second response it explicitly pivoted to building the skill around the user's expertise, consistently treating the task as skill creation throughout the conversation."
+      },
+      {
+        "criterion_id": "handles-format-conventions",
+        "description": "Agent knows the SKILL.md structure, persona system, and rubric format",
+        "result": "fail",
+        "justification": "The agent never references or uses the SKILL.md format, persona system, or rubric schema in either response, instead providing generic educational frameworks without any acknowledgment of the structured skill-building format conventions."
+      },
+      {
+        "criterion_id": "stays-in-scope",
+        "description": "Agent handles skill development tasks and does not attempt to use skills itself",
+        "result": "pass",
+        "justification": "The agent consistently focuses on helping the professor build and design a skill framework, asking questions to capture the professor's expertise rather than attempting to tutor or advise the professor on how to write exams itself."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "honors-domain-expertise",
+        "description": "Agent treats the user as the subject matter expert on their domain",
+        "result": "strong",
+        "justification": "When the user revealed their 15 years of law school exam expertise, the agent immediately pivoted from presenting generic frameworks to explicitly positioning itself as a learner, asking targeted questions to extract the user's knowledge and stating its goal is to capture their mental model rather than impose its own."
+      },
+      {
+        "criterion_id": "encodes-pedagogy",
+        "description": "Agent helps express educational knowledge in a format AI agents can follow reliably",
+        "result": "adequate",
+        "justification": "The agent pivots well to elicit the professor's expertise rather than imposing generic frameworks, which is a good pedagogical instinct, but it doesn't yet demonstrate concrete encoding of educational knowledge into a structured, AI-followable format—it's still in the information-gathering phase without showing how that knowledge will be systematically captured and operationalized as a skill."
+      },
+      {
+        "criterion_id": "concrete-testable-output",
+        "description": "Agent prefers specific, testable quality criteria over vague aspirations",
+        "result": "weak",
+        "justification": "The agent's responses are filled with vague aspirational language ('great,' 'rich but not unfair,' 'real practitioner wisdom') and generic checklists without any specific, testable criteria for what makes an exam question measurably effective."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "uses-skills-itself",
+        "description": "Agent attempts to tutor students, coach attorneys, or advise pro-se litigants rather than helping build skills",
+        "result": "clear",
+        "justification": "The agent is helping the professor build and design a skill by eliciting their expertise, not tutoring the professor on how to write exams or acting as a coach/guide for the professor's own practice."
+      },
+      {
+        "criterion_id": "overrides-user-expertise",
+        "description": "Agent dismisses or overrides the user's pedagogical choices",
+        "result": "clear",
+        "justification": "The agent explicitly deferred to the user's 15 years of expertise, shifted from presenting generic frameworks to asking questions that draw out the user's own knowledge, and expressed the goal of capturing the user's mental model rather than imposing its own approach."
+      },
+      {
+        "criterion_id": "modifies-infrastructure",
+        "description": "Agent attempts to change the build pipeline, website, or codebase rather than working with skill files",
+        "result": "clear",
+        "justification": "The agent focused entirely on pedagogical content and eliciting the user's expertise, without proposing any changes to scripts, configuration files, build pipelines, or website code."
+      }
+    ]
+  }
+}

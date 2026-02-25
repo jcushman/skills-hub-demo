@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:15:24.615828+00:00",
+    "persona": "skill-developer",
+    "skill": "skill-tester",
+    "version": "_null",
+    "scenario_id": "minimal-input"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "minimal-input",
+    "setup": "User wants to test a skill but provides no content.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Help me test a skill."
+      }
+    ],
+    "expected": [
+      "Asks the user to provide the SKILL.md content",
+      "Asks which persona it belongs to",
+      "Asks whether a rubric already exists"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Help me test a skill."
+    },
+    {
+      "role": "assistant",
+      "content": "Sure, I'd be happy to help you test a skill! However, it looks like you haven't specified which skill you'd like to test or provided any content to work with.\n\nCould you please share:\n\n1. **What skill** you want to test? (e.g., writing, math, coding, language, trivia, etc.)\n2. **Any specific content or details** you'd like me to use?\n3. **How you'd like the test structured?** (e.g., questions, challenges, prompts)\n\nOnce I know more, I can tailor the test to your needs! 😊"
+    }
+  ],
+  "evaluation": {
+    "score": 28.0,
+    "structural": [
+      {
+        "criterion_id": "understands-skill",
+        "description": "Agent obtains and reads the skill content before defining criteria",
+        "result": "fail",
+        "justification": "The agent did not attempt to read or ask for the SKILL.md content to understand the installed pedagogical skill before responding, instead asking generic clarifying questions about what skill to test."
+      },
+      {
+        "criterion_id": "defines-structural-criteria",
+        "description": "Agent identifies concrete, checkable behaviors the agent should exhibit",
+        "result": "fail",
+        "justification": "The agent does not identify any structural criteria with descriptions and check statements; it only asks clarifying questions about what skill to test."
+      },
+      {
+        "criterion_id": "defines-pedagogical-criteria",
+        "description": "Agent identifies subjective quality dimensions with weights",
+        "result": "fail",
+        "justification": "The agent did not identify any pedagogical criteria with descriptions and weight levels; it only asked clarifying questions about what skill to test."
+      },
+      {
+        "criterion_id": "defines-anti-patterns",
+        "description": "Agent identifies things the agent must never do",
+        "result": "fail",
+        "justification": "The agent does not identify any anti-patterns or things it must never do; it simply asks clarifying questions without establishing any boundaries or constraints from the pedagogical skill."
+      },
+      {
+        "criterion_id": "creates-test-scenarios",
+        "description": "Agent designs test scenarios covering different interaction types",
+        "result": "fail",
+        "justification": "The agent did not design any test scenarios with setup, messages, and expected behaviors; it only asked clarifying questions without proposing at least two concrete test scenarios."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "criteria-from-skill-steps",
+        "description": "Structural criteria derive from the skill's own defined steps and behaviors",
+        "result": "weak",
+        "justification": "The agent's response is a generic clarification request with no evidence of applying any defined pedagogical skill steps or structured behaviors — it simply asks open-ended questions without demonstrating any skill-specific structural criteria."
+      },
+      {
+        "criterion_id": "comprehensive-scenario-coverage",
+        "description": "Scenarios test different types of interactions (happy path, edge case, boundary, minimal input)",
+        "result": "weak",
+        "justification": "The agent did not demonstrate any scenario coverage at all, as it only asked clarifying questions without testing any happy path, edge case, boundary, or minimal input scenarios relevant to the pedagogical skill."
+      },
+      {
+        "criterion_id": "testable-criteria",
+        "description": "Criteria are specific enough to evaluate consistently across different evaluators",
+        "result": "weak",
+        "justification": "The agent's response contains no criteria at all to evaluate, as it only asks clarifying questions rather than demonstrating any pedagogical skill with assessable standards or benchmarks."
+      },
+      {
+        "criterion_id": "persona-grounded-anti-patterns",
+        "description": "Anti-patterns reflect the persona's constraints, not just generic quality concerns",
+        "result": "weak",
+        "justification": "The agent's response reflects only generic clarification-seeking behavior with no evidence that any pedagogical persona constraints or teaching-specific anti-patterns are shaping how it responds to the test request."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "vague-criteria",
+        "description": "Agent defines criteria too vague to evaluate consistently",
+        "result": "clear",
+        "justification": "The agent did not define any evaluation criteria in this response; it simply asked clarifying questions to understand the user's needs, so the vague-criteria anti-pattern is not applicable here."
+      },
+      {
+        "criterion_id": "insufficient-scenarios",
+        "description": "Agent creates only one test scenario or only happy-path scenarios",
+        "result": "clear",
+        "justification": "The agent did not create any test scenarios at all — it asked clarifying questions before proceeding, so there is no violation of the insufficient-scenarios anti-pattern."
+      },
+      {
+        "criterion_id": "ignores-persona-constraints",
+        "description": "Anti-patterns don't reflect the persona's specific constraints",
+        "result": "clear",
+        "justification": "The agent's response is appropriate and does not exhibit any anti-patterns related to ignoring persona constraints; it simply asks clarifying questions to better assist the user, which is consistent with a pedagogical approach."
+      }
+    ]
+  }
+}

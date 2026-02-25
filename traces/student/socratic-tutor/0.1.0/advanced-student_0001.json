@@ -1,0 +1,142 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:08:36.267849+00:00",
+    "persona": "student",
+    "skill": "socratic-tutor",
+    "version": "0.1.0",
+    "scenario_id": "advanced-student"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "advanced-student",
+    "setup": "3L student who handles basic questions easily and should be pushed to harder territory quickly.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Quiz me on my Fed Courts reading. We're covering Younger abstention and I know this material pretty well."
+      },
+      {
+        "role": "user",
+        "content": "Younger v. Harris says federal courts should abstain from enjoining ongoing state criminal proceedings. The rationale is comity and respect for state court processes. There are exceptions for bad faith prosecution, patently unconstitutional statutes, and other extraordinary circumstances."
+      }
+    ],
+    "expected": [
+      "Acknowledges the strong answer",
+      "Moves quickly past basics to harder territory -- hypotheticals, edge cases, or connections to other abstention doctrines",
+      "Might ask about how Younger applies to civil proceedings or what counts as \"ongoing\"",
+      "Does not rehash the basics the student already demonstrated mastery of"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Quiz me on my Fed Courts reading. We're covering Younger abstention and I know this material pretty well."
+    },
+    {
+      "role": "assistant",
+      "content": "Good — let's skip the warm-up then and get into it.\n\n**Younger v. Harris** established a doctrine of federal court abstention, but the holding itself is narrow. So let me start here:\n\n**What is the precise basis for the Younger abstention doctrine? And I don't mean the outcome — I mean the underlying principle the Court invoked to justify federal courts staying their hands.**\n\nTake a shot at it."
+    },
+    {
+      "role": "user",
+      "content": "Younger v. Harris says federal courts should abstain from enjoining ongoing state criminal proceedings. The rationale is comity and respect for state court processes. There are exceptions for bad faith prosecution, patently unconstitutional statutes, and other extraordinary circumstances."
+    },
+    {
+      "role": "assistant",
+      "content": "Good foundation — you've got the core elements. But \"comity and respect for state court processes\" is doing a lot of work there, and I want to push on it.\n\nThe Court in *Younger* actually grounds the doctrine in something more specific than just comity as a general sentiment. Justice Black's opinion invokes a particular historical and structural concept — one that predates *Younger* itself and connects to how federal courts understand their own role relative to state proceedings.\n\n**What is that deeper structural principle, and where does it come from?**\n\nAnd while you're thinking about that — you rattled off the exceptions quickly. Let's make sure those are solid. You said \"patently unconstitutional statute\" — **what does that actually mean as a legal standard, and how does it differ from just arguing your prosecution is unconstitutional?**\n\nPick whichever thread you want to pull first."
+    }
+  ],
+  "evaluation": {
+    "score": 74.4,
+    "structural": [
+      {
+        "criterion_id": "gathers-assignment",
+        "description": "Agent asks what cases, readings, or topics are assigned before beginning the dialogue",
+        "result": "fail",
+        "justification": "The agent immediately began posing substantive Socratic questions without first asking which specific cases, readings, or assigned materials the user was working from beyond the user's own mention of Younger abstention."
+      },
+      {
+        "criterion_id": "progresses-in-difficulty",
+        "description": "Questions move from foundational (facts, holding) to analytical (reasoning, policy) to advanced (hypotheticals, counterarguments)",
+        "result": "pass",
+        "justification": "The agent begins with a foundational question about the precise basis and underlying principle of Younger abstention, then progresses to a more analytical question probing the deeper structural/historical concept and a nuanced doctrinal distinction (patently unconstitutional vs. merely unconstitutional), demonstrating movement from factual recall toward analytical reasoning."
+      },
+      {
+        "criterion_id": "follows-up-on-answers",
+        "description": "Agent adapts questions based on the student's actual responses rather than running through a fixed list",
+        "result": "pass",
+        "justification": "The agent directly references the student's specific phrase 'patently unconstitutional statutes' from their previous response and builds a follow-up question around it, asking them to clarify what that standard actually means and how it differs from a general unconstitutionality argument."
+      },
+      {
+        "criterion_id": "scaffolds-when-stuck",
+        "description": "When the student struggles, agent offers hints or reframes the question rather than giving the answer immediately",
+        "result": "pass",
+        "justification": "When the student gave a correct but surface-level answer about 'comity and respect,' the agent refrained from simply explaining the deeper principle and instead offered a scaffolding hint ('a particular historical and structural concept — one that predates Younger itself') and a targeted sub-question to guide the student toward the more precise answer."
+      },
+      {
+        "criterion_id": "provides-debrief",
+        "description": "Agent provides a debrief summarizing strengths and areas to review",
+        "result": "fail",
+        "justification": "The conversation ends mid-quiz with the agent still asking follow-up questions, and no debrief summarizing the student's strengths and areas to review has been provided."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "dialogue-not-quiz",
+        "description": "Interaction feels like a genuine conversation that adapts, not a fixed list of questions",
+        "result": "strong",
+        "justification": "The agent adapts dynamically to the user's confident response by probing deeper rather than moving to a preset next question, offers two threads to explore and invites the user to choose, creating a genuinely conversational exchange rather than a scripted quiz sequence."
+      },
+      {
+        "criterion_id": "appropriate-pressure",
+        "description": "Agent pushes for precision and depth without intimidation or anxiety-inducing tone",
+        "result": "strong",
+        "justification": "The agent consistently pushes for greater precision and depth—challenging vague answers like 'comity and respect' and probing the 'patently unconstitutional' standard—while maintaining an encouraging, collaborative tone that invites rather than pressures the student."
+      },
+      {
+        "criterion_id": "celebrates-good-answers",
+        "description": "Agent explicitly acknowledges when the student answers well before moving to harder territory",
+        "result": "weak",
+        "justification": "The agent gives only a brief 'Good foundation' before immediately pivoting to critique and harder questions, never explicitly acknowledging that the student answered well or validating the correct elements of their response before pushing further."
+      },
+      {
+        "criterion_id": "builds-confidence",
+        "description": "The overall interaction builds the student's confidence and readiness for class",
+        "result": "adequate",
+        "justification": "The agent engages the student respectfully and at an appropriate level, but its repeated pushing and probing without affirmation of correct answers creates a slightly deflating dynamic that doesn't actively build confidence, even if it avoids undermining it."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "gives-answer-immediately",
+        "description": "Agent provides the correct answer without letting the student attempt it first",
+        "result": "clear",
+        "justification": "The agent consistently withholds the answer and redirects the student to attempt the deeper analysis themselves, asking probing follow-up questions rather than supplying the correct answer about the structural principle or the legal standard for 'patently unconstitutional.'"
+      },
+      {
+        "criterion_id": "produces-work-product",
+        "description": "Agent writes an outline, brief, case summary, or other finished work product",
+        "result": "clear",
+        "justification": "The agent asks probing follow-up questions to deepen the student's understanding rather than producing any finished work product like an outline, brief, or analytical document."
+      },
+      {
+        "criterion_id": "intimidating-tone",
+        "description": "Agent uses harsh, dismissive, or anxiety-inducing language",
+        "result": "fail",
+        "justification": "Judge response unparseable: {\"result\": \"clear\", \"justification\": \"The agent uses encouraging, Socratic language throughout (\"Good foundation,\" \"Take a shot at it\") and challenges the student intellectually without any dismissive"
+      }
+    ]
+  }
+}

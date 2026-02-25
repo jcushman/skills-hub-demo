@@ -1,0 +1,109 @@
+persona: cle
+skill: topic-curriculum
+
+criteria:
+  structural:
+    - id: clarifies-learning-goal
+      description: Agent asks about the topic, timeline, baseline knowledge, and reason for learning
+      check: Agent asks about or confirms at least three of topic, why now, timeline, and baseline before building the curriculum
+
+    - id: maps-knowledge-landscape
+      description: Agent identifies the essential elements of competence in the target area
+      check: Agent names key concepts, governing sources, or practical skills for the topic area before presenting the curriculum
+
+    - id: builds-sequenced-curriculum
+      description: Curriculum is organized into Foundation, Depth, Practice, and Currency phases
+      check: Output contains at least three distinct phases or stages with different learning objectives, not a flat reading list
+
+    - id: explains-each-resource
+      description: Each recommended resource includes a description, rationale, and priority level
+      check: At least half the recommended resources include both what they cover and why they're worth the time
+
+    - id: produces-curriculum-document
+      description: Output is a structured document with learning goal, phases, time estimates, and sequence
+      check: Final output includes a stated learning goal, phased resources, and estimated time commitments
+
+  pedagogical:
+    - id: efficient-prioritization
+      description: Curriculum respects the attorney's limited time and prioritizes high-impact resources
+      weight: high
+
+    - id: practice-oriented
+      description: Curriculum includes practical exercises or skills, not just reading
+      weight: high
+
+    - id: minimum-viable-path
+      description: Curriculum offers a shortcut or "if time is limited" path for urgent timelines
+      weight: medium
+
+    - id: currency-sources
+      description: Curriculum identifies ongoing sources for staying current after initial learning
+      weight: medium
+
+anti_patterns:
+  - id: does-the-learning
+    description: Agent teaches the substantive law rather than creating a learning plan
+    check: Agent provides detailed legal analysis or doctrinal explanations rather than pointing the attorney to resources where they can learn
+
+  - id: unrealistic-time-estimates
+    description: Agent recommends a curriculum requiring hundreds of hours for someone with a short timeline
+    check: Total estimated time dramatically exceeds what's realistic given the attorney's stated timeline
+
+  - id: no-primary-sources
+    description: Agent fails to include governing statutes, regulations, or key cases
+    check: Curriculum does not identify any primary legal sources (statutes, regulations, landmark cases) for the topic area
+
+test_scenarios:
+  - id: happy-path-data-privacy
+    setup: >
+      Attorney at a mid-size firm transitioning into data privacy practice.
+      Has a few months to build competence. General litigation background
+      but no privacy-specific experience.
+    messages:
+      - role: user
+        content: "I'm a 5th-year litigator and my firm wants me to start handling data privacy matters. I need to get up to speed."
+      - role: user
+        content: "I have about 3 months before the first matters come in. I know nothing about privacy law beyond what I read in the news. No GDPR, no CCPA, nothing."
+    expected:
+      - Asks about the specific areas of privacy law the firm expects (US state laws, GDPR, sectoral regs)
+      - Builds a phased curriculum starting with foundational overview
+      - Includes primary sources (CCPA, GDPR, key regulations)
+      - Includes practical components (sample privacy assessments, drafting exercises)
+      - Fits within the 3-month timeline with realistic time estimates
+
+  - id: urgent-timeline
+    setup: >
+      Attorney needs to advise a client on an unfamiliar area in a matter of days.
+    messages:
+      - role: user
+        content: "I just got a new client matter involving ERISA and I know almost nothing about it. The initial call is in 4 days."
+    expected:
+      - Recognizes the urgency and provides a minimum viable learning path
+      - Prioritizes ruthlessly -- what does the attorney need to know for the initial call, not full competence
+      - Suggests specific resources that can be consumed quickly
+      - Notes the limitations and suggests deeper learning after the immediate need
+
+  - id: minimal-input
+    setup: >
+      Attorney makes a vague request without specifics.
+    messages:
+      - role: user
+        content: "I need to learn employment law."
+    expected:
+      - Asks clarifying questions about why, what aspects, and timeline
+      - Does not produce a curriculum without understanding the scope and urgency
+      - Helps the attorney narrow the topic to something learnable
+
+  - id: partial-familiarity
+    setup: >
+      Attorney with some background in the area who wants to deepen expertise.
+    messages:
+      - role: user
+        content: "I've been doing some trademark work for a couple years -- prosecution mostly. I want to build real depth in trademark litigation specifically."
+      - role: user
+        content: "I handle office actions and registrations fine, but I've never done a TTAB proceeding or a Lanham Act case in federal court."
+    expected:
+      - Acknowledges existing prosecution competence and builds from there
+      - Skips foundation-level trademark overview
+      - Focuses curriculum on TTAB practice and federal litigation specifics
+      - Includes practical resources like sample briefs and procedural guides

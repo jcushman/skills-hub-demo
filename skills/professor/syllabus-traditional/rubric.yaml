@@ -1,0 +1,97 @@
+persona: professor
+skill: syllabus-traditional
+
+criteria:
+  structural:
+    - id: analyzes-provided-content
+      description: Agent reviews the user's source material before generating the syllabus
+      check: Agent references specific elements from the user's provided content (casebook chapters, case names, topic areas) in its analysis or output
+
+    - id: asks-missing-info
+      description: Agent asks for missing logistical information needed to build the syllabus
+      check: Agent asks about session count, session length, semester duration, or credit hours if not provided by the user
+
+    - id: produces-complete-syllabus
+      description: Output includes all required sections of a complete syllabus
+      check: Syllabus contains course header, course description, learning objectives, required materials, assessment, and a session-by-session schedule
+
+    - id: assigns-specific-readings
+      description: Each session has specific reading assignments drawn from the provided content
+      check: At least half the sessions in the schedule include specific case names, page ranges, or chapter references
+
+    - id: includes-discussion-questions
+      description: Sessions include Socratic discussion questions
+      check: At least some sessions include 2-3 key questions for Socratic discussion
+
+  pedagogical:
+    - id: follows-source-ordering
+      description: Syllabus follows the canonical casebook ordering and linear doctrinal progression
+      weight: high
+
+    - id: appropriate-coverage
+      description: All major doctrinal areas from the source material are represented in the schedule
+      weight: high
+
+    - id: uniform-pacing
+      description: Sessions are allocated roughly evenly or proportionally to source material, not calibrated to difficulty
+      weight: medium
+
+    - id: practical-completeness
+      description: Syllabus is detailed enough that a professor could use it as-is with minimal modification
+      weight: medium
+
+anti_patterns:
+  - id: uses-evidence-based-techniques
+    description: Agent injects evidence-based techniques (spiral structure, interleaving, spaced practice) into a traditional syllabus
+    check: Syllabus contains spiral return markers, interleaving notes, scaffolding levels, or explicit spaced practice elements
+
+  - id: produces-student-work
+    description: Agent produces student-facing work product like study guides or outlines
+    check: Agent output includes student-facing materials rather than an instructor's syllabus
+
+  - id: ignores-source-material
+    description: Agent generates a syllabus from general knowledge rather than the user's provided content
+    check: Syllabus topics and readings do not correspond to the materials the user shared
+
+test_scenarios:
+  - id: happy-path-torts
+    setup: >
+      1L Torts professor with a casebook table of contents covering
+      intentional torts, negligence, strict liability, products liability,
+      and damages. 28 class sessions, 75 minutes each.
+    messages:
+      - role: user
+        content: "I need a traditional Socratic syllabus for my 1L Torts class. 28 sessions, 75 minutes each."
+      - role: user
+        content: "Here's the casebook TOC: Part I Intentional Torts (Ch. 1 Battery, Ch. 2 Assault, Ch. 3 False Imprisonment, Ch. 4 IIED), Part II Negligence (Ch. 5 Duty, Ch. 6 Breach, Ch. 7 Causation, Ch. 8 Damages), Part III Strict Liability (Ch. 9 Abnormally Dangerous Activities, Ch. 10 Products Liability), Part IV Defenses (Ch. 11 Contributory/Comparative Negligence, Ch. 12 Assumption of Risk)."
+    expected:
+      - Produces a session-by-session schedule following the casebook's chapter order
+      - Allocates sessions roughly proportionally to the number of chapters per part
+      - Includes specific reading assignments referencing the provided chapters
+      - Includes a review period before the final exam
+      - Does not introduce spiral returns or evidence-based design elements
+
+  - id: minimal-input
+    setup: >
+      Professor wants a syllabus but provides no source material or logistics.
+    messages:
+      - role: user
+        content: "Make me a syllabus for my Property class."
+    expected:
+      - Asks for source material (casebook, readings, or topics to cover)
+      - Asks for logistical details (number of sessions, session length, credit hours)
+      - Does not generate a syllabus from thin air without the user's content
+
+  - id: specific-constraints
+    setup: >
+      Professor provides detailed constraints about what to include and exclude.
+    messages:
+      - role: user
+        content: "I need a traditional Con Law syllabus. 42 sessions, 50 minutes each. I want to skip the structural Constitution stuff and focus entirely on individual rights -- due process, equal protection, First Amendment."
+      - role: user
+        content: "I'm using Chemerinsky's Constitutional Law casebook, 6th edition. Chapters 8-16 cover individual rights."
+    expected:
+      - Respects the professor's scoping decision to skip structural content
+      - Builds the syllabus from the specified chapters
+      - Allocates 42 sessions across the individual rights topics
+      - Asks for confirmation and offers to iterate

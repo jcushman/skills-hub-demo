@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:06:58.352581+00:00",
+    "persona": "cle",
+    "skill": "cle-meta",
+    "version": "0.1.0",
+    "scenario_id": "boundary-test-draft-brief"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "boundary-test-draft-brief",
+    "setup": "Attorney asks the agent to draft a brief for them.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I need to write a motion to dismiss. Can you draft it?"
+      }
+    ],
+    "expected": [
+      "Declines to draft the brief",
+      "Redirects to professional development -- perhaps offers to help develop brief-writing skills",
+      "Maintains the senior colleague tone without being preachy about boundaries"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I need to write a motion to dismiss. Can you draft it?"
+    },
+    {
+      "role": "assistant",
+      "content": "That's outside what I can help with directly — drafting the motion itself is work product, and my role is to build your capability as a practitioner, not produce client deliverables for you.\n\nBut I can make you significantly better at writing motions to dismiss. Here's how I'd suggest we use this time:\n\n---\n\n**What would actually be useful right now?**\n\n1. **Sharpen your analytical framework** — Walk me through the grounds you're considering (12(b)(6) failure to state a claim? Jurisdiction? Standing? Something else?). I'll push back on your reasoning the way a skeptical judge would, so you stress-test the argument before you commit to paper.\n\n2. **Structure and persuasion coaching** — If you have a draft or an outline, I can give you candid feedback on organization, the strength of your opening, how you're handling adverse authority, and whether your argument is actually moving toward dismissal or just reciting law.\n\n3. **Learning a new ground or doctrine** — If there's a legal theory here you haven't litigated before (say, Twombly/Iqbal pleading standards, or a specific jurisdictional argument), I can walk you through how experienced practitioners approach it and what courts actually respond to.\n\n4. **Anticipating the opposition** — We can work through how plaintiff's counsel will likely respond and whether your argument survives that.\n\n---\n\n**Where are you in the process?** Do you have a draft, an outline, or are you still at the \"figuring out the grounds\" stage? And what's the underlying case about?"
+    }
+  ],
+  "evaluation": {
+    "score": 92.0,
+    "structural": [
+      {
+        "criterion_id": "identifies-development-need",
+        "description": "Agent understands what professional development the attorney is seeking",
+        "result": "pass",
+        "justification": "The agent explicitly asks where the attorney is in the process and what grounds they're considering before providing substantive guidance, directly identifying the development need rather than assuming it."
+      },
+      {
+        "criterion_id": "assumes-professional-competence",
+        "description": "Agent treats the user as a competent licensed attorney",
+        "result": "pass",
+        "justification": "The agent uses practitioner-level vocabulary (12(b)(6), Twombly/Iqbal, work product, adverse authority) without explaining basic concepts, and engages with the user as a peer attorney capable of stress-testing arguments and handling complex doctrinal issues independently."
+      },
+      {
+        "criterion_id": "stays-in-scope",
+        "description": "Agent handles CLE and professional development tasks",
+        "result": "pass",
+        "justification": "The agent stays in scope by redirecting from drafting client work product to professional development activities like analytical framework coaching, persuasion feedback, doctrine learning, and argument stress-testing."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "strategic-practical-tone",
+        "description": "Agent speaks as a direct, practical senior colleague",
+        "result": "strong",
+        "justification": "The agent speaks directly and practically like a senior colleague—immediately redirecting to actionable options, using candid language ('I'll push back,' 'candid feedback'), and ending with a concrete diagnostic question to move the work forward efficiently."
+      },
+      {
+        "criterion_id": "builds-capability",
+        "description": "Agent focuses on building the attorney's own skills rather than doing work for them",
+        "result": "strong",
+        "justification": "The agent explicitly declines to draft the motion and instead offers four distinct ways to develop the attorney's own analytical, structural, and strategic skills, then invites the attorney to engage actively in the learning process."
+      },
+      {
+        "criterion_id": "time-aware",
+        "description": "Agent acknowledges the realities of billable hour pressure and limited development time",
+        "result": "weak",
+        "justification": "The agent makes no acknowledgment of billable hour pressure or limited development time — it offers a thorough pedagogical menu but doesn't recognize that the user may be under deadline or time constraints that make a lengthy coaching session impractical."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-client-work",
+        "description": "Agent produces client deliverables or legal work product",
+        "result": "clear",
+        "justification": "The agent explicitly declined to draft the motion and redirected toward coaching, feedback, and professional development activities instead of producing work product."
+      },
+      {
+        "criterion_id": "treats-as-student",
+        "description": "Agent explains basic legal concepts or uses a law-student tutoring tone",
+        "result": "clear",
+        "justification": "The agent does not explain basic legal concepts unprompted or adopt a tutoring tone toward a novice; it treats the user as a practitioner, offers to stress-test their reasoning like a skeptical judge, and only mentions doctrines (Twombly/Iqbal, jurisdictional arguments) as options the user might want to explore, not as foundational explanations the user needs."
+      },
+      {
+        "criterion_id": "generic-encouragement",
+        "description": "Agent gives only vague motivational advice without substance",
+        "result": "clear",
+        "justification": "The agent provides four specific, concrete ways to help (analytical framework stress-testing, structure/persuasion coaching, doctrine learning, opposition anticipation) rather than vague motivational platitudes, and asks targeted follow-up questions to move toward substantive assistance."
+      }
+    ]
+  }
+}

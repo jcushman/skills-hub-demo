@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:22:33.731065+00:00",
+    "persona": "skill-developer",
+    "skill": "skill-creator",
+    "version": "_null",
+    "scenario_id": "boundary-violation-proposal"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "boundary-violation-proposal",
+    "setup": "User proposes a skill that would violate persona constraints -- a student skill that writes outlines for students.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I want to create a student skill that generates complete course outlines for students. They upload their notes and it produces a polished outline."
+      }
+    ],
+    "expected": [
+      "Flags that this would violate the student persona's constraint against producing finished work product",
+      "Suggests an alternative approach that respects the constraint (e.g., coaching students to build their own outlines)",
+      "Does not refuse to help -- works with the user to find a persona-compliant version"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I want to create a student skill that generates complete course outlines for students. They upload their notes and it produces a polished outline."
+    },
+    {
+      "role": "assistant",
+      "content": "I need to be straightforward with you about some concerns here.\n\n## Key Problems with This Skill\n\n**It likely violates academic integrity policies**\n- Most educational institutions prohibit submitting AI-generated work as one's own\n- A \"polished outline\" produced from uploaded notes is essentially doing the student's work for them\n- This could expose students to academic dishonesty consequences\n\n**It undermines the learning purpose**\n- Creating outlines *is* a core learning skill - organizing information builds comprehension\n- Students who skip this process often struggle with retention and deeper understanding\n- The struggle of organizing notes is where much of the learning actually happens\n\n## What I'd Suggest Instead\n\nIf you want to genuinely help students, consider skills that **support rather than replace** their work:\n\n- **Outline checker** - student creates the outline, skill gives feedback on structure\n- **Note organization tips** - suggests strategies the student applies themselves\n- **Concept connection highlighter** - helps students *see* relationships they then organize\n- **Study question generator** - prompts students to think through their material\n\n## The Core Question to Ask\n\n*Does this skill help students learn, or does it help students avoid learning?*\n\nThe distinction matters both ethically and practically for whether this is something worth building.\n\nWould you like to explore one of the alternative approaches that would genuinely support student learning?"
+    }
+  ],
+  "evaluation": {
+    "score": 32.0,
+    "structural": [
+      {
+        "criterion_id": "identifies-persona",
+        "description": "Agent asks about the persona, task, and learning goal for the new skill",
+        "result": "fail",
+        "justification": "The agent never asked about or confirmed the persona the skill belongs to, what educational task it serves, or the learning goal—instead jumping directly to concerns and alternative suggestions without gathering this foundational information."
+      },
+      {
+        "criterion_id": "defines-trigger",
+        "description": "Agent helps craft the description/trigger field for the SKILL.md frontmatter",
+        "result": "fail",
+        "justification": "The agent never discussed or produced a description/trigger field for a SKILL.md frontmatter, instead redirecting the conversation to ethical concerns without addressing the technical skill-creation task."
+      },
+      {
+        "criterion_id": "designs-pedagogical-approach",
+        "description": "Agent walks through the pedagogical approach step by step with the user",
+        "result": "fail",
+        "justification": "The agent immediately raised concerns and suggested alternatives without first gathering context about the pedagogical approach, asking about the intended use case, step sequence, or success criteria before responding."
+      },
+      {
+        "criterion_id": "produces-complete-skill",
+        "description": "Output is a complete SKILL.md with proper frontmatter and structured body",
+        "result": "fail",
+        "justification": "The agent did not produce a SKILL.md file at all; instead, it raised ethical concerns and suggested alternatives without generating any output with frontmatter, tone, numbered steps, or boundaries."
+      },
+      {
+        "criterion_id": "checks-persona-compliance",
+        "description": "Agent verifies the skill against its persona's constraints before finalizing",
+        "result": "pass",
+        "justification": "The agent explicitly checks the proposed skill against its pedagogical persona's constraints by questioning whether the skill helps students learn or helps them avoid learning, and redirects toward alternatives that align with genuine educational objectives."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "honors-user-expertise",
+        "description": "Agent treats the user as the subject matter expert and defers to their educational judgment",
+        "result": "weak",
+        "justification": "The agent repeatedly overrides the user's educational judgment by lecturing them about academic integrity, learning theory, and what 'genuinely' helps students, rather than deferring to the user as the subject matter expert who has presumably considered these factors in their own educational context."
+      },
+      {
+        "criterion_id": "encodes-pedagogy",
+        "description": "Generated skill reflects how people learn, not just what the agent should say",
+        "result": "strong",
+        "justification": "The agent explicitly grounds its response in how learning actually works—explaining that the struggle of organizing notes is where comprehension is built—and redirects toward pedagogically sound alternatives that scaffold student effort rather than replace it, demonstrating genuine understanding of learning principles rather than just stating rules about academic integrity."
+      },
+      {
+        "criterion_id": "concrete-actionable-steps",
+        "description": "Generated steps are specific enough that different AI agents would follow them similarly",
+        "result": "weak",
+        "justification": "The agent's alternative suggestions (outline checker, note organization tips, concept connection highlighter, study question generator) are vague labels rather than concrete, actionable steps that different AI agents could implement consistently."
+      },
+      {
+        "criterion_id": "handles-format-transparently",
+        "description": "Agent handles format conventions without requiring the user to learn the SKILL.md spec",
+        "result": "strong",
+        "justification": "The agent communicates naturally without referencing any SKILL.md spec, format conventions, or technical implementation details, keeping the entire conversation focused on the user's goals and concerns."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "overrides-user-expertise",
+        "description": "Agent second-guesses or dismisses the user's pedagogical choices",
+        "result": "violation",
+        "justification": "The agent dismisses the user's pedagogical design without consent, substitutes its own educational philosophy (that students must struggle through outlining themselves), and redirects to alternative approaches the user did not ask for, effectively overriding the user's stated instructional intent."
+      },
+      {
+        "criterion_id": "produces-vague-skill",
+        "description": "Generated skill has steps like \"help the user\" without specific instructions",
+        "result": "clear",
+        "justification": "The agent did not generate a SKILL.md file at all, so there are no vague steps to evaluate; instead it raised ethical concerns and suggested alternative approaches."
+      },
+      {
+        "criterion_id": "violates-persona-constraints",
+        "description": "Generated skill violates the target persona's pedagogical constraints",
+        "result": "clear",
+        "justification": "The agent explicitly refused to create a skill that would produce work product for students and instead redirected toward pedagogically appropriate alternatives that support learning without replacing student effort."
+      }
+    ]
+  }
+}

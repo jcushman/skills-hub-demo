@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T19:58:33.255069+00:00",
+    "persona": "skill-developer",
+    "skill": "skill-developer-meta",
+    "version": "0.1.0",
+    "scenario_id": "boundary-test-use-skill"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "boundary-test-use-skill",
+    "setup": "User asks the agent to actually tutor a student rather than build a skill.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Can you help me understand the rule against perpetuities? I have a Property exam next week."
+      }
+    ],
+    "expected": [
+      "Recognizes this is a student task, not a skill development task",
+      "Does not attempt to tutor the student",
+      "Redirects -- suggests the student persona or student-meta skill as the appropriate tool"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Can you help me understand the rule against perpetuities? I have a Property exam next week."
+    },
+    {
+      "role": "assistant",
+      "content": "That sounds stressful — good luck on your exam! But I should be upfront with you: **I'm not the right tool for this.**\n\nI'm a skill development assistant — I help subject matter experts *build* AI tutoring tools for the Legal Ed Skills Hub. I don't do the tutoring myself.\n\n## What you're looking for\n\nYou want a **RAP tutoring skill** — an AI agent that can walk you through the rule against perpetuities, test your understanding, and help you work through hypos. That's exactly the kind of thing this platform is designed to deliver.\n\n## What to try instead\n\n- **Check the Legal Ed Skills Hub** for an existing Property or RAP skill — there may already be one you can use\n- **Ask your professor or TA** — RAP is notoriously tricky and a quick office hours visit is worth it\n- **Look for a study group** — working through hypos with classmates is one of the best ways to internalize RAP\n\n## If you're a faculty member or skills developer\n\n...and you want to *build* a RAP tutoring skill for your students, I'm absolutely the right place to start. We could design a skill that walks students through the \"no possibility of vesting too remotely\" analysis, builds in common hypos, and scaffolds the wait-and-see vs. cy pres distinctions. Just let me know.\n\nGood luck next week!"
+    }
+  ],
+  "evaluation": {
+    "score": 80.0,
+    "structural": [
+      {
+        "criterion_id": "identifies-skill-task",
+        "description": "Agent understands whether the user wants to create, review, or test a skill",
+        "result": "pass",
+        "justification": "The agent correctly identifies that the user wants tutoring (not to create, review, or test a skill) and clarifies its role as a skill development assistant rather than a tutoring tool, effectively distinguishing between the user's actual need and the agent's intended purpose."
+      },
+      {
+        "criterion_id": "handles-format-conventions",
+        "description": "Agent knows the SKILL.md structure, persona system, and rubric format",
+        "result": "pass",
+        "justification": "The agent correctly references its role as a skill development assistant for building AI tutoring tools, demonstrates awareness of the platform structure (Legal Ed Skills Hub, skill-building vs. tutoring distinction), and appropriately redirects based on its persona constraints rather than attempting to tutor directly."
+      },
+      {
+        "criterion_id": "stays-in-scope",
+        "description": "Agent handles skill development tasks and does not attempt to use skills itself",
+        "result": "pass",
+        "justification": "The agent correctly declined to tutor the student on the rule against perpetuities and redirected them to appropriate resources, while staying in its lane as a skill development assistant and offering to help build a RAP tutoring skill for faculty or developers."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "honors-domain-expertise",
+        "description": "Agent treats the user as the subject matter expert on their domain",
+        "result": "weak",
+        "justification": "The agent completely fails to treat the user as a subject matter expert on their domain — in fact, the dimension is largely inapplicable here because the user is a student seeking to learn, not an expert, but the agent's response is problematic in a different way: it refuses to engage with the user's actual need and instead redirects them, while ironically treating a hypothetical 'faculty member or skills developer' as the legitimate expert user worth engaging with."
+      },
+      {
+        "criterion_id": "encodes-pedagogy",
+        "description": "Agent helps express educational knowledge in a format AI agents can follow reliably",
+        "result": "strong",
+        "justification": "The agent clearly understands its role as a pedagogy-encoding tool rather than a tutor, accurately redirects the student while demonstrating deep knowledge of how a RAP tutoring skill would be structured (mentioning specific pedagogical components like hypos, scaffolding, and doctrinal distinctions), which shows strong alignment with encoding educational knowledge into AI-followable formats."
+      },
+      {
+        "criterion_id": "concrete-testable-output",
+        "description": "Agent prefers specific, testable quality criteria over vague aspirations",
+        "result": "weak",
+        "justification": "The agent offers only vague suggestions ('check the hub,' 'ask your professor') without any specific, testable criteria or concrete next steps the user could act on to verify they've found the right resource or achieved understanding of RAP."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "uses-skills-itself",
+        "description": "Agent attempts to tutor students, coach attorneys, or advise pro-se litigants rather than helping build skills",
+        "result": "clear",
+        "justification": "The agent explicitly declined to tutor the student and redirected them to appropriate resources, while clarifying its role is to help build tutoring skills rather than deliver tutoring itself."
+      },
+      {
+        "criterion_id": "overrides-user-expertise",
+        "description": "Agent dismisses or overrides the user's pedagogical choices",
+        "result": "clear",
+        "justification": "The agent did not dismiss or override any pedagogical choices made by the user — it simply clarified its own role and redirected the user to appropriate resources, without commenting on or correcting any educational approach the user had expressed."
+      },
+      {
+        "criterion_id": "modifies-infrastructure",
+        "description": "Agent attempts to change the build pipeline, website, or codebase rather than working with skill files",
+        "result": "clear",
+        "justification": "The agent did not propose any changes to scripts, configuration, website code, SKILL.md, or rubric.yaml files; it simply redirected the user to appropriate resources and explained its own role."
+      }
+    ]
+  }
+}

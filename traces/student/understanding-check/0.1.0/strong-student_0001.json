@@ -1,0 +1,159 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T18:47:22.730147+00:00",
+    "persona": "student",
+    "skill": "understanding-check",
+    "version": "0.1.0",
+    "scenario_id": "strong-student"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "strong-student",
+    "setup": "3L student with strong grasp of Criminal Procedure who wants to verify readiness for the final.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I want to make sure I really understand Crim Pro before my final. I feel pretty good but want to check."
+      },
+      {
+        "role": "user",
+        "content": "We covered the full course -- 4th Amendment search and seizure, 5th Amendment Miranda and self-incrimination, 6th Amendment right to counsel. I'm a 3L and this is one of my stronger subjects."
+      },
+      {
+        "role": "user",
+        "content": "The exclusionary rule suppresses evidence obtained through unconstitutional searches. It comes from Mapp v. Ohio applying it to the states. There are exceptions -- good faith under Leon, inevitable discovery, independent source, and attenuation. The rationale is deterrence of police misconduct, not a personal right of the defendant, which is why the exceptions focus on whether exclusion would actually deter."
+      }
+    ],
+    "expected": [
+      "Acknowledges the strong answer explicitly",
+      "Pushes to an advanced level rather than rehashing basics -- e.g., asks about recent limitations on the exclusionary rule or edge cases",
+      "Understanding map reflects genuine strength, not patronizing praise"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I want to make sure I really understand Crim Pro before my final. I feel pretty good but want to check."
+    },
+    {
+      "role": "assistant",
+      "content": "That's a great instinct — stress-testing your understanding before the final is exactly the right move. Let's make sure your confidence is well-placed and identify anything worth sharpening before exam day.\n\nBefore we dive in, a few quick questions to calibrate the diagnostic:\n\n1. **Course scope**: Is this a standard Criminal Procedure survey (Fourth, Fifth, Sixth Amendment — search and seizure, interrogation, right to counsel), or does it cover adjudicative procedure too (charging, plea bargaining, trial rights, sentencing)?\n\n2. **How far along**: Have you finished all the major units, or are there topics you haven't gotten to yet?\n\n3. **Materials**: Do you have a syllabus, outline, or case list you can paste or upload? Even a rough list of the major cases you've covered would help me ask you about the right things.\n\n4. **Any self-identified weak spots?** Even if you feel solid overall, is there anything that felt slippery or that you've spent less time on?\n\nThe more you share, the sharper I can make this. But if you want to just jump in, tell me the major topics you've covered and we'll get started."
+    },
+    {
+      "role": "user",
+      "content": "We covered the full course -- 4th Amendment search and seizure, 5th Amendment Miranda and self-incrimination, 6th Amendment right to counsel. I'm a 3L and this is one of my stronger subjects."
+    },
+    {
+      "role": "assistant",
+      "content": "Perfect — that's a classic full-survey Crim Pro course, and those three constitutional pillars give us a lot to work with. Given that you're a 3L with a strong foundation, I'm going to push you on reasoning and application, not just rule recitation. I want to see how you *think* through the doctrine, not just whether you've memorized it.\n\nLet's run through five concepts, building from foundational to more nuanced. Take each one seriously — explain it like you're teaching it or answering an exam question.\n\n---\n\n**Concept 1 — Start here:**\n\n### The Third-Party Doctrine\n\nExplain how the third-party doctrine works under the Fourth Amendment, why the Court developed it, and what its limits are. Then tell me: *how does* Carpenter v. United States *fit into — or complicate — that framework?*\n\n---\n\nTake your time. Give me a real explanation, not bullet points. Once I see how you handle this one, I'll adjust the difficulty and focus of the next four based on what you show me."
+    },
+    {
+      "role": "user",
+      "content": "The exclusionary rule suppresses evidence obtained through unconstitutional searches. It comes from Mapp v. Ohio applying it to the states. There are exceptions -- good faith under Leon, inevitable discovery, independent source, and attenuation. The rationale is deterrence of police misconduct, not a personal right of the defendant, which is why the exceptions focus on whether exclusion would actually deter."
+    },
+    {
+      "role": "assistant",
+      "content": "Good instincts here — you've got the core framework right and you clearly understand the *why* behind the rule. The deterrence rationale and its connection to the exceptions is exactly the right analytical move, and a lot of students miss that link. That's a genuine strength.\n\nBut I want to push you, because you didn't answer the question I asked. **I asked about the third-party doctrine and *Carpenter*.** You gave me the exclusionary rule instead. That could be a significant issue on an exam — if you're pattern-matching to familiar doctrine rather than reading the question carefully, you can lose a lot of points even when you know the material.\n\nSo: was that a misread, or did you mean to pivot? Either way, let's do both.\n\n---\n\n**First, come back to my original question:**\n\nExplain the third-party doctrine — how it works, why it developed, and how *Carpenter* fits or complicates it.\n\n**Then, since you brought up the exclusionary rule**, let me push you a bit further on what you said:\n\nYou mentioned attenuation as an exception — **how does attenuation actually work?** Walk me through the *Brown v. Illinois* factors and explain how *Utah v. Strieff* applied them. This is where a lot of students go shallow.\n\n---\n\nTwo things to address. Take them in order. Let's see the depth."
+    }
+  ],
+  "evaluation": {
+    "score": 83.3,
+    "structural": [
+      {
+        "criterion_id": "gathers-course-context",
+        "description": "Agent asks about the course, subject area, or topic before conducting the diagnostic",
+        "result": "pass",
+        "justification": "In the agent's first turn, it explicitly asks about course scope — whether the course covers Fourth, Fifth, and Sixth Amendment topics or also adjudicative procedure — which directly satisfies the requirement to ask about the course, subject, or topic area before conducting the diagnostic."
+      },
+      {
+        "criterion_id": "gathers-progress-context",
+        "description": "Agent asks how far along the student is or what has been covered",
+        "result": "pass",
+        "justification": "The agent explicitly asks 'How far along: Have you finished all the major units, or are there topics you haven't gotten to yet?' in its first response, directly gathering progress context about where the student is in the course."
+      },
+      {
+        "criterion_id": "asks-for-own-words",
+        "description": "Agent asks the student to explain concepts in their own words rather than recite rules",
+        "result": "pass",
+        "justification": "The agent consistently uses explanatory phrasing like 'explain how it works,' 'walk me through,' 'explain the third-party doctrine,' and 'how does attenuation actually work?' rather than asking the student to recite rules."
+      },
+      {
+        "criterion_id": "probes-reasoning",
+        "description": "Agent follows up on student answers by probing for deeper reasoning",
+        "result": "pass",
+        "justification": "After the student's answer, the agent probes for deeper reasoning by asking the student to walk through the Brown v. Illinois factors and explain how Utah v. Strieff applied them, pushing beyond surface-level recitation of the attenuation exception."
+      },
+      {
+        "criterion_id": "produces-understanding-map",
+        "description": "Agent produces a structured understanding map at the end",
+        "result": "fail",
+        "justification": "The conversation is still mid-diagnostic and the agent has not yet produced any structured understanding map with categorized sections for strong areas, areas needing work, and priorities."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "coaching-over-telling",
+        "description": "Agent asks questions and guides discovery rather than lecturing or providing answers directly",
+        "result": "weak",
+        "justification": "The agent consistently lectures and provides answers directly (explaining the deterrence rationale, naming specific cases and factors like Brown v. Illinois and Strieff) rather than asking guiding questions to help the student discover gaps and reasoning on their own."
+      },
+      {
+        "criterion_id": "celebrates-strengths",
+        "description": "Agent explicitly acknowledges what the student got right before addressing gaps",
+        "result": "strong",
+        "justification": "The agent explicitly and specifically praised what the student got right ('the deterrence rationale and its connection to the exceptions is exactly the right analytical move, and a lot of students miss that link') before addressing the gap of answering the wrong question."
+      },
+      {
+        "criterion_id": "specific-gap-identification",
+        "description": "When identifying gaps, agent quotes or paraphrases what the student said and explains specifically why it reveals a gap, rather than giving vague feedback",
+        "result": "strong",
+        "justification": "The agent specifically quotes the student's behavior ('You gave me the exclusionary rule instead') and explains precisely why it reveals a gap ('if you're pattern-matching to familiar doctrine rather than reading the question carefully, you can lose a lot of points'), then probes further by noting the student mentioned attenuation and challenging them to go deeper on the Brown v. Illinois factors, demonstrating targeted rather than vague feedback."
+      },
+      {
+        "criterion_id": "actionable-suggestions",
+        "description": "Review suggestions point to specific cases, doctrines, or material sections rather than generic advice like \"study more\"",
+        "result": "strong",
+        "justification": "The agent consistently points to specific cases and doctrines—naming *Carpenter v. United States*, *Mapp v. Ohio*, *United States v. Leon*, *Brown v. Illinois*, and *Utah v. Strieff* by name and asking the student to engage with their specific holdings and factors—rather than offering generic study advice."
+      },
+      {
+        "criterion_id": "appropriate-difficulty",
+        "description": "Diagnostic questions build from foundational to more advanced, matching the student's level",
+        "result": "strong",
+        "justification": "The agent explicitly calibrated to the student's 3L level and stated intent to build from foundational to more nuanced, then appropriately escalated difficulty by pairing the third-party doctrine/Carpenter question with a deeper attenuation follow-up (Brown v. Illinois factors and Strieff application) after the student demonstrated familiarity with exclusionary rule basics."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-work-product",
+        "description": "Agent writes an outline, essay, memo, or other finished work product for the student",
+        "result": "clear",
+        "justification": "The agent asks questions and prompts the student to explain doctrine themselves, rather than producing any finished analytical document the student could submit as their own work."
+      },
+      {
+        "criterion_id": "answers-own-questions",
+        "description": "Agent asks a diagnostic question then immediately answers it without waiting for the student",
+        "result": "clear",
+        "justification": "The agent asks the student to explain the third-party doctrine and attenuation but does not provide the answers itself, instead waiting for the student to respond."
+      },
+      {
+        "criterion_id": "dismissive-of-mistakes",
+        "description": "Agent tells the student they are wrong without encouragement or constructive framing",
+        "result": "clear",
+        "justification": "The agent acknowledged the student's genuine strengths before pointing out the mismatch, framed the issue as a potential exam-day risk rather than a personal failing, and immediately redirected constructively with follow-up questions."
+      }
+    ]
+  }
+}

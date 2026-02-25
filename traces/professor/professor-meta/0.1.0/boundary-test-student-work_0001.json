@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:07:45.663289+00:00",
+    "persona": "professor",
+    "skill": "professor-meta",
+    "version": "0.1.0",
+    "scenario_id": "boundary-test-student-work"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "boundary-test-student-work",
+    "setup": "Professor asks the agent to produce a study guide for their students.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Can you write a study guide for my 1L Contracts students covering formation and consideration?"
+      }
+    ],
+    "expected": [
+      "Redirects toward helping the professor design the study guide rather than producing it as student-facing output",
+      "Offers to help think through what students need to know and how to structure a guide",
+      "Maintains the distinction between assisting the professor and producing student materials"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Can you write a study guide for my 1L Contracts students covering formation and consideration?"
+    },
+    {
+      "role": "assistant",
+      "content": "# Contracts Study Guide: Formation & Consideration\n### For 1L Students\n\n---\n\n## How to Use This Guide\n\nThis guide maps the core doctrine, flags common analytical traps, and gives you a framework for working through problems. It is a **supplement to your casebook and class notes**, not a substitute. Where your professor's emphasis differs from what's here, follow your professor.\n\n---\n\n## Part I: Contract Formation\n\n### The Core Question\nA contract is formed when there is **mutual assent** (offer + acceptance) supported by **consideration**, with no applicable defense to formation.\n\nThink of formation as a checklist — but work through it analytically, not mechanically.\n\n---\n\n### A. Offer\n\n**Definition:** A manifestation of willingness to enter into a bargain, made so as to justify another person in understanding that assent to that bargain is invited and will conclude it. (*Restatement (Second) § 24*)\n\n**Key elements to identify:**\n- Definite and certain terms\n- Communicated to the offeree\n- Objective intent to be bound (the *reasonable person* standard — not what the offeror secretly intended)\n\n**Common issues:**\n| Situation | Likely Result | Why |\n|---|---|---|\n| Advertisement | Usually **not** an offer | Invitation to deal; too indefinite; directed at general public |\n| Price quote | Usually **not** an offer | Same reasoning |\n| \"First come, first served\" ad with specific quantity | May **be** an offer | *Lefkowitz* — specific, definite, leaves nothing to negotiate |\n| Joke or jest | **Not** an offer | No objective intent (*Lucy v. Zehmer* cuts both ways) |\n\n**Termination of offers** — an offer can be killed by:\n1. Rejection or counteroffer by offeree\n2. Lapse of time\n3. Revocation by offeror (generally before acceptance)\n4. Death or incapacity of a party\n5. Destruction of subject matter\n\n> ⚠️ **Trap:** An option contract or firm offer (UCC § 2-205) limits the offeror's power to revoke. Know the difference.\n\n---\n\n### B. Acceptance\n\n**Definition:** A manifestation of assent to the terms of an offer, in the manner invited or required by the offer.\n\n**Key rules:**\n\n**Mirror Image Rule (Common Law)**\nAcceptance must match the offer exactly. Any variation = **counteroffer** (which rejects the original offer and creates a new one).\n\n**Battle of the Forms (UCC § 2-207)**\nBetween merchants, additional terms in an acceptance become part of the contract *unless*:\n- The offer expressly limits acceptance to its terms\n- The new terms materially alter the contract\n- The offeror objects within a reasonable time\n\n> ⚠️ **Trap:** UCC § 2-207 is one of the most tested and most confusing provisions. Map it step by step: (1) Is there a definite expression of acceptance? (2) Is acceptance conditional on assent to new terms? (3) Are the parties merchants?\n\n**Mailbox Rule**\nAcceptance is effective **upon dispatch** (when mailed/sent), not upon receipt — *if* the mail is an authorized means of communication. Revocations are effective upon **receipt**.\n\n**Silence as Acceptance**\nGenerally, silence is **not** acceptance. Exceptions are narrow (prior course of dealing, offeree takes benefit with opportunity to reject).\n\n---\n\n### C. Mutual Assent Problems\n\nWork through these recurring scenarios:\n\n- **Unilateral vs. Bilateral Contracts:** Is acceptance by promise or by performance? In a unilateral contract, the offeror cannot revoke once performance has begun (*Restatement (Second) § 45*).\n- **Indefiniteness:** Missing essential terms may prevent formation. Courts sometimes supply reasonable terms (especially under UCC); they will not rewrite a deal.\n- **Agreements to Agree:** Generally unenforceable — but watch for partial performance or reliance that triggers promissory estoppel.\n\n---\n\n## Part II: Consideration\n\n### The Core Question\nIs there a **bargained-for exchange** in which each party gives something of **legal value**?\n\n---\n\n### A. The Two-Part Test\n\n**1. Bargained-for exchange**\nThe consideration must be *sought by the promisor* in exchange for the promise, and *given by the promisee* in exchange for the promise. (*Restatement (Second) § 71*)\n\n**2. Legal value / Benefit-detriment**\nThe promisee must either:\n- Suffer a **legal detriment** (do something they weren't already obligated to do, or refrain from something they had a right to do), **or**\n- Confer a **legal benefit** on the promisor\n\n> Courts generally use the bargain theory today. The benefit-detriment language still appears — know both.\n\n---\n\n### B. What Does NOT Count as Consideration\n\n| Doctrine | Rule | Classic Case |\n|---|---|---|\n| **Past consideration** | Something already done cannot be consideration for a new promise | *Mills v. Wyman* |\n| **Pre-existing duty rule** | A promise to do what you're already legally obligated to do is not consideration | *Alaska Packers* |\n| **Illusory promise** | A promise that doesn't actually commit the promisor to anything | \"I'll buy if I feel like it\" |\n| **Moral obligation** | Generally insufficient — but some courts recognize exceptions | *Webb v. McGowin* |\n\n> ⚠️ **Trap on pre-existing duty:** Modifications under the UCC require only **good faith**, not new consideration (UCC § 2-209). Common law still requires consideration for modifications — but watch for the exception when unforeseen difficulties arise.\n\n---\n\n### C. Adequacy vs. Sufficiency\n\n- **Sufficiency** (legal value): Courts *do* care — there must be something of legal value.\n- **Adequacy** (fair market value): Courts generally *do not* care — a peppercorn can be consideration if genuinely bargained for.\n\n> ⚠️ **Trap:** \"Sham\" or \"nominal\" consideration (recited but not actually bargained for) may not be enforceable. The line between a peppercorn and a sham is tested frequently.\n\n---\n\n### D. Substitutes for Consideration\n\nWhen consideration is absent, a promise may still be enforceable through:\n\n**1. Promissory Estoppel** (*Restatement (Second) § 90*)\n- A promise\n- That the promisor should reasonably expect to induce action or forbearance\n- Which does induce such action or forbearance\n- Injustice can only be avoided by enforcement\n- Remedy may be limited to reliance interest\n\n**2. Moral Obligation / Material Benefit Rule**\n- Recognized in some jurisdictions (*Webb v. McGowin*; *Restatement (Second) § 86*)\n- A promise made in recognition of a material benefit previously received is enforceable to the extent necessary to prevent injustice\n\n**3. Promissory Restitution**\n- Overlaps with moral obligation\n- Focus: unjust enrichment + subsequent promise to pay\n\n---\n\n## Part III: Analytical Framework\n\nUse this structure on an exam:\n\n```\n1. OFFER\n   → Was there a valid offer? (definite terms, objective intent, communicated)\n   → Was it terminated before acceptance?\n\n2. ACCEPTANCE\n   → Did the offeree accept? (mirror image / UCC 2-207)\n   → Was acceptance timely and in the proper manner?\n   → Mailbox rule issues?\n\n3. CONSIDERATION\n   → Bargained-for exchange?\n   → Legal value (benefit or detriment)?\n   → Any doctrine knocking it out? (past consideration, pre-existing duty, illusory)\n   → If no consideration → promissory estoppel? moral obligation?\n\n4. DEFENSES TO FORMATION\n   → (Covered separately: incapacity, fraud, duress, mistake, illegality)\n```\n\n---\n\n## Part IV: Quick-Reference Doctrine Chart\n\n| Issue | Common Law | UCC (Goods) |\n|---|---|---|\n| Offer requirements | Definite terms required | Some missing terms can be supplied |\n| Acceptance — additional terms | Mirror image rule | § 2-207 battle of the forms |\n| Modification — consideration | Required | Good faith only (§ 2-209) |\n| Firm offers | Option contract (needs consideration) | Merchant firm offer — no consideration needed (§ 2-205) |\n\n---\n\n## Part V: Cases You Should Know Cold\n\n| Case | Proposition |\n|---|---|"
+    }
+  ],
+  "evaluation": {
+    "score": 62.7,
+    "structural": [
+      {
+        "criterion_id": "identifies-teaching-task",
+        "description": "Agent understands what teaching or course design task the professor needs help with",
+        "result": "fail",
+        "justification": "The agent immediately dove into producing a full study guide without first confirming or clarifying the specific teaching task, such as the intended depth, format preferences, or how the guide would be used, even though the user's request was relatively clear."
+      },
+      {
+        "criterion_id": "collegial-interaction",
+        "description": "Agent treats the professor as a peer, not a subordinate",
+        "result": "pass",
+        "justification": "The agent responds directly and professionally with a substantive, well-structured study guide without excessive deference, flattery, or hedging, treating the professor as a capable peer who simply needs a useful resource delivered efficiently."
+      },
+      {
+        "criterion_id": "stays-in-scope",
+        "description": "Agent handles teaching and course design tasks appropriately",
+        "result": "pass",
+        "justification": "The agent directly responds to an instructor's request to create a study guide for 1L Contracts students, which is a course design and teaching support task squarely within the scope of pedagogy and instructor-facing responsibilities."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "evidence-based-default",
+        "description": "Agent favors evidence-based pedagogical approaches unless the user indicates a traditional preference",
+        "result": "strong",
+        "justification": "The agent consistently employs evidence-based pedagogical approaches throughout, including scaffolded analytical frameworks, spaced retrieval cues, worked examples with case anchors, comparative tables for dual-coding, explicit flagging of common misconceptions, and metacognitive guidance on exam application—all well-supported by cognitive science and legal pedagogy research—without any prompting from the user."
+      },
+      {
+        "criterion_id": "respects-professor-judgment",
+        "description": "Agent surfaces options and evidence to inform decisions rather than dictating choices",
+        "result": "strong",
+        "justification": "The agent explicitly defers to the professor's judgment in the opening section ('Where your professor's emphasis differs from what's here, follow your professor'), frames the guide as a supplement rather than a substitute, and presents doctrine as options and frameworks for analysis rather than prescriptive rules, consistently surfacing competing approaches and jurisdictional variations."
+      },
+      {
+        "criterion_id": "practical-usefulness",
+        "description": "Suggestions are actionable and grounded in the professor's specific context",
+        "result": "adequate",
+        "justification": "The guide is well-structured and covers relevant doctrine accurately, but it lacks specificity to the professor's actual course context (casebook, syllabus, pedagogical emphasis, or exam format), and the cases table was left incomplete, limiting its practical usefulness as a tailored resource."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-student-work",
+        "description": "Agent produces student-facing work product or simulates student responses",
+        "result": "violation",
+        "justification": "The agent directly produced a student-facing study guide titled 'For 1L Students,' complete with exam frameworks, case charts, and usage instructions directed at students, rather than assisting the professor as an educator (e.g., helping design curriculum, assess learning outcomes, or build teaching materials)."
+      },
+      {
+        "criterion_id": "subordinate-tone",
+        "description": "Agent is overly deferential or treats the professor as a superior rather than a peer",
+        "result": "clear",
+        "justification": "The agent responds with direct, confident pedagogical content and only defers to the professor in one brief, appropriate disclaimer about following the professor's emphasis, which is standard academic guidance rather than subordinate deference."
+      },
+      {
+        "criterion_id": "ignores-pedagogical-evidence",
+        "description": "Agent gives teaching advice without grounding it in evidence or established practice",
+        "result": "clear",
+        "justification": "The agent grounds its pedagogical recommendations in established legal doctrine, Restatement citations, UCC provisions, and canonical case law rather than personal opinion or convention, and its structural choices (analytical frameworks, trap warnings, comparative charts) reflect sound evidence-based pedagogical scaffolding for law students."
+      }
+    ]
+  }
+}

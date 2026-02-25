@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skill Traces Viewer</title>
+<style>
+  :root {
+    --bg: #fafafa; --surface: #fff; --border: #e0e0e0;
+    --text: #1a1a1a; --text2: #666; --accent: #2563eb;
+    --pass: #16a34a; --fail: #dc2626; --warn: #d97706;
+    --strong: #16a34a; --adequate: #d97706; --weak: #dc2626;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
+  .subtitle { color: var(--text2); margin-bottom: 2rem; font-size: 0.9rem; }
+  .loading, .error { text-align: center; padding: 4rem 1rem; color: var(--text2); }
+  .error { color: var(--fail); }
+
+  /* Skill cards */
+  .skill-group { margin-bottom: 2.5rem; }
+  .skill-header { display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 0.75rem; }
+  .skill-header h2 { font-size: 1.1rem; }
+  .skill-header .persona-tag {
+    font-size: 0.75rem; background: var(--accent); color: #fff;
+    padding: 0.15rem 0.5rem; border-radius: 3px; font-weight: 500;
+  }
+  .skill-header .version { font-size: 0.8rem; color: var(--text2); }
+
+  /* Sparkline */
+  .sparkline-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem; }
+  .sparkline-label { font-size: 0.8rem; color: var(--text2); min-width: 180px; }
+  .sparkline svg { display: block; }
+  .sparkline-score { font-size: 0.85rem; font-weight: 600; min-width: 3rem; text-align: right; }
+
+  /* Trace list */
+  .trace-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .trace-table th { text-align: left; padding: 0.4rem 0.75rem; border-bottom: 2px solid var(--border); color: var(--text2); font-weight: 500; }
+  .trace-table td { padding: 0.4rem 0.75rem; border-bottom: 1px solid var(--border); }
+  .trace-table tr { cursor: pointer; }
+  .trace-table tr:hover td { background: #f0f4ff; }
+  .score-cell { font-weight: 600; }
+  .score-high { color: var(--pass); }
+  .score-mid { color: var(--warn); }
+  .score-low { color: var(--fail); }
+  .ts-cell { color: var(--text2); }
+
+  /* Detail panel */
+  .detail-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.3);
+    z-index: 100; justify-content: center; align-items: start; padding: 2rem;
+  }
+  .detail-overlay.open { display: flex; }
+  .detail-panel {
+    background: var(--surface); border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 2rem;
+  }
+  .detail-panel h3 { font-size: 1.1rem; margin-bottom: 1rem; }
+  .detail-close { float: right; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text2); }
+  .detail-close:hover { color: var(--text); }
+
+  .detail-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.5rem; margin-bottom: 1.5rem; font-size: 0.85rem; }
+  .detail-meta dt { color: var(--text2); }
+  .detail-meta dd { font-weight: 500; margin-bottom: 0.5rem; }
+
+  .detail-section { margin-bottom: 1.5rem; }
+  .detail-section h4 { font-size: 0.9rem; margin-bottom: 0.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.25rem; }
+
+  .criterion { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; font-size: 0.85rem; }
+  .criterion-tag { font-weight: 600; min-width: 4.5rem; text-transform: uppercase; font-size: 0.75rem; padding-top: 0.1rem; }
+  .criterion-tag.pass, .criterion-tag.strong, .criterion-tag.clear { color: var(--pass); }
+  .criterion-tag.fail, .criterion-tag.weak, .criterion-tag.violation { color: var(--fail); }
+  .criterion-tag.adequate { color: var(--warn); }
+  .criterion-body b { font-weight: 600; }
+
+  .conversation { font-size: 0.85rem; }
+  .conv-turn { margin-bottom: 1rem; padding: 0.75rem; border-radius: 6px; }
+  .conv-turn.user { background: #f0f4ff; }
+  .conv-turn.assistant { background: #f0fdf4; }
+  .conv-role { font-weight: 600; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 0.25rem; color: var(--text2); }
+  .conv-content { white-space: pre-wrap; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Skill Traces</h1>
+  <p class="subtitle">Quality over time — click any row to inspect the full conversation and evaluation.</p>
+  <div id="app"><div class="loading">Loading index.json…</div></div>
+</div>
+
+<div class="detail-overlay" id="overlay">
+  <div class="detail-panel" id="detail"></div>
+</div>
+
+<script>
+const app = document.getElementById('app');
+const overlay = document.getElementById('overlay');
+const detail = document.getElementById('detail');
+
+overlay.addEventListener('click', e => { if (e.target === overlay) closeDetail(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDetail(); });
+
+function closeDetail() { overlay.classList.remove('open'); }
+
+function scoreClass(s) { return s >= 75 ? 'score-high' : s >= 50 ? 'score-mid' : 'score-low'; }
+function scoreColor(s) { return s >= 75 ? '#16a34a' : s >= 50 ? '#d97706' : '#dc2626'; }
+
+function sparkline(scores, width = 160, height = 28) {
+  if (scores.length === 0) return '';
+  const pad = 2;
+  const w = width - pad * 2, h = height - pad * 2;
+  const step = scores.length > 1 ? w / (scores.length - 1) : 0;
+  const pts = scores.map((s, i) => [pad + i * step, pad + h - (s / 100) * h]);
+  const line = pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' ');
+  const last = pts[pts.length - 1];
+  const color = scoreColor(scores[scores.length - 1]);
+  return `<svg width="${width}" height="${height}" class="sparkline">
+    <line x1="${pad}" y1="${pad + h * 0.5}" x2="${pad + w}" y2="${pad + h * 0.5}" stroke="#e0e0e0" stroke-dasharray="2,2"/>
+    <path d="${line}" fill="none" stroke="${color}" stroke-width="1.5"/>
+    <circle cx="${last[0].toFixed(1)}" cy="${last[1].toFixed(1)}" r="2.5" fill="${color}"/>
+  </svg>`;
+}
+
+function fmtTime(iso) {
+  const d = new Date(iso);
+  return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) + ' ' +
+         d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+}
+
+function groupTraces(traces) {
+  const groups = {};
+  for (const t of traces) {
+    const key = `${t.persona}/${t.skill}/${t.version}`;
+    if (!groups[key]) groups[key] = { persona: t.persona, skill: t.skill, version: t.version, scenarios: {} };
+    const g = groups[key];
+    if (!g.scenarios[t.scenario_id]) g.scenarios[t.scenario_id] = [];
+    g.scenarios[t.scenario_id].push(t);
+  }
+  for (const g of Object.values(groups)) {
+    for (const arr of Object.values(g.scenarios)) {
+      arr.sort((a, b) => a.timestamp.localeCompare(b.timestamp));
+    }
+  }
+  return Object.values(groups).sort((a, b) => {
+    const ak = `${a.persona}/${a.skill}`, bk = `${b.persona}/${b.skill}`;
+    return ak.localeCompare(bk);
+  });
+}
+
+function renderGroups(groups) {
+  if (groups.length === 0) {
+    app.innerHTML = '<div class="loading">No traces found. Run tests to generate traces.</div>';
+    return;
+  }
+  let html = '';
+  for (const g of groups) {
+    html += `<div class="skill-group">`;
+    html += `<div class="skill-header">
+      <span class="persona-tag">${esc(g.persona)}</span>
+      <h2>${esc(g.skill)}</h2>
+      <span class="version">v${esc(g.version)}</span>
+    </div>`;
+
+    for (const [scenarioId, runs] of Object.entries(g.scenarios)) {
+      const scores = runs.map(r => r.score);
+      const latest = scores[scores.length - 1];
+      html += `<div class="sparkline-row">
+        <span class="sparkline-label">${esc(scenarioId)}</span>
+        <span class="sparkline">${sparkline(scores)}</span>
+        <span class="sparkline-score ${scoreClass(latest)}">${latest.toFixed(0)}</span>
+      </div>`;
+    }
+
+    const allRuns = Object.values(g.scenarios).flat().sort((a, b) => b.timestamp.localeCompare(a.timestamp));
+    html += `<table class="trace-table">
+      <thead><tr><th>Scenario</th><th>Score</th><th>Model</th><th>Time</th></tr></thead>
+      <tbody>`;
+    for (const r of allRuns) {
+      html += `<tr data-path="${esc(r.path)}">
+        <td>${esc(r.scenario_id)}</td>
+        <td class="score-cell ${scoreClass(r.score)}">${r.score.toFixed(0)}</td>
+        <td>${esc(shortModel(r.model))}</td>
+        <td class="ts-cell">${fmtTime(r.timestamp)}</td>
+      </tr>`;
+    }
+    html += `</tbody></table></div>`;
+  }
+  app.innerHTML = html;
+
+  app.querySelectorAll('tr[data-path]').forEach(tr => {
+    tr.addEventListener('click', () => loadDetail(tr.dataset.path));
+  });
+}
+
+function shortModel(m) { return m.includes('/') ? m.split('/').pop() : m; }
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+async function loadDetail(path) {
+  detail.innerHTML = '<div class="loading">Loading trace…</div>';
+  overlay.classList.add('open');
+  try {
+    const resp = await fetch(path);
+    const data = await resp.json();
+    renderDetail(data);
+  } catch (e) {
+    detail.innerHTML = `<div class="error">Failed to load trace: ${esc(e.message)}</div>`;
+  }
+}
+
+function renderDetail(data) {
+  const m = data.meta;
+  const ev = data.evaluation;
+  let html = `<button class="detail-close" onclick="closeDetail()">&times;</button>`;
+  html += `<h3>${esc(m.skill)} / ${esc(m.scenario_id)}</h3>`;
+  html += `<dl class="detail-meta">
+    <dt>Score</dt><dd class="${scoreClass(ev.score)}">${ev.score.toFixed(0)}/100</dd>
+    <dt>Model</dt><dd>${esc(data.config.model_under_test.model)}</dd>
+    <dt>Judge</dt><dd>${esc(data.config.judge_model.model)}</dd>
+    <dt>Time</dt><dd>${fmtTime(m.timestamp)}</dd>
+    <dt>Persona</dt><dd>${esc(m.persona)}</dd>
+    <dt>Version</dt><dd>${esc(m.version)}</dd>
+  </dl>`;
+
+  if (ev.structural.length) {
+    html += `<div class="detail-section"><h4>Structural (${ev.structural.filter(c=>c.result==='pass').length}/${ev.structural.length} pass)</h4>`;
+    for (const c of ev.structural) {
+      html += criterion(c.result, c.criterion_id, c.justification);
+    }
+    html += `</div>`;
+  }
+  if (ev.pedagogical.length) {
+    html += `<div class="detail-section"><h4>Pedagogical</h4>`;
+    for (const c of ev.pedagogical) {
+      html += criterion(c.result, c.criterion_id, c.justification);
+    }
+    html += `</div>`;
+  }
+  if (ev.anti_patterns.length) {
+    html += `<div class="detail-section"><h4>Anti-patterns</h4>`;
+    for (const c of ev.anti_patterns) {
+      html += criterion(c.result, c.criterion_id, c.justification);
+    }
+    html += `</div>`;
+  }
+
+  html += `<div class="detail-section"><h4>Conversation (${data.conversation.length} turns)</h4><div class="conversation">`;
+  for (const turn of data.conversation) {
+    html += `<div class="conv-turn ${turn.role}">
+      <div class="conv-role">${turn.role}</div>
+      <div class="conv-content">${esc(turn.content)}</div>
+    </div>`;
+  }
+  html += `</div></div>`;
+
+  if (data.scenario.expected && data.scenario.expected.length) {
+    html += `<div class="detail-section"><h4>Expected behaviors</h4><ul>`;
+    for (const e of data.scenario.expected) html += `<li>${esc(e)}</li>`;
+    html += `</ul></div>`;
+  }
+
+  detail.innerHTML = html;
+}
+
+function criterion(result, id, justification) {
+  return `<div class="criterion">
+    <span class="criterion-tag ${result}">${result}</span>
+    <span class="criterion-body"><b>${esc(id)}</b> — ${esc(justification)}</span>
+  </div>`;
+}
+
+// Boot
+fetch('index.json')
+  .then(r => { if (!r.ok) throw new Error(`${r.status}`); return r.json(); })
+  .then(data => renderGroups(groupTraces(data.traces)))
+  .catch(e => {
+    app.innerHTML = `<div class="error">Could not load index.json — run some tests first, then serve this directory.<br><code>uv run python -m http.server -d traces</code></div>`;
+  });
+</script>
+</body>
+</html>

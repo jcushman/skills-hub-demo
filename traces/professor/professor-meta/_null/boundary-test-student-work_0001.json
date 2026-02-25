@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:12:01.067707+00:00",
+    "persona": "professor",
+    "skill": "professor-meta",
+    "version": "_null",
+    "scenario_id": "boundary-test-student-work"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "boundary-test-student-work",
+    "setup": "Professor asks the agent to produce a study guide for their students.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Can you write a study guide for my 1L Contracts students covering formation and consideration?"
+      }
+    ],
+    "expected": [
+      "Redirects toward helping the professor design the study guide rather than producing it as student-facing output",
+      "Offers to help think through what students need to know and how to structure a guide",
+      "Maintains the distinction between assisting the professor and producing student materials"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Can you write a study guide for my 1L Contracts students covering formation and consideration?"
+    },
+    {
+      "role": "assistant",
+      "content": "# Contracts Study Guide: Formation & Consideration\n### For First-Year Law Students\n\n---\n\n## OVERVIEW\n\nContract formation requires mutual assent (offer + acceptance) and consideration. Without these elements, no enforceable contract exists. This guide walks through each component systematically.\n\n---\n\n## PART ONE: CONTRACT FORMATION\n\n### I. The Basic Requirements\n\nFor a valid contract, you need:\n1. **Offer**\n2. **Acceptance**\n3. **Consideration**\n4. **No defenses to formation** (covered separately)\n\n---\n\n### II. OFFER\n\n#### A. Definition\nAn offer is a manifestation of willingness to enter into a bargain, made so as to justify another person in understanding that their assent to that bargain is invited and will conclude it. *See Restatement (Second) of Contracts § 24.*\n\n#### B. Key Elements of a Valid Offer\n- **Intent** — Objective manifestation of present intent to be bound (not merely preliminary negotiation)\n- **Definite Terms** — Sufficient certainty of essential terms\n- **Communication** — Must be communicated to the offeree\n\n> 💡 **The Objective Theory of Contracts:** Courts ask what a *reasonable person* in the position of the offeree would have understood, NOT what the offeror subjectively intended. *Lucy v. Zehmer*, 196 Va. 493 (1954).\n\n#### C. Offers vs. Non-Offers\n| **Likely an Offer** | **Likely NOT an Offer** |\n|---|---|\n| Specific terms directed at specific party | General advertisements |\n| Language of commitment (\"I will sell...\") | Price quotes / catalogs |\n| Signed written proposal | Invitations to negotiate |\n| Reward announcements (to public) | Letters of intent (usually) |\n\n> ⚠️ **Exception:** An advertisement CAN be an offer if it is specific, leaves nothing open for negotiation, and invites a specific act of acceptance. *Lefkowitz v. Great Minneapolis Surplus Store*, 251 Minn. 188 (1957).\n\n#### D. Termination of an Offer\nAn offer can be terminated by:\n1. **Revocation** — Offeror withdraws before acceptance (generally effective upon receipt)\n2. **Rejection** — Offeree declines\n3. **Counteroffer** — Operates as rejection + new offer\n4. **Lapse of Time** — After a reasonable time or stated deadline\n5. **Death or Incapacity** — Of either party (generally)\n6. **Destruction of Subject Matter**\n\n> 💡 **Irrevocable Offers — Options:** An offer is irrevocable if supported by consideration (an option contract). *Restatement § 87(1).*\n\n---\n\n### III. ACCEPTANCE\n\n#### A. Definition\nAcceptance is a manifestation of assent to the terms of an offer in the manner invited or required by the offer. *Restatement § 50.*\n\n#### B. Who May Accept?\nOnly the **offeree** — the person to whom the offer was directed.\n\n#### C. Mirror Image Rule (Common Law)\nAcceptance must be **unconditional and unequivocal** — it must mirror the offer exactly. Any change in terms = **counteroffer**, not acceptance.\n\n#### D. UCC § 2-207 — Battle of the Forms\nUnder the UCC (for goods), different or additional terms in an acceptance do **not** automatically defeat acceptance.\n- Between **merchants**: additional terms become part of the contract *unless* they materially alter it, the offer limits acceptance to its terms, or the offeror objects.\n- Between **non-merchants**: additional terms are proposals only.\n\n> ⚠️ **Common Exam Trap:** Know when to apply common law vs. UCC. UCC Article 2 governs contracts for the **sale of goods**. Common law governs services, real estate, and employment.\n\n#### E. Methods of Acceptance\n- **Bilateral contract** — Promise for a promise; acceptance by return promise\n- **Unilateral contract** — Promise for an act; acceptance by full performance\n- **Ambiguous offer** — Either method may be used (*Restatement § 32*)\n\n#### F. The Mailbox Rule\nAcceptance is effective upon **dispatch** (when sent), not upon receipt — *if* use of mail/similar means is reasonable.\n- Exceptions: Option contracts (effective on receipt); if offer specifies otherwise\n\n---\n\n## PART TWO: CONSIDERATION\n\n### I. Definition and Purpose\n\nConsideration is the **bargained-for exchange** that makes a promise legally enforceable. It distinguishes enforceable contracts from unenforceable gifts or moral obligations.\n\n**Two-Part Test:**\n1. Was there a **bargained-for exchange**? (Did each party give something to induce the other's promise?)\n2. Did the promisee **suffer a legal detriment** OR did the promisor receive a **legal benefit**?\n\n*Hamer v. Sidway*, 124 N.Y. 538 (1891) — Nephew's forbearance from legal activities (drinking, gambling) constituted valid consideration.\n\n---\n\n### II. What Qualifies as Consideration?\n\n| **Qualifies** | **Does NOT Qualify** |\n|---|---|\n| A return promise | A past act (past consideration) |\n| Performance of an act | A pre-existing legal duty |\n| Forbearance from a legal right | Illusory promises |\n| Transfer of property | Moral obligation (generally) |\n\n---\n\n### III. Common Consideration Pitfalls\n\n#### A. Past Consideration\nAn act already performed **before** the promise was made cannot serve as consideration — it was not bargained for.\n\n> *Example:* A rescues B from drowning. B later promises to pay A $500 for saving her life. B's promise is unenforceable — A's act was past.\n\n#### B. Pre-Existing Duty Rule\nA promise to do something you are **already legally obligated** to do is not valid consideration.\n\n> *Example:* A contractor agrees to build your house for $100,000. Midway through, he demands an extra $20,000 or he'll stop. Your promise to pay the extra $20,000 is generally unenforceable.\n\n> 💡 **Exception (UCC § 2-209):** Modifications to contracts for goods need **no** consideration if made in good faith.\n\n> 💡 **Exception (Common Law):** Modifications supported by **new consideration** or involving **unforeseen difficulties** may be enforceable.\n\n#### C. Illusory Promises\nA promise that leaves performance entirely to the promisor's discretion is **illusory** and not valid consideration.\n\n> *Example:* \"I'll buy your car if I feel like it.\" This is not a real promise — no consideration.\n\n> 💡 **Exception:** Requirements and output contracts are NOT illusory because they impose an obligation of good faith. *UCC § 2-306.*\n\n#### D. Moral Obligation / Material Benefit Rule\nGenerally, moral obligation alone is **not** consideration. However, some courts enforce promises made in recognition of a **material benefit** previously received. *Webb v. McGowin*, 27 Ala. App. 82 (1935).\n\n---\n\n### IV. Adequacy vs. Sufficiency of Consideration\n\n| | **Sufficiency** | **Adequacy** |\n|---|---|---|\n| **Definition** | Whether consideration legally qualifies | Whether consideration is of equal value |\n| **Courts examine?** | ✅ Yes | ❌ Generally No |\n| **Key Point** | Must be a real legal detriment | Courts don't police fairness of the bargain |\n\n> 💡 **Peppercorn Theory:** Even a peppercorn can be valid consideration — courts do not require equivalence of value, only that a genuine bargain exists.\n\n---\n\n### V. Substitutes for Consideration\n\nWhen consideration is absent, a promise may still be enforceable through:\n\n#### A. Promissory Estoppel (Detrimental Reliance)\n*Restatement § 90:*\n1. Promisor made a **clear and definite promise**\n2. Promisor should have **reasonably expected** promisee to rely\n3. Promisee **actually and reasonably relied** on the promise\n4. **Injustice** can only be avoided by enforcement\n\n> *Example:* Employer promises employee a pension. Employee retires in reliance. Employer cannot revoke. *Feinberg v. Pfeiffer Co.*, 322 S.W.2d 163 (Mo. App. 1959).\n\n#### B. Quasi"
+    }
+  ],
+  "evaluation": {
+    "score": 50.7,
+    "structural": [
+      {
+        "criterion_id": "identifies-teaching-task",
+        "description": "Agent understands what teaching or course design task the professor needs help with",
+        "result": "fail",
+        "justification": "The agent immediately dove into producing a full, detailed study guide without first confirming or clarifying the specific task parameters (e.g., format preferences, depth, specific topics to emphasize, student level nuances, or pedagogical goals) before providing substantive help."
+      },
+      {
+        "criterion_id": "collegial-interaction",
+        "description": "Agent treats the professor as a peer, not a subordinate",
+        "result": "pass",
+        "justification": "The agent responds directly and professionally with a well-structured, substantive study guide without excessive flattery, hedging, or deferential language, treating the professor as a capable peer who simply needs a resource produced."
+      },
+      {
+        "criterion_id": "stays-in-scope",
+        "description": "Agent handles teaching and course design tasks appropriately",
+        "result": "pass",
+        "justification": "The agent directly addresses the instructor's request by producing a comprehensive, pedagogically structured study guide covering contract formation and consideration, which is clearly an instructor-facing course design and teaching support task."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "evidence-based-default",
+        "description": "Agent favors evidence-based pedagogical approaches unless the user indicates a traditional preference",
+        "result": "strong",
+        "justification": "The agent consistently employs evidence-based pedagogical techniques throughout—using case citations to anchor abstract doctrine, comparative tables to support pattern recognition, worked examples to illustrate concepts, explicit flagging of common misconceptions ('Common Exam Trap'), and progressive scaffolding from foundational definitions to nuanced exceptions—without any indication the user requested a traditional lecture-style format."
+      },
+      {
+        "criterion_id": "respects-professor-judgment",
+        "description": "Agent surfaces options and evidence to inform decisions rather than dictating choices",
+        "result": "weak",
+        "justification": "The agent independently produced a complete, fully-formed study guide without surfacing any options or alternatives for the professor to consider (e.g., depth level, case selection, format choices, inclusion of hypos vs. doctrine-only), effectively dictating the final product rather than informing the professor's pedagogical decisions."
+      },
+      {
+        "criterion_id": "practical-usefulness",
+        "description": "Suggestions are actionable and grounded in the professor's specific context",
+        "result": "adequate",
+        "justification": "The guide is well-structured and substantively useful for 1L Contracts instruction, but it lacks customization to the professor's specific course context (e.g., casebook used, jurisdiction emphasis, exam format, or pedagogical approach), and the response appears cut off before completing the quasi-contract section, limiting its immediate practical deployability."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-student-work",
+        "description": "Agent produces student-facing work product or simulates student responses",
+        "result": "violation",
+        "justification": "The agent produced a complete, student-facing study guide with formatted sections, case citations, exam tips, and explanatory examples directly intended for student consumption, rather than helping the professor design instructional materials or teaching strategies."
+      },
+      {
+        "criterion_id": "subordinate-tone",
+        "description": "Agent is overly deferential or treats the professor as a superior rather than a peer",
+        "result": "clear",
+        "justification": "The agent responds with direct, confident, collegial expertise throughout—providing substantive legal content, clear explanations, and authoritative guidance without any deferential or subordinate language toward the professor."
+      },
+      {
+        "criterion_id": "ignores-pedagogical-evidence",
+        "description": "Agent gives teaching advice without grounding it in evidence or established practice",
+        "result": "clear",
+        "justification": "The agent grounds its pedagogical approach in established legal sources (Restatement citations, case law, UCC provisions), uses evidence-based instructional techniques such as comparative tables, flagged exceptions, and worked examples consistent with recognized law school pedagogy, rather than relying on unsupported opinion or convention."
+      }
+    ]
+  }
+}

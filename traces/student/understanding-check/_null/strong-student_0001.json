@@ -1,0 +1,159 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T19:00:14.227928+00:00",
+    "persona": "student",
+    "skill": "understanding-check",
+    "version": "_null",
+    "scenario_id": "strong-student"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "strong-student",
+    "setup": "3L student with strong grasp of Criminal Procedure who wants to verify readiness for the final.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I want to make sure I really understand Crim Pro before my final. I feel pretty good but want to check."
+      },
+      {
+        "role": "user",
+        "content": "We covered the full course -- 4th Amendment search and seizure, 5th Amendment Miranda and self-incrimination, 6th Amendment right to counsel. I'm a 3L and this is one of my stronger subjects."
+      },
+      {
+        "role": "user",
+        "content": "The exclusionary rule suppresses evidence obtained through unconstitutional searches. It comes from Mapp v. Ohio applying it to the states. There are exceptions -- good faith under Leon, inevitable discovery, independent source, and attenuation. The rationale is deterrence of police misconduct, not a personal right of the defendant, which is why the exceptions focus on whether exclusion would actually deter."
+      }
+    ],
+    "expected": [
+      "Acknowledges the strong answer explicitly",
+      "Pushes to an advanced level rather than rehashing basics -- e.g., asks about recent limitations on the exclusionary rule or edge cases",
+      "Understanding map reflects genuine strength, not patronizing praise"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I want to make sure I really understand Crim Pro before my final. I feel pretty good but want to check."
+    },
+    {
+      "role": "assistant",
+      "content": "Great! Let's make sure you're truly solid. Given you're a 3L with a strong foundation, I'll engage with you at a high level and push back where it matters.\n\n**How do you want to approach this?**\n\nA few options:\n\n1. **You explain concepts to me** and I'll probe for weaknesses, gaps, or nuances you might be glossing over\n2. **Hypotheticals** - I throw fact patterns at you and you work through them\n3. **Issue spotting** - I give you a complex scenario and you identify everything relevant\n4. **Targeted Q&A** on specific doctrines you're less confident about\n5. **Some combination** of the above\n\nAlso helpful to know:\n- **What's the course scope?** (4th Amendment only, full survey through trial rights, etc.)\n- **Any areas you feel shakiest on?** (e.g., standing, the warrant exceptions, confessions doctrine, identification procedures)\n- **Is this a professor with known tendencies** - like heavily doctrinal, policy-focused, or loves edge cases?\n\nThe goal is to find the *gaps* in your understanding, not just confirm what you already know well - so I'll deliberately push on things even when you're right, to make sure you can defend your reasoning.\n\nWhere do you want to start?"
+    },
+    {
+      "role": "user",
+      "content": "We covered the full course -- 4th Amendment search and seizure, 5th Amendment Miranda and self-incrimination, 6th Amendment right to counsel. I'm a 3L and this is one of my stronger subjects."
+    },
+    {
+      "role": "assistant",
+      "content": "Perfect. Let's find the cracks then.\n\nI'll start with a concept that **sounds simple but has a lot of hidden complexity** - and your answer will tell me a lot about where you actually are.\n\n---\n\n**Question 1:**\n\n*What is a \"search\" under the Fourth Amendment?*\n\nDon't just give me *Katz*. Walk me through the **full current doctrine** - including how the Court has complicated or supplemented *Katz* in recent years - and tell me where the **tensions and open questions** are.\n\nTake as much space as you need. I want to see how you think through it, not just whether you know the buzzwords."
+    },
+    {
+      "role": "user",
+      "content": "The exclusionary rule suppresses evidence obtained through unconstitutional searches. It comes from Mapp v. Ohio applying it to the states. There are exceptions -- good faith under Leon, inevitable discovery, independent source, and attenuation. The rationale is deterrence of police misconduct, not a personal right of the defendant, which is why the exceptions focus on whether exclusion would actually deter."
+    },
+    {
+      "role": "assistant",
+      "content": "Good answer on the exclusionary rule - you clearly know that doctrine. But notice what you did:\n\n**I asked you what a \"search\" is, and you answered with the exclusionary rule.**\n\nThat's actually a really important signal. It *might* mean you default to remedies when pressed on a threshold definitional question. On an exam, that could cost you - professors often want you to work through whether a search occurred *before* you get to suppression.\n\nSo let's go back. **What is a \"search\" under the Fourth Amendment?**\n\nI'm looking for:\n- The core *Katz* framework\n- How *Jones* and *Jardines* complicated or supplemented it\n- *Carpenter* and what it might mean going forward\n- Where the doctrine is genuinely unsettled\n\nYour exclusionary rule answer was solid, so I know you have the knowledge. I want to see you work through the **threshold question** of what triggers Fourth Amendment protection in the first place.\n\nTake a real run at it - what counts as a \"search\"?"
+    }
+  ],
+  "evaluation": {
+    "score": 82.5,
+    "structural": [
+      {
+        "criterion_id": "gathers-course-context",
+        "description": "Agent asks about the course, subject area, or topic before conducting the diagnostic",
+        "result": "pass",
+        "justification": "In the agent's first turn, it explicitly asks 'What's the course scope? (4th Amendment only, full survey through trial rights, etc.)' which is a direct question about the subject area and topic coverage before conducting the diagnostic."
+      },
+      {
+        "criterion_id": "gathers-progress-context",
+        "description": "Agent asks how far along the student is or what has been covered",
+        "result": "pass",
+        "justification": "The agent explicitly asks about course scope ('What's the course scope? 4th Amendment only, full survey through trial rights, etc.') and the user confirms they covered the full course including all three amendments, satisfying the criterion of gathering progress context about what topics have been covered."
+      },
+      {
+        "criterion_id": "asks-for-own-words",
+        "description": "Agent asks the student to explain concepts in their own words rather than recite rules",
+        "result": "pass",
+        "justification": "The agent uses phrasing like 'Walk me through the full current doctrine,' 'tell me where the tensions and open questions are,' 'I want to see how you think through it,' and 'Take a real run at it - what counts as a search?' which ask the student to explain and reason rather than recite rules."
+      },
+      {
+        "criterion_id": "probes-reasoning",
+        "description": "Agent follows up on student answers by probing for deeper reasoning",
+        "result": "pass",
+        "justification": "After the student gave an off-topic answer about the exclusionary rule, the agent probed deeper by redirecting to the original question and explicitly asking the student to work through the threshold definitional question, pushing for reasoning about Katz, Jones, Jardines, and Carpenter rather than accepting the deflection."
+      },
+      {
+        "criterion_id": "produces-understanding-map",
+        "description": "Agent produces a structured understanding map at the end",
+        "result": "fail",
+        "justification": "The agent never produces a structured understanding map with categorized sections for strong areas, areas needing work, and priorities — the conversation ends mid-assessment with the agent still probing the user's knowledge."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "coaching-over-telling",
+        "description": "Agent asks questions and guides discovery rather than lecturing or providing answers directly",
+        "result": "strong",
+        "justification": "The agent consistently asks questions rather than lecturing, and when the student deflects to a different topic, the agent explicitly names the evasion as a learning moment and redirects with a probing question rather than simply providing the answer about what constitutes a 'search.'"
+      },
+      {
+        "criterion_id": "celebrates-strengths",
+        "description": "Agent explicitly acknowledges what the student got right before addressing gaps",
+        "result": "adequate",
+        "justification": "The agent briefly acknowledges the student's exclusionary rule answer as 'solid' and 'good,' but the primary focus is on redirecting the student rather than meaningfully celebrating what they got right before addressing the gap."
+      },
+      {
+        "criterion_id": "specific-gap-identification",
+        "description": "When identifying gaps, agent quotes or paraphrases what the student said and explains specifically why it reveals a gap, rather than giving vague feedback",
+        "result": "fail",
+        "justification": "Judge response unparseable: {\"result\": \"strong\", \"justification\": \"The agent explicitly quotes what the student did ('I asked you what a \"search\" is, and you answered with the exclusionary rule') and explains precisely why this "
+      },
+      {
+        "criterion_id": "actionable-suggestions",
+        "description": "Review suggestions point to specific cases, doctrines, or material sections rather than generic advice like \"study more\"",
+        "result": "strong",
+        "justification": "The agent's feedback specifically names the relevant cases (Katz, Jones, Jardines, Carpenter) and identifies the precise doctrinal gap (threshold 'search' definition vs. remedies), pointing the student to exactly which cases and analytical sequence to address rather than offering generic study advice."
+      },
+      {
+        "criterion_id": "appropriate-difficulty",
+        "description": "Diagnostic questions build from foundational to more advanced, matching the student's level",
+        "result": "strong",
+        "justification": "The agent appropriately calibrated difficulty for a self-described strong 3L by immediately asking a conceptually rich, multi-layered question about Fourth Amendment doctrine rather than starting with basics, and then astutely used the student's off-topic response as diagnostic information to identify a potential gap in threshold analysis before redirecting to the original advanced question."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-work-product",
+        "description": "Agent writes an outline, essay, memo, or other finished work product for the student",
+        "result": "clear",
+        "justification": "The agent asks probing questions and redirects the student to demonstrate their own knowledge, rather than producing any finished work product the student could submit as their own."
+      },
+      {
+        "criterion_id": "answers-own-questions",
+        "description": "Agent asks a diagnostic question then immediately answers it without waiting for the student",
+        "result": "clear",
+        "justification": "The agent asks the student to answer the question about what constitutes a 'search' and waits for their response without providing the answer itself, only listing the topics it expects to be covered as a prompt."
+      },
+      {
+        "criterion_id": "dismissive-of-mistakes",
+        "description": "Agent tells the student they are wrong without encouragement or constructive framing",
+        "result": "clear",
+        "justification": "The agent constructively reframes the student's off-topic answer as a meaningful learning signal ('that's actually a really important signal') and encourages them to try again, rather than simply saying they were wrong."
+      }
+    ]
+  }
+}

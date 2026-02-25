@@ -1,0 +1,112 @@
+persona: cle
+skill: client-email-coach
+
+criteria:
+  structural:
+    - id: receives-draft-and-context
+      description: Agent asks for the draft email, client relationship context, purpose, and concerns
+      check: Agent asks for or confirms it has the draft text and at least one contextual element (relationship, purpose, or concern) before evaluating
+
+    - id: evaluates-along-dimensions
+      description: Agent assesses the draft across key communication dimensions
+      check: Agent's feedback addresses at least three of clarity, tone, completeness, risk management, and client relationship
+
+    - id: quotes-specific-passages
+      description: Agent references specific parts of the draft when giving feedback
+      check: Agent quotes or paraphrases particular sentences or phrases from the draft rather than only speaking in generalities
+
+    - id: identifies-patterns
+      description: Agent names recurring communication patterns, not just one-off issues
+      check: Agent identifies at least one pattern (e.g., burying the lead, over-hedging) that the attorney can watch for in future emails
+
+    - id: offers-principles
+      description: Agent closes with actionable communication principles the attorney can apply going forward
+      check: Agent provides at least one transferable principle framed as applicable beyond this specific email
+
+  pedagogical:
+    - id: candid-direct-feedback
+      description: Feedback is specific and direct like a senior colleague, not generic praise
+      weight: high
+
+    - id: shows-not-tells
+      description: Agent provides rewritten examples for problems rather than just describing what's wrong
+      weight: high
+
+    - id: prioritized-feedback
+      description: Agent focuses on the most important 3-5 points rather than line-editing every sentence
+      weight: medium
+
+    - id: transferable-skills
+      description: Patterns and principles help the attorney improve future emails, not just this one
+      weight: medium
+
+anti_patterns:
+  - id: rewrites-whole-email
+    description: Agent rewrites the entire email rather than coaching the attorney to improve it
+    check: Agent produces a complete replacement draft rather than targeted feedback with selective rewrites
+
+  - id: too-deferential
+    description: Agent is so gentle that important problems go unflagged
+    check: Agent's feedback is entirely positive or hedges every critique to the point of uselessness
+
+  - id: ignores-risk
+    description: Agent doesn't address risk management issues in the draft
+    check: Draft contains potential guarantees, scope issues, or missing caveats and agent does not mention risk management
+
+test_scenarios:
+  - id: happy-path-status-update
+    setup: >
+      4th-year associate drafting a case status update to a long-standing
+      corporate client. The email is too long and buries the key update
+      at the end.
+    messages:
+      - role: user
+        content: "Can you review this email to my client? It's a status update on their breach of contract case."
+      - role: user
+        content: "Here's the draft: 'Dear Ms. Chen, I wanted to follow up on several matters related to the pending litigation. As you may recall, we filed the motion to compel on January 15th. Since then, opposing counsel has filed a response brief that raises several arguments about the scope of discovery. We reviewed their arguments carefully and believe most are without merit, though there is one point about attorney-client privilege that we need to address. We are preparing a reply brief that will be filed by next Friday. In other news, the judge has set a pretrial conference for March 20th. We should discuss preparation for that in the next week or two. The bottom line is that the motion to compel is progressing well and we expect a favorable ruling, though the privilege issue adds some uncertainty. Please let me know if you have any questions. Best regards, [Name]'"
+      - role: user
+        content: "She's a busy GC who reads on her phone. I'm worried it's too long but I want to be thorough."
+    expected:
+      - Identifies that the email buries the lead (key update at the end)
+      - Suggests leading with the bottom line
+      - Notes the "we expect a favorable ruling" language as a potential risk management issue (sounds like a guarantee)
+      - Provides a rewritten lead paragraph showing how to restructure
+      - Acknowledges the thoroughness while suggesting more scannable formatting
+
+  - id: boundary-test-write-for-me
+    setup: >
+      Attorney asks the agent to just write the email from scratch.
+    messages:
+      - role: user
+        content: "I need to tell a client about a settlement offer. Can you write the email?"
+    expected:
+      - Redirects toward coaching rather than drafting from scratch
+      - Offers to help the attorney think through the key messages and then review their draft
+      - May provide a structural framework (what to cover in what order) without writing the full email
+
+  - id: bad-news-email
+    setup: >
+      Attorney needs to communicate an unfavorable outcome to a client
+      and is struggling with tone.
+    messages:
+      - role: user
+        content: "We lost the summary judgment motion. I need to email the client. Here's my draft: 'Dear Mr. Patel, Unfortunately, the court has denied our motion for summary judgment. We were surprised by this ruling as we believed the arguments were strong. The judge seemed to focus heavily on a factual dispute about the timeline of events. We think this is wrong but we need to discuss next steps. There may be grounds for reconsideration but honestly the judge seemed to have made up his mind. We should talk soon about whether to proceed to trial or explore settlement. Let me know when you're available. Best, [Name]'"
+      - role: user
+        content: "He's going to be upset. He's invested a lot in this case. I want to be honest without sounding defeatist."
+    expected:
+      - Notes the tone issues (sounding surprised and defeatist undermines confidence)
+      - Identifies risk language ("we think this is wrong," "seemed to have made up his mind")
+      - Suggests leading with the outcome clearly, then pivoting to concrete next steps
+      - Provides rewritten passages showing a more confident, forward-looking tone
+      - Acknowledges the difficulty of delivering bad news and suggests a call may be better for the initial communication
+
+  - id: minimal-context
+    setup: >
+      Attorney provides only the draft with no context.
+    messages:
+      - role: user
+        content: "Review this: 'Hi Sarah, The deal is moving forward. We should close by end of month if all goes well. I'll send the revised docs tomorrow. Let me know if the board has any concerns. Thanks, [Name]'"
+    expected:
+      - Asks for context about the client relationship, the deal, and any specific concerns
+      - May offer preliminary observations (very brief, potentially too casual, "if all goes well" is hedgy)
+      - Explains why context matters for calibrating feedback

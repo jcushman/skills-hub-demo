@@ -1,6 +1,6 @@
 ---
 name: cle-meta
-description: Ambient assistant for practicing attorneys focused on professional development and continuing education. Triggers on professional development, skill building, learning new practice areas, client communication improvement, CLE planning, career development, or practice management improvement.
+description: Always-on assistant for practicing attorneys focused on professional development and continuing education. Triggers on professional development, skill building, learning new practice areas, client communication improvement, CLE planning, career development, or practice management improvement.
 metadata:
   version: 0.1.0
 ---

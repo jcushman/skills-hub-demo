@@ -1,0 +1,130 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:06:30.280238+00:00",
+    "persona": "cle",
+    "skill": "topic-curriculum",
+    "version": "0.1.0",
+    "scenario_id": "urgent-timeline"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "urgent-timeline",
+    "setup": "Attorney needs to advise a client on an unfamiliar area in a matter of days.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I just got a new client matter involving ERISA and I know almost nothing about it. The initial call is in 4 days."
+      }
+    ],
+    "expected": [
+      "Recognizes the urgency and provides a minimum viable learning path",
+      "Prioritizes ruthlessly -- what does the attorney need to know for the initial call, not full competence",
+      "Suggests specific resources that can be consumed quickly",
+      "Notes the limitations and suggests deeper learning after the immediate need"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I just got a new client matter involving ERISA and I know almost nothing about it. The initial call is in 4 days."
+    },
+    {
+      "role": "assistant",
+      "content": "Let me ask a few quick questions before I build this out for you.\n\n1. **What's the matter about?** ERISA is vast — the curriculum for a benefits litigation dispute looks very different from one covering fiduciary duty in plan administration, a 401(k) plan design question, a welfare benefit plan issue, or an M&A deal with pension liabilities. What's the general nature of the client's situation?\n\n2. **Who's the client?** Plan sponsor/employer, plan participant, fiduciary, service provider, or someone else? This shapes which parts of ERISA you need to understand first.\n\n3. **What do you need to accomplish in 4 days?** Is the goal to (a) get oriented enough to have an intelligent intake call and identify the right questions, (b) actually advise on the merits, or (c) decide whether to refer out or bring in co-counsel?\n\n4. **Any adjacent familiarity?** Have you touched benefits issues in employment work, M&A due diligence, or litigation? Or is this truly a cold start?\n\nThe answers will let me give you a tight, prioritized curriculum rather than a survey of all of ERISA — which would take weeks and won't help you in 4 days."
+    }
+  ],
+  "evaluation": {
+    "score": 45.6,
+    "structural": [
+      {
+        "criterion_id": "clarifies-learning-goal",
+        "description": "Agent asks about the topic, timeline, baseline knowledge, and reason for learning",
+        "result": "pass",
+        "justification": "The agent asks about all four key dimensions: topic/matter type (question 1), baseline knowledge (question 4), timeline is already known from the user (4 days) and confirmed implicitly in question 3, and reason/goal for learning (question 3), satisfying the requirement to address at least three of the specified criteria before building a curriculum."
+      },
+      {
+        "criterion_id": "maps-knowledge-landscape",
+        "description": "Agent identifies the essential elements of competence in the target area",
+        "result": "fail",
+        "justification": "The agent asks clarifying questions before presenting any curriculum but does not identify key concepts, governing sources, or practical skills in the ERISA domain — it defers mapping the knowledge landscape entirely until after the user responds."
+      },
+      {
+        "criterion_id": "builds-sequenced-curriculum",
+        "description": "Curriculum is organized into Foundation, Depth, Practice, and Currency phases",
+        "result": "fail",
+        "justification": "The agent has not yet built any curriculum — it is still gathering information through clarifying questions, so there are no phases or stages present in the output."
+      },
+      {
+        "criterion_id": "explains-each-resource",
+        "description": "Each recommended resource includes a description, rationale, and priority level",
+        "result": "fail",
+        "justification": "The agent has not yet recommended any resources in this response, so there are no resources to evaluate for descriptions, rationales, or priority levels."
+      },
+      {
+        "criterion_id": "produces-curriculum-document",
+        "description": "Output is a structured document with learning goal, phases, time estimates, and sequence",
+        "result": "fail",
+        "justification": "The agent has not yet produced any curriculum document; it is still in the information-gathering phase, asking clarifying questions before building the learning plan."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "efficient-prioritization",
+        "description": "Curriculum respects the attorney's limited time and prioritizes high-impact resources",
+        "result": "strong",
+        "justification": "The agent explicitly refuses to dump a broad ERISA survey on the attorney and instead asks targeted diagnostic questions to build a tight, prioritized curriculum matched to the 4-day constraint and specific use case, directly demonstrating respect for limited time and focus on high-impact resources."
+      },
+      {
+        "criterion_id": "practice-oriented",
+        "description": "Curriculum includes practical exercises or skills, not just reading",
+        "result": "weak",
+        "justification": "The agent's response consists entirely of clarifying questions with no practical exercises, skills, or hands-on learning activities included, making it purely diagnostic rather than practice-oriented."
+      },
+      {
+        "criterion_id": "minimum-viable-path",
+        "description": "Curriculum offers a shortcut or \"if time is limited\" path for urgent timelines",
+        "result": "weak",
+        "justification": "The agent asks clarifying questions before building any curriculum, which is reasonable, but fails to immediately offer any minimum-viable-path guidance or even acknowledge that a 4-day shortcut path exists — leaving the user with nothing actionable while waiting for a follow-up exchange."
+      },
+      {
+        "criterion_id": "currency-sources",
+        "description": "Curriculum identifies ongoing sources for staying current after initial learning",
+        "result": "weak",
+        "justification": "The agent focuses entirely on scoping the immediate 4-day learning need and never mentions any ongoing sources—journals, agencies, listservs, treatises, or other mechanisms—for staying current with ERISA after the initial learning period."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "does-the-learning",
+        "description": "Agent teaches the substantive law rather than creating a learning plan",
+        "result": "clear",
+        "justification": "The agent asks clarifying questions to build a targeted learning plan rather than providing any substantive ERISA legal analysis or doctrinal explanations."
+      },
+      {
+        "criterion_id": "unrealistic-time-estimates",
+        "description": "Agent recommends a curriculum requiring hundreds of hours for someone with a short timeline",
+        "result": "clear",
+        "justification": "The agent explicitly acknowledged the 4-day constraint and declined to provide a broad curriculum, instead asking clarifying questions to build a targeted, realistic plan while noting that a full ERISA survey 'would take weeks and won't help you in 4 days.'"
+      },
+      {
+        "criterion_id": "no-primary-sources",
+        "description": "Agent fails to include governing statutes, regulations, or key cases",
+        "result": "clear",
+        "justification": "The agent has not yet provided any curriculum or substantive ERISA content — it is appropriately gathering information before building a learning plan, so there are no primary sources to have omitted yet."
+      }
+    ]
+  }
+}

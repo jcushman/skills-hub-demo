@@ -1,0 +1,136 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:13:19.992627+00:00",
+    "persona": "professor",
+    "skill": "syllabus-evidence-based",
+    "version": "_null",
+    "scenario_id": "compares-to-traditional"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "compares-to-traditional",
+    "setup": "Professor asks how this approach differs from a traditional syllabus.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I usually teach a traditional block syllabus. Why would I want an evidence-based one? What's different?"
+      }
+    ],
+    "expected": [
+      "Explains the key structural differences (spiral vs. linear, spaced practice, scaffolded complexity)",
+      "Grounds the explanation in learning science, not just preference",
+      "Respects the professor's existing approach while making the case for evidence-based design",
+      "Does not dismiss traditional approaches"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I usually teach a traditional block syllabus. Why would I want an evidence-based one? What's different?"
+    },
+    {
+      "role": "assistant",
+      "content": "# Evidence-Based vs. Traditional Block Syllabus\n\nGreat question. Here's the core difference:\n\n## Traditional Block Syllabus\n- Organized around **content coverage** (\"Week 3: Chapter 5\")\n- Tells students *what* you'll teach\n- Sequence driven by textbook or instructor habit\n- Assessment often comes **after** teaching is complete\n\n## Evidence-Based Syllabus\n- Organized around **what students will be able to do**\n- Tells students *why* the sequence matters\n- Sequence driven by **learning science** (spacing, retrieval, interleaving)\n- Assessment is **woven throughout** as a learning tool\n\n---\n\n## Why Consider Switching?\n\n**The research problem with block teaching:**\n- Students cram, perform okay on exams, then forget\n- Massed practice feels productive but produces weak retention\n\n**What evidence suggests instead:**\n- **Spaced practice** - returning to concepts over time\n- **Retrieval practice** - low-stakes testing that actually builds memory\n- **Interleaving** - mixing topics improves transfer to new problems\n\n---\n\n## Practical Difference\n\n| | Traditional | Evidence-Based |\n|---|---|---|\n| Student question | \"What's on the test?\" | \"What should I be able to do?\" |\n| Your planning question | \"What do I cover?\" | \"What do students need to practice?\" |\n\n---\n\n**The honest answer:** It requires more upfront design work, but typically produces **better retention and transfer**.\n\nWhat subject do you teach? That might help make this more concrete."
+    }
+  ],
+  "evaluation": {
+    "score": 42.4,
+    "structural": [
+      {
+        "criterion_id": "analyzes-provided-content",
+        "description": "Agent reviews the user's source material before generating the syllabus",
+        "result": "fail",
+        "justification": "The user has not provided any source material (casebook chapters, case names, or topic areas) in this conversation, so there is no content for the agent to analyze or reference."
+      },
+      {
+        "criterion_id": "asks-missing-info",
+        "description": "Agent asks for missing logistical information needed to build the syllabus",
+        "result": "fail",
+        "justification": "The agent never asked about session count, session length, semester duration, or credit hours, which would be necessary to build a syllabus; it only asked about the subject taught."
+      },
+      {
+        "criterion_id": "includes-spiral-markers",
+        "description": "Schedule includes explicit spiral return points connecting later sessions to earlier material",
+        "result": "fail",
+        "justification": "The agent's response explains evidence-based syllabus concepts but does not present any actual schedule with sessions, and therefore cannot include spiral markers or explicit connections back to earlier session topics."
+      },
+      {
+        "criterion_id": "includes-scaffolding-levels",
+        "description": "Sessions indicate the scaffolding progression across the semester",
+        "result": "fail",
+        "justification": "The agent's response explains the difference between traditional and evidence-based syllabi but includes no scaffolding progression annotations or descriptions of how support levels change across a semester."
+      },
+      {
+        "criterion_id": "includes-spaced-practice",
+        "description": "Schedule includes cumulative practice touchpoints that draw on material from multiple units",
+        "result": "fail",
+        "justification": "The agent explains spaced practice and interleaving conceptually but does not include any actual schedule, session, or assignment labeled as a cumulative problem set, connection class, or diagnostic spanning multiple doctrinal areas."
+      },
+      {
+        "criterion_id": "includes-design-note",
+        "description": "Syllabus includes a note explaining the evidence-based design approach for students",
+        "result": "fail",
+        "justification": "The agent explains evidence-based design concepts to the instructor but does not include a syllabus with a note explaining the evidence-based approach to students; no actual syllabus document was produced."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "evidence-based-grounding",
+        "description": "Design decisions reference or reflect learning science principles rather than just conventional practice",
+        "result": "strong",
+        "justification": "The agent explicitly grounds its recommendations in named learning science principles (spaced practice, retrieval practice, interleaving) and contrasts them with the research problem of massed practice, demonstrating that design decisions are directly tied to empirical evidence rather than mere convention."
+      },
+      {
+        "criterion_id": "difficulty-calibrated-pacing",
+        "description": "More time is allocated to conceptually dense topics, not just proportional to page count",
+        "result": "adequate",
+        "justification": "The agent provides a balanced overview of evidence-based vs. traditional syllabi but doesn't demonstrate difficulty-calibrated pacing itself—it treats all concepts (spaced practice, retrieval practice, interleaving, backward design) with roughly equal brevity rather than spending more time on the denser or more counterintuitive ideas like interleaving or how assessment-as-learning differs from traditional assessment."
+      },
+      {
+        "criterion_id": "transparent-rationale",
+        "description": "Pacing choices and revisitation decisions are explained, supporting student metacognition",
+        "result": "weak",
+        "justification": "The agent explains what evidence-based syllabi are and why they work, but never explains its own pedagogical choices—such as why it used a comparison table, why it ended with a question, or how this response is paced to support the instructor's learning—leaving the rationale for its teaching decisions entirely implicit."
+      },
+      {
+        "criterion_id": "cumulative-assessment",
+        "description": "Assessments draw from multiple units rather than testing only the most recent block",
+        "result": "weak",
+        "justification": "The conversation only has one exchange, so there is no opportunity to observe cumulative assessment across multiple units; the agent mentions assessment woven throughout as a concept but does not itself demonstrate or implement any cross-unit assessment practice."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "linear-block-design",
+        "description": "Agent produces a traditional linear syllabus without spiral returns or spaced practice",
+        "result": "clear",
+        "justification": "The agent explicitly advocates against linear block design by explaining the value of spaced practice, retrieval practice, and interleaving, contrasting these evidence-based approaches with the traditional block syllabus the user currently uses."
+      },
+      {
+        "criterion_id": "produces-student-work",
+        "description": "Agent produces student-facing work product like study guides or outlines",
+        "result": "clear",
+        "justification": "The agent's output is instructor-facing content explaining pedagogical concepts and design principles to help the teacher make an informed decision, not a student-facing study guide or outline."
+      },
+      {
+        "criterion_id": "ignores-source-material",
+        "description": "Agent generates a syllabus from general knowledge rather than the user's provided content",
+        "result": "clear",
+        "justification": "The user did not provide any source materials or content for the agent to base a syllabus on; the agent appropriately answered a conceptual question about evidence-based syllabi using general pedagogical knowledge, which is exactly what the situation called for."
+      }
+    ]
+  }
+}

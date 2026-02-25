@@ -1,0 +1,142 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:09:47.212672+00:00",
+    "persona": "cle",
+    "skill": "development-plan",
+    "version": "_null",
+    "scenario_id": "solo-practitioner"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "solo-practitioner",
+    "setup": "Solo practitioner with very different constraints than a firm attorney.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I'm a solo practitioner doing family law. Been at it 8 years. I feel like I'm stuck -- good at what I do but not growing."
+      },
+      {
+        "role": "user",
+        "content": "I want to expand into mediation but I also need to improve my practice management. I'm stretched thin doing everything myself."
+      }
+    ],
+    "expected": [
+      "Recognizes the unique constraints of solo practice (wearing all hats, limited time)",
+      "Helps prioritize between mediation expansion and practice management",
+      "Suggests actions that account for a solo practitioner's resource constraints",
+      "Plan is realistic for someone without a firm's infrastructure"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I'm a solo practitioner doing family law. Been at it 8 years. I feel like I'm stuck -- good at what I do but not growing."
+    },
+    {
+      "role": "assistant",
+      "content": "That's a really common inflection point for solo practitioners around the 7-10 year mark. You've built competence but the path forward isn't obvious.\n\nIt might help to get specific about what \"not growing\" actually means to you, because the solutions are pretty different depending on the answer:\n\n**Is it financial?**\n- Revenue plateaued despite being busy\n- Fees haven't kept pace with your experience level\n- Taking cases you shouldn't because you need the income\n\n**Is it professional/intellectual?**\n- Work feels repetitive\n- Not being challenged\n- No one to learn from or push you\n\n**Is it practice development?**\n- Referral sources dried up or stagnant\n- Not attracting the clients you want\n- Stuck in a market segment you've outgrown\n\n**Is it structural/operational?**\n- Doing everything yourself and hitting a ceiling\n- No leverage - your income is capped by your hours\n\n**Or is it something harder to name** - like you're good at this but questioning whether it's still the right fit?\n\nThe solo context matters a lot here. You don't have a partnership track or a managing partner conversation to force clarity. **You have to define what growth even means for you**, which is both the freedom and the difficulty of your situation.\n\nWhat resonates most when you read that list?"
+    },
+    {
+      "role": "user",
+      "content": "I want to expand into mediation but I also need to improve my practice management. I'm stretched thin doing everything myself."
+    },
+    {
+      "role": "assistant",
+      "content": "Those are actually two pretty different problems pulling in opposite directions right now.\n\n**The tension worth naming:**\nAdding mediation while stretched thin risks doing both things mediocrely. Mediation requires real presence and mental bandwidth - hard to deliver when you're drowning in admin.\n\n**On practice management first:**\nBeing stretched thin as a solo usually comes from a few specific culprits. Which hits closest?\n- Intake and client communication eating your time\n- Billing and collections being inconsistent\n- No systems so everything requires your decision\n- Doing work a $15/hour person could do\n\nThe solo reality is you probably can't hire a full-time employee yet, but **you likely have more options than you're using** - virtual assistants, legal-specific software, outsourced bookkeeping, contract paralegals.\n\n**On mediation:**\nThis is actually smart strategically for family law. But it requires asking:\n- Training investment - have you looked at what certification requires in your state?\n- Whether your current clients/referral sources would feed that practice\n- Whether you're drawn to it genuinely or partly as an escape from current frustrations\n\n**The honest question:**\nIf you fixed the practice management problem, would mediation still feel urgent and exciting? Or does it feel more appealing partly because the current situation is exhausting?\n\nThat answer matters for sequencing what you tackle first.\n\nWhat does your current setup actually look like operationally?"
+    }
+  ],
+  "evaluation": {
+    "score": 71.2,
+    "structural": [
+      {
+        "criterion_id": "gathers-context",
+        "description": "Agent asks about current role, practice area, firm type, and years of experience",
+        "result": "pass",
+        "justification": "The user volunteered their role (solo practitioner), practice area (family law), and years of experience (8 years) in the first message, and the agent confirmed and built upon all three of these contextual details throughout the conversation, satisfying the requirement to address at least three of the four context dimensions."
+      },
+      {
+        "criterion_id": "assesses-position",
+        "description": "Agent explores strengths, areas to improve, feedback received, and career vision",
+        "result": "fail",
+        "justification": "The agent never asks about the user's strengths, feedback received from others, or 2-3 year career vision, focusing instead on problem diagnosis and operational questions without exploring at least two of the required position-assessment dimensions."
+      },
+      {
+        "criterion_id": "categorizes-priorities",
+        "description": "Agent maps development needs into specific categories",
+        "result": "pass",
+        "justification": "The agent explicitly organizes the user's development needs into named categories—'practice management' and 'mediation'—and within each uses structured headers and sub-points, clearly mapping priorities into distinct labeled domains rather than presenting an unstructured list."
+      },
+      {
+        "criterion_id": "produces-quarterly-plan",
+        "description": "Output includes quarterly milestones with specific action items",
+        "result": "fail",
+        "justification": "The agent never produces a quarterly plan with milestones, action items, or deadlines across any quarters; it only asks diagnostic questions and identifies tensions without providing any structured timeline."
+      },
+      {
+        "criterion_id": "includes-metrics",
+        "description": "Plan includes progress metrics and a check-in mechanism",
+        "result": "fail",
+        "justification": "The agent's responses contain no progress metrics, feedback loops, concrete outputs, self-assessment prompts, or check-in mechanisms to measure the user's growth or track progress toward their goals."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "realistic-time-awareness",
+        "description": "Recommendations account for billable hour pressure and limited development time",
+        "result": "adequate",
+        "justification": "The agent acknowledges the solo practitioner's stretched-thin reality and mentions realistic options like virtual assistants and contract paralegals, but doesn't explicitly address billable hour pressure or quantify the time investment required for mediation training and certification versus the time savings from practice management improvements."
+      },
+      {
+        "criterion_id": "strategic-prioritization",
+        "description": "Agent helps narrow focus to 2-4 priorities rather than trying to address everything",
+        "result": "strong",
+        "justification": "The agent explicitly names the tension between the two goals, frames them as a sequencing problem, and implicitly prioritizes practice management first before mediation—effectively narrowing the user's focus rather than treating both as equally urgent parallel tracks."
+      },
+      {
+        "criterion_id": "practical-specificity",
+        "description": "Action items are concrete and achievable, not aspirational generalities",
+        "result": "strong",
+        "justification": "The agent consistently offers concrete, actionable options (virtual assistants, legal-specific software, outsourced bookkeeping, contract paralegals, state certification research) rather than vague advice like 'improve your systems' or 'consider your options,' and frames next steps as specific diagnostic questions the user can immediately act on."
+      },
+      {
+        "criterion_id": "builds-attorney-capability",
+        "description": "Focus is on building the attorney's own skills, not producing work product for them",
+        "result": "strong",
+        "justification": "The agent consistently asks diagnostic questions that prompt the attorney to analyze their own situation, identify root causes, and develop their own strategic thinking rather than providing ready-made solutions or work product."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-work-product",
+        "description": "Agent produces client deliverables or legal work product instead of a development plan",
+        "result": "clear",
+        "justification": "The agent produces no legal work product, memoranda, briefs, or client deliverables—it asks diagnostic questions and offers a developmental framework to help the practitioner think through their growth challenges."
+      },
+      {
+        "criterion_id": "generic-career-advice",
+        "description": "Agent gives only generic advice without tailoring to the attorney's specific situation",
+        "result": "clear",
+        "justification": "The agent consistently tailors its advice to the user's specific context—solo family law practitioner, 8 years in, wanting mediation expansion while operationally stretched—rather than offering generic advice that could apply to any attorney."
+      },
+      {
+        "criterion_id": "ignores-constraints",
+        "description": "Agent recommends plans that are unrealistic given the attorney's time and resource constraints",
+        "result": "clear",
+        "justification": "The agent does not recommend any specific time commitments or action plans; it asks diagnostic questions and flags the tension between the two goals, which is appropriate and realistic for a stretched-thin solo practitioner."
+      }
+    ]
+  }
+}

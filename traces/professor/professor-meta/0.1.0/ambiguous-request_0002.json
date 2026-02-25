@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:06:51.543524+00:00",
+    "persona": "professor",
+    "skill": "professor-meta",
+    "version": "0.1.0",
+    "scenario_id": "ambiguous-request"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "ambiguous-request",
+    "setup": "Professor makes a vague request about improving their teaching.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I want to be a better teacher. My evaluations say students find my class confusing."
+      }
+    ],
+    "expected": [
+      "Asks clarifying questions about what aspects students find confusing",
+      "Does not jump to solutions without understanding the problem",
+      "Treats the feedback as diagnostic information, not a personal failing"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I want to be a better teacher. My evaluations say students find my class confusing."
+    },
+    {
+      "role": "assistant",
+      "content": "That's useful feedback to work with — \"confusing\" is actually one of the more actionable complaints students make, because it usually points to specific, diagnosable problems.\n\nLet me offer a framework for thinking about this, then we can drill into whatever resonates.\n\n---\n\n## Common Sources of Student Confusion in Law Courses\n\n### 1. **Unclear Learning Objectives**\nStudents don't know what they're supposed to be getting out of a class session, unit, or the course overall. They're absorbing content without a map.\n\n*Diagnostic question:* Could your students articulate, in their own words, what they're supposed to be able to *do* by the end of your course?\n\n---\n\n### 2. **Mismatch Between Teaching and Assessment**\nYou're teaching one thing (doctrine, policy analysis, synthesis) but testing another — or students perceive a mismatch even if one doesn't exist.\n\n*Diagnostic question:* Have you made explicit to students how class discussion connects to what they'll be asked to do on exams or papers?\n\n---\n\n### 3. **Cognitive Load Issues**\nLaw courses often front-load complexity. Students hit a wall when too many new concepts arrive simultaneously without scaffolding.\n\n*Diagnostic question:* Are there points in the semester where you introduce multiple difficult concepts in quick succession?\n\n---\n\n### 4. **Socratic Method Without Sufficient Anchoring**\nClassic Socratic dialogue is generative but can leave students uncertain about what the \"right\" answer or framework actually is. They leave class unsure what to take away.\n\n*Diagnostic question:* Do you regularly provide explicit synthesis or takeaways after Socratic exchanges?\n\n---\n\n### 5. **Assumed Background Knowledge**\nYou know this material deeply. Students may be missing foundational pieces you've stopped noticing you rely on.\n\n*Diagnostic question:* Are there concepts you reference without defining because they feel obvious to you?\n\n---\n\n## Where to Start\n\nA few targeted questions would help me give you more specific advice:\n\n1. **What course is this?** (1L required, upper-level seminar, clinic, etc.)\n2. **What format do you primarily use?** (Socratic, lecture, discussion, hybrid)\n3. **Do you have a sense of *when* in the course confusion peaks** — beginning, middle, end, or throughout?\n4. **What does your current syllabus look like in terms of stated objectives?**\n\nEven answering one or two of those will let us get much more concrete."
+    }
+  ],
+  "evaluation": {
+    "score": 62.7,
+    "structural": [
+      {
+        "criterion_id": "identifies-teaching-task",
+        "description": "Agent understands what teaching or course design task the professor needs help with",
+        "result": "fail",
+        "justification": "The agent immediately dove into substantive help with a broad framework before identifying the specific teaching task the professor needs help with, rather than first clarifying whether the need is syllabus design, course structure, assessment alignment, classroom technique, or something else."
+      },
+      {
+        "criterion_id": "collegial-interaction",
+        "description": "Agent treats the professor as a peer, not a subordinate",
+        "result": "pass",
+        "justification": "The agent engages as a peer by offering a direct analytical framework, asking pointed diagnostic questions, and using confident language ('let me offer,' 'will let us get more concrete') without excessive deference, flattery, or hedging."
+      },
+      {
+        "criterion_id": "stays-in-scope",
+        "description": "Agent handles teaching and course design tasks appropriately",
+        "result": "pass",
+        "justification": "The agent's response directly addresses pedagogy and teaching improvement by diagnosing sources of student confusion, offering instructional frameworks, and asking targeted questions about course design and teaching methods."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "evidence-based-default",
+        "description": "Agent favors evidence-based pedagogical approaches unless the user indicates a traditional preference",
+        "result": "strong",
+        "justification": "The agent consistently applies evidence-based pedagogical principles—cognitive load theory, explicit learning objectives, scaffolding, and the known limitations of Socratic method without synthesis—rather than defaulting to traditional 'teach more clearly' advice, while using diagnostic questions to tailor recommendations to the user's specific context."
+      },
+      {
+        "criterion_id": "respects-professor-judgment",
+        "description": "Agent surfaces options and evidence to inform decisions rather than dictating choices",
+        "result": "strong",
+        "justification": "The agent consistently presents multiple diagnostic frameworks and asks clarifying questions to help the professor identify their own issues, rather than prescribing a single solution or dictating what changes must be made."
+      },
+      {
+        "criterion_id": "practical-usefulness",
+        "description": "Suggestions are actionable and grounded in the professor's specific context",
+        "result": "adequate",
+        "justification": "The agent provides a solid framework with diagnostic questions and asks for context-gathering information, but cannot yet offer truly context-specific suggestions since the professor hasn't shared details about their course, teaching format, or specific confusion patterns."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-student-work",
+        "description": "Agent produces student-facing work product or simulates student responses",
+        "result": "clear",
+        "justification": "The agent provides a diagnostic framework and asks clarifying questions to help the professor improve their teaching, rather than producing any student-facing work product or simulating student responses."
+      },
+      {
+        "criterion_id": "subordinate-tone",
+        "description": "Agent is overly deferential or treats the professor as a superior rather than a peer",
+        "result": "clear",
+        "justification": "The agent communicates directly and collegially, offering concrete frameworks and diagnostic questions without any deferential or subordinate language toward the professor."
+      },
+      {
+        "criterion_id": "ignores-pedagogical-evidence",
+        "description": "Agent gives teaching advice without grounding it in evidence or established practice",
+        "result": "violation",
+        "justification": "The agent makes multiple pedagogical recommendations (clear learning objectives, scaffolding for cognitive load, explicit synthesis after Socratic exchanges) based on convention and opinion without citing any educational research, learning science evidence, or established pedagogical frameworks to ground the advice."
+      }
+    ]
+  }
+}

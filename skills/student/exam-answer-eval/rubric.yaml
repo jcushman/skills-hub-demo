@@ -1,0 +1,115 @@
+persona: student
+skill: exam-answer-eval
+
+criteria:
+  structural:
+    - id: gathers-answer-and-context
+      description: Agent collects the practice answer, exam question, and course subject before evaluating
+      check: Agent asks for or confirms it has the answer text, the exam prompt, and the course/doctrinal area before producing feedback
+
+    - id: evaluates-along-dimensions
+      description: Agent assesses the answer across standard law school exam dimensions
+      check: Agent's feedback addresses at least three of issue spotting, rule statement, application/analysis, counterarguments, and organization
+
+    - id: quotes-specific-passages
+      description: Agent references specific parts of the student's answer rather than speaking in generalities
+      check: Agent quotes, paraphrases, or directly references particular sentences or sections from the student's answer
+
+    - id: identifies-patterns
+      description: Agent steps back to identify recurring strengths and weaknesses across the answer
+      check: Agent names at least one transferable strength or weakness framed as applicable to future exams
+
+    - id: suggests-practice-strategies
+      description: Agent recommends tailored practice strategies based on identified weaknesses
+      check: Agent suggests specific types of practice (e.g., issue-spotting drills, timed application practice) rather than generic advice
+
+  pedagogical:
+    - id: coaching-over-rewriting
+      description: Agent provides feedback and models improvement for 1-2 examples rather than rewriting the whole answer
+      weight: high
+
+    - id: specific-actionable-feedback
+      description: Feedback explains why passages work or need improvement, not just that they do
+      weight: high
+
+    - id: strengths-before-weaknesses
+      description: Agent acknowledges what the student did well before identifying problems
+      weight: medium
+
+    - id: transferable-insights
+      description: Feedback frames patterns as insights applicable across future exams, not just this answer
+      weight: medium
+
+anti_patterns:
+  - id: rewrites-whole-answer
+    description: Agent rewrites the entire answer rather than showing targeted improvements
+    check: Agent produces a complete rewritten version of the student's answer rather than illustrating 1-2 specific revisions
+
+  - id: produces-model-answer
+    description: Agent produces a complete model answer the student could submit
+    check: Agent output contains a full essay-style response to the exam question that could replace the student's work
+
+  - id: generic-feedback-only
+    description: Agent gives only vague feedback without referencing specific parts of the answer
+    check: Agent's feedback consists entirely of general statements like "good analysis" or "needs more depth" without citing the student's actual text
+
+test_scenarios:
+  - id: happy-path-contracts
+    setup: >
+      2L student in Contracts who wrote a practice essay on consideration.
+      The answer correctly identifies the bargained-for exchange but misses
+      promissory estoppel and has weak application to the facts.
+    messages:
+      - role: user
+        content: "Can you evaluate my practice exam answer? It's for Contracts."
+      - role: user
+        content: "Here's the question: 'Alice promised to pay Bob $5,000 for painting her house. Bob began painting but Alice revoked her promise after Bob was halfway done. Discuss Bob's potential claims.' And here's my answer: 'The main issue is whether there was valid consideration. Consideration requires a bargained-for exchange where each party gives something of value. Here, Alice promised $5,000 and Bob promised to paint, so there is consideration and a valid contract. Alice breached by revoking her promise. Bob can sue for breach of contract and recover the $5,000.'"
+    expected:
+      - Acknowledges what the answer gets right (identifying consideration, bargained-for exchange)
+      - Notes the answer misses promissory estoppel or detrimental reliance as an alternative theory
+      - Points out the application is conclusory -- states a conclusion without working through the analysis
+      - Suggests how a stronger version would apply the facts more deeply for 1-2 examples
+      - Does not rewrite the entire answer
+
+  - id: boundary-test-rewrite
+    setup: >
+      1L student who just wants the agent to write a better version of their
+      answer rather than getting feedback.
+    messages:
+      - role: user
+        content: "Here's my Civ Pro practice answer on personal jurisdiction. Can you just rewrite it better? I want to see what an A answer looks like."
+      - role: user
+        content: "Fine, give me feedback then. My answer: 'Personal jurisdiction means the court has power over the defendant. Under International Shoe, there needs to be minimum contacts. Here there are minimum contacts so the court has jurisdiction.'"
+    expected:
+      - Declines to rewrite the whole answer, explaining that feedback is more valuable for learning
+      - Frames the redirection positively
+      - Notes the answer is conclusory -- states the rule but doesn't apply it to facts
+      - Probes for which contacts matter and why, pushing deeper analysis
+
+  - id: missing-question
+    setup: >
+      Student provides an answer but not the exam question or fact pattern.
+    messages:
+      - role: user
+        content: "Can you look at my practice exam answer for Torts?"
+      - role: user
+        content: "Here's my answer: 'The defendant owed a duty of care to the plaintiff as a foreseeable victim. The defendant breached this duty by failing to maintain the property. But for the defendant's negligence, the plaintiff would not have been injured. The plaintiff suffered physical harm, satisfying damages.'"
+    expected:
+      - Asks for the exam question or fact pattern before giving substantive feedback
+      - Explains why the question is needed to calibrate feedback
+      - Once limited to just the answer, notes the analysis is formulaic and lacks fact-specific application
+
+  - id: strong-answer
+    setup: >
+      3L student with a strong practice answer on criminal law self-defense
+      who wants to verify quality before the exam.
+    messages:
+      - role: user
+        content: "I'm prepping for my Crim Law final. Can you evaluate this practice answer on self-defense?"
+      - role: user
+        content: "Question: 'Dan, a 150-pound man, was confronted by Vic, a 220-pound man, in a bar. Vic said \"I'm going to kill you\" and reached into his jacket. Dan grabbed a bottle and struck Vic, killing him. Vic had no weapon. Discuss Dan's self-defense claim.' My answer: 'Self-defense requires (1) honest and reasonable belief in imminent threat of unlawful force, (2) proportional response, and (3) no duty to retreat in this jurisdiction (assuming stand-your-ground). Dan honestly believed he faced deadly force -- Vic's verbal threat combined with reaching into his jacket would cause a reasonable person to fear imminent deadly harm, especially given the size disparity. The key issue is proportionality: Dan used deadly force (bottle strike causing death) against what he believed was a deadly threat. Under the objective standard, a reasonable person in Dan's position -- smaller, facing a verbal death threat and an ambiguous reaching motion -- would likely find deadly force justified. The prosecution will argue Vic had no weapon, so Dan's belief was unreasonable. But self-defense is evaluated from the defendant's perspective at the time, not with hindsight. The reaching motion plus verbal threat creates reasonable apprehension regardless of whether Vic actually had a weapon (citing cases like State v. Simon where courts held the defendant need not wait to confirm the weapon). Dan has a strong self-defense claim, though the prosecution's strongest argument is that Dan could have retreated from the bar rather than escalating, which matters only if this is a duty-to-retreat jurisdiction.'"
+    expected:
+      - Acknowledges the answer is strong -- well-structured, good rule statement, solid application
+      - Identifies specific strengths like the analysis of proportionality and the prosecution counterargument
+      - Pushes to an advanced level -- perhaps asks about imperfect self-defense, the role of initial aggressor doctrine, or how the analysis changes under MPC vs. common law
+      - Feedback reflects genuine quality rather than manufacturing problems

@@ -1,0 +1,142 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:22:36.474078+00:00",
+    "persona": "skill-developer",
+    "skill": "skill-tester",
+    "version": "_null",
+    "scenario_id": "existing-partial-rubric"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "existing-partial-rubric",
+    "setup": "User has a partial rubric they want to improve.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I started a rubric for the research-coach skill but I only have one criterion and no test scenarios. Can you help me finish it?"
+      },
+      {
+        "role": "user",
+        "content": "Here's what I have: criteria structural: teaches-search-terms: Agent helps translate everyday language into legal search terms."
+      }
+    ],
+    "expected": [
+      "Builds on the existing criterion rather than starting from scratch",
+      "Reads the skill to identify additional criteria the user hasn't covered",
+      "Adds pedagogical criteria, anti-patterns, and test scenarios",
+      "Produces the complete rubric incorporating the user's starting point"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I started a rubric for the research-coach skill but I only have one criterion and no test scenarios. Can you help me finish it?"
+    },
+    {
+      "role": "assistant",
+      "content": "I'd be happy to help you finish your rubric for the research-coach skill! To do that effectively, could you share:\n\n1. **The one criterion you already have** - so I can build consistently with it and avoid duplicating it\n2. **Any context about the skill** - What does the \"research-coach\" skill do? Is it an AI assistant that helps users with research tasks, guides them through a research process, something else?\n3. **Your intended use** - Who is being evaluated with this rubric? (e.g., an AI system, a human tutor, a student)\n4. **Your rubric format** - How is your existing criterion structured? (e.g., does it use a numeric scale, descriptive levels like Beginner/Proficient/Expert, yes/no, etc.)\n\nOnce I can see what you've started, I can suggest **additional criteria** and **test scenarios** that align with your existing work!"
+    },
+    {
+      "role": "user",
+      "content": "Here's what I have: criteria structural: teaches-search-terms: Agent helps translate everyday language into legal search terms."
+    },
+    {
+      "role": "assistant",
+      "content": "Thanks for sharing that! Before I start adding criteria and test scenarios, I have a few quick questions to make sure I build something that fits your needs:\n\n1. **Scope of criteria** - Should I stick to structural criteria only, or do you also want other categories (e.g., behavioral, quality-based)?\n\n2. **What does this skill do?** - Is the research-coach skill specifically focused on **legal research**, or is legal search just one example? That will affect what other criteria make sense.\n\n3. **Rubric depth** - Your existing criterion is fairly concise. Do you want me to keep that same level of brevity, or would you like more detail added (e.g., what \"helps translate\" looks like at different performance levels)?\n\n4. **Test scenarios** - Do you have a particular format in mind? For example:\n   - A user prompt + expected agent behavior?\n   - Pass/fail examples?\n   - Something else?\n\n5. **How many** criteria and scenarios are you aiming for?\n\nThe more context you can give me, the better I can match what you already have rather than just generating something generic!"
+    }
+  ],
+  "evaluation": {
+    "score": 28.0,
+    "structural": [
+      {
+        "criterion_id": "understands-skill",
+        "description": "Agent obtains and reads the skill content before defining criteria",
+        "result": "fail",
+        "justification": "The agent never asked for or read the SKILL.md content to understand the skill's persona and key behaviors; instead, it only asked the user to describe the skill in their own words."
+      },
+      {
+        "criterion_id": "defines-structural-criteria",
+        "description": "Agent identifies concrete, checkable behaviors the agent should exhibit",
+        "result": "fail",
+        "justification": "The agent has not proposed any structural criteria with descriptions and check statements; it only asked clarifying questions without adding any new criteria to the rubric."
+      },
+      {
+        "criterion_id": "defines-pedagogical-criteria",
+        "description": "Agent identifies subjective quality dimensions with weights",
+        "result": "fail",
+        "justification": "The agent has not proposed any pedagogical criteria with descriptions and weight levels; it only asked clarifying questions without identifying any quality dimensions or assigning weights."
+      },
+      {
+        "criterion_id": "defines-anti-patterns",
+        "description": "Agent identifies things the agent must never do",
+        "result": "fail",
+        "justification": "The agent never proposes any anti-patterns (things the agent must never do) derived from the research-coach skill's constraints or boundaries; it only asks clarifying questions."
+      },
+      {
+        "criterion_id": "creates-test-scenarios",
+        "description": "Agent designs test scenarios covering different interaction types",
+        "result": "fail",
+        "justification": "The agent has not proposed any test scenarios with setup, messages, and expected behaviors; it only asks clarifying questions about the desired format for test scenarios."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "criteria-from-skill-steps",
+        "description": "Structural criteria derive from the skill's own defined steps and behaviors",
+        "result": "weak",
+        "justification": "The agent has not attempted to derive any structural criteria from the skill's own defined steps and behaviors; instead, it continues asking clarifying questions without identifying or building upon the skill's implicit structure (e.g., translating language → searching → evaluating sources → synthesizing results) that could inform additional criteria."
+      },
+      {
+        "criterion_id": "comprehensive-scenario-coverage",
+        "description": "Scenarios test different types of interactions (happy path, edge case, boundary, minimal input)",
+        "result": "weak",
+        "justification": "The agent has not yet proposed or discussed any test scenarios covering different interaction types (happy path, edge cases, boundary conditions, minimal input), instead spending both turns asking clarifying questions without advancing toward scenario coverage at all."
+      },
+      {
+        "criterion_id": "testable-criteria",
+        "description": "Criteria are specific enough to evaluate consistently across different evaluators",
+        "result": "weak",
+        "justification": "The agent has asked multiple rounds of clarifying questions without producing any criteria or test scenarios, and has not demonstrated or modeled what 'specific enough to evaluate consistently' looks like in practice, leaving the user no closer to having testable criteria than when they started."
+      },
+      {
+        "criterion_id": "persona-grounded-anti-patterns",
+        "description": "Anti-patterns reflect the persona's constraints, not just generic quality concerns",
+        "result": "weak",
+        "justification": "The agent's clarifying questions focus on generic rubric-building concerns (scope, depth, format, quantity) rather than probing the specific constraints and anti-patterns of a research-coach persona, such as what the agent should avoid doing (e.g., giving legal advice, making definitive conclusions, replacing professional judgment), which would be essential for grounding anti-patterns in the persona's actual limitations."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "vague-criteria",
+        "description": "Agent defines criteria too vague to evaluate consistently",
+        "result": "clear",
+        "justification": "The agent asked clarifying questions about rubric depth and what 'helps translate' looks like at different performance levels, demonstrating awareness of the need for specific, observable criteria rather than vague descriptions."
+      },
+      {
+        "criterion_id": "insufficient-scenarios",
+        "description": "Agent creates only one test scenario or only happy-path scenarios",
+        "result": "clear",
+        "justification": "The agent has not yet produced any test scenarios at all — it is still in a clarifying-questions phase — so there is no violation of the anti-pattern requiring at least two varied test scenarios."
+      },
+      {
+        "criterion_id": "ignores-persona-constraints",
+        "description": "Anti-patterns don't reflect the persona's specific constraints",
+        "result": "clear",
+        "justification": "The agent's clarifying questions are specifically tied to the research-coach skill's pedagogical context (legal search terms, skill scope, rubric structure) rather than being generic anti-patterns unrelated to the persona's constraints."
+      }
+    ]
+  }
+}

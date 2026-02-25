@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:09:25.581120+00:00",
+    "persona": "cle",
+    "skill": "topic-curriculum",
+    "version": "_null",
+    "scenario_id": "minimal-input"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "minimal-input",
+    "setup": "Attorney makes a vague request without specifics.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I need to learn employment law."
+      }
+    ],
+    "expected": [
+      "Asks clarifying questions about why, what aspects, and timeline",
+      "Does not produce a curriculum without understanding the scope and urgency",
+      "Helps the attorney narrow the topic to something learnable"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I need to learn employment law."
+    },
+    {
+      "role": "assistant",
+      "content": "# Learning Employment Law\n\nThat's a broad topic! Let me give you a structured overview to help you get started.\n\n## Core Areas of Employment Law\n\n### Federal Statutes\n- **Title VII** (Civil Rights Act) - discrimination based on race, sex, religion, national origin\n- **ADEA** - age discrimination (40+)\n- **ADA** - disability discrimination\n- **FLSA** - wage and hour, overtime, minimum wage\n- **FMLA** - family and medical leave\n- **NLRA** - collective bargaining, union rights\n- **OSHA** - workplace safety\n\n### Key Concepts\n- At-will employment and exceptions\n- Protected classes and characteristics\n- Hostile work environment\n- Retaliation claims\n- Independent contractor vs. employee classification\n- Wrongful termination\n\n## Suggested Learning Approaches\n\n1. **Treatises** - Lindemann & Grossman's Employment Discrimination Law\n2. **PLI or CLE courses** - practical, up-to-date\n3. **EEOC website** - guidance documents\n4. **Westlaw/Lexis** - practice guides\n5. **State-specific resources** - employment law varies significantly by state\n\n## Questions to Help Me Help You\n\n- What **jurisdiction** are you in?\n- Are you representing **employers or employees**?\n- Any **specific issue** (discrimination, wage/hour, etc.)?\n- What's your **current knowledge level**?\n\nWould you like to narrow the focus?"
+    }
+  ],
+  "evaluation": {
+    "score": 24.0,
+    "structural": [
+      {
+        "criterion_id": "clarifies-learning-goal",
+        "description": "Agent asks about the topic, timeline, baseline knowledge, and reason for learning",
+        "result": "fail",
+        "justification": "The agent jumped straight into delivering content before clarifying learning goals, and while it asked some questions at the end, it did not ask about timeline or reason for learning (why now), covering only topic specifics and baseline knowledge—and even those came as an afterthought rather than upfront clarification before building the curriculum."
+      },
+      {
+        "criterion_id": "maps-knowledge-landscape",
+        "description": "Agent identifies the essential elements of competence in the target area",
+        "result": "pass",
+        "justification": "Before presenting any curriculum or learning path, the agent explicitly maps the knowledge landscape by naming key federal statutes, core legal concepts, and practical skill areas (jurisdiction awareness, party representation, issue-specific knowledge) that constitute competence in employment law."
+      },
+      {
+        "criterion_id": "builds-sequenced-curriculum",
+        "description": "Curriculum is organized into Foundation, Depth, Practice, and Currency phases",
+        "result": "fail",
+        "justification": "The agent provides a flat overview with topic areas and a reading list, but does not organize learning into distinct sequential phases (Foundation, Depth, Practice, Currency) with different learning objectives for each stage."
+      },
+      {
+        "criterion_id": "explains-each-resource",
+        "description": "Each recommended resource includes a description, rationale, and priority level",
+        "result": "fail",
+        "justification": "The recommended resources (Lindemann & Grossman, PLI/CLE, EEOC website, Westlaw/Lexis, state-specific resources) are listed without descriptions of what they cover, rationale for why they're worth the time, or priority levels."
+      },
+      {
+        "criterion_id": "produces-curriculum-document",
+        "description": "Output is a structured document with learning goal, phases, time estimates, and sequence",
+        "result": "fail",
+        "justification": "The agent's output lacks a structured curriculum document with a stated learning goal, phased resources with sequence, and estimated time commitments — it provides a topical overview and resource suggestions but no learning phases or time estimates."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "efficient-prioritization",
+        "description": "Curriculum respects the attorney's limited time and prioritizes high-impact resources",
+        "result": "adequate",
+        "justification": "The agent provides a reasonable overview and asks clarifying questions to prioritize resources, but lists numerous statutes, concepts, and resources without distinguishing which are highest-impact or most time-efficient for an attorney to tackle first, missing an opportunity to truly prioritize based on common use cases."
+      },
+      {
+        "criterion_id": "practice-oriented",
+        "description": "Curriculum includes practical exercises or skills, not just reading",
+        "result": "weak",
+        "justification": "The agent provides only reading resources and conceptual overviews without including any practical exercises, case analysis activities, drafting tasks, or hands-on skills practice that would make the curriculum practice-oriented."
+      },
+      {
+        "criterion_id": "minimum-viable-path",
+        "description": "Curriculum offers a shortcut or \"if time is limited\" path for urgent timelines",
+        "result": "weak",
+        "justification": "The agent provides a comprehensive overview and asks clarifying questions but never offers a minimum viable path or 'if time is limited' shortcut for someone who may have urgent learning needs."
+      },
+      {
+        "criterion_id": "currency-sources",
+        "description": "Curriculum identifies ongoing sources for staying current after initial learning",
+        "result": "adequate",
+        "justification": "The agent mentions PLI/CLE courses and the EEOC website as ongoing resources, which partially addresses currency, but doesn't explicitly frame these as mechanisms for staying current over time or mention other ongoing sources like legal newsletters, bar association updates, or regulatory monitoring tools."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "does-the-learning",
+        "description": "Agent teaches the substantive law rather than creating a learning plan",
+        "result": "violation",
+        "justification": "The agent taught substantive employment law by listing federal statutes, key legal concepts, and doctrinal explanations rather than focusing primarily on pointing the attorney to learning resources and creating a structured learning plan."
+      },
+      {
+        "criterion_id": "unrealistic-time-estimates",
+        "description": "Agent recommends a curriculum requiring hundreds of hours for someone with a short timeline",
+        "result": "clear",
+        "justification": "The agent did not provide any time estimates for learning employment law, and instead asked clarifying questions to narrow the scope before recommending specific resources."
+      },
+      {
+        "criterion_id": "no-primary-sources",
+        "description": "Agent fails to include governing statutes, regulations, or key cases",
+        "result": "clear",
+        "justification": "The agent explicitly identifies multiple primary legal sources including federal statutes (Title VII, ADEA, ADA, FLSA, FMLA, NLRA, OSHA) and directs the user to authoritative resources like the EEOC website, satisfying the requirement to include governing statutes and regulations."
+      }
+    ]
+  }
+}

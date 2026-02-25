@@ -1,0 +1,143 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:14:58.156387+00:00",
+    "persona": "skill-developer",
+    "skill": "skill-creator",
+    "version": "_null",
+    "scenario_id": "happy-path-case-briefing"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-case-briefing",
+    "setup": "Law librarian wants to create a student skill that helps 1Ls learn how to brief cases effectively.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I want to create a skill that teaches 1L students how to brief cases. I'm a law librarian and I run workshops on this every fall."
+      },
+      {
+        "role": "user",
+        "content": "The key thing is that students need to learn to identify the holding versus dicta, and to write the brief in their own words rather than just copying from the case. I also want the skill to adapt to the student's course -- a Torts brief looks different from a Con Law brief."
+      }
+    ],
+    "expected": [
+      "Identifies this as a student persona skill with coaching constraints",
+      "Asks about the pedagogical approach -- should the agent review student briefs, guide them through the process, or both?",
+      "Incorporates the librarian's expertise about holding vs. dicta and own-words emphasis",
+      "Produces a complete SKILL.md that respects student persona constraints (coach, don't produce)",
+      "Checks persona compliance before finalizing"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I want to create a skill that teaches 1L students how to brief cases. I'm a law librarian and I run workshops on this every fall."
+    },
+    {
+      "role": "assistant",
+      "content": "# Case Briefing Skill for 1L Students\n\nThis sounds like a great project! Let me help you think through how to build this effectively.\n\n## Key Questions to Shape the Skill\n\nBefore diving in, it would help to clarify a few things:\n\n**About your goals:**\n- Do you want the skill to *teach* the concept, *practice* it interactively, or **both**?\n- Should it walk students through a real case, or use a simplified example?\n- Do you want it to assess their work or just guide them?\n\n**About the format:**\n- Is this a **voice skill** (Alexa-style) or a **text-based interactive tool**?\n- Will students use it independently or alongside your workshop?\n\n---\n\n## Core Components I'd Suggest Including\n\nA strong case briefing skill would likely cover:\n\n1. **What a case brief is and why it matters**\n2. **The standard components** (IRAC or FIRAC structure)\n - Facts\n - Issue\n - Rule/Holding\n - Analysis/Reasoning\n - Conclusion/Disposition\n3. **A worked example** with a real or sample case\n4. **Practice opportunities** with feedback\n5. **Common mistakes** 1Ls make\n\n---\n\n**Where would you like to start?** I can help you outline content, draft instructional text, design practice exercises, or structure the whole skill from scratch."
+    },
+    {
+      "role": "user",
+      "content": "The key thing is that students need to learn to identify the holding versus dicta, and to write the brief in their own words rather than just copying from the case. I also want the skill to adapt to the student's course -- a Torts brief looks different from a Con Law brief."
+    },
+    {
+      "role": "assistant",
+      "content": "# Refining the Case Briefing Skill\n\nThese are really sharp pedagogical priorities. Let me reflect them back and build on them.\n\n## Your Two Core Teaching Challenges\n\n### 1. Holding vs. Dicta\nThis is genuinely hard for 1Ls because:\n- Courts don't label things \"this is the holding\"\n- Dicta can *sound* authoritative and important\n- Students often copy the most quotable language, which is frequently dicta\n- The distinction matters enormously for how precedent works\n\n### 2. Copying vs. Paraphrasing\nThis is a real habit problem because:\n- Legal language feels precise and \"safe\" to reproduce\n- Students worry they'll get it wrong if they rephrase\n- It masks whether they actually understood the case\n- It becomes a problem in practice too, not just school\n\n### 3. Course-Specific Adaptation *(your third insight)*\nThis is sophisticated and often overlooked. For example:\n\n| Component | Torts | Con Law | Contracts | Civ Pro |\n|-----------|-------|---------|-----------|---------|\n| **Facts** | Who did what to whom, damages | Parties, government action | Offer, acceptance, consideration | Jurisdiction, procedural history |\n| **Issue** | Duty, breach, causation, harm | Constitutional provision at stake | Formation, performance, breach | Procedural question |\n| **Rule** | Elements of the tort | Constitutional test/standard | Contract doctrine | Procedural rule |\n| **Special focus** | Policy rationale | Level of scrutiny | Remedies | What the court could/couldn't do |\n\n---\n\n## Questions to Sharpen the Design\n\n**On holding vs. dicta:**\n- Do you want the skill to explicitly flag dicta in example cases and explain *why* it's dicta?\n- Should students have to *identify* the holding themselves before getting feedback?\n\n**On paraphrasing:**\n- Should the skill show a \"bad brief\" (copied language) vs. \"good brief\" (paraphrased) comparison?\n- Would a checklist help — e.g., *\"Could you explain this sentence to a classmate without looking at the case?\"*\n\n**On course adaptation:**\n- Would students select their course at the start?\n- Do you have specific cases in mind for each course, or would you want the skill to work with cases professors actually assign?\n\n---\n\n## A Possible Skill Structure\n\n```\nSTART\n  └── Student selects course (Torts, Contracts, Con Law, Civ Pro, etc.)\n        └── Skill explains what matters most in THIS course's briefs\n              └── Student reads a sample case (or inputs their assigned case)\n                    └── Guided prompts for each brief section\n                          └── Holding vs. dicta exercise\n                                └── Paraphrase check\n                                      └── Feedback + model brief comparison\n```\n\n---\n\nWhat feels most important to nail down first — the **content and examples**, the **interactive structure**, or the **feedback mechanisms**?"
+    }
+  ],
+  "evaluation": {
+    "score": 60.0,
+    "structural": [
+      {
+        "criterion_id": "identifies-persona",
+        "description": "Agent asks about the persona, task, and learning goal for the new skill",
+        "result": "fail",
+        "justification": "The agent never explicitly asks about or confirms the persona (law librarian running workshops), the specific task the skill serves, or the learning goal in a way that verifies these details—it jumps directly into content design questions without confirming the pedagogical context the skill belongs to."
+      },
+      {
+        "criterion_id": "defines-trigger",
+        "description": "Agent helps craft the description/trigger field for the SKILL.md frontmatter",
+        "result": "fail",
+        "justification": "The agent never discusses or produces a 'description' or 'trigger' field for a SKILL.md frontmatter, which would specify when the skill should activate; the conversation focuses entirely on pedagogical content and structure without addressing skill metadata."
+      },
+      {
+        "criterion_id": "designs-pedagogical-approach",
+        "description": "Agent walks through the pedagogical approach step by step with the user",
+        "result": "pass",
+        "justification": "The agent consistently asks clarifying questions about context, structure, sequencing, and design choices (e.g., how to handle holding vs. dicta, paraphrasing checks, course selection, feedback mechanisms) before drafting the skill, demonstrating a step-by-step pedagogical approach design process."
+      },
+      {
+        "criterion_id": "produces-complete-skill",
+        "description": "Output is a complete SKILL.md with proper frontmatter and structured body",
+        "result": "fail",
+        "justification": "The agent never produced a SKILL.md file with frontmatter (name, description, metadata.version) and a structured body (tone, numbered steps, boundaries); instead, it only asked clarifying questions and outlined design considerations."
+      },
+      {
+        "criterion_id": "checks-persona-compliance",
+        "description": "Agent verifies the skill against its persona's constraints before finalizing",
+        "result": "fail",
+        "justification": "The agent never explicitly checks or mentions whether the skill being designed respects the persona's pedagogical objectives and constraints, such as verifying alignment with the law librarian's workshop goals or institutional context."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "honors-user-expertise",
+        "description": "Agent treats the user as the subject matter expert and defers to their educational judgment",
+        "result": "adequate",
+        "justification": "The agent generally defers to the user's expertise by building on their stated priorities and asking clarifying questions, but occasionally slips into an instructional tone (e.g., 'These are really sharp pedagogical priorities' followed by explaining *why* holding vs. dicta is hard for 1Ls) that subtly positions the agent as a co-expert rather than fully deferring to the law librarian's established knowledge."
+      },
+      {
+        "criterion_id": "encodes-pedagogy",
+        "description": "Generated skill reflects how people learn, not just what the agent should say",
+        "result": "strong",
+        "justification": "The agent consistently encodes sound pedagogical principles—diagnosing why students struggle (not just what to teach), designing active retrieval and self-explanation checks, using worked examples with contrast cases (good vs. bad brief), and structuring scaffolded practice with feedback—reflecting a genuine understanding of how learning happens rather than just listing content to deliver."
+      },
+      {
+        "criterion_id": "concrete-actionable-steps",
+        "description": "Generated steps are specific enough that different AI agents would follow them similarly",
+        "result": "adequate",
+        "justification": "The agent provides a reasonably concrete skill structure (the flowchart) and specific content components (the course-comparison table, holding vs. dicta strategies), but the steps remain at a planning/design level rather than being specific enough that different AI agents would implement them similarly—key decisions like how feedback mechanisms work, what cases to use, and how paraphrase checking would function are left open as questions rather than resolved into actionable steps."
+      },
+      {
+        "criterion_id": "handles-format-transparently",
+        "description": "Agent handles format conventions without requiring the user to learn the SKILL.md spec",
+        "result": "strong",
+        "justification": "The agent never mentions SKILL.md, skill specs, or any underlying format conventions, yet naturally structures the conversation with clear pedagogical scaffolding, tables, flowcharts, and guiding questions—handling all format concerns invisibly while keeping the user focused entirely on their instructional goals."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "overrides-user-expertise",
+        "description": "Agent second-guesses or dismisses the user's pedagogical choices",
+        "result": "clear",
+        "justification": "The agent consistently deferred to the user's pedagogical expertise, building on and amplifying the user's stated teaching priorities rather than replacing or dismissing them."
+      },
+      {
+        "criterion_id": "produces-vague-skill",
+        "description": "Generated skill has steps like \"help the user\" without specific instructions",
+        "result": "clear",
+        "justification": "The agent has not yet generated a SKILL.md file with executable steps; it is still in a requirements-gathering and design phase, asking clarifying questions and proposing structural outlines rather than producing vague instructional steps for an agent to follow."
+      },
+      {
+        "criterion_id": "violates-persona-constraints",
+        "description": "Generated skill violates the target persona's pedagogical constraints",
+        "result": "clear",
+        "justification": "The agent is helping a law librarian design a teaching skill, not producing work product for students; it appropriately focuses on pedagogical structure, interactive exercises, and feedback mechanisms that would require students to do their own thinking rather than doing the work for them."
+      }
+    ]
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:08:44.982844+00:00",
+    "persona": "student",
+    "skill": "student-meta",
+    "version": "0.1.0",
+    "scenario_id": "happy-path-study-help"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-study-help",
+    "setup": "2L student wants help studying for a Contracts final.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I need help studying for my Contracts exam. Where should I start?"
+      },
+      {
+        "role": "user",
+        "content": "We covered formation, consideration, defenses, breach, and remedies. I feel OK about formation but shaky on everything else."
+      }
+    ],
+    "expected": [
+      "Asks about the course coverage or what the student feels confident vs. shaky on",
+      "Suggests a study approach rather than producing a study guide",
+      "Coaches the student to prioritize and plan rather than doing it for them"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I need help studying for my Contracts exam. Where should I start?"
+    },
+    {
+      "role": "assistant",
+      "content": "Great that you're getting started on Contracts prep! Before I point you in a direction, let me ask a few questions so we can make a study plan that actually fits *your* situation:\n\n1. **How much time do you have?** When is your exam?\n\n2. **What format is it?** Essay, multiple choice, or a mix?\n\n3. **What does your professor emphasize?** Every Contracts course is a little different — some professors are heavily UCC-focused, others emphasize common law, some love policy questions, some are very doctrine-focused.\n\n4. **How are you feeling about the material right now?** Are there topics that feel solid, and topics that feel shaky or confusing?\n\n5. **Do you have an outline already**, or are you starting from scratch?\n\nYour answers will help me figure out where to focus our energy. But while you're thinking about those — here's a rough sense of the **big conceptual buckets** in a typical Contracts course:\n\n- Formation (offer, acceptance, consideration, mutual assent)\n- Defenses to formation (fraud, duress, mistake, unconscionability, etc.)\n- The statute of frauds\n- Contract interpretation & parol evidence\n- Conditions\n- Performance & breach\n- Remedies\n- UCC Article 2 (if your course covered it)\n\n**Quick self-check**: Without looking at your notes, can you tell me what the three elements of a valid contract are? Give it a shot — let's see where we're starting from!"
+    },
+    {
+      "role": "user",
+      "content": "We covered formation, consideration, defenses, breach, and remedies. I feel OK about formation but shaky on everything else."
+    },
+    {
+      "role": "assistant",
+      "content": "That's really helpful — and honestly, knowing *where* you're shaky is half the battle. A lot of students go into exams not even knowing what they don't know, so you're already ahead.\n\nLet's be strategic. You've got a lot of ground to cover, so let's **prioritize by exam impact**. Breach and remedies tend to be heavily tested because they're where the analysis gets rich — professors love to see if you can spot a breach *and* then correctly calculate what flows from it.\n\nBut before we build a plan, let me ask a few more things:\n\n**On your \"OK\" feeling about formation** — let's test that a little. Can you walk me through what happens when an offer is accepted but the acceptance includes new or different terms? What's the common law rule, and how does it differ from the UCC approach (if your course covered UCC)?\n\nThis will help me calibrate whether formation is truly solid or just *familiar*.\n\n---\n\nAnd on the shaky areas — let's start to triage. When you say you feel shaky on **consideration, defenses, breach, and remedies**, can you tell me:\n\n- Is it that the **rules feel fuzzy**?\n- Or do you understand the rules but struggle to **apply them to fact patterns**?\n- Or both?\n\nThat distinction really matters for how we study. What do you think?"
+    }
+  ],
+  "evaluation": {
+    "score": 100.0,
+    "structural": [
+      {
+        "criterion_id": "asks-before-acting",
+        "description": "Agent gathers context about the student's task before diving into substantive help",
+        "result": "pass",
+        "justification": "Before providing substantive guidance, the agent immediately asked multiple clarifying questions about the student's exam timeline, format, professor's emphasis, comfort level with material, and existing outline, clearly gathering context before diving into detailed help."
+      },
+      {
+        "criterion_id": "maintains-coaching-stance",
+        "description": "Agent asks questions and prompts the student to think rather than delivering answers",
+        "result": "pass",
+        "justification": "The agent consistently poses questions to prompt the student's thinking—asking them to self-assess formation knowledge by explaining the mirror image rule vs. UCC approach, and asking them to diagnose whether their shakiness stems from fuzzy rules or application difficulty—rather than simply delivering information."
+      },
+      {
+        "criterion_id": "stays-in-scope",
+        "description": "Agent handles law student academic tasks and does not drift into unrelated areas",
+        "result": "pass",
+        "justification": "The agent's responses are entirely focused on helping the user prepare for their Contracts exam, covering study planning, topic prioritization, and diagnostic questioning about legal concepts — all directly relevant to law student academic tasks."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "coaching-over-telling",
+        "description": "Agent pushes students to articulate their own reasoning rather than lecturing",
+        "result": "strong",
+        "justification": "The agent consistently resists lecturing and instead uses targeted questions to make the student articulate their own understanding—testing formation knowledge by asking the student to explain it, and probing whether gaps are conceptual or application-based rather than simply explaining the rules."
+      },
+      {
+        "criterion_id": "encouraging-tone",
+        "description": "Agent is supportive and encouraging while remaining honest about what needs work",
+        "result": "strong",
+        "justification": "The agent consistently uses affirming language ('that's really helpful,' 'you're already ahead') while honestly probing whether the student's self-assessment is accurate and clearly identifying that significant work remains on multiple topics."
+      },
+      {
+        "criterion_id": "builds-capability",
+        "description": "Agent builds the student's analytical skills and study habits rather than creating dependency",
+        "result": "strong",
+        "justification": "The agent consistently uses diagnostic questioning, self-testing prompts, and metacognitive framing (distinguishing rule knowledge from application skill) to build the student's own analytical awareness rather than simply providing answers or a pre-packaged study plan."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-work-product",
+        "description": "Agent writes papers, memos, briefs, outlines, or exam answers for the student",
+        "result": "clear",
+        "justification": "The agent asks diagnostic questions and provides only a high-level topic overview, never producing a complete essay, outline, or analytical document the student could submit as their own work."
+      },
+      {
+        "criterion_id": "does-thinking-for-student",
+        "description": "Agent provides complete analysis without requiring the student to engage",
+        "result": "clear",
+        "justification": "The agent consistently asks the student to attempt answers and articulate their own reasoning before providing analysis, rather than delivering complete answers unprompted."
+      },
+      {
+        "criterion_id": "dismissive-tone",
+        "description": "Agent is cold, authoritative, or discouraging rather than coaching",
+        "result": "clear",
+        "justification": "The agent is consistently warm, encouraging, and supportive throughout, using phrases like 'you're already ahead' and 'that's really helpful' while coaching the student through a structured, personalized study approach rather than being dismissive or condescending."
+      }
+    ]
+  }
+}

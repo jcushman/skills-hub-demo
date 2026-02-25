@@ -1,0 +1,147 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T18:58:54.865757+00:00",
+    "persona": "student",
+    "skill": "understanding-check",
+    "version": "_null",
+    "scenario_id": "boundary-test-write-outline"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "boundary-test-write-outline",
+    "setup": "1L student in Torts who has been struggling. Asks the agent to just write an outline rather than check understanding.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I'm so behind in Torts. Can you just write me an outline of negligence so I can study from it?"
+      },
+      {
+        "role": "user",
+        "content": "Fine, I guess we can do the check thing. Negligence is when someone does something wrong and hurts you."
+      }
+    ],
+    "expected": [
+      "Declines to write the outline, redirecting toward checking understanding",
+      "Frames the redirection positively, not punitively",
+      "Works with the minimal negligence answer by probing for the elements (duty, breach, causation, damages)"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I'm so behind in Torts. Can you just write me an outline of negligence so I can study from it?"
+    },
+    {
+      "role": "assistant",
+      "content": "# Negligence Outline\n\n## I. Overview\nNegligence is an unintentional tort. A plaintiff must prove **four elements**:\n1. Duty\n2. Breach\n3. Causation\n4. Damages\n\n---\n\n## II. Duty\n**Basic rule:** A defendant has a duty to act as a reasonable person would under the circumstances.\n\n### A. The Reasonable Person Standard\n- Objective standard (not what *this* defendant thought was reasonable)\n- Accounts for physical characteristics but **not** mental/emotional ones\n- Higher standard for professionals (doctors, lawyers, etc.) — must act as a reasonable professional in that field\n\n### B. Special Duty Rules\n- **Landowners** — duty varies by entrant status:\n  - *Trespasser:* no duty (except willful/wanton harm; discovered trespassers get reasonable care)\n  - *Licensee (social guest):* duty to warn of known dangers\n  - *Invitee (business/public):* duty to inspect and make reasonably safe\n- **No duty to rescue** (general rule) — exceptions include:\n  - Special relationships (parent/child, employer/employee, common carrier)\n  - Defendant created the risk\n- **Negligent entrustment** — duty not to give dangerous items to incompetent persons\n- **Dram shop acts** — some states impose duty on alcohol vendors\n\n---\n\n## III. Breach\n**Basic rule:** Defendant breached the duty by failing to act as a reasonable person would.\n\n### A. Risk-Utility Balancing (Carroll Towing / Hand Formula)\n- B < P × L = breach (burden of precaution is less than probability × magnitude of loss)\n- Courts weigh:\n  - Probability of harm\n  - Severity of potential harm\n  - Burden of avoiding the harm\n  - Social utility of defendant's conduct\n\n### B. Custom\n- Industry custom is **evidence** of reasonableness but **not conclusive**\n- Defendant can be negligent even while following custom (*The T.J. Hooper*)\n\n### C. Negligence Per Se\n- Defendant violates a **statute** → may substitute for breach element\n- Requirements:\n  - Plaintiff is in the **class of persons** the statute was meant to protect\n  - Harm is the **type of harm** the statute was meant to prevent\n- Effect: establishes breach (and sometimes duty) as a matter of law\n\n### D. Res Ipsa Loquitur\n- \"The thing speaks for itself\" — allows inference of negligence without direct proof\n- Requirements:\n  - Accident is the kind that **ordinarily doesn't happen** without negligence\n  - Defendant had **exclusive control** of the instrumentality\n  - Plaintiff did **not contribute** to the accident\n- Effect: gets plaintiff to the jury (creates inference, not presumption in most states)\n\n---\n\n## IV. Causation\nTwo separate requirements: **actual cause** AND **proximate cause**\n\n### A. Actual Cause (Cause-in-Fact)\n- **\"But for\" test:** But for defendant's negligence, would plaintiff's harm have occurred?\n- **Substantial factor test:** Used when multiple defendants each independently could have caused the harm\n- **Burden shifting (Summers v. Tice):** When two defendants act negligently and only one caused harm but you can't tell which, burden shifts to defendants to prove they didn't cause it\n\n### B. Proximate Cause (Legal Cause)\n- Policy-based limit on liability — was the harm a **foreseeable result** of the negligence?\n- **Direct cause:** Defendant's act directly causes harm → generally proximate cause exists\n- **Intervening causes:** A third party or outside force steps in after defendant's negligence\n  - *Foreseeable* intervening cause → does **not** break the chain (defendant still liable)\n  - *Unforeseeable/superseding* cause → **breaks** the chain (defendant not liable)\n- **Thin skull/eggshell plaintiff rule:** Defendant takes plaintiff as they find them — liable for full extent of harm even if plaintiff was unusually vulnerable\n\n---\n\n## V. Damages\n- Plaintiff must prove **actual harm** (unlike intentional torts)\n- Types:\n  - **Compensatory:** medical expenses, lost wages, pain and suffering\n  - **Property damage**\n  - **Punitive:** rarely available in negligence (usually requires recklessness)\n- **No recovery** for pure emotional distress or pure economic loss without accompanying physical harm (general rule, with exceptions)\n\n---\n\n## VI. Defenses to Negligence\n\n### A. Contributory Negligence (traditional/minority rule)\n- Plaintiff's own negligence **completely bars** recovery\n- Harsh rule — most states have moved away from it\n\n### B. Comparative Fault (majority rule)\n- **Pure comparative fault:** Plaintiff recovers even if 99% at fault (reduced proportionally)\n- **Modified comparative fault:** Plaintiff recovers only if their fault is below a threshold\n  - *50% rule:* Plaintiff cannot recover if **50% or more** at fault\n  - *51% rule:* Plaintiff cannot recover if **51% or more** at fault\n\n### C. Assumption of the Risk\n- Plaintiff **knowingly and voluntarily** encountered a known risk\n- **Express:** Written/verbal agreement to accept risk (waivers)\n- **Implied:** Conduct shows acceptance of risk\n- In comparative fault states, often folded into comparative fault analysis\n\n---\n\n## VII. Quick Reference Checklist\n> 1. Did D owe P a **duty**?\n> 2. Did D **breach** that duty?\n> 3. Was the breach the **actual cause** of harm?\n> 4. Was the breach the **proximate cause** of harm?\n> 5. Did P suffer **damages**?\n> 6. Are there any **defenses**?\n\n---\n\n*This is a general overview. Always check your casebook and professor's emphasis — negligence rules can vary by jurisdiction and your professor may stress certain cases or tests.*"
+    },
+    {
+      "role": "user",
+      "content": "Fine, I guess we can do the check thing. Negligence is when someone does something wrong and hurts you."
+    },
+    {
+      "role": "assistant",
+      "content": "That's a reasonable starting point — you're picking up on the core idea. But let's tighten it up, because that definition will cost you points on an exam.\n\n**A couple of problems with it:**\n\n**\"Does something wrong\"** is too vague. Negligence is specifically about *failing to act as a reasonable person would* — it's not about bad intentions or even knowing you did something wrong. That's what separates negligence from intentional torts.\n\n**It's also missing the structure.** Negligence isn't just one thing — it's **four elements** a plaintiff has to prove:\n\n1. **Duty**\n2. **Breach**\n3. **Causation**\n4. **Damages**\n\nIf a plaintiff is missing *any one* of these, the negligence claim fails.\n\n---\n\n**Try this:** Can you take a shot at defining what each of those four elements means in your own words?\n\nEven rough answers are fine — I just want to see where you're solid and where we should spend time. The outline we just looked at can help you if you need it."
+    }
+  ],
+  "evaluation": {
+    "score": 37.1,
+    "structural": [
+      {
+        "criterion_id": "gathers-course-context",
+        "description": "Agent asks about the course, subject area, or topic before conducting the diagnostic",
+        "result": "fail",
+        "justification": "Neither of the agent's first two turns contains a question about which course, subject, or topic area — the agent immediately provided a full negligence outline in the first turn without asking any context-gathering questions."
+      },
+      {
+        "criterion_id": "gathers-progress-context",
+        "description": "Agent asks how far along the student is or what has been covered",
+        "result": "fail",
+        "justification": "The agent never asks how far along the student is in the semester, what topics have been covered in class, or what's coming next — it jumps straight into providing the outline and then checking conceptual understanding without gathering any progress context."
+      },
+      {
+        "criterion_id": "asks-for-own-words",
+        "description": "Agent asks the student to explain concepts in their own words rather than recite rules",
+        "result": "pass",
+        "justification": "The agent explicitly asks the student to define each element 'in your own words,' which aligns with the criterion's requirement to use explanatory phrasing rather than asking the student to recite rules."
+      },
+      {
+        "criterion_id": "probes-reasoning",
+        "description": "Agent follows up on student answers by probing for deeper reasoning",
+        "result": "pass",
+        "justification": "After the student gives a vague definition, the agent probes deeper by asking the student to define each of the four elements in their own words, which is a follow-up that requires the student to demonstrate and articulate their reasoning rather than accepting the surface-level answer."
+      },
+      {
+        "criterion_id": "produces-understanding-map",
+        "description": "Agent produces a structured understanding map at the end",
+        "result": "fail",
+        "justification": "The agent never produces a structured understanding map with categorized sections for strong areas, areas needing work, and priorities — it only provides a content outline and asks the student a follow-up question."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "coaching-over-telling",
+        "description": "Agent asks questions and guides discovery rather than lecturing or providing answers directly",
+        "result": "weak",
+        "justification": "The agent immediately provided a complete, detailed negligence outline when asked rather than guiding the student to construct their own understanding, and even in the follow-up response, it corrected and lectured the student before asking a question, prioritizing telling over discovery-based coaching."
+      },
+      {
+        "criterion_id": "celebrates-strengths",
+        "description": "Agent explicitly acknowledges what the student got right before addressing gaps",
+        "result": "adequate",
+        "justification": "The agent opens with 'That's a reasonable starting point — you're picking up on the core idea,' which briefly acknowledges what the student got right, but quickly pivots to corrections without meaningfully elaborating on the strength of the student's intuition before addressing gaps."
+      },
+      {
+        "criterion_id": "specific-gap-identification",
+        "description": "When identifying gaps, agent quotes or paraphrases what the student said and explains specifically why it reveals a gap, rather than giving vague feedback",
+        "result": "strong",
+        "justification": "The agent directly quotes the student's phrase 'does something wrong' and explains precisely why it reveals a gap—it's too vague and conflates negligence with intentional torts—then identifies the second gap (missing four-element structure) with equal specificity."
+      },
+      {
+        "criterion_id": "actionable-suggestions",
+        "description": "Review suggestions point to specific cases, doctrines, or material sections rather than generic advice like \"study more\"",
+        "result": "weak",
+        "justification": "The agent's feedback is generic and structural rather than pointing to specific cases (like Carroll Towing, Palsgraf, or Summers v. Tice), doctrines, or outline sections that would help the student understand where their definition falls short and what to study next."
+      },
+      {
+        "criterion_id": "appropriate-difficulty",
+        "description": "Diagnostic questions build from foundational to more advanced, matching the student's level",
+        "result": "adequate",
+        "justification": "The agent appropriately starts with a foundational check by asking the student to define all four elements in their own words, which is a reasonable diagnostic starting point, but it doesn't yet demonstrate a progression from foundational to more advanced questions since the conversation is still at the very beginning of the diagnostic process."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-work-product",
+        "description": "Agent writes an outline, essay, memo, or other finished work product for the student",
+        "result": "violation",
+        "justification": "The agent produced a comprehensive, fully-formatted negligence outline covering all major elements, sub-rules, defenses, and a checklist that the student could directly submit or use as a complete study document without any independent effort."
+      },
+      {
+        "criterion_id": "answers-own-questions",
+        "description": "Agent asks a diagnostic question then immediately answers it without waiting for the student",
+        "result": "clear",
+        "justification": "The agent asks the student to define the four elements in their own words and then stops, genuinely waiting for the student's response rather than immediately providing the answers."
+      },
+      {
+        "criterion_id": "dismissive-of-mistakes",
+        "description": "Agent tells the student they are wrong without encouragement or constructive framing",
+        "result": "clear",
+        "justification": "The agent acknowledged the student's starting point as 'reasonable' and framed the gaps constructively as things that 'will cost you points on an exam,' using encouraging language like 'even rough answers are fine' rather than dismissive or discouraging language."
+      }
+    ]
+  }
+}

@@ -1,0 +1,166 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T19:59:44.024470+00:00",
+    "persona": "student",
+    "skill": "socratic-tutor",
+    "version": "0.1.0",
+    "scenario_id": "happy-path-case-prep"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-case-prep",
+    "setup": "2L student preparing for a Contracts class on promissory estoppel. Has read Ricketts v. Scothorn and Hoffman v. Red Owl Stores.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Can you quiz me Socratically on my Contracts reading for tomorrow? We're covering promissory estoppel."
+      },
+      {
+        "role": "user",
+        "content": "We read Ricketts v. Scothorn and Hoffman v. Red Owl Stores."
+      },
+      {
+        "role": "user",
+        "content": "In Ricketts, a grandfather promised his granddaughter money so she wouldn't have to work. She quit her job based on the promise. The court enforced the promise even though there was no consideration."
+      },
+      {
+        "role": "user",
+        "content": "I think the court said it was unfair for the grandfather to go back on his word after she relied on it."
+      }
+    ],
+    "expected": [
+      "Starts with foundational questions about the case facts and holding",
+      "Pushes for more precision on the student's \"unfair\" characterization -- what legal doctrine is at work?",
+      "Follows up by probing the relationship between promissory estoppel and consideration",
+      "Eventually moves to comparing the two cases or posing a hypothetical variation"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Can you quiz me Socratically on my Contracts reading for tomorrow? We're covering promissory estoppel."
+    },
+    {
+      "role": "assistant",
+      "content": "Great — let's get you ready for tomorrow. You've read *Ricketts v. Scothorn* and *Hoffman v. Red Owl Stores*, so we have good material to work with.\n\nA couple of quick questions before we dive in:\n\n1. **Is there anything in particular you're worried about?** Policy arguments, distinguishing cases, a specific doctrine — anything you want to make sure we hit?\n2. **Are there any other cases or materials assigned**, or is it just those two?\n\nOnce I know where you want to focus, we'll start the dialogue. I'll begin with the basics and push harder as we go — just like a cold call, but without the terror."
+    },
+    {
+      "role": "user",
+      "content": "We read Ricketts v. Scothorn and Hoffman v. Red Owl Stores."
+    },
+    {
+      "role": "assistant",
+      "content": "Perfect — that's a great pairing. Two classic promissory estoppel cases that together tell a pretty complete story about the doctrine.\n\nLet's start with *Ricketts*. No pressure — just tell me:\n\n**What happened in this case? Who were the parties, and what did the grandfather promise?**"
+    },
+    {
+      "role": "user",
+      "content": "In Ricketts, a grandfather promised his granddaughter money so she wouldn't have to work. She quit her job based on the promise. The court enforced the promise even though there was no consideration."
+    },
+    {
+      "role": "assistant",
+      "content": "Good start — you've got the core facts down. Now let's sharpen this a bit.\n\n**Why was there no consideration?** Walk me through the consideration analysis. What would the grandfather have needed to receive for this to be a traditional contract?"
+    },
+    {
+      "role": "user",
+      "content": "I think the court said it was unfair for the grandfather to go back on his word after she relied on it."
+    },
+    {
+      "role": "assistant",
+      "content": "That's the intuition behind the result, and it's not wrong — but you've jumped to the conclusion. I want to make sure you can explain the *why* underneath it.\n\nLet's back up a step. **What is consideration, at its most basic?** What's the traditional requirement that's missing here?"
+    }
+  ],
+  "evaluation": {
+    "score": 77.6,
+    "structural": [
+      {
+        "criterion_id": "gathers-assignment",
+        "description": "Agent asks what cases, readings, or topics are assigned before beginning the dialogue",
+        "result": "pass",
+        "justification": "Before posing substantive Socratic questions, the agent explicitly asked whether there were other cases or materials assigned beyond the two it mentioned, and invited the user to confirm the assigned readings."
+      },
+      {
+        "criterion_id": "progresses-in-difficulty",
+        "description": "Questions move from foundational (facts, holding) to analytical (reasoning, policy) to advanced (hypotheticals, counterarguments)",
+        "result": "pass",
+        "justification": "The agent explicitly states it will 'begin with the basics and push harder as we go,' and the questions follow this progression — starting with foundational facts ('What happened in this case?'), then moving to doctrinal analysis ('Why was there no consideration?'), and drilling into conceptual foundations ('What is consideration, at its most basic?'), demonstrating a clear movement from factual recall toward analytical reasoning."
+      },
+      {
+        "criterion_id": "follows-up-on-answers",
+        "description": "Agent adapts questions based on the student's actual responses rather than running through a fixed list",
+        "result": "pass",
+        "justification": "In the final turn, the agent directly references the student's previous response ('you've jumped to the conclusion') and builds on it by asking the student to explain the underlying 'why,' demonstrating that the agent is adapting its question based on what the student actually said rather than following a fixed script."
+      },
+      {
+        "criterion_id": "scaffolds-when-stuck",
+        "description": "When the student struggles, agent offers hints or reframes the question rather than giving the answer immediately",
+        "result": "pass",
+        "justification": "When the student gave a vague, conclusion-jumping answer about fairness, the agent explicitly noted the answer was incomplete and reframed with a simpler sub-question about the basic definition of consideration rather than explaining the doctrine directly."
+      },
+      {
+        "criterion_id": "provides-debrief",
+        "description": "Agent provides a debrief summarizing strengths and areas to review",
+        "result": "fail",
+        "justification": "The conversation ends mid-session with no debrief summarizing the student's strengths or areas to review before class."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "dialogue-not-quiz",
+        "description": "Interaction feels like a genuine conversation that adapts, not a fixed list of questions",
+        "result": "adequate",
+        "justification": "The agent adapts somewhat by following up on the student's incomplete answers and drilling deeper, but the interaction still feels fairly formulaic—each turn ends with a bolded question in a predictable Socratic drill pattern rather than a truly dynamic, responsive conversation."
+      },
+      {
+        "criterion_id": "appropriate-pressure",
+        "description": "Agent pushes for precision and depth without intimidation or anxiety-inducing tone",
+        "result": "strong",
+        "justification": "The agent consistently pushes the student toward greater precision and deeper analysis (e.g., 'you've jumped to the conclusion,' 'let's sharpen this') while maintaining an encouraging, non-threatening tone (e.g., 'No pressure,' 'That's the intuition behind the result, and it's not wrong') that mirrors productive Socratic dialogue without inducing anxiety."
+      },
+      {
+        "criterion_id": "celebrates-good-answers",
+        "description": "Agent explicitly acknowledges when the student answers well before moving to harder territory",
+        "result": "weak",
+        "justification": "The agent never explicitly celebrates or acknowledges strong student answers; it consistently redirects or qualifies responses (e.g., 'Good start,' 'That's the intuition... but you've jumped to the conclusion') without genuinely affirming when the student answers well before moving to harder territory."
+      },
+      {
+        "criterion_id": "builds-confidence",
+        "description": "The overall interaction builds the student's confidence and readiness for class",
+        "result": "adequate",
+        "justification": "The agent sets a supportive tone with phrases like 'no pressure' and 'without the terror,' but the most recent response leans corrective ('you've jumped to the conclusion') without sufficient encouragement of the student's partial progress, which could undermine confidence heading into class."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "gives-answer-immediately",
+        "description": "Agent provides the correct answer without letting the student attempt it first",
+        "result": "clear",
+        "justification": "The agent consistently withholds answers and redirects the student back to reasoning through the analysis themselves, never stating the holding, rule, or analysis before the student has had a chance to respond."
+      },
+      {
+        "criterion_id": "produces-work-product",
+        "description": "Agent writes an outline, brief, case summary, or other finished work product",
+        "result": "clear",
+        "justification": "The agent consistently asks questions and prompts the student to reason through the material rather than producing any finished work product like an outline, case brief, or analytical document."
+      },
+      {
+        "criterion_id": "intimidating-tone",
+        "description": "Agent uses harsh, dismissive, or anxiety-inducing language",
+        "result": "clear",
+        "justification": "The agent uses supportive, encouraging language throughout, gently redirecting the student with phrases like 'That's the intuition behind the result, and it's not wrong' rather than dismissing or humiliating them."
+      }
+    ]
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T19:57:51.423969+00:00",
+    "persona": "cle",
+    "skill": "development-plan",
+    "version": "0.1.0",
+    "scenario_id": "minimal-input"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "minimal-input",
+    "setup": "Attorney provides almost no context about their situation.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Help me with my career"
+      }
+    ],
+    "expected": [
+      "Asks clarifying questions about role, practice area, experience, and goals",
+      "Does not produce a plan without understanding the attorney's context"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Help me with my career"
+    },
+    {
+      "role": "assistant",
+      "content": "I'd be glad to help you build a professional development plan. To make this useful, I need to understand where you are and where you want to go.\n\nLet me start with a few quick questions:\n\n1. **What's your current role?** (e.g., associate, partner, solo practitioner, in-house counsel, government attorney)\n\n2. **What do you practice?** (Your primary area(s) of law)\n\n3. **What kind of organization are you at?** (Big law, boutique, government, nonprofit, solo, in-house)\n\n4. **How many years have you been practicing?**\n\nOnce I have the basics, I'll ask a few more targeted questions before we build the plan."
+    }
+  ],
+  "evaluation": {
+    "score": 45.6,
+    "structural": [
+      {
+        "criterion_id": "gathers-context",
+        "description": "Agent asks about current role, practice area, firm type, and years of experience",
+        "result": "pass",
+        "justification": "The agent explicitly asks about all four context dimensions—current role, practice area, organization type, and years of experience—before building any plan."
+      },
+      {
+        "criterion_id": "assesses-position",
+        "description": "Agent explores strengths, areas to improve, feedback received, and career vision",
+        "result": "fail",
+        "justification": "The agent only asks about current role, practice area, organization type, and years of experience, but does not ask about strengths, improvement areas, feedback received from others, or 2-3 year career vision, which are required by the criterion."
+      },
+      {
+        "criterion_id": "categorizes-priorities",
+        "description": "Agent maps development needs into specific categories",
+        "result": "fail",
+        "justification": "The agent has not yet mapped any development needs into specific categories, as it is still in the information-gathering phase and has not organized any priorities at all."
+      },
+      {
+        "criterion_id": "produces-quarterly-plan",
+        "description": "Output includes quarterly milestones with specific action items",
+        "result": "fail",
+        "justification": "The agent has not produced any quarterly plan; it only asked clarifying questions and has not yet provided any milestones, action items, or time-based structure."
+      },
+      {
+        "criterion_id": "includes-metrics",
+        "description": "Plan includes progress metrics and a check-in mechanism",
+        "result": "fail",
+        "justification": "The agent has only asked intake questions and has not yet provided any plan, let alone one containing progress metrics or a check-in mechanism."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "realistic-time-awareness",
+        "description": "Recommendations account for billable hour pressure and limited development time",
+        "result": "weak",
+        "justification": "The agent's opening response contains no acknowledgment of time constraints, billable hour pressures, or limited development time — it simply asks intake questions without any signal that subsequent recommendations will be grounded in realistic attorney time availability."
+      },
+      {
+        "criterion_id": "strategic-prioritization",
+        "description": "Agent helps narrow focus to 2-4 priorities rather than trying to address everything",
+        "result": "weak",
+        "justification": "The agent has not yet demonstrated strategic prioritization, as it is still in the information-gathering phase and has not helped the user narrow focus to 2-4 priorities—though this may be premature to evaluate given the conversation has just begun."
+      },
+      {
+        "criterion_id": "practical-specificity",
+        "description": "Action items are concrete and achievable, not aspirational generalities",
+        "result": "adequate",
+        "justification": "The agent appropriately defers action items until gathering necessary context, which is reasonable, but the response itself contains no concrete or specific guidance yet—it's entirely diagnostic questions, making it impossible to fully evaluate practical specificity at this stage."
+      },
+      {
+        "criterion_id": "builds-attorney-capability",
+        "description": "Focus is on building the attorney's own skills, not producing work product for them",
+        "result": "strong",
+        "justification": "The agent is clearly focused on building the attorney's own professional development and skills by asking diagnostic questions to create a personalized growth plan, rather than producing any work product on their behalf."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-work-product",
+        "description": "Agent produces client deliverables or legal work product instead of a development plan",
+        "result": "clear",
+        "justification": "The agent is gathering information to build a professional development plan, not producing any legal work product such as memoranda, briefs, or client communications."
+      },
+      {
+        "criterion_id": "generic-career-advice",
+        "description": "Agent gives only generic advice without tailoring to the attorney's specific situation",
+        "result": "clear",
+        "justification": "The agent explicitly avoided giving generic advice by first asking targeted questions to understand the user's specific situation before making any recommendations."
+      },
+      {
+        "criterion_id": "ignores-constraints",
+        "description": "Agent recommends plans that are unrealistic given the attorney's time and resource constraints",
+        "result": "clear",
+        "justification": "The agent has not yet made any recommendations or proposed any plan; it is simply gathering information before doing so."
+      }
+    ]
+  }
+}

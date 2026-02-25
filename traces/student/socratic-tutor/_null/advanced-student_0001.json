@@ -1,0 +1,142 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:16:10.590211+00:00",
+    "persona": "student",
+    "skill": "socratic-tutor",
+    "version": "_null",
+    "scenario_id": "advanced-student"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "advanced-student",
+    "setup": "3L student who handles basic questions easily and should be pushed to harder territory quickly.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Quiz me on my Fed Courts reading. We're covering Younger abstention and I know this material pretty well."
+      },
+      {
+        "role": "user",
+        "content": "Younger v. Harris says federal courts should abstain from enjoining ongoing state criminal proceedings. The rationale is comity and respect for state court processes. There are exceptions for bad faith prosecution, patently unconstitutional statutes, and other extraordinary circumstances."
+      }
+    ],
+    "expected": [
+      "Acknowledges the strong answer",
+      "Moves quickly past basics to harder territory -- hypotheticals, edge cases, or connections to other abstention doctrines",
+      "Might ask about how Younger applies to civil proceedings or what counts as \"ongoing\"",
+      "Does not rehash the basics the student already demonstrated mastery of"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Quiz me on my Fed Courts reading. We're covering Younger abstention and I know this material pretty well."
+    },
+    {
+      "role": "assistant",
+      "content": "Let's dive into the harder territory then.\n\n---\n\n**Question 1:**\n\nIn *Younger v. Harris*, the Court grounded abstention in principles of \"Our Federalism\" and \"comity.\" But Justice Black's opinion is notably vague about the *precise constitutional or statutory basis* for the doctrine.\n\n**Is Younger abstention constitutionally required, or is it a judicially-created prudential doctrine? And why does the answer to that question matter for Congress's power to abrogate it?**\n\nTake your time — I'm looking for a nuanced answer, not just a label."
+    },
+    {
+      "role": "user",
+      "content": "Younger v. Harris says federal courts should abstain from enjoining ongoing state criminal proceedings. The rationale is comity and respect for state court processes. There are exceptions for bad faith prosecution, patently unconstitutional statutes, and other extraordinary circumstances."
+    },
+    {
+      "role": "assistant",
+      "content": "That's a solid baseline summary, but you've essentially just restated the doctrine without engaging with my question. Let me push you on the specific issue I raised.\n\n---\n\nYou identified the *what* of Younger. I asked about the *why* at a deeper level — specifically:\n\n**If Younger is purely a judicially-created prudential doctrine rather than constitutionally compelled, what follows for Congress's ability to override it?**\n\nThink about this: Congress passed 42 U.S.C. § 1983 and the federal courts have jurisdiction under § 1331 and § 1343. \n\n- If Younger is just judicial policy-making, can Congress simply *tell* federal courts they *must* hear § 1983 claims even when state criminal proceedings are pending?\n- Or is there something in the constitutional structure — maybe Article III, maybe the Tenth Amendment, maybe something else — that would constrain even Congress's ability to abrogate Younger?\n\n**And here's the harder edge of the question:** Some scholars argue Younger is actually doing *constitutional* work disguised as prudential doctrine. What constitutional provision might support that reading, and what are the implications if they're right?\n\nDon't just tell me what Younger says — tell me what you *think* the best answer is and why."
+    }
+  ],
+  "evaluation": {
+    "score": 38.4,
+    "structural": [
+      {
+        "criterion_id": "gathers-assignment",
+        "description": "Agent asks what cases, readings, or topics are assigned before beginning the dialogue",
+        "result": "fail",
+        "justification": "The agent immediately began posing substantive Socratic questions without first asking which specific cases, readings, or assigned materials the user had been given to study."
+      },
+      {
+        "criterion_id": "progresses-in-difficulty",
+        "description": "Questions move from foundational (facts, holding) to analytical (reasoning, policy) to advanced (hypotheticals, counterarguments)",
+        "result": "fail",
+        "justification": "The agent skips foundational questions entirely and opens immediately with an advanced analytical/theoretical question about constitutional versus prudential doctrine, never progressing from basic facts or holding to harder analysis as the criterion requires."
+      },
+      {
+        "criterion_id": "follows-up-on-answers",
+        "description": "Agent adapts questions based on the student's actual responses rather than running through a fixed list",
+        "result": "pass",
+        "justification": "In the second turn, the agent directly references the student's response ('you've essentially just restated the doctrine without engaging with my question' and 'You identified the *what* of Younger') and builds its follow-up question specifically around what the student did and did not address, rather than moving to a new fixed question."
+      },
+      {
+        "criterion_id": "scaffolds-when-stuck",
+        "description": "When the student struggles, agent offers hints or reframes the question rather than giving the answer immediately",
+        "result": "pass",
+        "justification": "When the student gave a weak answer that restated the doctrine without engaging the deeper question, the agent explicitly called this out and provided scaffolding by breaking the question into smaller sub-questions, offering specific statutory hooks (§1983, §1331), and reframing the inquiry rather than simply explaining the answer directly."
+      },
+      {
+        "criterion_id": "provides-debrief",
+        "description": "Agent provides a debrief summarizing strengths and areas to review",
+        "result": "fail",
+        "justification": "The conversation ends mid-quiz with the agent still pushing questions and no debrief summarizing the student's strengths or areas to review before class."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "dialogue-not-quiz",
+        "description": "Interaction feels like a genuine conversation that adapts, not a fixed list of questions",
+        "result": "adequate",
+        "justification": "The agent adapts by pushing back on a surface-level answer and drilling deeper, but the interaction still feels somewhat quiz-like with numbered questions and multi-part prompts rather than a truly organic back-and-forth conversation."
+      },
+      {
+        "criterion_id": "appropriate-pressure",
+        "description": "Agent pushes for precision and depth without intimidation or anxiety-inducing tone",
+        "result": "strong",
+        "justification": "The agent consistently pushes for deeper analytical engagement—explicitly calling out when the user restated doctrine without addressing the core question, layering increasingly precise follow-up questions, and demanding the user's own reasoned position—all while maintaining an intellectually challenging but collegial, non-threatening tone."
+      },
+      {
+        "criterion_id": "celebrates-good-answers",
+        "description": "Agent explicitly acknowledges when the student answers well before moving to harder territory",
+        "result": "weak",
+        "justification": "When the student gave a basic but accurate summary of Younger abstention, the agent dismissed it as merely restating the doctrine without acknowledging what the student got right before redirecting to the deeper question."
+      },
+      {
+        "criterion_id": "builds-confidence",
+        "description": "The overall interaction builds the student's confidence and readiness for class",
+        "result": "weak",
+        "justification": "The agent repeatedly criticizes the student's responses as insufficient and pushes them with increasingly complex questions without any affirmation or encouragement, which is likely to undermine rather than build the student's confidence, especially given that the student stated they knew the material pretty well."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "gives-answer-immediately",
+        "description": "Agent provides the correct answer without letting the student attempt it first",
+        "result": "clear",
+        "justification": "The agent consistently withholds the answer and pushes the student to reason through the question themselves, asking follow-up questions and prompting deeper analysis rather than stating the holding or correct answer."
+      },
+      {
+        "criterion_id": "produces-work-product",
+        "description": "Agent writes an outline, brief, case summary, or other finished work product",
+        "result": "clear",
+        "justification": "The agent asks probing questions and pushes the student to think more deeply, but does not produce any finished work product like an outline, case brief, or analytical document the student could use as-is."
+      },
+      {
+        "criterion_id": "intimidating-tone",
+        "description": "Agent uses harsh, dismissive, or anxiety-inducing language",
+        "result": "violation",
+        "justification": "The agent's response 'That's a solid baseline summary, but you've essentially just restated the doctrine without engaging with my question' is dismissive and mildly humiliating, implying the student failed to do what was asked rather than acknowledging their answer and constructively redirecting."
+      }
+    ]
+  }
+}

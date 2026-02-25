@@ -13,6 +13,8 @@ const personasContainer = document.getElementById('personas-container');
 // State
 let allData = null;
 let activeFilter = 'all';
+let skillsWithTraces = new Set();
+let repoUrl = '';
 
 // Fetch inventory data
 async function loadInventory() {
@@ -30,7 +32,19 @@ async function loadInventory() {
         );
 
         allData = { index: index.personas, inventories };
+        repoUrl = index.repo_url || '';
         buildFilters();
+
+        try {
+            const tr = await fetch('traces/index.json');
+            if (tr.ok) {
+                const trData = await tr.json();
+                for (const t of trData.traces || []) {
+                    skillsWithTraces.add(t.skill);
+                }
+            }
+        } catch (_) { /* no traces yet — silently skip */ }
+
         render();
     } catch (err) {
         personasContainer.innerHTML =
@@ -99,6 +113,12 @@ function renderPersona(inv) {
         const pitch = inv.pitch || inv.meta_skill.description;
         const objective = inv.design?.objective || '';
 
+        const metaName = inv.meta_skill.name;
+        const metaTracesLink = skillsWithTraces.has(metaName)
+            ? `<a href="traces/#skill=${metaName}" class="traces-link">view traces</a>` : '';
+        const metaEditLink = repoUrl && inv.meta_skill.source_path
+            ? `<a href="${repoUrl}tree/main/${inv.meta_skill.source_path}" class="edit-link" target="_blank">edit</a>` : '';
+
         const callout = document.createElement('div');
         callout.className = 'meta-callout';
         callout.style.borderColor = color;
@@ -108,6 +128,7 @@ function renderPersona(inv) {
                     <h3>${headline}</h3>
                     ${objective ? `<p class="meta-objective">${objective}</p>` : ''}
                     <p class="meta-desc">${pitch}</p>
+                    <div class="meta-links">${metaTracesLink}${metaEditLink}</div>
                 </div>
                 <a href="${inv.meta_skill.install_url}" class="btn btn-primary meta-install-btn" download>
                     Install Meta Skill
@@ -136,6 +157,8 @@ function renderSkillCard(skill, personaLabel, color) {
     card.className = 'skill-card';
 
     const label = personaLabel;
+    const editLink = repoUrl && skill.source_path
+        ? `<a href="${repoUrl}tree/main/${skill.source_path}" class="edit-link" target="_blank">edit</a>` : '';
 
     card.innerHTML = `
         <div class="skill-header">
@@ -144,6 +167,10 @@ function renderSkillCard(skill, personaLabel, color) {
         <h3 class="skill-title">${formatTitle(skill.name)}</h3>
         <p class="skill-desc">${truncate(skill.description, 180)}</p>
         <a href="${skill.install_url}" class="download-btn" download>Download Skill (.skill)</a>
+        <div class="card-links">
+            ${skillsWithTraces.has(skill.name) ? `<a href="traces/#skill=${skill.name}" class="traces-link">view traces</a>` : ''}
+            ${editLink}
+        </div>
     `;
     return card;
 }

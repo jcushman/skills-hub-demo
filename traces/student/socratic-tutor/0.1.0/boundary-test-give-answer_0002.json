@@ -1,0 +1,141 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:08:48.195880+00:00",
+    "persona": "student",
+    "skill": "socratic-tutor",
+    "version": "0.1.0",
+    "scenario_id": "boundary-test-give-answer"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "boundary-test-give-answer",
+    "setup": "1L student who wants the agent to just explain the case rather than engage in Socratic dialogue.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I need to prepare for Property class tomorrow. Can you just explain the rule in Pierson v. Post?"
+      },
+      {
+        "role": "user",
+        "content": "OK fine, ask me about it. It's about two guys hunting a fox."
+      }
+    ],
+    "expected": [
+      "Redirects from just explaining to engaging in dialogue",
+      "Frames the redirection positively -- Socratic practice is better preparation for cold calls",
+      "Works with the student's minimal answer by asking follow-up questions about the holding and reasoning"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I need to prepare for Property class tomorrow. Can you just explain the rule in Pierson v. Post?"
+    },
+    {
+      "role": "assistant",
+      "content": "I hear you — it's tempting to just get the answer, especially the night before class. But here's the thing: if your professor cold-calls you tomorrow, they won't ask \"what's the rule?\" and then wait quietly while you recite it. They'll *push* — on the facts, the reasoning, the dissent, hypotheticals. A memorized rule won't carry you through that.\n\nThe best way I can help you prepare is to work through it together, the way class will actually go. It'll stick better, and you'll be ready to think on your feet.\n\nSo let's start easy — **what happened in *Pierson v. Post*?** Just tell me the basic facts as you understand them. Don't worry about getting it perfect."
+    },
+    {
+      "role": "user",
+      "content": "OK fine, ask me about it. It's about two guys hunting a fox."
+    },
+    {
+      "role": "assistant",
+      "content": "Good start — you've got the core setup. Now let's sharpen it up.\n\n**Who were the two guys, and what exactly was each of them doing?** Specifically: what was Post doing, and what did Pierson do?\n\n(And if you remember: where did this take place? It matters more than you might think.)"
+    }
+  ],
+  "evaluation": {
+    "score": 64.8,
+    "structural": [
+      {
+        "criterion_id": "gathers-assignment",
+        "description": "Agent asks what cases, readings, or topics are assigned before beginning the dialogue",
+        "result": "fail",
+        "justification": "The agent never asked what cases, readings, or topics were assigned before beginning the Socratic dialogue — it jumped straight into questioning about Pierson v. Post without first inquiring about the student's assigned materials or course context."
+      },
+      {
+        "criterion_id": "progresses-in-difficulty",
+        "description": "Questions move from foundational (facts, holding) to analytical (reasoning, policy) to advanced (hypotheticals, counterarguments)",
+        "result": "fail",
+        "justification": "The conversation is too short to evaluate progression in difficulty — the agent has only asked foundational factual questions (what happened, who were the parties, what were they doing), with no movement toward analytical or advanced questions yet."
+      },
+      {
+        "criterion_id": "follows-up-on-answers",
+        "description": "Agent adapts questions based on the student's actual responses rather than running through a fixed list",
+        "result": "pass",
+        "justification": "The agent's follow-up question directly builds on the student's response ('two guys hunting a fox') by asking them to specify what each of the two guys was doing, explicitly referencing the student's own framing."
+      },
+      {
+        "criterion_id": "scaffolds-when-stuck",
+        "description": "When the student struggles, agent offers hints or reframes the question rather than giving the answer immediately",
+        "result": "pass",
+        "justification": "When the student gave a weak, vague answer ('two guys hunting a fox'), the agent affirmed the partial response and then scaffolded by asking a more specific sub-question about each party's actions rather than immediately explaining the rule or facts directly."
+      },
+      {
+        "criterion_id": "provides-debrief",
+        "description": "Agent provides a debrief summarizing strengths and areas to review",
+        "result": "fail",
+        "justification": "The conversation is still in the early questioning phase and the agent has not yet provided any debrief summarizing the student's strengths or areas to review."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "dialogue-not-quiz",
+        "description": "Interaction feels like a genuine conversation that adapts, not a fixed list of questions",
+        "result": "adequate",
+        "justification": "The agent adapts somewhat to the user's responses and builds on their answers, but still follows a fairly structured question-by-question format that feels more like a guided quiz than a genuinely fluid conversation."
+      },
+      {
+        "criterion_id": "appropriate-pressure",
+        "description": "Agent pushes for precision and depth without intimidation or anxiety-inducing tone",
+        "result": "strong",
+        "justification": "The agent consistently pushes for greater precision and depth (asking for specific roles, actions, and location) while maintaining an encouraging, low-pressure tone through phrases like 'Good start' and parenthetical reassurances that details matter without being intimidating."
+      },
+      {
+        "criterion_id": "celebrates-good-answers",
+        "description": "Agent explicitly acknowledges when the student answers well before moving to harder territory",
+        "result": "weak",
+        "justification": "The agent says 'Good start' but immediately pivots to correcting/sharpening the answer rather than genuinely celebrating what the student got right, and there is no meaningful acknowledgment of the student's willingness to engage or the accuracy of their basic response."
+      },
+      {
+        "criterion_id": "builds-confidence",
+        "description": "The overall interaction builds the student's confidence and readiness for class",
+        "result": "strong",
+        "justification": "The agent actively builds confidence by validating the student's initial response ('Good start'), encouraging imperfect answers ('Don't worry about getting it perfect'), and framing the Socratic method as preparation for real class dynamics rather than a test, which reduces anxiety and increases readiness."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "gives-answer-immediately",
+        "description": "Agent provides the correct answer without letting the student attempt it first",
+        "result": "clear",
+        "justification": "The agent consistently withholds the rule and answer, instead prompting the student with questions to elicit their own understanding of the facts before any analysis is provided."
+      },
+      {
+        "criterion_id": "produces-work-product",
+        "description": "Agent writes an outline, brief, case summary, or other finished work product",
+        "result": "clear",
+        "justification": "The agent does not produce any finished work product; instead, it uses Socratic questioning to guide the student through the material themselves."
+      },
+      {
+        "criterion_id": "intimidating-tone",
+        "description": "Agent uses harsh, dismissive, or anxiety-inducing language",
+        "result": "clear",
+        "justification": "The agent uses encouraging, supportive language throughout, praising the user's response as a 'good start' and explicitly reassuring them not to worry about getting things perfect, with no harsh or dismissive language present."
+      }
+    ]
+  }
+}

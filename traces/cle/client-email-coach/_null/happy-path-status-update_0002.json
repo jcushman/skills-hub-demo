@@ -1,0 +1,155 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:09:08.474953+00:00",
+    "persona": "cle",
+    "skill": "client-email-coach",
+    "version": "_null",
+    "scenario_id": "happy-path-status-update"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-status-update",
+    "setup": "4th-year associate drafting a case status update to a long-standing corporate client. The email is too long and buries the key update at the end.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Can you review this email to my client? It's a status update on their breach of contract case."
+      },
+      {
+        "role": "user",
+        "content": "Here's the draft: 'Dear Ms. Chen, I wanted to follow up on several matters related to the pending litigation. As you may recall, we filed the motion to compel on January 15th. Since then, opposing counsel has filed a response brief that raises several arguments about the scope of discovery. We reviewed their arguments carefully and believe most are without merit, though there is one point about attorney-client privilege that we need to address. We are preparing a reply brief that will be filed by next Friday. In other news, the judge has set a pretrial conference for March 20th. We should discuss preparation for that in the next week or two. The bottom line is that the motion to compel is progressing well and we expect a favorable ruling, though the privilege issue adds some uncertainty. Please let me know if you have any questions. Best regards, [Name]'"
+      },
+      {
+        "role": "user",
+        "content": "She's a busy GC who reads on her phone. I'm worried it's too long but I want to be thorough."
+      }
+    ],
+    "expected": [
+      "Identifies that the email buries the lead (key update at the end)",
+      "Suggests leading with the bottom line",
+      "Notes the \"we expect a favorable ruling\" language as a potential risk management issue (sounds like a guarantee)",
+      "Provides a rewritten lead paragraph showing how to restructure",
+      "Acknowledges the thoroughness while suggesting more scannable formatting"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Can you review this email to my client? It's a status update on their breach of contract case."
+    },
+    {
+      "role": "assistant",
+      "content": "Sure, share the email and I'll take a look!"
+    },
+    {
+      "role": "user",
+      "content": "Here's the draft: 'Dear Ms. Chen, I wanted to follow up on several matters related to the pending litigation. As you may recall, we filed the motion to compel on January 15th. Since then, opposing counsel has filed a response brief that raises several arguments about the scope of discovery. We reviewed their arguments carefully and believe most are without merit, though there is one point about attorney-client privilege that we need to address. We are preparing a reply brief that will be filed by next Friday. In other news, the judge has set a pretrial conference for March 20th. We should discuss preparation for that in the next week or two. The bottom line is that the motion to compel is progressing well and we expect a favorable ruling, though the privilege issue adds some uncertainty. Please let me know if you have any questions. Best regards, [Name]'"
+    },
+    {
+      "role": "assistant",
+      "content": "This is a solid draft with good information, but you're right that it has two main issues. Here's my feedback:\n\n**The Core Problems**\n- The key takeaway (\"motion is progressing well, expect favorable ruling\") is buried at the end\n- The opening is vague and slow to get to the point\n- A busy executive like Ms. Chen wants the headline first\n\n**Structural Suggestion**\nLead with your bottom line, then support it:\n1. Overall status/assessment upfront\n2. Key developments\n3. Action items/next steps\n\n**A Few Other Notes**\n- The privilege issue gets mentioned twice but somewhat casually - since it introduces uncertainty, it deserves a cleaner, more direct explanation so she understands the risk without being alarmed\n- \"In other news\" feels too informal for a client update\n- The March 20th conference is actually significant - flag it more urgently since \"the next week or two\" is vague given the timeline\n\n**Suggested Opening Instead:**\n*\"The motion to compel is progressing well and we expect a favorable ruling. Here is a brief update on where things stand...\"*\n\nThen walk through the details in order of importance.\n\nOverall the content is all there - it really just needs to be reorganized so Ms. Chen gets the most important information immediately. Would you like me to redraft the full email?"
+    },
+    {
+      "role": "user",
+      "content": "She's a busy GC who reads on her phone. I'm worried it's too long but I want to be thorough."
+    },
+    {
+      "role": "assistant",
+      "content": "That's a real tension, but I'd actually argue your current draft **isn't thorough enough in the right places** - it's just long in the wrong places.\n\n**The good news:** You can be both concise AND thorough by restructuring rather than cutting content.\n\n**A few specific suggestions:**\n\n- **Use a clear subject line** that does some of the work - she may triage her inbox based on it alone. Something like: *\"Motion to Compel Update - Action Needed Before March 20\"*\n- **Lead with a one-sentence status** so she gets the headline even if she only skims\n- **Use short labeled sections** instead of paragraphs - they're much easier to read on a phone and actually convey more information faster\n- **Put your ask up front** - you need a meeting before March 20th, so say that early\n\n**Something like this structure:**\n- Status (1 sentence)\n- Key developments (2-3 bullet points)\n- What we need from you (1-2 sentences)\n\n**The honest truth:** A GC will feel more confident in you if you communicate crisply. Length can actually signal that you haven't prioritized the information for her.\n\nWant me to take a full pass at redrafting it with this structure? I think I can keep everything substantive while cutting the length roughly in half."
+    }
+  ],
+  "evaluation": {
+    "score": 48.0,
+    "structural": [
+      {
+        "criterion_id": "receives-draft-and-context",
+        "description": "Agent asks for the draft email, client relationship context, purpose, and concerns",
+        "result": "fail",
+        "justification": "The agent immediately asked the user to share the email without gathering any contextual elements (relationship, purpose, or concerns) beforehand, and only learned about the client relationship and concerns later when the user volunteered that information in a follow-up message rather than being prompted by the agent."
+      },
+      {
+        "criterion_id": "evaluates-along-dimensions",
+        "description": "Agent assesses the draft across key communication dimensions",
+        "result": "pass",
+        "justification": "The agent addresses at least three communication dimensions across its responses: clarity (buried bottom line, vague opening, structure), tone ('In other news' being too informal), completeness (privilege issue needs cleaner explanation, March 20th conference needs more urgency), and client relationship (how length signals professionalism to a busy GC reading on her phone)."
+      },
+      {
+        "criterion_id": "quotes-specific-passages",
+        "description": "Agent references specific parts of the draft when giving feedback",
+        "result": "pass",
+        "justification": "The agent directly quotes specific phrases from the draft such as 'In other news,' 'the next week or two,' and the buried bottom-line sentence, and paraphrases specific structural elements like the privilege issue being mentioned twice, demonstrating clear reference to particular passages rather than speaking only in generalities."
+      },
+      {
+        "criterion_id": "identifies-patterns",
+        "description": "Agent names recurring communication patterns, not just one-off issues",
+        "result": "fail",
+        "justification": "The agent identifies specific issues with this email (buried lead, vague opening, informal tone) but never names these as recurring communication patterns the attorney should watch for in future emails."
+      },
+      {
+        "criterion_id": "offers-principles",
+        "description": "Agent closes with actionable communication principles the attorney can apply going forward",
+        "result": "fail",
+        "justification": "While the agent offers useful structural advice, it never explicitly frames any principle as transferable beyond this specific email—there is no closing statement like 'as a general rule for client communications' or similar language that positions the guidance as a reusable principle for future correspondence."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "candid-direct-feedback",
+        "description": "Feedback is specific and direct like a senior colleague, not generic praise",
+        "result": "strong",
+        "justification": "The agent delivers specific, actionable critique throughout—identifying exact problems like 'In other news' being too informal, the privilege issue being mentioned casually, and 'the next week or two' being vague, while also reframing the user's concern about length with the pointed observation that the draft 'isn't thorough enough in the right places - it's just long in the wrong places,' all of which reflects the candid directness of a senior colleague rather than generic praise."
+      },
+      {
+        "criterion_id": "shows-not-tells",
+        "description": "Agent provides rewritten examples for problems rather than just describing what's wrong",
+        "result": "adequate",
+        "justification": "The agent provides a suggested opening rewrite and structural outline in the first response, but stops short of fully rewriting the email despite repeatedly offering to do so, and the second response only describes the ideal structure rather than demonstrating it with actual rewritten prose."
+      },
+      {
+        "criterion_id": "prioritized-feedback",
+        "description": "Agent focuses on the most important 3-5 points rather than line-editing every sentence",
+        "result": "strong",
+        "justification": "The agent consistently focuses on 3-5 high-impact structural and strategic issues (bottom-line placement, opening clarity, privilege framing, informality, conference urgency) rather than line-editing every sentence, and explicitly frames feedback around priorities rather than exhaustive corrections."
+      },
+      {
+        "criterion_id": "transferable-skills",
+        "description": "Patterns and principles help the attorney improve future emails, not just this one",
+        "result": "adequate",
+        "justification": "The agent offers useful structural principles (lead with bottom line, use labeled sections, subject lines that do work) that could transfer to future emails, but frames them primarily as fixes for this specific email rather than explicitly teaching reusable patterns the attorney could apply independently going forward."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "rewrites-whole-email",
+        "description": "Agent rewrites the entire email rather than coaching the attorney to improve it",
+        "result": "clear",
+        "justification": "The agent provided targeted feedback, structural suggestions, and only a brief example opening line rather than producing a complete replacement draft, and explicitly asked permission before offering a full redraft."
+      },
+      {
+        "criterion_id": "too-deferential",
+        "description": "Agent is so gentle that important problems go unflagged",
+        "result": "clear",
+        "justification": "The agent provides direct, substantive critiques throughout both responses, explicitly flagging problems like vague language, poor structure, informal tone, and the privilege issue being handled too casually, without hedging these concerns into uselessness."
+      },
+      {
+        "criterion_id": "ignores-risk",
+        "description": "Agent doesn't address risk management issues in the draft",
+        "result": "violation",
+        "justification": "The draft contains 'we expect a favorable ruling,' which is a potential guarantee that could create client expectations or liability issues, but the agent never flagged this as a risk management concern across either response, focusing only on structure and conciseness."
+      }
+    ]
+  }
+}

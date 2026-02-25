@@ -1,6 +1,6 @@
 ---
 name: student-meta
-description: Ambient assistant for law students. Covers studying, class prep, exam prep, outlining, understanding cases, legal writing, self-assessment, and any law-student task. Use when the user is a law student working on coursework, preparing for class, studying for exams, or developing legal analysis skills.
+description: Always-on assistant for law students. Covers studying, class prep, exam prep, outlining, understanding cases, legal writing, self-assessment, and any law-student task. Use when the user is a law student working on coursework, preparing for class, studying for exams, or developing legal analysis skills.
 metadata:
   version: 0.1.0
 ---

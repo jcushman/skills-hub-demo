@@ -1,0 +1,143 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:15:33.876693+00:00",
+    "persona": "student",
+    "skill": "exam-answer-eval",
+    "version": "_null",
+    "scenario_id": "happy-path-contracts"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-contracts",
+    "setup": "2L student in Contracts who wrote a practice essay on consideration. The answer correctly identifies the bargained-for exchange but misses promissory estoppel and has weak application to the facts.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Can you evaluate my practice exam answer? It's for Contracts."
+      },
+      {
+        "role": "user",
+        "content": "Here's the question: 'Alice promised to pay Bob $5,000 for painting her house. Bob began painting but Alice revoked her promise after Bob was halfway done. Discuss Bob's potential claims.' And here's my answer: 'The main issue is whether there was valid consideration. Consideration requires a bargained-for exchange where each party gives something of value. Here, Alice promised $5,000 and Bob promised to paint, so there is consideration and a valid contract. Alice breached by revoking her promise. Bob can sue for breach of contract and recover the $5,000.'"
+      }
+    ],
+    "expected": [
+      "Acknowledges what the answer gets right (identifying consideration, bargained-for exchange)",
+      "Notes the answer misses promissory estoppel or detrimental reliance as an alternative theory",
+      "Points out the application is conclusory -- states a conclusion without working through the analysis",
+      "Suggests how a stronger version would apply the facts more deeply for 1-2 examples",
+      "Does not rewrite the entire answer"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Can you evaluate my practice exam answer? It's for Contracts."
+    },
+    {
+      "role": "assistant",
+      "content": "I'd be happy to evaluate your practice exam answer! Please go ahead and share it, and I'll give you feedback keeping in mind that you're working on **consideration** issues as a 2L.\n\nWhen you share it, I'll look at things like:\n\n- **Rule statements** - accuracy and completeness\n- **Application to facts** - how well you connect the law to specific facts\n- **Issue spotting** - whether you've caught all the relevant issues\n- **Organization and structure** - IRAC or similar framework\n- **Conclusions** - whether they're supported by your analysis\n\nGo ahead and paste your answer!"
+    },
+    {
+      "role": "user",
+      "content": "Here's the question: 'Alice promised to pay Bob $5,000 for painting her house. Bob began painting but Alice revoked her promise after Bob was halfway done. Discuss Bob's potential claims.' And here's my answer: 'The main issue is whether there was valid consideration. Consideration requires a bargained-for exchange where each party gives something of value. Here, Alice promised $5,000 and Bob promised to paint, so there is consideration and a valid contract. Alice breached by revoking her promise. Bob can sue for breach of contract and recover the $5,000.'"
+    },
+    {
+      "role": "assistant",
+      "content": "Good start! You've identified the core contract claim correctly. Here's a detailed evaluation:\n\n---\n\n## What You Did Well ✓\n\n- **Correctly identified consideration** as the main framework\n- **Accurately stated the rule** for bargained-for exchange\n- **Reached a reasonable conclusion** on breach of contract\n\n---\n\n## Key Weaknesses to Address\n\n### 1. Damages Analysis is Wrong\nThis is a significant error. You concluded Bob recovers **$5,000**, but that's likely incorrect.\n- Bob was only **halfway done** when Alice revoked\n- He would probably recover **partial performance damages**, not the full contract price\n- You need to distinguish between **expectation, reliance, and restitution** damages\n\n### 2. You Missed Promissory Estoppel\nThis is a major gap. You should always ask:\n- Even **if** the contract argument fails, Bob **detrimentally relied** on Alice's promise\n- He began painting, which is a **concrete, foreseeable action**\n- Promissory estoppel could provide an **alternative recovery theory**\n- Strong exam answers typically plead **alternative theories**\n\n### 3. Weak Fact Application\nYour analysis is fairly generic. Push yourself to ask:\n- Was Bob's promise **already performed or still executory?**\n- Does partial performance affect the consideration analysis?\n\n---\n\n## Suggested Structure\n> Contract claim → damages → **then** promissory estoppel as alternative → compare recoveries\n\nWould you like help drafting a stronger version?"
+    }
+  ],
+  "evaluation": {
+    "score": 55.2,
+    "structural": [
+      {
+        "criterion_id": "gathers-answer-and-context",
+        "description": "Agent collects the practice answer, exam question, and course subject before evaluating",
+        "result": "fail",
+        "justification": "The agent began evaluating the answer without first confirming the exam question, instead assuming the topic was 'consideration' and a '2L' context before the user had provided any details, and never explicitly confirmed it had all necessary context (answer text, exam prompt, and course/doctrinal area) before producing feedback."
+      },
+      {
+        "criterion_id": "evaluates-along-dimensions",
+        "description": "Agent assesses the answer across standard law school exam dimensions",
+        "result": "pass",
+        "justification": "The agent's feedback explicitly addresses at least three required dimensions: issue spotting (missing promissory estoppel as an alternative theory), rule statement (consideration rule was correctly stated), application/analysis (weak fact application noted regarding partial performance), and organization (suggested structure provided)."
+      },
+      {
+        "criterion_id": "quotes-specific-passages",
+        "description": "Agent references specific parts of the student's answer rather than speaking in generalities",
+        "result": "fail",
+        "justification": "The agent speaks in generalities about the student's weaknesses without quoting or directly paraphrasing specific sentences from the student's answer, such as the student's exact damages conclusion ('recover the $5,000') or their specific consideration analysis."
+      },
+      {
+        "criterion_id": "identifies-patterns",
+        "description": "Agent steps back to identify recurring strengths and weaknesses across the answer",
+        "result": "fail",
+        "justification": "The agent provides specific feedback on this answer but never steps back to identify recurring or transferable strengths/weaknesses framed as patterns applicable to future exams (e.g., 'you tend to stop at liability without analyzing damages' or 'always consider alternative theories on future exams')."
+      },
+      {
+        "criterion_id": "suggests-practice-strategies",
+        "description": "Agent recommends tailored practice strategies based on identified weaknesses",
+        "result": "fail",
+        "justification": "The agent identifies weaknesses but does not recommend specific tailored practice strategies (e.g., issue-spotting drills, timed application exercises, or targeted practice on damages analysis) to help the student improve those weaknesses."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "coaching-over-rewriting",
+        "description": "Agent provides feedback and models improvement for 1-2 examples rather than rewriting the whole answer",
+        "result": "weak",
+        "justification": "The agent ends by offering to draft a stronger version for the student, and while it stops short of fully rewriting the answer, it provides comprehensive feedback across all dimensions without modeling improvement on 1-2 specific examples from the student's own text, missing the coaching opportunity to show the student how to revise a particular sentence or section themselves."
+      },
+      {
+        "criterion_id": "specific-actionable-feedback",
+        "description": "Feedback explains why passages work or need improvement, not just that they do",
+        "result": "strong",
+        "justification": "The agent consistently explains *why* each issue matters—specifying that $5,000 is wrong because Bob only half-performed and distinguishing expectation/reliance/restitution damages, explaining *why* promissory estoppel is relevant by tying it to Bob's concrete detrimental reliance, and noting *why* the fact application is weak by pointing to the specific unaddressed question of partial performance's effect on consideration."
+      },
+      {
+        "criterion_id": "strengths-before-weaknesses",
+        "description": "Agent acknowledges what the student did well before identifying problems",
+        "result": "strong",
+        "justification": "The agent explicitly structures its feedback with a clearly labeled 'What You Did Well' section before moving to weaknesses, acknowledging the student's correct identification of consideration, accurate rule statement, and reasonable breach conclusion prior to addressing the errors in damages, missing promissory estoppel, and weak fact application."
+      },
+      {
+        "criterion_id": "transferable-insights",
+        "description": "Feedback frames patterns as insights applicable across future exams, not just this answer",
+        "result": "adequate",
+        "justification": "The agent provides useful feedback on alternative theories and damages distinctions, but frames these primarily as corrections to this specific answer rather than explicitly connecting them to transferable exam strategies (e.g., 'always plead alternative theories when a primary claim might fail' is mentioned briefly but not developed as a generalizable pattern for future exams)."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "rewrites-whole-answer",
+        "description": "Agent rewrites the entire answer rather than showing targeted improvements",
+        "result": "clear",
+        "justification": "The agent provided targeted feedback identifying specific weaknesses (damages analysis, missing promissory estoppel, weak fact application) with brief explanations, and only offered a suggested structure outline rather than rewriting the student's full answer."
+      },
+      {
+        "criterion_id": "produces-model-answer",
+        "description": "Agent produces a complete model answer the student could submit",
+        "result": "clear",
+        "justification": "The agent provided targeted feedback on the student's existing answer—identifying weaknesses, missing issues, and structural improvements—without writing a complete model answer that the student could submit as their own work."
+      },
+      {
+        "criterion_id": "generic-feedback-only",
+        "description": "Agent gives only vague feedback without referencing specific parts of the answer",
+        "result": "clear",
+        "justification": "The agent consistently references specific parts of the student's actual text, such as the student's conclusion that Bob recovers '$5,000,' the student's omission of promissory estoppel, and the student's generic fact application, rather than giving only vague general statements."
+      }
+    ]
+  }
+}

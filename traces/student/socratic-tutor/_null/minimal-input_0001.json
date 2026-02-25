@@ -1,0 +1,141 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:15:32.279899+00:00",
+    "persona": "student",
+    "skill": "socratic-tutor",
+    "version": "_null",
+    "scenario_id": "minimal-input"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "minimal-input",
+    "setup": "Student provides almost no information about what they're preparing for.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Help me prepare for class"
+      },
+      {
+        "role": "user",
+        "content": "Torts"
+      }
+    ],
+    "expected": [
+      "Asks which cases or readings are assigned before starting",
+      "Does not guess at topics -- asks what has been covered",
+      "Adapts once given the topic rather than refusing to proceed"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Help me prepare for class"
+    },
+    {
+      "role": "assistant",
+      "content": "I'd be happy to help you prepare for class! To give you the most useful help, could you tell me a bit more?\n\n- **What subject/class** is it? (e.g., math, history, biology, English)\n- **What topic** are you covering?\n- **What do you need help with?** (e.g., reviewing notes, understanding a concept, studying for a quiz, completing homework)\n- **What level** are you at? (e.g., middle school, high school, college)\n\nThe more details you share, the better I can help! 😊"
+    },
+    {
+      "role": "user",
+      "content": "Torts"
+    },
+    {
+      "role": "assistant",
+      "content": "Great! **Torts** is a fascinating area of law! To help you best, a few quick questions:\n\n- **What specific topic** within Torts? For example:\n  - Negligence\n  - Intentional torts\n  - Strict liability\n  - Defamation\n  - Products liability\n  - Damages\n\n- **What do you need help with?**\n  - Understanding concepts\n  - Reviewing a case\n  - Preparing for cold calls\n  - Outlining\n  - Practice hypos\n\n- **Are you in law school** (1L?) or a paralegal/undergraduate program?\n\n---\n\nIn the meantime, here are some **core Torts concepts** you may be covering:\n\n1. **Negligence** - Duty, Breach, Causation, Damages\n2. **Intentional Torts** - Battery, Assault, False Imprisonment, IIED\n3. **Strict Liability** - Liability without fault\n4. **Defenses** - Contributory/Comparative negligence, Assumption of Risk\n\n---\n\nJust let me know where you want to focus and I can help you:\n- Break down concepts\n- Walk through cases\n- Run through hypotheticals\n- Prep for the Socratic method\n\nWhat would you like to start with? 😊"
+    }
+  ],
+  "evaluation": {
+    "score": 44.0,
+    "structural": [
+      {
+        "criterion_id": "gathers-assignment",
+        "description": "Agent asks what cases, readings, or topics are assigned before beginning the dialogue",
+        "result": "pass",
+        "justification": "Before posing any substantive Socratic questions, the agent explicitly asks about specific topics within Torts and what the student needs help with, which effectively gathers information about assigned cases, readings, or topics before beginning substantive dialogue."
+      },
+      {
+        "criterion_id": "progresses-in-difficulty",
+        "description": "Questions move from foundational (facts, holding) to analytical (reasoning, policy) to advanced (hypotheticals, counterarguments)",
+        "result": "fail",
+        "justification": "The agent has not yet asked any substantive questions that progress in difficulty from foundational to analytical to advanced, as it is still in the information-gathering phase and has not begun actual pedagogical questioning on Torts content."
+      },
+      {
+        "criterion_id": "follows-up-on-answers",
+        "description": "Agent adapts questions based on the student's actual responses rather than running through a fixed list",
+        "result": "fail",
+        "justification": "The agent asks follow-up questions but none of them directly reference or build on something specific the student said — the student only said 'Torts' and the agent simply lists generic sub-topics without tailoring questions to any actual student response content."
+      },
+      {
+        "criterion_id": "scaffolds-when-stuck",
+        "description": "When the student struggles, agent offers hints or reframes the question rather than giving the answer immediately",
+        "result": "fail",
+        "justification": "The student has not yet struggled or given an incorrect answer, so the scaffolding criterion cannot be evaluated; however, the agent proactively gave away a full breakdown of core Torts concepts without any student struggle, which preemptively bypasses the scaffolding process the criterion is designed to assess."
+      },
+      {
+        "criterion_id": "provides-debrief",
+        "description": "Agent provides a debrief summarizing strengths and areas to review",
+        "result": "fail",
+        "justification": "The agent has not yet provided any debrief summarizing strengths and areas to review, as the conversation is still in the information-gathering stage and no actual study session or assessment has taken place."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "dialogue-not-quiz",
+        "description": "Interaction feels like a genuine conversation that adapts, not a fixed list of questions",
+        "result": "weak",
+        "justification": "The agent repeatedly presents fixed bulleted lists of questions rather than adapting conversationally—after the user gave a one-word answer, the agent responded with another rigid multi-category questionnaire instead of making a reasonable assumption or asking one natural follow-up question."
+      },
+      {
+        "criterion_id": "appropriate-pressure",
+        "description": "Agent pushes for precision and depth without intimidation or anxiety-inducing tone",
+        "result": "adequate",
+        "justification": "The agent appropriately asks clarifying questions to focus the help, but the repeated lists and multiple follow-up questions across two turns could feel slightly overwhelming rather than gently guiding the user toward precision."
+      },
+      {
+        "criterion_id": "celebrates-good-answers",
+        "description": "Agent explicitly acknowledges when the student answers well before moving to harder territory",
+        "result": "weak",
+        "justification": "The agent has not yet had an opportunity to celebrate a good answer because the student hasn't answered any substantive questions yet — the conversation is still in the information-gathering phase with no student responses to academic content being evaluated or acknowledged."
+      },
+      {
+        "criterion_id": "builds-confidence",
+        "description": "The overall interaction builds the student's confidence and readiness for class",
+        "result": "adequate",
+        "justification": "The agent is organized and encouraging, offering structured support that could build confidence, but the interaction is still in the setup phase with no actual teaching or confidence-building yet demonstrated through successful concept mastery or positive reinforcement."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "gives-answer-immediately",
+        "description": "Agent provides the correct answer without letting the student attempt it first",
+        "result": "clear",
+        "justification": "The agent did not provide any answers or analysis unprompted; it only listed general topic categories and offered to help, while consistently asking the student what they want to focus on before diving into any substantive content."
+      },
+      {
+        "criterion_id": "produces-work-product",
+        "description": "Agent writes an outline, brief, case summary, or other finished work product",
+        "result": "clear",
+        "justification": "The agent provided only a general overview of core Torts concepts as orientation while asking clarifying questions, rather than producing a complete, ready-to-use work product like a case brief, outline, or analytical document."
+      },
+      {
+        "criterion_id": "intimidating-tone",
+        "description": "Agent uses harsh, dismissive, or anxiety-inducing language",
+        "result": "clear",
+        "justification": "The agent used consistently warm, encouraging, and supportive language throughout, with no harsh, dismissive, or anxiety-inducing language present."
+      }
+    ]
+  }
+}

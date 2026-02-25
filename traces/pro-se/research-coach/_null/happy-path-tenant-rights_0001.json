@@ -1,0 +1,143 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:11:07.589852+00:00",
+    "persona": "pro-se",
+    "skill": "research-coach",
+    "version": "_null",
+    "scenario_id": "happy-path-tenant-rights"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-tenant-rights",
+    "setup": "Person wants to find the law about tenant rights in their state because their landlord won't fix a broken heater.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "My landlord won't fix my heater and it's been two weeks. I want to find out what the law says about this."
+      },
+      {
+        "role": "user",
+        "content": "I'm in Massachusetts."
+      }
+    ],
+    "expected": [
+      "Asks what the person is trying to find out and what type of information they need",
+      "Suggests looking at Massachusetts tenant rights statutes or the state's housing code",
+      "Points to specific free resources (e.g., Mass.gov, state court self-help)",
+      "Helps translate the question into searchable legal terms",
+      "Does not deliver the answer -- teaches them where and how to find it"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "My landlord won't fix my heater and it's been two weeks. I want to find out what the law says about this."
+    },
+    {
+      "role": "assistant",
+      "content": "This is a really common and frustrating situation. Here are some practical steps to find the relevant laws:\n\n## Finding Your State's Laws\n\n**Online resources:**\n- Search \"[your state] landlord tenant law habitability\" or \"[your state] implied warranty of habitability\"\n- Your state legislature's official website (usually .gov) has the actual statutes\n- Many state attorney general websites have plain-language tenant rights guides\n\n**Key legal concepts to look for:**\n- **Implied warranty of habitability** - most states require landlords to maintain livable conditions\n- **Heating requirements** - many states specifically require working heat, especially in winter\n- **Repair and deduct** - some states let you pay for repairs and deduct from rent\n- **Rent withholding** - some states allow this under specific conditions\n\n## Other Helpful Resources\n\n- **Local tenant rights organizations** - often free advice\n- **Legal aid societies** - free legal help if you qualify\n- **211.org** - connects you to local resources\n\n## Document Everything\n\n- Keep records of when you reported the issue\n- Send requests in **writing** (text or email creates a paper trail)\n- Note dates and temperatures if relevant\n\n**Could you share your state?** That would help point you to the specific laws that apply to your situation, since tenant rights vary significantly by state."
+    },
+    {
+      "role": "user",
+      "content": "I'm in Massachusetts."
+    },
+    {
+      "role": "assistant",
+      "content": "Great, Massachusetts actually has pretty strong tenant protections for this situation!\n\n## Massachusetts Law on Heat\n\n**The key requirement:**\n- Landlords must provide heat capable of maintaining **68°F from 7am-11pm** and **64°F from 11pm-7am**\n- This applies from **September 16 through June 14**\n- This is found in the **Massachusetts Sanitary Code (105 CMR 410.201)**\n\n## Your Options in Massachusetts\n\n**Report to local authorities:**\n- Contact your local **Board of Health** - they can inspect and order your landlord to fix it\n- This is often the fastest and most effective step\n\n**Rent Withholding:**\n- Massachusetts law (Chapter 111, Section 127L) allows you to withhold rent if conditions are serious\n- There are specific steps you must follow to do this legally\n\n**Repair and Deduct:**\n- You may be able to hire someone to fix it and deduct the cost from rent\n- Again, specific legal steps are required\n\n## Recommended Resources\n\n- **Massachusetts Attorney General's tenant rights guide**: mass.gov/ago\n- **Greater Boston Legal Services**: gbls.org (free legal help)\n- **Mass Legal Help**: masslegalhelp.org - excellent plain language guides\n\n## Important Next Step\n\nMake sure you have **written documentation** that you notified your landlord. If you haven't done so in writing yet, send a text or email today.\n\nWould you like more detail on any of these options?"
+    }
+  ],
+  "evaluation": {
+    "score": 38.2,
+    "structural": [
+      {
+        "criterion_id": "understands-question",
+        "description": "Agent clarifies what the person is trying to find and what type of legal information they need",
+        "result": "fail",
+        "justification": "The agent never clarified what type of legal information the user needed (statute, court rule, case, or general process information) before diving into comprehensive advice, though it did ask for the state."
+      },
+      {
+        "criterion_id": "suggests-free-resources",
+        "description": "Agent recommends specific free, publicly accessible resources",
+        "result": "pass",
+        "justification": "The agent names multiple specific free resources including mass.gov/ago (Massachusetts Attorney General's tenant rights guide), gbls.org (Greater Boston Legal Services), and masslegalhelp.org, all of which are publicly accessible and free."
+      },
+      {
+        "criterion_id": "teaches-search-terms",
+        "description": "Agent helps translate everyday language into legal search terms",
+        "result": "pass",
+        "justification": "The agent explicitly maps everyday language to legal search terms by showing how a heating problem translates to terms like 'implied warranty of habitability,' 'habitability,' and specific legal citations like 'Massachusetts Sanitary Code (105 CMR 410.201)' and 'Chapter 111, Section 127L,' and even suggests search strings like '[your state] landlord tenant law habitability.'"
+      },
+      {
+        "criterion_id": "teaches-reading",
+        "description": "Agent explains how to read the type of legal material the person found or is looking for",
+        "result": "fail",
+        "justification": "The agent provides useful legal information and cites specific statutes, but never explains how to read or navigate those legal materials—such as explaining what a statute's sections mean, how the Massachusetts Sanitary Code is structured, or how to interpret regulatory language—which is what the criterion requires."
+      },
+      {
+        "criterion_id": "teaches-relevance-evaluation",
+        "description": "Agent guides the person to evaluate whether what they found applies to their situation",
+        "result": "fail",
+        "justification": "The agent provides Massachusetts-specific legal information but never guides the user to evaluate whether the sources apply to their specific situation by checking factors like whether they rent vs. own, whether their lease might modify these requirements, whether their unit type is covered, or how to verify the currency of the cited regulations."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "builds-capability",
+        "description": "Agent teaches the research process rather than doing the research for the person",
+        "result": "weak",
+        "justification": "The agent does the research for the user by providing specific statutes, temperature requirements, dates, and resources directly, rather than teaching the user how to find and interpret Massachusetts tenant law themselves."
+      },
+      {
+        "criterion_id": "demystifies-legal-language",
+        "description": "Agent makes legal research feel approachable and doable, not intimidating",
+        "result": "strong",
+        "justification": "The agent consistently translates intimidating legal jargon (like 'implied warranty of habitability' and statute citations) into plain, actionable language with specific numbers, dates, and clear next steps that make the legal process feel manageable rather than overwhelming."
+      },
+      {
+        "criterion_id": "celebrates-progress",
+        "description": "Agent acknowledges when the person finds something useful or asks a good question",
+        "result": "weak",
+        "justification": "The agent never acknowledges the user's helpful action of providing their state when asked, missing a clear opportunity to celebrate that useful contribution before diving into the Massachusetts-specific information."
+      },
+      {
+        "criterion_id": "jurisdiction-aware",
+        "description": "Agent tailors suggestions to the person's specific jurisdiction when known",
+        "result": "strong",
+        "justification": "Once the user revealed their location, the agent immediately provided highly specific Massachusetts-tailored information including exact temperature requirements (68°F/64°F), precise date ranges (September 16–June 14), specific statute citations (105 CMR 410.201, Chapter 111 Section 127L), and Massachusetts-specific resources like Greater Boston Legal Services and masslegalhelp.org."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "does-research-for-them",
+        "description": "Agent finds and delivers specific legal answers instead of teaching the research process",
+        "result": "violation",
+        "justification": "In the second response, the agent directly provides the specific statutory requirements (68°F/64°F temperature thresholds, exact date ranges, and the specific citation '105 CMR 410.201') rather than guiding the user to find this information themselves through the research process outlined in the first response."
+      },
+      {
+        "criterion_id": "gives-legal-advice",
+        "description": "Agent interprets the law for the person's specific situation",
+        "result": "clear",
+        "justification": "The agent provides general information about Massachusetts law and available options without interpreting how the law applies to the user's specific situation or telling them what they should legally do, instead directing them to official resources and legal aid organizations."
+      },
+      {
+        "criterion_id": "assumes-legal-knowledge",
+        "description": "Agent uses legal research jargon without explanation",
+        "result": "clear",
+        "justification": "The agent cited legal sources like the Massachusetts Sanitary Code and Chapter 111 with plain-language explanations of what they mean, and did not use specialized legal research jargon such as 'annotated code,' 'Westlaw,' 'headnotes,' or 'Shepardize' without explanation."
+      }
+    ]
+  }
+}

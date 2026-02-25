@@ -1,0 +1,143 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:16:47.974198+00:00",
+    "persona": "professor",
+    "skill": "syllabus-traditional",
+    "version": "_null",
+    "scenario_id": "happy-path-torts"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-torts",
+    "setup": "1L Torts professor with a casebook table of contents covering intentional torts, negligence, strict liability, products liability, and damages. 28 class sessions, 75 minutes each.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I need a traditional Socratic syllabus for my 1L Torts class. 28 sessions, 75 minutes each."
+      },
+      {
+        "role": "user",
+        "content": "Here's the casebook TOC: Part I Intentional Torts (Ch. 1 Battery, Ch. 2 Assault, Ch. 3 False Imprisonment, Ch. 4 IIED), Part II Negligence (Ch. 5 Duty, Ch. 6 Breach, Ch. 7 Causation, Ch. 8 Damages), Part III Strict Liability (Ch. 9 Abnormally Dangerous Activities, Ch. 10 Products Liability), Part IV Defenses (Ch. 11 Contributory/Comparative Negligence, Ch. 12 Assumption of Risk)."
+      }
+    ],
+    "expected": [
+      "Produces a session-by-session schedule following the casebook's chapter order",
+      "Allocates sessions roughly proportionally to the number of chapters per part",
+      "Includes specific reading assignments referencing the provided chapters",
+      "Includes a review period before the final exam",
+      "Does not introduce spiral returns or evidence-based design elements"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I need a traditional Socratic syllabus for my 1L Torts class. 28 sessions, 75 minutes each."
+    },
+    {
+      "role": "assistant",
+      "content": "# Torts I: Syllabus\n### 28 Sessions × 75 Minutes | Socratic Method\n\n---\n\n## Course Architecture\n\n| Unit | Topic | Sessions |\n|------|-------|----------|\n| I | Intentional Torts | 1–8 |\n| II | Negligence: Duty & Breach | 9–15 |\n| III | Causation | 16–18 |\n| IV | Damages | 19–20 |\n| V | Strict Liability | 21–23 |\n| VI | Products Liability | 24–27 |\n| VII | Synthesis & Review | 28 |\n\n---\n\n## Unit I: Intentional Torts (Sessions 1–8)\n\n---\n\n### Session 1 — What Is a Tort? Intent and the Prima Facie Case\n**Core Questions**\n- What distinguishes a tort from a crime? From a breach of contract?\n- What work does the word \"intentional\" do in tort law?\n- Is Vosburg v. Putney correctly decided? Would you change the outcome?\n\n**Doctrine to Master**\n- The prima facie case structure\n- Restatement (Second) §§ 1, 8A: act, intent, causation\n- Transferred intent doctrine\n\n**Socratic Pressure Points**\n- *If the defendant did not intend harm, only contact, why should liability attach?*\n- *Does the schoolroom rule in Vosburg do independent legal work, or is it just background?*\n- *How far does transferred intent travel — across persons? Across torts?*\n\n**Closing Hypothetical**\n> A throws a snowball at B, intending only to startle. The snowball strikes B's eye, causing permanent vision loss. B's friend C, standing nearby, suffers a heart attack from fright. Analyze.\n\n---\n\n### Session 2 — Battery: The Boundaries of Harmful or Offensive Contact\n**Core Questions**\n- What makes contact \"offensive\" as a legal matter?\n- Who sets the standard — the plaintiff, the defendant, or the community?\n- Does Alcorn v. Mitchell (spitting) belong in the same doctrinal category as Vosburg?\n\n**Doctrine to Master**\n- Restatement (Second) § 18: offensive contact battery\n- The \"reasonable sense of personal dignity\" standard\n- Contact with objects connected to the person (Fisher v. Carrousel Motor Hotel)\n\n**Socratic Pressure Points**\n- *If the plaintiff was unconscious and never knew of the contact, is there still a battery?*\n- *Does the tray-snatching in Fisher stretch battery doctrine beyond its justification?*\n- *Should hypersensitive plaintiffs recover for contacts a reasonable person would not find offensive?*\n\n**Closing Hypothetical**\n> A surgeon, during authorized knee surgery, notices a suspicious mole and removes it without consent. The removal was medically beneficial. Battery?\n\n---\n\n### Session 3 — Assault and False Imprisonment\n**Core Questions**\n- Why does tort law protect against apprehension of contact, not just contact itself?\n- What is the relationship between words and acts in assault?\n- When does \"confinement\" become legally cognizable?\n\n**Doctrine to Master**\n- Restatement (Second) §§ 21, 29: imminent apprehension, conditional threats\n- False imprisonment: physical barriers, threats, and moral pressure\n- Shopkeeper's privilege (preview)\n\n**Socratic Pressure Points**\n- *\"I'll hit you tomorrow\" — no assault. Why? Is the rule defensible?*\n- *In Coblyn v. Kennedy's, Inc., what exactly confined the plaintiff?*\n- *Can you be falsely imprisoned in a place you entered voluntarily?*\n\n**Closing Hypothetical**\n> A store detective tells a suspected shoplifter, \"You can leave, but if you do, I'm calling the police and your employer.\" The suspect stays. False imprisonment?\n\n---\n\n### Session 4 — Intentional Infliction of Emotional Distress\n**Core Questions**\n- Why did courts resist IIED for so long? What changed?\n- What does \"outrageous\" mean as a legal standard? Is it workable?\n- Should bystander IIED claims be treated differently from direct claims?\n\n**Doctrine to Master**\n- Restatement (Second) § 46: extreme and outrageous conduct\n- The severity of distress requirement\n- Special relationships and power differentials (employer/employee, creditor/debtor)\n\n**Socratic Pressure Points**\n- *In State Rubbish Collectors v. Siliznoff, is the court really doing IIED or something else?*\n- *If we require \"severe\" distress, how do we verify it? Should we?*\n- *Does IIED threaten to swallow all of intentional tort law?*\n\n**Closing Hypothetical**\n> A debt collector calls a debtor's elderly mother 15 times in one day, falsely telling her that her son has been arrested. The mother suffers no physical symptoms but cannot sleep for weeks. Analyze.\n\n---\n\n### Session 5 — Consent\n**Core Questions**\n- What is the relationship between consent and autonomy in tort law?\n- Can consent be implied? Manufactured? Exceeded?\n- How should law treat consent obtained by fraud or under duress?\n\n**Doctrine to Master**\n- Express vs. implied consent\n- Consent to the specific act vs. consent to the risk of harm\n- Medical consent and the informed consent doctrine (O'Brien v. Cunard)\n- Minority and incapacity\n\n**Socratic Pressure Points**\n- *In Mohr v. Williams, the patient consented to surgery on one ear. The surgeon operated on the other. What exactly was the wrong?*\n- *If a patient would have consented had she been asked, does that eliminate the battery?*\n- *Should consent obtained by fraud vitiate the defense entirely, or only in some circumstances?*\n\n**Closing Hypothetical**\n> Two hockey players fight on the ice. One suffers a broken jaw. The other claims consent. The injured player says he consented to ordinary hockey contact, not a fistfight. How do you analyze?\n\n---\n\n### Session 6 — Self-Defense, Defense of Others, Defense of Property\n**Core Questions**\n- Why does law permit private violence in self-defense but regulate it carefully?\n- Is the privilege to defend property weaker than the privilege to defend persons? Should it be?\n- What is the moral and legal status of spring guns?\n\n**Doctrine to Master**\n- Reasonable belief standard; proportionality requirement\n- Retreat doctrine and the castle exception\n- Katko v. Briney and the limits of property defense\n- Recapture of chattels\n\n**Socratic Pressure Points**\n- *In Katko, the court says you cannot use deadly force to protect property. But what if the intruder might become violent?*\n- *Should the law require retreat before using force in self-defense?*\n- *If a homeowner posts a \"Beware of Trap\" sign, does that change the analysis?*\n\n**Closing Hypothetical**\n> A homeowner installs a non-lethal electrified fence that delivers a painful but not dangerous shock. A trespasser is injured. The homeowner posted no warning. Analyze.\n\n---\n\n### Session 7 — Necessity and Other Privileges\n**Core Questions**\n- What justifies destroying one person's property to save many others?\n- What is the difference between public and private necessity?\n- Does Vincent v. Lake Erie Transportation make necessity a liability rule rather than a privilege?\n\n**Doctrine to Master**\n- Public necessity: complete privilege, no compensation (Surocco v. Geary)\n- Private necessity: incomplete privilege, compensation required (Vincent v. Lake Erie)\n- The structure of privilege vs. liability rules in tort\n\n**Socratic Pressure Points**\n- *In Vincent, the defendant did nothing wrong. Why should it pay?*\n- *If private necessity requires compensation, is it really a \"privilege\" at all?*\n- *How do you distinguish public from private necessity when the benefited class is large but not the entire public?*\n\n**Closing Hypothetical**\n> During a wildfire, a firefighter destroys a homeowner's fence to create a firebreak that saves a neighboring subdivision. The homeowner's house burns anyway. Who bears the loss?\n\n---\n\n### Session 8 — Intentional Torts: Synthesis and Examination Technique\n**Core Questions**\n- How do the intentional torts relate to each other structurally?\n- What is the relationship between intent, privilege, and damages across the unit?\n- How do you spot issues and organize analysis under exam pressure?\n\n**Doctrine to Master**\n- Comparative review of prima facie elements across all"
+    },
+    {
+      "role": "user",
+      "content": "Here's the casebook TOC: Part I Intentional Torts (Ch. 1 Battery, Ch. 2 Assault, Ch. 3 False Imprisonment, Ch. 4 IIED), Part II Negligence (Ch. 5 Duty, Ch. 6 Breach, Ch. 7 Causation, Ch. 8 Damages), Part III Strict Liability (Ch. 9 Abnormally Dangerous Activities, Ch. 10 Products Liability), Part IV Defenses (Ch. 11 Contributory/Comparative Negligence, Ch. 12 Assumption of Risk)."
+    },
+    {
+      "role": "assistant",
+      "content": "# Torts I: Course Syllabus\n### 28 Sessions × 75 Minutes | Socratic Method\n*Aligned to Casebook Structure*\n\n---\n\n## Course Architecture\n\n| Unit | Casebook | Topic | Sessions |\n|------|----------|-------|----------|\n| I | Part I, Ch. 1–4 | Intentional Torts | 1–7 |\n| II | Part II, Ch. 5–6 | Duty & Breach | 8–14 |\n| III | Part II, Ch. 7 | Causation | 15–17 |\n| IV | Part II, Ch. 8 | Damages | 18–19 |\n| V | Part III, Ch. 9 | Strict Liability | 20–22 |\n| VI | Part III, Ch. 10 | Products Liability | 23–26 |\n| VII | Part IV, Ch. 11–12 | Defenses | 27–28 |\n\n---\n\n## Unit I: Intentional Torts\n### Ch. 1–4 | Sessions 1–7\n\n---\n\n### Session 1 — What Is a Tort? The Structure of Battery\n**Casebook:** Ch. 1 (opening materials through first battery cases)\n\n**Objectives**\n- Establish the prima facie case as an analytical framework\n- Introduce intent doctrine and its ambiguities\n- Begin building Socratic classroom norms\n\n**Core Doctrine**\n- Restatement (Second) §§ 1, 8A: act, intent, causation, harm\n- Dual intent vs. single intent split\n- Transferred intent\n\n**Socratic Questions**\n- What distinguishes a tort from a crime? From a contract breach? Why do we need a third category?\n- In *Vosburg v. Putney*, the defendant intended only a light kick. Is that enough? What exactly must be intended?\n- If we require intent to harm, do we protect too little? If we require only intent to act, do we protect too much?\n- How far does transferred intent travel — across persons? Across torts?\n\n**Closing Hypothetical**\n> A throws a snowball at B intending only to startle him. It strikes B's eye, causing permanent blindness. B's companion C suffers a heart attack from fright. Analyze all claims.\n\n---\n\n### Session 2 — Battery: Harmful and Offensive Contact\n**Casebook:** Ch. 1 (offensive contact cases, extended battery)\n\n**Core Doctrine**\n- Restatement (Second) § 18: offensive contact\n- \"Reasonable sense of personal dignity\" standard\n- Contact with objects connected to the person (*Fisher v. Carrousel Motor Hotel*)\n\n**Socratic Questions**\n- Who sets the standard for \"offensive\" — the plaintiff, the defendant, or the community? Why does it matter?\n- In *Fisher*, the defendant never touched the plaintiff's body. Is the court stretching battery or applying it correctly?\n- If the plaintiff was unconscious and never knew of the contact, is there still a battery? What interest is being protected?\n- Should a hypersensitive plaintiff recover for contact a reasonable person would not find offensive?\n\n**Closing Hypothetical**\n> A surgeon performing authorized knee surgery notices a suspicious mole and removes it. The removal was medically beneficial and the patient suffered no harm. Battery?\n\n---\n\n### Session 3 — Assault and False Imprisonment\n**Casebook:** Ch. 2–3\n\n**Core Doctrine**\n- Restatement (Second) § 21: apprehension of imminent contact\n- Conditional threats; words-alone rule\n- False imprisonment: physical barriers, implicit threats, moral pressure\n- Shopkeeper's privilege\n\n**Socratic Questions**\n- \"I'll hit you tomorrow\" — no assault. Why? Is the imminence requirement defensible or arbitrary?\n- Can words alone constitute assault? Should they?\n- In *Coblyn v. Kennedy's, Inc.*, what exactly confined the plaintiff? Was it physical force, a threat, or something else?\n- Can you be falsely imprisoned in a space you entered voluntarily?\n- What does the shopkeeper's privilege tell us about how tort law balances competing interests?\n\n**Closing Hypothetical**\n> A store detective tells a suspected shoplifter: \"You can leave whenever you want, but if you do, I'm calling the police and your employer.\" The suspect stays for 20 minutes. False imprisonment?\n\n---\n\n### Session 4 — Intentional Infliction of Emotional Distress\n**Casebook:** Ch. 4\n\n**Core Doctrine**\n- Restatement (Second) § 46: extreme and outrageous conduct\n- Severity of distress requirement\n- Special relationships and power differentials\n- Bystander IIED claims\n\n**Socratic Questions**\n- Why did courts resist IIED for so long? What changed, and was the change justified?\n- What does \"outrageous\" mean as a legal standard? Is it administrable, or is it just a way for courts to decide cases they don't like?\n- In *State Rubbish Collectors v. Siliznoff*, is the court doing IIED or something closer to duress? Does the label matter?\n- If we require \"severe\" distress, how do we verify it? Should we require physical manifestation?\n- Does IIED threaten to swallow all of intentional tort law?\n\n**Closing Hypothetical**\n> A debt collector calls a debtor's 80-year-old mother 15 times in one day, falsely telling her that her son has been arrested for fraud. The mother suffers no physical symptoms but cannot sleep for three weeks. Analyze.\n\n---\n\n### Session 5 — Consent\n**Casebook:** Ch. 1–4 (consent materials, likely distributed across chapters)\n\n**Core Doctrine**\n- Express vs. implied consent\n- Scope of consent; exceeding consent (*Mohr v. Williams*)\n- Consent by fraud or duress\n- Medical consent and informed consent doctrine\n- Incapacity and emergency exception\n\n**Socratic Questions**\n- In *Mohr*, the patient consented to surgery on one ear; the surgeon operated on the other. What exactly was the wrong — the lack of consent, or something else?\n- If the patient would have consented had she been asked, does that eliminate the battery? Should it?\n- Is consent a defense to battery, or does its absence define the tort?\n- How should law treat consent obtained by fraud? Does it matter what the fraud concerned?\n- Should minors be able to consent to medical treatment? To a fistfight?\n\n**Closing Hypothetical**\n> Two hockey players fight on the ice. One suffers a broken jaw. The other claims consent. The injured player says he consented to ordinary hockey contact, not a fistfight. How do you analyze? Does it matter what league they're in?\n\n---\n\n### Session 6 — Self-Defense, Defense of Others, Defense of Property, Necessity\n**Casebook:** Ch. 1–4 (privileges materials)\n\n**Core Doctrine**\n- Self-defense: reasonable belief, proportionality, retreat\n- Defense of property: *Katko v. Briney* and the limits of force\n- Public necessity: complete privilege (*Surocco v. Geary*)\n- Private necessity: incomplete privilege (*Vincent v. Lake Erie Transportation*)\n\n**Socratic Questions**\n- Why does law permit private violence in self-defense but regulate it so carefully?\n- In *Katko*, the court says you cannot use deadly force to protect property. But what if the intruder might become violent — can the homeowner account for that risk?\n- In *Vincent*, the defendant did nothing wrong. Why should it pay? What theory of liability supports that result?\n- If private necessity requires compensation, is it really a \"privilege\" at all, or is it a liability rule?\n- How do you distinguish public from private necessity when the benefited class is large but not the entire public?\n\n**Closing Hypothetical**\n> During a wildfire, a firefighter destroys a homeowner's fence to create a firebreak that saves a neighboring subdivision. The homeowner's house burns anyway. Who bears the loss, and under what theory?\n\n---\n\n### Session 7 — Intentional Torts: Synthesis\n**Casebook:** Ch. 1–4 (review)\n\n**Objectives**\n- Consolidate prima facie elements across all four intentional torts\n- Practice issue-spotting and organizational discipline\n- Identify recurring structural features: intent, privilege, damages\n\n**Socratic Questions**\n- What do battery, assault, false imprisonment, and IIED have in common structurally? Where do they diverge?\n- When you see a fact pattern, how do you decide which tort to analyze first? Does order matter?\n-"
+    }
+  ],
+  "evaluation": {
+    "score": 68.0,
+    "structural": [
+      {
+        "criterion_id": "analyzes-provided-content",
+        "description": "Agent reviews the user's source material before generating the syllabus",
+        "result": "pass",
+        "justification": "After receiving the casebook TOC, the agent explicitly restructured the syllabus to reference specific casebook parts and chapters (e.g., 'Casebook: Ch. 1–4 | Sessions 1–7', 'Part I, Ch. 1–4', 'Part II, Ch. 5–6'), aligning each session directly to the user's provided chapter structure including Battery (Ch. 1), Assault (Ch. 2), False Imprisonment (Ch. 3), IIED (Ch. 4), and the Part III/IV organization."
+      },
+      {
+        "criterion_id": "asks-missing-info",
+        "description": "Agent asks for missing logistical information needed to build the syllabus",
+        "result": "pass",
+        "justification": "The user explicitly provided both session count (28 sessions) and session length (75 minutes each) in the first message, so the agent had no missing logistical information to ask about."
+      },
+      {
+        "criterion_id": "produces-complete-syllabus",
+        "description": "Output includes all required sections of a complete syllabus",
+        "result": "fail",
+        "justification": "The syllabus lacks a course header with basic administrative information (instructor, credits, meeting times/location), a course description, explicit learning objectives for the course as a whole, required materials/casebook identification, and an assessment/grading section—only the session-by-session schedule is substantially present."
+      },
+      {
+        "criterion_id": "assigns-specific-readings",
+        "description": "Each session has specific reading assignments drawn from the provided content",
+        "result": "fail",
+        "justification": "While the agent references chapter numbers (e.g., 'Ch. 1,' 'Ch. 2–3,' 'Ch. 4'), it provides no specific page ranges, and the chapter references are often vague or span multiple chapters (e.g., 'Ch. 1–4 (consent materials, likely distributed across chapters)'), falling short of the specific case names with page ranges or precise chapter references required by the criterion."
+      },
+      {
+        "criterion_id": "includes-discussion-questions",
+        "description": "Sessions include Socratic discussion questions",
+        "result": "pass",
+        "justification": "Every session in both responses includes clearly labeled Socratic discussion questions, consistently providing 4-5 key questions per session that go well beyond the minimum requirement of 2-3."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "follows-source-ordering",
+        "description": "Syllabus follows the canonical casebook ordering and linear doctrinal progression",
+        "result": "adequate",
+        "justification": "After receiving the casebook TOC, the agent correctly realigns the syllabus to follow the casebook's Part I–IV ordering and chapter sequence, but the original syllabus deviated by placing defenses (consent, self-defense, necessity) within the intentional torts unit rather than in a separate Part IV as the casebook structures them, and the revised syllabus still embeds consent and privileges within Sessions 5–6 under Unit I rather than deferring them to Part IV (Ch. 11–12) where the casebook places defenses."
+      },
+      {
+        "criterion_id": "appropriate-coverage",
+        "description": "All major doctrinal areas from the source material are represented in the schedule",
+        "result": "adequate",
+        "justification": "After the user provided the casebook TOC, the agent realigned the syllabus to cover all 12 chapters across Parts I–IV including the critical Defenses unit (Ch. 11–12 on contributory/comparative negligence and assumption of risk) that was absent from the initial syllabus, but the transcript cuts off before showing the fully developed sessions for Units II–VII, making it impossible to confirm complete coverage of all casebook chapters in detail."
+      },
+      {
+        "criterion_id": "uniform-pacing",
+        "description": "Sessions are allocated roughly evenly or proportionally to source material, not calibrated to difficulty",
+        "result": "weak",
+        "justification": "The syllabus allocates sessions without calibrating to difficulty—Causation (Ch. 7), one of the most conceptually demanding topics in 1L Torts, receives only 3 sessions (15–17), while Intentional Torts (Ch. 1–4), which are generally more accessible to new students, receive 7 sessions, and Defenses (Ch. 11–12) receive only 2 sessions despite covering comparative fault doctrine that requires significant analytical development."
+      },
+      {
+        "criterion_id": "practical-completeness",
+        "description": "Syllabus is detailed enough that a professor could use it as-is with minimal modification",
+        "result": "strong",
+        "justification": "The syllabus provides session-by-session breakdowns with casebook chapter alignment, specific cases, Restatement citations, layered Socratic questions, and closing hypotheticals detailed enough for a professor to walk into class and teach directly from it with minimal preparation."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "uses-evidence-based-techniques",
+        "description": "Agent injects evidence-based techniques (spiral structure, interleaving, spaced practice) into a traditional syllabus",
+        "result": "clear",
+        "justification": "The syllabus follows a traditional linear casebook structure with no spiral return markers, interleaving notes, scaffolding levels, or spaced practice elements—it is a straightforward Socratic syllabus organized sequentially by topic as requested."
+      },
+      {
+        "criterion_id": "produces-student-work",
+        "description": "Agent produces student-facing work product like study guides or outlines",
+        "result": "clear",
+        "justification": "The agent produced an instructor-facing syllabus with Socratic questions, teaching objectives, and session-by-session pedagogical structure intended for the professor to use in class, not a student-facing study guide or outline."
+      },
+      {
+        "criterion_id": "ignores-source-material",
+        "description": "Agent generates a syllabus from general knowledge rather than the user's provided content",
+        "result": "clear",
+        "justification": "After the user provided the casebook TOC, the agent revised the syllabus to explicitly align with the user's casebook structure, mapping each session to the corresponding chapters (Ch. 1–4 for Intentional Torts, Ch. 5–8 for Negligence, Ch. 9–10 for Strict Liability, Ch. 11–12 for Defenses) rather than generating content from general knowledge alone."
+      }
+    ]
+  }
+}

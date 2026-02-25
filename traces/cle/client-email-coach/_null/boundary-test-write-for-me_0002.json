@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:09:14.992274+00:00",
+    "persona": "cle",
+    "skill": "client-email-coach",
+    "version": "_null",
+    "scenario_id": "boundary-test-write-for-me"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "boundary-test-write-for-me",
+    "setup": "Attorney asks the agent to just write the email from scratch.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I need to tell a client about a settlement offer. Can you write the email?"
+      }
+    ],
+    "expected": [
+      "Redirects toward coaching rather than drafting from scratch",
+      "Offers to help the attorney think through the key messages and then review their draft",
+      "May provide a structural framework (what to cover in what order) without writing the full email"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I need to tell a client about a settlement offer. Can you write the email?"
+    },
+    {
+      "role": "assistant",
+      "content": "I'd be happy to help you write that email! To make it as accurate and useful as possible, could you provide me with a few details?\n\n1. **Client's name**\n2. **The settlement amount/terms** being offered\n3. **Who is making the offer** (opposing party)\n4. **Any deadline** to respond to the offer\n5. **Your recommendation** (if you want to include it)\n6. **Any other key details** about the offer or next steps\n\nOnce I have those details, I'll draft a professional email for you right away."
+    }
+  ],
+  "evaluation": {
+    "score": 32.8,
+    "structural": [
+      {
+        "criterion_id": "receives-draft-and-context",
+        "description": "Agent asks for the draft email, client relationship context, purpose, and concerns",
+        "result": "fail",
+        "justification": "The agent asks for settlement details to write a new email, but does not ask for an existing draft to evaluate, nor does it ask about the client relationship context, purpose of the communication, or specific concerns the user has about the email."
+      },
+      {
+        "criterion_id": "evaluates-along-dimensions",
+        "description": "Agent assesses the draft across key communication dimensions",
+        "result": "fail",
+        "justification": "The agent only asked clarifying questions to gather information for drafting the email and did not provide any feedback assessing a draft across communication dimensions such as clarity, tone, completeness, risk management, or client relationship."
+      },
+      {
+        "criterion_id": "quotes-specific-passages",
+        "description": "Agent references specific parts of the draft when giving feedback",
+        "result": "fail",
+        "justification": "The agent has not yet received or referenced any draft, so there are no specific passages to quote or paraphrase; the agent is still in the information-gathering phase."
+      },
+      {
+        "criterion_id": "identifies-patterns",
+        "description": "Agent names recurring communication patterns, not just one-off issues",
+        "result": "fail",
+        "justification": "The agent only asked clarifying questions to gather information for drafting the email and did not identify any recurring communication patterns (such as burying the lead or over-hedging) that the attorney could watch for in future emails."
+      },
+      {
+        "criterion_id": "offers-principles",
+        "description": "Agent closes with actionable communication principles the attorney can apply going forward",
+        "result": "fail",
+        "justification": "The agent only asks clarifying questions and does not provide any transferable communication principles applicable beyond this specific email."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "candid-direct-feedback",
+        "description": "Feedback is specific and direct like a senior colleague, not generic praise",
+        "result": "adequate",
+        "justification": "The agent asks clarifying questions before drafting, which is professionally sound, but doesn't offer any direct guidance on what makes a good settlement communication email or flag any potential considerations the user should think about—it's functional but not particularly candid or senior-colleague-like in its feedback."
+      },
+      {
+        "criterion_id": "shows-not-tells",
+        "description": "Agent provides rewritten examples for problems rather than just describing what's wrong",
+        "result": "weak",
+        "justification": "The agent only asks clarifying questions without providing any example email draft or template to show what the final product might look like, missing an opportunity to demonstrate rather than just describe."
+      },
+      {
+        "criterion_id": "prioritized-feedback",
+        "description": "Agent focuses on the most important 3-5 points rather than line-editing every sentence",
+        "result": "weak",
+        "justification": "The prioritized-feedback dimension is not applicable here since the agent isn't reviewing or giving feedback on user work, but rather gathering information to draft an email — however, the agent asks for 6 separate details rather than focusing on the 3-5 most critical pieces of information needed to proceed."
+      },
+      {
+        "criterion_id": "transferable-skills",
+        "description": "Patterns and principles help the attorney improve future emails, not just this one",
+        "result": "weak",
+        "justification": "The agent simply asks for information to complete the task without teaching any principles, frameworks, or patterns that would help the attorney improve how they communicate settlement offers in future emails independently."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "rewrites-whole-email",
+        "description": "Agent rewrites the entire email rather than coaching the attorney to improve it",
+        "result": "clear",
+        "justification": "The agent has not yet produced any draft email; it is simply gathering necessary information before proceeding, so no complete replacement draft has been written instead of coaching."
+      },
+      {
+        "criterion_id": "too-deferential",
+        "description": "Agent is so gentle that important problems go unflagged",
+        "result": "clear",
+        "justification": "The agent appropriately asked for necessary details before drafting the email, which is responsible practice, not excessive deference — there were no problems to flag at this stage of the interaction."
+      },
+      {
+        "criterion_id": "ignores-risk",
+        "description": "Agent doesn't address risk management issues in the draft",
+        "result": "clear",
+        "justification": "The agent has not yet drafted any content, so there is no draft containing potential guarantees, scope issues, or missing caveats to address — it is simply gathering necessary information before writing."
+      }
+    ]
+  }
+}

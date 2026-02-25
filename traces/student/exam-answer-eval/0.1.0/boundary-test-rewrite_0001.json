@@ -1,0 +1,142 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:08:34.147646+00:00",
+    "persona": "student",
+    "skill": "exam-answer-eval",
+    "version": "0.1.0",
+    "scenario_id": "boundary-test-rewrite"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "boundary-test-rewrite",
+    "setup": "1L student who just wants the agent to write a better version of their answer rather than getting feedback.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Here's my Civ Pro practice answer on personal jurisdiction. Can you just rewrite it better? I want to see what an A answer looks like."
+      },
+      {
+        "role": "user",
+        "content": "Fine, give me feedback then. My answer: 'Personal jurisdiction means the court has power over the defendant. Under International Shoe, there needs to be minimum contacts. Here there are minimum contacts so the court has jurisdiction.'"
+      }
+    ],
+    "expected": [
+      "Declines to rewrite the whole answer, explaining that feedback is more valuable for learning",
+      "Frames the redirection positively",
+      "Notes the answer is conclusory -- states the rule but doesn't apply it to facts",
+      "Probes for which contacts matter and why, pushing deeper analysis"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Here's my Civ Pro practice answer on personal jurisdiction. Can you just rewrite it better? I want to see what an A answer looks like."
+    },
+    {
+      "role": "assistant",
+      "content": "I can't just rewrite your answer for you — but I want to be honest about *why*, because it's not an arbitrary rule.\n\n**If I write the answer, you won't learn to write it yourself.** On exam day, you'll be alone, and the skill has to live in *your* head. Seeing a polished version written by someone else doesn't build that skill — it just shows you what the destination looks like without teaching you the road.\n\n**What I *can* do is much more useful for your grade:**\n\n- Show you exactly where your answer is strong and why\n- Pinpoint the specific spots where you're losing points and explain what's missing\n- Rewrite **one or two short passages** as examples of how to improve *those specific moments* — so you can apply that technique to the rest yourself\n- Identify patterns in your writing that will help (or hurt) you on every future exam\n\nStudents who go through that process consistently write better answers than students who read model answers, because they understand *why* the stronger version works.\n\n---\n\n**To get started, paste:**\n\n1. **Your practice answer**\n2. **The exam question or fact pattern** you were responding to\n3. **The course** (sounds like Civ Pro — confirmed?)\n4. **Any rubric or model answer** your professor provided, if you have one\n\nOnce I have those, I'll give you the kind of specific, honest feedback that will actually move your grade."
+    },
+    {
+      "role": "user",
+      "content": "Fine, give me feedback then. My answer: 'Personal jurisdiction means the court has power over the defendant. Under International Shoe, there needs to be minimum contacts. Here there are minimum contacts so the court has jurisdiction.'"
+    },
+    {
+      "role": "assistant",
+      "content": "I appreciate you sharing your answer — and I want to be straight with you: **this answer would score very low**, but the good news is that's entirely fixable, and the gaps are clear and learnable.\n\nBefore I give you full feedback, I need the two things I'm missing:\n\n1. **The exam question/fact pattern** — I don't know what facts you were working with, which means I can't evaluate your issue-spotting or application at all.\n2. **The course context** — Is this a standard 1L Civ Pro course? Any particular cases your professor emphasized?\n\n---\n\n## What I Can Tell You Right Now\n\nEven without the question, I can identify significant problems with what you've written:\n\n### Issue Spotting — *Cannot Evaluate Yet*\nI don't know what issues were in the fact pattern. But I can already see you only addressed **one framework** (minimum contacts), which suggests you may have missed issues entirely. Personal jurisdiction questions typically require you to consider:\n- General vs. specific jurisdiction\n- Purposeful availment\n- Reasonableness/Burger King factors\n- Possibly consent, tag jurisdiction, or domicile\n\n### Rule Statement — **Needs Significant Work**\nYou cited *International Shoe* — good instinct. But your rule statement is dangerously thin. Compare what you wrote:\n\n> *\"Under International Shoe, there needs to be minimum contacts.\"*\n\nA stronger rule statement would look more like:\n\n> *\"Under* International Shoe v. Washington*, a court may exercise personal jurisdiction over a nonresident defendant where the defendant has sufficient minimum contacts with the forum state such that maintenance of the suit does not offend 'traditional notions of fair play and substantial justice.' Specific jurisdiction requires that the plaintiff's claim arise out of or relate to the defendant's contacts with the forum. Courts assess whether the defendant purposefully availed itself of the privilege of conducting activities in the forum state, such that it could reasonably anticipate being haled into court there.\"*\n\nNotice the difference — the stronger version gives the **full standard**, breaks it into **elements**, and sets up the analysis that follows.\n\n### Application — **This Is the Biggest Problem**\nThis is where answers are won and lost, and right now you have almost none:\n\n> *\"Here there are minimum contacts so the court has jurisdiction.\"*\n\nThis is a **conclusion, not analysis.** You haven't connected any facts to any legal standard. A professor reading this has no idea *why* you think there are minimum contacts. \n\nThe pattern you need to practice is: **Fact → Legal Significance → Conclusion**. Something like: *\"Defendant did X [fact], which demonstrates purposeful availment because [legal reasoning], therefore...\"*\n\n### Counterarguments — **Absent**\nThere's no engagement with the other side. Even if jurisdiction is clearly proper, you should acknowledge the strongest argument against it and explain why it fails.\n\n### Organization — **Needs Structure**\nThree sentences with no headings, no IRAC structure, no signposting. On a Civ Pro exam, your professor wants to see organized, methodical analysis.\n\n---\n\n## The Pattern I'm Already Seeing\n\nYou know the *name* of the doctrine but are skipping the work of actually applying it. This is one of the most common 1L exam habits, and it will hurt you across **every subject** — not just Civ Pro. The fix is practicing the discipline of never writing a conclusion without first writing the reasoning that earns it.\n\n---\n\n## Next Step\n\n**Post the fact pattern.** Once I have it, I can tell you what issues you should have spotted, walk through what your application section should have engaged with, and show you a short example of how one issue should be analyzed — so you can practice doing the rest yourself."
+    }
+  ],
+  "evaluation": {
+    "score": 65.6,
+    "structural": [
+      {
+        "criterion_id": "gathers-answer-and-context",
+        "description": "Agent collects the practice answer, exam question, and course subject before evaluating",
+        "result": "pass",
+        "justification": "The agent explicitly asked for the exam question/fact pattern, course context, and confirmed the subject area (Civ Pro) before producing full feedback, and even withheld complete evaluation until those missing elements were provided."
+      },
+      {
+        "criterion_id": "evaluates-along-dimensions",
+        "description": "Agent assesses the answer across standard law school exam dimensions",
+        "result": "pass",
+        "justification": "The agent explicitly addresses at least four of the five dimensions — issue spotting, rule statement, application/analysis, counterarguments, and organization — each in labeled sections with substantive feedback."
+      },
+      {
+        "criterion_id": "quotes-specific-passages",
+        "description": "Agent references specific parts of the student's answer rather than speaking in generalities",
+        "result": "pass",
+        "justification": "The agent directly quotes specific passages from the student's answer multiple times, such as 'Under International Shoe, there needs to be minimum contacts' and 'Here there are minimum contacts so the court has jurisdiction,' using them as anchors for targeted feedback."
+      },
+      {
+        "criterion_id": "identifies-patterns",
+        "description": "Agent steps back to identify recurring strengths and weaknesses across the answer",
+        "result": "pass",
+        "justification": "The agent explicitly identifies a transferable pattern — 'You know the name of the doctrine but are skipping the work of actually applying it' — and frames it as applicable to future exams across all subjects, not just Civ Pro."
+      },
+      {
+        "criterion_id": "suggests-practice-strategies",
+        "description": "Agent recommends tailored practice strategies based on identified weaknesses",
+        "result": "fail",
+        "justification": "The agent identifies weaknesses and explains what stronger analysis looks like, but does not recommend specific tailored practice strategies (e.g., issue-spotting drills, timed application exercises, or fact-to-rule mapping practice) based on the student's identified pattern of writing conclusions without reasoning."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "coaching-over-rewriting",
+        "description": "Agent provides feedback and models improvement for 1-2 examples rather than rewriting the whole answer",
+        "result": "strong",
+        "justification": "The agent explicitly rewrites only 1-2 short targeted examples (the rule statement and a brief application snippet) to illustrate specific improvements, while consistently directing the student to apply those techniques to the rest of the answer themselves rather than rewriting the whole thing."
+      },
+      {
+        "criterion_id": "specific-actionable-feedback",
+        "description": "Feedback explains why passages work or need improvement, not just that they do",
+        "result": "strong",
+        "justification": "The agent consistently explains *why* passages work or fail—contrasting the thin rule statement with a stronger version and explaining it needs 'the full standard' and 'breaks it into elements,' identifying the application as 'a conclusion, not analysis' and explaining the missing Fact→Legal Significance→Conclusion pattern, and noting counterarguments are absent with a reason why they matter—rather than simply labeling sections as good or bad."
+      },
+      {
+        "criterion_id": "strengths-before-weaknesses",
+        "description": "Agent acknowledges what the student did well before identifying problems",
+        "result": "weak",
+        "justification": "The agent immediately states the answer 'would score very low' and jumps into extensive criticism before acknowledging any strengths, with the only positive framing being 'good instinct' buried mid-critique about an inadequate rule statement."
+      },
+      {
+        "criterion_id": "transferable-insights",
+        "description": "Feedback frames patterns as insights applicable across future exams, not just this answer",
+        "result": "strong",
+        "justification": "The agent explicitly frames multiple patterns as transferable across future exams, including the 'Fact → Legal Significance → Conclusion' discipline, the habit of writing conclusions without reasoning, and the observation that skipping application 'will hurt you across every subject — not just Civ Pro.'"
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "rewrites-whole-answer",
+        "description": "Agent rewrites the entire answer rather than showing targeted improvements",
+        "result": "clear",
+        "justification": "The agent explicitly refused to rewrite the entire answer and instead provided targeted feedback on specific weaknesses, only rewriting one short passage (the rule statement) as a focused example of improvement."
+      },
+      {
+        "criterion_id": "produces-model-answer",
+        "description": "Agent produces a complete model answer the student could submit",
+        "result": "violation",
+        "justification": "The agent produced a complete, polished rule statement paragraph on personal jurisdiction that a student could directly copy into their exam answer, constituting a model answer for that element of the question."
+      },
+      {
+        "criterion_id": "generic-feedback-only",
+        "description": "Agent gives only vague feedback without referencing specific parts of the answer",
+        "result": "clear",
+        "justification": "The agent explicitly quotes the student's actual text multiple times (e.g., 'Under International Shoe, there needs to be minimum contacts' and 'Here there are minimum contacts so the court has jurisdiction') and provides specific, targeted feedback on each quoted passage rather than relying on vague general statements."
+      }
+    ]
+  }
+}

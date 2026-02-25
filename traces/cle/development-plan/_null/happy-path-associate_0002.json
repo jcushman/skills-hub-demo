@@ -1,0 +1,143 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:09:24.904226+00:00",
+    "persona": "cle",
+    "skill": "development-plan",
+    "version": "_null",
+    "scenario_id": "happy-path-associate"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-associate",
+    "setup": "3rd-year associate at a mid-size litigation firm who wants to develop business development and client management skills to position for partnership.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I'm a 3rd-year associate at a mid-size litigation firm. I want to start building toward partnership. What should I focus on?"
+      },
+      {
+        "role": "user",
+        "content": "My supervising partner says my legal work is strong but I need to start originating business and managing client relationships more independently. I have maybe 3-4 hours a month for development."
+      }
+    ],
+    "expected": [
+      "Identifies business development and client management as the key priorities",
+      "Asks about current strengths and specific gaps",
+      "Produces a plan with quarterly milestones that fits within 3-4 hours/month",
+      "Suggests concrete actions (networking events, writing opportunities, shadowing client meetings)",
+      "Does not overload the plan"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I'm a 3rd-year associate at a mid-size litigation firm. I want to start building toward partnership. What should I focus on?"
+    },
+    {
+      "role": "assistant",
+      "content": "This is a smart time to start thinking about this. Here's what actually matters:\n\n## Build a Foundation Before Chasing Clients\n\n**First, be excellent at the work.** Partners won't champion someone who creates problems. Make sure your reputation internally is solid before investing heavily in external BD.\n\n---\n\n## What Actually Moves the Needle\n\n**Develop a genuine specialty**\n- Pick 1-2 practice areas and become the person people call\n- Generalists rarely make partner at competitive firms\n- Follow where the firm's growth opportunities are\n\n**Start building relationships now, not later**\n- Former classmates are becoming in-house counsel and business owners\n- Reconnect authentically, not transactionally\n- These relationships take 5-7 years to generate work\n\n**Understand your firm's partnership criteria specifically**\n- Ask a trusted partner directly what they look for\n- Origination requirements vary enormously by firm\n- Know the actual target before optimizing for it\n\n---\n\n## Practical Near-Term Actions\n\n- Write articles or speak at events in your specialty area\n- Join 1-2 bar associations or industry groups and actually participate\n- Ask to be on client calls and pitches whenever possible\n- Develop relationships with clients you already serve\n\n---\n\n## One Honest Caution\n\n**Have a direct conversation with a mentor partner** about your trajectory. Firms vary hugely in whether associates realistically make partner, and you want honest feedback now rather than at year 6.\n\nWhat practice area are you in? That would help me give more specific advice."
+    },
+    {
+      "role": "user",
+      "content": "My supervising partner says my legal work is strong but I need to start originating business and managing client relationships more independently. I have maybe 3-4 hours a month for development."
+    },
+    {
+      "role": "assistant",
+      "content": "3-4 hours is actually workable if you're strategic. The mistake most associates make is spreading that time too thin.\n\n## Reframe the Constraint\n\n**Don't try to do \"BD\" broadly.** With limited time, you need activities that compound - meaning they build relationships AND reputation simultaneously.\n\n---\n\n## How I'd Allocate 3-4 Hours Monthly\n\n**~1.5 hours: One substantive touchpoint with your network**\n- Coffee, lunch, or even a quick call with a former classmate or contact\n- Focus on people moving into roles where they'll need outside counsel in 2-3 years\n- One genuine conversation beats ten LinkedIn likes\n\n**~1 hour: One piece of visible content**\n- Short LinkedIn post on a case or legal development in your area\n- Email update to clients about relevant legal changes\n- This builds reputation passively over time\n\n**~30 min: Internal relationship building**\n- Lunch with a partner in a complementary practice\n- Cross-referrals matter enormously at mid-size firms\n\n**~30 min: Track and follow up**\n- Keep a simple spreadsheet of contacts and last touchpoint\n- BD dies from neglect, not lack of effort\n\n---\n\n## The Honest Reality\n\nYour supervising partner's feedback is important signal. I'd push back gently on one thing though:\n\n**Ask them specifically what \"managing client relationships more independently\" looks like in practice.** That's vague feedback that could mean very different things, and clarifying it is itself a partnership-track behavior.\n\nWhat does your current network look like - law school contacts, former clients, industry connections?"
+    }
+  ],
+  "evaluation": {
+    "score": 64.8,
+    "structural": [
+      {
+        "criterion_id": "gathers-context",
+        "description": "Agent asks about current role, practice area, firm type, and years of experience",
+        "result": "fail",
+        "justification": "The agent only confirmed role (3rd-year associate) and organization type (mid-size litigation firm) from the user's initial message, and asked about practice area at the end of the first response, but never asked about or confirmed experience level beyond year, nor did it gather at least three of the required context points before building the plan—it immediately launched into detailed advice."
+      },
+      {
+        "criterion_id": "assesses-position",
+        "description": "Agent explores strengths, areas to improve, feedback received, and career vision",
+        "result": "fail",
+        "justification": "The agent only explores one area (improvement areas via the supervising partner's feedback) but does not ask about current strengths, feedback from others beyond the one mention, or the user's 2-3 year career vision, falling short of the required two areas."
+      },
+      {
+        "criterion_id": "categorizes-priorities",
+        "description": "Agent maps development needs into specific categories",
+        "result": "pass",
+        "justification": "The agent explicitly organizes development priorities into named categories such as internal relationship building, visible content/reputation building, network touchpoints, and tracking—and in the first response uses headers like 'Develop a genuine specialty,' 'Start building relationships now,' and 'Understand your firm's partnership criteria' as distinct named categories rather than an unstructured list."
+      },
+      {
+        "criterion_id": "produces-quarterly-plan",
+        "description": "Output includes quarterly milestones with specific action items",
+        "result": "fail",
+        "justification": "The agent's responses provide general advice and monthly time allocation guidance but do not include quarterly milestones with specific action items, deadlines, or measurable milestones across at least two quarters."
+      },
+      {
+        "criterion_id": "includes-metrics",
+        "description": "Plan includes progress metrics and a check-in mechanism",
+        "result": "fail",
+        "justification": "The agent's plan lacks explicit progress metrics (e.g., measurable targets like number of contacts per month) and contains no check-in mechanism or self-assessment prompt to help the user evaluate their progress over time."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "realistic-time-awareness",
+        "description": "Recommendations account for billable hour pressure and limited development time",
+        "result": "strong",
+        "justification": "The agent directly acknowledges the 3-4 hour monthly constraint as a real limitation and builds its entire recommendation around that reality, allocating specific time blocks that fit within billable hour pressure rather than offering idealistic advice that ignores the associate's actual available bandwidth."
+      },
+      {
+        "criterion_id": "strategic-prioritization",
+        "description": "Agent helps narrow focus to 2-4 priorities rather than trying to address everything",
+        "result": "strong",
+        "justification": "When the user revealed their 3-4 hour monthly constraint, the agent immediately reframed around strategic focus and allocated that limited time across exactly four concrete priorities rather than overwhelming the user with options."
+      },
+      {
+        "criterion_id": "practical-specificity",
+        "description": "Action items are concrete and achievable, not aspirational generalities",
+        "result": "strong",
+        "justification": "The agent translates vague partnership advice into a specific time-budgeted plan with concrete, measurable activities (e.g., '1.5 hours for one coffee/call,' 'a simple spreadsheet of contacts') that a busy associate can realistically execute within their stated 3-4 hour monthly constraint."
+      },
+      {
+        "criterion_id": "builds-attorney-capability",
+        "description": "Focus is on building the attorney's own skills, not producing work product for them",
+        "result": "adequate",
+        "justification": "The agent provides strategic frameworks and asks clarifying questions to help the attorney think through their situation, but primarily delivers prescriptive advice and action plans rather than coaching the attorney to develop their own BD thinking and decision-making skills."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-work-product",
+        "description": "Agent produces client deliverables or legal work product instead of a development plan",
+        "result": "clear",
+        "justification": "The agent provides career development advice, coaching frameworks, and strategic guidance rather than any legal work product such as memos, briefs, or client communications."
+      },
+      {
+        "criterion_id": "generic-career-advice",
+        "description": "Agent gives only generic advice without tailoring to the attorney's specific situation",
+        "result": "clear",
+        "justification": "The agent consistently tailored advice to the user's specific context—3rd-year associate at a mid-size litigation firm, 3-4 hours monthly constraint, and the supervising partner's specific feedback about origination and independent client management—rather than offering generic advice applicable to any attorney."
+      },
+      {
+        "criterion_id": "ignores-constraints",
+        "description": "Agent recommends plans that are unrealistic given the attorney's time and resource constraints",
+        "result": "clear",
+        "justification": "The agent explicitly acknowledged the 3-4 hour monthly constraint and built its entire recommendation around that realistic limitation, allocating specific time blocks that fit within the stated availability."
+      }
+    ]
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:07:57.668790+00:00",
+    "persona": "skill-developer",
+    "skill": "skill-creator",
+    "version": "0.1.0",
+    "scenario_id": "happy-path-case-briefing"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-case-briefing",
+    "setup": "Law librarian wants to create a student skill that helps 1Ls learn how to brief cases effectively.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I want to create a skill that teaches 1L students how to brief cases. I'm a law librarian and I run workshops on this every fall."
+      },
+      {
+        "role": "user",
+        "content": "The key thing is that students need to learn to identify the holding versus dicta, and to write the brief in their own words rather than just copying from the case. I also want the skill to adapt to the student's course -- a Torts brief looks different from a Con Law brief."
+      }
+    ],
+    "expected": [
+      "Identifies this as a student persona skill with coaching constraints",
+      "Asks about the pedagogical approach -- should the agent review student briefs, guide them through the process, or both?",
+      "Incorporates the librarian's expertise about holding vs. dicta and own-words emphasis",
+      "Produces a complete SKILL.md that respects student persona constraints (coach, don't produce)",
+      "Checks persona compliance before finalizing"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I want to create a skill that teaches 1L students how to brief cases. I'm a law librarian and I run workshops on this every fall."
+    },
+    {
+      "role": "assistant",
+      "content": "What a great skill to build! Case briefing is one of those foundational 1L skills where good coaching early makes a huge difference, and it's exactly the kind of thing an AI agent can reinforce between your workshops.\n\nLet me make sure I understand the context before we start designing this together.\n\n---\n\n## A few questions to get us started\n\n**1. Who's using this skill?**\n\nThis sounds like a **Student** skill — a 1L who's trying to learn how to brief cases. That means the agent's job is to *coach and build understanding*, not to write the brief for them. The agent should never hand over a finished brief the student could just copy. Does that match your intent?\n\n**2. What does \"briefing a case\" look like in your workshops?**\n\nDifferent schools and professors emphasize different formats. Some use IRAC-style briefs, some use FIRAC, some have their own templates. \n\n- Do you teach a specific structure (e.g., Facts, Issue, Rule, Holding, Reasoning, Disposition)?\n- Are there elements you find students consistently get wrong or skip?\n- Do you want the skill to work with *any* case, or is it oriented toward a particular subject (Contracts, Torts, Civil Procedure)?\n\n**3. What's the learning goal beyond \"write a brief\"?**\n\nYour workshops probably have a deeper objective — something like \"students understand *why* each element matters\" or \"students can identify the legally relevant facts vs. irrelevant ones.\" What do you want a student to walk away understanding?\n\n**4. What does a student bring to this interaction?**\n\nWhen someone activates this skill, what do you imagine they have in front of them? A case they've already read? A case they're struggling to understand? A draft brief they want feedback on?\n\n---\n\nTake these in whatever order feels natural — even a few sentences on each will give me enough to start drafting something you can react to."
+    },
+    {
+      "role": "user",
+      "content": "The key thing is that students need to learn to identify the holding versus dicta, and to write the brief in their own words rather than just copying from the case. I also want the skill to adapt to the student's course -- a Torts brief looks different from a Con Law brief."
+    },
+    {
+      "role": "assistant",
+      "content": "This is really useful — you've just identified the two hardest things about case briefing for 1Ls:\n\n1. **Holding vs. dicta** — students either can't tell the difference or don't understand why it matters\n2. **Paraphrasing vs. copying** — the temptation to just lift language from the opinion is almost universal\n\nAnd the point about subject-matter adaptation is smart. The *structure* of a brief is fairly consistent, but what counts as a \"relevant fact\" or a \"well-stated issue\" is genuinely different in Torts vs. Con Law vs. Civ Pro.\n\nLet me ask a few more focused questions before I draft, because your answers will shape the actual step-by-step instructions the agent follows.\n\n---\n\n## Digging into the pedagogy\n\n**On holding vs. dicta:**\n\nWhen you teach this in your workshops, how do you help students find the holding? Do you use a particular test or framing — like \"what did the court *have* to decide to resolve this dispute?\" or \"what would change if you removed this sentence?\" I want the agent to use your approach, not a generic one.\n\n**On paraphrasing:**\n\nWhen a student submits a brief that's mostly copied language, what do you say to them? Do you ask them to explain it back to you? Have them cover the case and restate it? I want to build that intervention into the skill.\n\n**On subject-matter adaptation:**\n\nWhat information would the agent need to adapt well? Just knowing the course name (Torts, Con Law, etc.)? Or does it also matter what *unit* they're in, or who their professor is? \n\nFor example — would a Con Law brief in a federalism unit look different from one in a First Amendment unit? Or is the course-level distinction enough?\n\n**On where students start:**\n\nWhen a student activates this skill, do you picture them:\n- (A) Having read the case and trying to write a brief from scratch\n- (B) Having a draft brief they want feedback on\n- (C) Confused mid-reading and not sure what the case is even about\n\nOr all three? The agent's opening move depends on this.\n\n---\n\nYou don't need to answer exhaustively — even rough answers will let me start drafting something concrete for you to react to."
+    }
+  ],
+  "evaluation": {
+    "score": 69.6,
+    "structural": [
+      {
+        "criterion_id": "identifies-persona",
+        "description": "Agent asks about the persona, task, and learning goal for the new skill",
+        "result": "pass",
+        "justification": "The agent explicitly confirms the persona ('Who's using this skill? This sounds like a Student skill — a 1L who's trying to learn how to brief cases') and clarifies the educational task and learning goals in its very first response, satisfying the criterion."
+      },
+      {
+        "criterion_id": "defines-trigger",
+        "description": "Agent helps craft the description/trigger field for the SKILL.md frontmatter",
+        "result": "fail",
+        "justification": "The agent has not yet discussed or produced a description/trigger field for the SKILL.md frontmatter; it has only asked pedagogical questions to gather requirements without addressing when or how the skill should activate."
+      },
+      {
+        "criterion_id": "designs-pedagogical-approach",
+        "description": "Agent walks through the pedagogical approach step by step with the user",
+        "result": "pass",
+        "justification": "The agent explicitly pauses before drafting to ask targeted questions about pedagogical approach, including teaching methods for holding vs. dicta, intervention strategies for copying, subject-matter adaptation needs, and student starting context, demonstrating a clear step-by-step context-gathering process before producing any skill content."
+      },
+      {
+        "criterion_id": "produces-complete-skill",
+        "description": "Output is a complete SKILL.md with proper frontmatter and structured body",
+        "result": "fail",
+        "justification": "The agent has not produced a SKILL.md file at all — it has only asked clarifying questions across two turns without generating any output with frontmatter, tone, numbered steps, or boundaries."
+      },
+      {
+        "criterion_id": "checks-persona-compliance",
+        "description": "Agent verifies the skill against its persona's constraints before finalizing",
+        "result": "fail",
+        "justification": "The agent never explicitly checks or mentions whether the skill being designed respects its own persona's pedagogical objectives and constraints — it focuses entirely on gathering requirements from the user without pausing to verify alignment with any stated persona framework."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "honors-user-expertise",
+        "description": "Agent treats the user as the subject matter expert and defers to their educational judgment",
+        "result": "strong",
+        "justification": "The agent consistently defers to the user's pedagogical expertise by explicitly asking to learn her specific teaching approaches (e.g., 'I want the agent to use your approach, not a generic one') rather than imposing standard frameworks, and treats her workshop experience as the authoritative source for how the skill should be designed."
+      },
+      {
+        "criterion_id": "encodes-pedagogy",
+        "description": "Generated skill reflects how people learn, not just what the agent should say",
+        "result": "strong",
+        "justification": "The agent consistently asks how the librarian *teaches* concepts (e.g., 'what do you say to them when they copy?', 'what test do you use to find the holding?') rather than just what content to cover, explicitly framing the skill around coaching and building understanding rather than producing outputs, and designing interventions (like the paraphrasing check) that mirror actual pedagogical practice."
+      },
+      {
+        "criterion_id": "concrete-actionable-steps",
+        "description": "Generated steps are specific enough that different AI agents would follow them similarly",
+        "result": "weak",
+        "justification": "The agent has not yet generated any concrete actionable steps for the skill — it has only asked clarifying questions across two turns, so there is nothing to evaluate for specificity or consistency of execution."
+      },
+      {
+        "criterion_id": "handles-format-transparently",
+        "description": "Agent handles format conventions without requiring the user to learn the SKILL.md spec",
+        "result": "strong",
+        "justification": "The agent never mentions SKILL.md, spec files, or any technical format conventions, instead naturally gathering all the information needed to construct a skill through conversational pedagogical questions that feel completely native to a law librarian's domain."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "overrides-user-expertise",
+        "description": "Agent second-guesses or dismisses the user's pedagogical choices",
+        "result": "clear",
+        "justification": "The agent consistently defers to the user's pedagogical expertise, asking questions like 'I want the agent to use your approach, not a generic one' and building around the user's stated goals rather than substituting its own educational framework."
+      },
+      {
+        "criterion_id": "produces-vague-skill",
+        "description": "Generated skill has steps like \"help the user\" without specific instructions",
+        "result": "clear",
+        "justification": "The agent has not yet generated a SKILL.md file — it is still in the requirements-gathering phase, asking specific pedagogical questions before drafting anything, so there are no vague steps to evaluate."
+      },
+      {
+        "criterion_id": "violates-persona-constraints",
+        "description": "Generated skill violates the target persona's pedagogical constraints",
+        "result": "clear",
+        "justification": "The agent explicitly establishes that this is a Student skill where the agent coaches rather than produces work product, stating 'the agent's job is to *coach and build understanding*, not to write the brief for them' and 'The agent should never hand over a finished brief the student could just copy,' which aligns with the pedagogical constraint against producing work product for students."
+      }
+    ]
+  }
+}

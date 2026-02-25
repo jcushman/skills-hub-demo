@@ -1,0 +1,130 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T19:57:45.838372+00:00",
+    "persona": "cle",
+    "skill": "topic-curriculum",
+    "version": "0.1.0",
+    "scenario_id": "urgent-timeline"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "urgent-timeline",
+    "setup": "Attorney needs to advise a client on an unfamiliar area in a matter of days.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I just got a new client matter involving ERISA and I know almost nothing about it. The initial call is in 4 days."
+      }
+    ],
+    "expected": [
+      "Recognizes the urgency and provides a minimum viable learning path",
+      "Prioritizes ruthlessly -- what does the attorney need to know for the initial call, not full competence",
+      "Suggests specific resources that can be consumed quickly",
+      "Notes the limitations and suggests deeper learning after the immediate need"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I just got a new client matter involving ERISA and I know almost nothing about it. The initial call is in 4 days."
+    },
+    {
+      "role": "assistant",
+      "content": "Let me get you oriented before building this out.\n\n**A few quick questions:**\n\n1. **What type of matter?** ERISA is vast — the issues in a benefits denial dispute, a fiduciary breach claim, a plan design question, and an M&A due diligence review are completely different. What's the client's situation?\n\n2. **Who's the client?** Plan sponsor/employer, plan participant, fiduciary, service provider, or someone else?\n\n3. **Any sense of the core issue?** For example: denied benefits claim, fiduciary liability exposure, plan compliance problem, withdrawal liability, executive compensation (top-hat plans), or something else?\n\n4. **Your background:** Any exposure to employee benefits, tax, or labor law, or are you starting from zero?\n\nThe answers will let me cut the curriculum down to what actually matters for your call — 4 days is tight, and you don't want to spend it learning ERISA preemption doctrine if your client has a 401(k) fiduciary problem."
+    }
+  ],
+  "evaluation": {
+    "score": 52.0,
+    "structural": [
+      {
+        "criterion_id": "clarifies-learning-goal",
+        "description": "Agent asks about the topic, timeline, baseline knowledge, and reason for learning",
+        "result": "pass",
+        "justification": "The agent asks about at least three of the required elements: the topic/matter type (questions 1-3), the baseline knowledge (question 4), and implicitly confirms the timeline (acknowledging the 4-day constraint) before building any curriculum."
+      },
+      {
+        "criterion_id": "maps-knowledge-landscape",
+        "description": "Agent identifies the essential elements of competence in the target area",
+        "result": "fail",
+        "justification": "The agent asks clarifying questions before presenting the curriculum but does not identify any essential elements of competence, key concepts, governing sources, or practical skills for ERISA — it maps nothing about the knowledge landscape before seeking more information."
+      },
+      {
+        "criterion_id": "builds-sequenced-curriculum",
+        "description": "Curriculum is organized into Foundation, Depth, Practice, and Currency phases",
+        "result": "fail",
+        "justification": "The agent only asks clarifying questions and does not present any curriculum with distinct phases or stages; no learning sequence has been built yet."
+      },
+      {
+        "criterion_id": "explains-each-resource",
+        "description": "Each recommended resource includes a description, rationale, and priority level",
+        "result": "fail",
+        "justification": "The agent has not recommended any resources in this response, so there are no resources to evaluate for descriptions, rationales, or priority levels."
+      },
+      {
+        "criterion_id": "produces-curriculum-document",
+        "description": "Output is a structured document with learning goal, phases, time estimates, and sequence",
+        "result": "fail",
+        "justification": "The agent has not produced any structured curriculum document; it only asked clarifying questions and has not yet provided a learning goal, phased resources, or time estimates."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "efficient-prioritization",
+        "description": "Curriculum respects the attorney's limited time and prioritizes high-impact resources",
+        "result": "strong",
+        "justification": "The agent explicitly acknowledges the 4-day time constraint, explains why specificity matters for prioritization, and directly states it will cut the curriculum to what's relevant rather than overwhelming the attorney with the full breadth of ERISA—demonstrating clear intent to respect limited time and focus on high-impact preparation."
+      },
+      {
+        "criterion_id": "practice-oriented",
+        "description": "Curriculum includes practical exercises or skills, not just reading",
+        "result": "weak",
+        "justification": "The agent's response consists entirely of clarifying questions with no practical exercises, skills practice, or hands-on learning activities included, making it purely diagnostic rather than practice-oriented."
+      },
+      {
+        "criterion_id": "minimum-viable-path",
+        "description": "Curriculum offers a shortcut or \"if time is limited\" path for urgent timelines",
+        "result": "strong",
+        "justification": "The agent explicitly acknowledges the tight 4-day timeline and proactively commits to cutting the curriculum down to only what matters for the specific call, demonstrating clear intent to offer a minimum-viable-path once context is gathered."
+      },
+      {
+        "criterion_id": "currency-sources",
+        "description": "Curriculum identifies ongoing sources for staying current after initial learning",
+        "result": "weak",
+        "justification": "The agent focuses entirely on scoping the immediate learning need and does not mention any ongoing sources (journals, newsletters, regulatory updates, professional organizations, etc.) for staying current on ERISA after the initial learning period."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "does-the-learning",
+        "description": "Agent teaches the substantive law rather than creating a learning plan",
+        "result": "clear",
+        "justification": "The agent asks clarifying questions to scope a learning plan rather than teaching any ERISA doctrine or providing substantive legal analysis."
+      },
+      {
+        "criterion_id": "unrealistic-time-estimates",
+        "description": "Agent recommends a curriculum requiring hundreds of hours for someone with a short timeline",
+        "result": "clear",
+        "justification": "The agent explicitly acknowledged the tight 4-day timeline and is gathering information to narrow the curriculum rather than recommending any broad study plan, making an unrealistic time estimate impossible to assess at this stage."
+      },
+      {
+        "criterion_id": "no-primary-sources",
+        "description": "Agent fails to include governing statutes, regulations, or key cases",
+        "result": "clear",
+        "justification": "The agent is in a diagnostic/intake phase asking clarifying questions before building a curriculum, so the absence of primary sources at this stage is appropriate and expected — it would be premature to cite statutes or cases before knowing the specific ERISA issue involved."
+      }
+    ]
+  }
+}

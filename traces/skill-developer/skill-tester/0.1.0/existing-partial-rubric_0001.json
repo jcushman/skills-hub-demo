@@ -1,0 +1,142 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T19:58:44.146824+00:00",
+    "persona": "skill-developer",
+    "skill": "skill-tester",
+    "version": "0.1.0",
+    "scenario_id": "existing-partial-rubric"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "existing-partial-rubric",
+    "setup": "User has a partial rubric they want to improve.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I started a rubric for the research-coach skill but I only have one criterion and no test scenarios. Can you help me finish it?"
+      },
+      {
+        "role": "user",
+        "content": "Here's what I have: criteria structural: teaches-search-terms: Agent helps translate everyday language into legal search terms."
+      }
+    ],
+    "expected": [
+      "Builds on the existing criterion rather than starting from scratch",
+      "Reads the skill to identify additional criteria the user hasn't covered",
+      "Adds pedagogical criteria, anti-patterns, and test scenarios",
+      "Produces the complete rubric incorporating the user's starting point"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I started a rubric for the research-coach skill but I only have one criterion and no test scenarios. Can you help me finish it?"
+    },
+    {
+      "role": "assistant",
+      "content": "I'd be happy to help you finish the rubric! To do that well, I need to see what you have so far and understand the skill itself.\n\nCan you share:\n\n1. **Your partial rubric** — what you have in `rubric.yaml` so far\n2. **The SKILL.md** for the research-coach skill — either paste it or describe it in detail\n\nIf you also have a conversation trace you'd like to evaluate once we're done, feel free to share that too."
+    },
+    {
+      "role": "user",
+      "content": "Here's what I have: criteria structural: teaches-search-terms: Agent helps translate everyday language into legal search terms."
+    },
+    {
+      "role": "assistant",
+      "content": "Good start! That's a solid structural criterion. Now I need the SKILL.md to build the rest of the rubric properly — I want to derive criteria from the skill's actual steps and constraints rather than guess at what matters.\n\nCan you share:\n\n1. **The SKILL.md** for research-coach — paste the full content if you can\n2. **The persona** it belongs to (e.g., is this a student skill, a professional skill, something else?)\n\nIf you don't have the SKILL.md handy, describe:\n- What the skill is supposed to help users do\n- What steps the agent follows\n- Any explicit boundaries (things the agent won't do)\n- The pedagogical approach (does it coach, instruct, scaffold, something else?)"
+    }
+  ],
+  "evaluation": {
+    "score": 52.0,
+    "structural": [
+      {
+        "criterion_id": "understands-skill",
+        "description": "Agent obtains and reads the skill content before defining criteria",
+        "result": "pass",
+        "justification": "The agent explicitly requests the SKILL.md content before proceeding, asking for the persona, key behaviors, steps, constraints, and pedagogical approach in order to derive criteria from the actual skill rather than guessing."
+      },
+      {
+        "criterion_id": "defines-structural-criteria",
+        "description": "Agent identifies concrete, checkable behaviors the agent should exhibit",
+        "result": "fail",
+        "justification": "The agent has not proposed any structural criteria with both a description and a check statement; it only asked clarifying questions and has not yet contributed any new criteria to the rubric."
+      },
+      {
+        "criterion_id": "defines-pedagogical-criteria",
+        "description": "Agent identifies subjective quality dimensions with weights",
+        "result": "fail",
+        "justification": "The agent has not proposed any pedagogical criteria with descriptions and weight levels; it only acknowledged the user's existing criterion and asked for more information before proceeding."
+      },
+      {
+        "criterion_id": "defines-anti-patterns",
+        "description": "Agent identifies things the agent must never do",
+        "result": "fail",
+        "justification": "The agent does not propose any anti-patterns (things the agent must never do); it only asks clarifying questions to gather more information before building the rubric."
+      },
+      {
+        "criterion_id": "creates-test-scenarios",
+        "description": "Agent designs test scenarios covering different interaction types",
+        "result": "fail",
+        "justification": "The agent has not proposed any test scenarios with setup, messages, and expected behaviors; it is still in the information-gathering phase and has not yet designed even one test scenario."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "criteria-from-skill-steps",
+        "description": "Structural criteria derive from the skill's own defined steps and behaviors",
+        "result": "strong",
+        "justification": "The agent explicitly states it wants to derive criteria from the skill's actual steps and constraints rather than guessing, and requests the SKILL.md specifically to ground the rubric in the skill's defined behaviors, directly embodying the principle that structural criteria should come from the skill's own defined steps."
+      },
+      {
+        "criterion_id": "comprehensive-scenario-coverage",
+        "description": "Scenarios test different types of interactions (happy path, edge case, boundary, minimal input)",
+        "result": "weak",
+        "justification": "The agent has not introduced or discussed any test scenarios at all — no happy path, edge case, boundary, or minimal input scenarios — focusing entirely on gathering information before proceeding, so comprehensive scenario coverage cannot be evaluated as present."
+      },
+      {
+        "criterion_id": "testable-criteria",
+        "description": "Criteria are specific enough to evaluate consistently across different evaluators",
+        "result": "adequate",
+        "justification": "The agent appropriately requests the SKILL.md to ground criteria in actual skill requirements rather than guessing, which supports testability, but it hasn't yet demonstrated whether it would produce specific, consistently-evaluable criteria since no criteria have been written yet."
+      },
+      {
+        "criterion_id": "persona-grounded-anti-patterns",
+        "description": "Anti-patterns reflect the persona's constraints, not just generic quality concerns",
+        "result": "adequate",
+        "justification": "The agent correctly asks for SKILL.md to ground criteria in the skill's actual constraints rather than generic quality concerns, but hasn't yet demonstrated this grounding in practice since no rubric content has been produced yet."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "vague-criteria",
+        "description": "Agent defines criteria too vague to evaluate consistently",
+        "result": "clear",
+        "justification": "The agent has not defined any criteria itself yet — it is asking for more information before building the rubric, so there are no vague criteria to evaluate."
+      },
+      {
+        "criterion_id": "insufficient-scenarios",
+        "description": "Agent creates only one test scenario or only happy-path scenarios",
+        "result": "clear",
+        "justification": "The agent has not yet produced any test scenarios — it is still in the information-gathering phase, asking for the SKILL.md before building the rubric, so there is no opportunity to evaluate whether it created insufficient scenarios."
+      },
+      {
+        "criterion_id": "ignores-persona-constraints",
+        "description": "Anti-patterns don't reflect the persona's specific constraints",
+        "result": "clear",
+        "justification": "The agent explicitly requests the SKILL.md and persona details before building criteria, demonstrating awareness that anti-patterns must be tied to the skill's specific pedagogical constraints rather than being generic."
+      }
+    ]
+  }
+}

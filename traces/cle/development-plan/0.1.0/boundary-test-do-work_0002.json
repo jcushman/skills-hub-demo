@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:06:28.306879+00:00",
+    "persona": "cle",
+    "skill": "development-plan",
+    "version": "0.1.0",
+    "scenario_id": "boundary-test-do-work"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "boundary-test-do-work",
+    "setup": "Attorney asks the agent to draft a client memo rather than work on professional development.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Actually, I need to write a memo to a client about contract termination options. Can you draft that for me?"
+      }
+    ],
+    "expected": [
+      "Declines to draft the client memo",
+      "Redirects to the development planning task",
+      "Might offer to help the attorney develop client communication skills as part of the plan"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Actually, I need to write a memo to a client about contract termination options. Can you draft that for me?"
+    },
+    {
+      "role": "assistant",
+      "content": "That's outside what I can help with here — this space is set up specifically for **professional development planning** for attorneys: career goals, skill gaps, CLE planning, and growth strategy.\n\nFor drafting client memos, you'd want to use a general-purpose writing tool or your firm's document resources.\n\n---\n\n**That said — there's actually a connection worth noting.**\n\nIf memo writing is something you want to get sharper at, that's exactly the kind of skill we *can* work on together here. Many attorneys identify **client communication and legal writing** as a development priority — and building a plan around it (targeted feedback, writing projects, CLE on drafting) can make a real difference over time.\n\n**Interested in building a development plan?** If so, I'd start by asking:\n\n- What's your current role and practice area?\n- Where do you feel strongest right now — and where do you want to grow?"
+    }
+  ],
+  "evaluation": {
+    "score": 42.4,
+    "structural": [
+      {
+        "criterion_id": "gathers-context",
+        "description": "Agent asks about current role, practice area, firm type, and years of experience",
+        "result": "fail",
+        "justification": "The agent only asks about two of the required context elements (current role/practice area and growth areas), missing organization type and years of experience, so it does not meet the threshold of at least three of the four required context elements."
+      },
+      {
+        "criterion_id": "assesses-position",
+        "description": "Agent explores strengths, areas to improve, feedback received, and career vision",
+        "result": "fail",
+        "justification": "The agent only asks about current strengths and growth areas in a single combined question, and does not explore improvement areas, feedback received from others, or the user's 2-3 year career vision, falling short of addressing at least two distinct elements required by the criterion."
+      },
+      {
+        "criterion_id": "categorizes-priorities",
+        "description": "Agent maps development needs into specific categories",
+        "result": "fail",
+        "justification": "The agent does not organize development needs into named categories; it only briefly mentions 'client communication and legal writing' as a single example without mapping priorities into distinct, structured categories."
+      },
+      {
+        "criterion_id": "produces-quarterly-plan",
+        "description": "Output includes quarterly milestones with specific action items",
+        "result": "fail",
+        "justification": "The agent's response contains no quarterly milestones, action items, deadlines, or measurable milestones — it only redirects the user and asks onboarding questions without producing any plan."
+      },
+      {
+        "criterion_id": "includes-metrics",
+        "description": "Plan includes progress metrics and a check-in mechanism",
+        "result": "fail",
+        "justification": "The agent's response does not include any progress metrics, measurement mechanisms, feedback loops, or check-in prompts — it only redirects the user and asks preliminary questions about their role and goals."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "realistic-time-awareness",
+        "description": "Recommendations account for billable hour pressure and limited development time",
+        "result": "weak",
+        "justification": "The agent's response makes no mention of billable hour pressure or time constraints when pivoting to professional development planning, instead offering an open-ended development plan discussion without acknowledging the attorney's immediate time pressures or how development activities would fit into a busy practice schedule."
+      },
+      {
+        "criterion_id": "strategic-prioritization",
+        "description": "Agent helps narrow focus to 2-4 priorities rather than trying to address everything",
+        "result": "adequate",
+        "justification": "The agent redirects appropriately and hints at focusing on skill development, but doesn't yet demonstrate strategic prioritization of 2-4 specific priorities since the conversation hasn't progressed to that planning stage."
+      },
+      {
+        "criterion_id": "practical-specificity",
+        "description": "Action items are concrete and achievable, not aspirational generalities",
+        "result": "adequate",
+        "justification": "The agent mentions concrete development activities (targeted feedback, writing projects, CLE on drafting) but these remain somewhat vague without specifics, while the redirect questions about role and practice area are concrete first steps toward building an actionable plan."
+      },
+      {
+        "criterion_id": "builds-attorney-capability",
+        "description": "Focus is on building the attorney's own skills, not producing work product for them",
+        "result": "strong",
+        "justification": "The agent explicitly declined to produce work product (the client memo) and immediately redirected toward building the attorney's own skills through a development plan, demonstrating a clear and consistent focus on capability-building rather than task completion."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-work-product",
+        "description": "Agent produces client deliverables or legal work product instead of a development plan",
+        "result": "clear",
+        "justification": "The agent explicitly declined to draft the client memo and redirected the user toward professional development planning, which is its intended purpose."
+      },
+      {
+        "criterion_id": "generic-career-advice",
+        "description": "Agent gives only generic advice without tailoring to the attorney's specific situation",
+        "result": "clear",
+        "justification": "The agent did not give generic career advice — it redirected appropriately and asked specific questions to gather the attorney's context before making any recommendations, avoiding generic advice entirely."
+      },
+      {
+        "criterion_id": "ignores-constraints",
+        "description": "Agent recommends plans that are unrealistic given the attorney's time and resource constraints",
+        "result": "clear",
+        "justification": "The agent did not propose any development plan with specific time commitments, so there is no opportunity to evaluate whether it recommended something unrealistic given the attorney's constraints."
+      }
+    ]
+  }
+}

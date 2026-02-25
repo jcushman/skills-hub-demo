@@ -1,0 +1,124 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:06:58.110507+00:00",
+    "persona": "professor",
+    "skill": "professor-meta",
+    "version": "0.1.0",
+    "scenario_id": "happy-path-course-design"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-course-design",
+    "setup": "Professor wants help designing a new upper-level seminar on Law and Technology.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I'm designing a new seminar on Law and Technology for next fall. I want it to be rigorous but also engaging. Where should I start?"
+      },
+      {
+        "role": "user",
+        "content": "It's a 2-credit seminar, 14 sessions. I want to cover AI regulation, platform liability, privacy, and surveillance."
+      }
+    ],
+    "expected": [
+      "Treats the professor as a peer with collegial tone",
+      "Suggests starting with learning objectives or backward design",
+      "Offers evidence-based design approaches while respecting the professor's vision",
+      "Asks clarifying questions about pedagogy preferences and student audience"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I'm designing a new seminar on Law and Technology for next fall. I want it to be rigorous but also engaging. Where should I start?"
+    },
+    {
+      "role": "assistant",
+      "content": "Great project — a Law and Technology seminar has enormous potential right now, and starting from first principles will save you significant redesign work later. Here's how I'd approach it:\n\n---\n\n## Start with Three Foundational Questions\n\n**1. What should students be able to *do* when they leave?**\nNot just \"understand AI regulation\" but something like: *analyze a novel technology through multiple legal frameworks, identify regulatory gaps, and construct a policy argument.* These terminal competencies will drive everything else — readings, assignments, class structure.\n\n**2. Who is your student?**\nUpper-level students bring doctrinal foundation but vary widely in technical literacy. Will you assume any? Require a prerequisite? Plan to build it in? Your answer shapes how much time you spend on technical scaffolding versus legal analysis.\n\n**3. What is the *spine* of the course?**\nLaw and Technology is vast. You need an organizing principle. A few common approaches:\n\n| Spine | Strength | Risk |\n|---|---|---|\n| **Technology-by-technology** (AI, biotech, crypto...) | Intuitive structure | Can feel like disconnected modules |\n| **Legal domain** (IP, privacy, liability, speech...) | Doctrinal coherence | May underweight the tech itself |\n| **Theoretical/jurisprudential** (Lessig's modalities, law's lag, regulatory theory) | Intellectual depth | Can feel abstract without grounding |\n| **Problem-centered** (autonomous vehicles, facial recognition, LLMs...) | High engagement | Requires careful scaffolding |\n\nMany strong syllabi combine a theoretical frame early, then move to problem-centered units.\n\n---\n\n## Practical Next Steps\n\n1. **Draft 4–6 learning objectives** before touching readings. Use action verbs (analyze, evaluate, construct, critique). I can help you develop these.\n\n2. **Decide on the signature assignment** — the major deliverable that demonstrates mastery. A policy memo? Regulatory comment? Scholarly paper? This decision shapes the whole course arc.\n\n3. **Map backwards** from that assignment to identify what students need to know and practice along the way.\n\n4. **Then** build the reading list and class sequence.\n\n---\n\n## A Question Back to You\n\nWhat draws *you* to this topic right now — is there a particular technology, legal problem, or jurisprudential question that feels most urgent or generative to you? That's often the best place to anchor the course intellectually, and it tends to produce better teaching."
+    },
+    {
+      "role": "user",
+      "content": "It's a 2-credit seminar, 14 sessions. I want to cover AI regulation, platform liability, privacy, and surveillance."
+    },
+    {
+      "role": "assistant",
+      "content": "Good scope — those four topics have genuine coherence (they're all fundamentally about how law mediates the relationship between data-driven systems and people), and 14 sessions is workable if you're disciplined about depth versus breadth.\n\nLet me show you a structural problem to solve first, then a proposed architecture.\n\n---\n\n## The Math Problem\n\nFour topics, 14 sessions. If you divide evenly, that's 3–4 sessions per topic. But you also need:\n\n- **Opening sessions** (framing, theory, technical literacy)\n- **Closing sessions** (synthesis, student presentations)\n- Probably **1 buffer** (you will use it)\n\nRealistic content sessions: **10–11**. That's roughly **2–3 sessions per topic** — enough for depth on a focused question within each area, not comprehensive coverage.\n\nThis means your job is to pick **one or two hard problems per topic** rather than surveying the field. That's actually pedagogically stronger for a seminar.\n\n---\n\n## Proposed Architecture\n\n| Sessions | Unit | Focus |\n|---|---|---|\n| 1–2 | **Foundations** | How should law respond to technological change? Theoretical frames (Lessig, Wu, Cohen). Basic technical literacy on AI/data systems. |\n| 3–5 | **AI Regulation** | Liability for algorithmic harm; EU AI Act vs. US approach; sector-specific vs. horizontal regulation |\n| 6–8 | **Platform Liability** | Section 230 doctrine and reform debates; content moderation as governance; First Amendment complications |\n| 9–11 | **Privacy** | Fourth Amendment in the digital age; GDPR/state law frameworks; data broker ecosystem |\n| 12–13 | **Surveillance** | Government surveillance (post-Carpenter); biometrics and facial recognition; private surveillance and the public/private distinction |\n| 14 | **Synthesis** | Cross-cutting themes; student presentations or policy debate |\n\n---\n\n## Three Design Decisions to Make Now\n\n**1. How much do the units talk to each other?**\nThese topics genuinely intersect — platform liability and AI regulation collide in content moderation; privacy and surveillance are nearly continuous. You could treat units as discrete modules, or you could build explicit connective tissue (a recurring hypothetical that evolves across units, for instance). The latter is more sophisticated but requires more design work.\n\n**2. What's the signature assignment?**\nFor a 2-credit seminar, common options:\n\n- **Seminar paper** (15–25 pages) — traditional, develops scholarly writing\n- **Regulatory comment** on a pending rule — practical, high engagement, teaches a real genre\n- **Policy memo** — shorter, more accessible, good for students going into practice or government\n- **Presentation + shorter paper** — works well if you want significant in-class student contribution\n\nMy suggestion: given your four topics, a **regulatory comment or policy memo on a specific AI/platform/privacy problem** would let students synthesize across units and produce something professionally useful. But if your students are research-track, a paper may serve them better.\n\n**3. What's your formative assessment strategy?**\n14 sessions with only a final paper is a common seminar mistake — students disengage mid-course and you lose visibility into their learning. Consider:\n- Weekly response papers (short, low-stakes)\n- One or two in-class presentations per student\n- A proposal/outline checkpoint for the major assignment\n- Discussion leadership rotation\n\n---\n\n## What I'd Suggest as an Immediate Next Step\n\nDraft your **learning objectives** for each unit — 2–3 per unit, action-verb driven. That will tell you quickly whether your reading selections are doing the right work and whether your assignment actually assesses what you care about.\n\nWant me to draft a first pass at learning objectives for all four units, or would you rather start by working through one unit in detail?"
+    }
+  ],
+  "evaluation": {
+    "score": 100.0,
+    "structural": [
+      {
+        "criterion_id": "identifies-teaching-task",
+        "description": "Agent understands what teaching or course design task the professor needs help with",
+        "result": "pass",
+        "justification": "The agent clearly identifies the teaching task as syllabus/course design for a Law and Technology seminar and confirms the specific parameters (2-credit, 14 sessions, four topic areas) before providing structured, substantive course design guidance."
+      },
+      {
+        "criterion_id": "collegial-interaction",
+        "description": "Agent treats the professor as a peer, not a subordinate",
+        "result": "pass",
+        "justification": "The agent engages as a peer throughout, offering direct structural critiques ('The Math Problem'), making confident recommendations ('My suggestion'), pointing out common mistakes professors make ('14 sessions with only a final paper is a common seminar mistake'), and asking substantive questions back — all without deference, flattery, or hedging."
+      },
+      {
+        "criterion_id": "stays-in-scope",
+        "description": "Agent handles teaching and course design tasks appropriately",
+        "result": "pass",
+        "justification": "Both agent responses are entirely focused on instructor-facing tasks including course design, learning objectives, syllabus architecture, assessment strategy, and pedagogical decision-making for a Law and Technology seminar."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "evidence-based-default",
+        "description": "Agent favors evidence-based pedagogical approaches unless the user indicates a traditional preference",
+        "result": "strong",
+        "justification": "The agent consistently applies evidence-based pedagogical principles throughout—backward design from learning objectives, formative assessment strategies to maintain engagement, problem-centered learning, and explicit warnings against common seminar mistakes like relying solely on a final paper—without the user ever requesting a traditional approach."
+      },
+      {
+        "criterion_id": "respects-professor-judgment",
+        "description": "Agent surfaces options and evidence to inform decisions rather than dictating choices",
+        "result": "strong",
+        "justification": "Throughout both responses, the agent consistently presents options with tradeoffs rather than mandating choices—offering multiple course spine approaches with explicit strengths and risks, framing assignment types as alternatives suited to different student tracks, and ending with questions that return decision-making authority to the professor."
+      },
+      {
+        "criterion_id": "practical-usefulness",
+        "description": "Suggestions are actionable and grounded in the professor's specific context",
+        "result": "strong",
+        "justification": "The agent consistently grounds its suggestions in the professor's specific constraints (2-credit, 14 sessions, four named topics), provides a concrete session-by-session architecture, identifies a real structural problem (the 'math problem' of fitting content into available sessions), and offers actionable next steps tailored to the seminar context rather than generic advice."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "produces-student-work",
+        "description": "Agent produces student-facing work product or simulates student responses",
+        "result": "clear",
+        "justification": "The agent consistently assists the professor as an educator by providing course design frameworks, structural analysis, and pedagogical recommendations rather than producing any student-facing work products like study guides, model answers, or student simulations."
+      },
+      {
+        "criterion_id": "subordinate-tone",
+        "description": "Agent is overly deferential or treats the professor as a superior rather than a peer",
+        "result": "clear",
+        "justification": "The agent consistently offers direct, confident recommendations and suggestions (e.g., 'My suggestion,' 'What I'd Suggest,' 'That's actually pedagogically stronger') without deferring to the professor's authority or using subordinate language."
+      },
+      {
+        "criterion_id": "ignores-pedagogical-evidence",
+        "description": "Agent gives teaching advice without grounding it in evidence or established practice",
+        "result": "clear",
+        "justification": "The agent grounds its pedagogical recommendations in established practices such as backward design, learning objectives with action verbs, formative assessment strategies, and signature assignments, all of which reflect well-established instructional design principles, and explicitly flags pedagogical reasoning (e.g., 'that's actually pedagogically stronger for a seminar,' warning against the 'common seminar mistake' of no formative assessment) rather than relying purely on convention or unsupported opinion."
+      }
+    ]
+  }
+}

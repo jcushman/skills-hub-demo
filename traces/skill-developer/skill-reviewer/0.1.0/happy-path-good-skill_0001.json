@@ -1,0 +1,143 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T19:59:28.336343+00:00",
+    "persona": "skill-developer",
+    "skill": "skill-reviewer",
+    "version": "0.1.0",
+    "scenario_id": "happy-path-good-skill"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "happy-path-good-skill",
+    "setup": "User submits a well-written student skill with minor issues -- good structure but a slightly vague step and a description that could be more specific.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Can you review this skill for me? It's a student skill for legal writing feedback."
+      },
+      {
+        "role": "user",
+        "content": "---\nname: writing-feedback\ndescription: Helps with legal writing\nmetadata:\n  version: 0.1.0\n---\n# Legal Writing Feedback\nYou help law students improve their legal writing.\n## Tone\nEncouraging and constructive.\n## Step 1: Read the Draft\nRead the student's draft carefully.\n## Step 2: Give Feedback\nHelp the student improve their writing by giving feedback on structure, analysis, and clarity.\n## Step 3: Suggest Next Steps\nSuggest what the student should work on next.\n"
+      }
+    ],
+    "expected": [
+      "Acknowledges the basic structure is correct before identifying issues",
+      "Flags the description as too vague to trigger reliably",
+      "Notes that Steps 2 and 3 lack specificity (what kind of feedback? how?)",
+      "Checks persona compliance (student persona -- does it avoid producing work product?)",
+      "Provides specific suggestions for each issue, not just \"make it better\""
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "Can you review this skill for me? It's a student skill for legal writing feedback."
+    },
+    {
+      "role": "assistant",
+      "content": "I'd be happy to review your skill! Please go ahead and paste the SKILL.md content here so I can take a look.\n\nSince you've mentioned it's a student skill for legal writing feedback, I already have a sense of the persona — but I'll confirm the specifics once I see the file. The key thing I'll be watching for with student skills is the core constraint: **the skill should coach and build understanding, never produce finished work product the student would submit.**\n\nPaste it whenever you're ready!"
+    },
+    {
+      "role": "user",
+      "content": "---\nname: writing-feedback\ndescription: Helps with legal writing\nmetadata:\n  version: 0.1.0\n---\n# Legal Writing Feedback\nYou help law students improve their legal writing.\n## Tone\nEncouraging and constructive.\n## Step 1: Read the Draft\nRead the student's draft carefully.\n## Step 2: Give Feedback\nHelp the student improve their writing by giving feedback on structure, analysis, and clarity.\n## Step 3: Suggest Next Steps\nSuggest what the student should work on next.\n"
+    },
+    {
+      "role": "assistant",
+      "content": "This is a solid starting point — the structure is right, the persona is appropriate, and the core intent is clear. But there are some meaningful gaps that would cause an AI agent to behave inconsistently or too permissively. Here's the full review.\n\n---\n\n## Summary\n\nThe skill has the right bones: correct frontmatter format, a logical three-step sequence, and an appropriate student persona. The most important thing to fix is **Step 2**, which is so vague that different agents would interpret it completely differently — some might rewrite the student's draft wholesale, which would violate the student persona's core constraint. The description also needs to be more specific to trigger reliably on the right tasks.\n\n---\n\n## Format Compliance\n\n| Item | Status | Note |\n|------|--------|------|\n| `name` (lowercase-hyphenated) | ✅ Pass | `writing-feedback` is clean |\n| `description` trigger paragraph | ⚠️ Needs work | \"Helps with legal writing\" is too broad — see below |\n| `metadata.version` | ✅ Pass | Present |\n| Intro paragraph | ✅ Pass | Brief but present |\n| Tone section | ✅ Pass | Present, though thin — see Pedagogical Quality |\n| Numbered, named steps | ✅ Pass | Steps are numbered and named |\n| Agent addressed as \"you\" | ✅ Pass | \"You help law students...\" |\n| Boundaries section | ❌ Missing | Critical for a student skill — see Persona Alignment |\n\n---\n\n## Persona Alignment\n\n**Severity: Must-Fix**\n\nThe skill has no explicit Boundaries section, which means the student persona's core constraint — *never produce finished work product the student would submit* — is never stated. This is a significant risk. Step 2 says \"giving feedback,\" which sounds safe, but an agent following this skill could reasonably interpret \"help the student improve their writing\" as license to rewrite sentences, restructure paragraphs, or produce a corrected version of the draft. That's work product.\n\n**Specific risk:** The phrase *\"help the student improve their writing by giving feedback\"* is ambiguous. \"Help improve\" could mean coaching or it could mean editing. An agent won't know the difference unless you tell it.\n\n**Fix:** Add an explicit Boundaries section, something like:\n\n```\n## Boundaries\nYou coach the student — you do not edit or rewrite their work. \nDo not produce revised sentences, corrected paragraphs, or \na \"fixed\" version of any portion of the draft. Your feedback \nshould describe what to improve and why; the student does the \nrevising.\n```\n\n---\n\n## Pedagogical Quality\n\n### Strengths\n- The three-step sequence (read → feedback → next steps) is a logical and appropriate arc.\n- Ending with next steps is a nice pedagogical touch — it keeps the student oriented and moving forward.\n\n### Issues, Ordered by Impact\n\n**1. Step 2 is too vague to produce consistent behavior** *(High impact)*\n\n\"Give feedback on structure, analysis, and clarity\" tells an agent *what categories* to address but not *how* to give feedback in a pedagogically sound way. Two agents following this instruction would produce very different results — one might write a bullet list of corrections, another might ask the student questions, another might lecture.\n\nGood legal writing feedback for a student should prompt reflection, not just deliver verdicts. Consider specifying the approach:\n\n```\n## Step 2: Give Feedback\nFor each area (structure, analysis, clarity), identify one or two \nspecific passages that illustrate the issue. Explain *why* it's \na problem — what effect does it have on the reader or the argument? \nThen ask the student what they were trying to accomplish in that \npassage before suggesting a direction for revision.\n```\n\n**2. Step 1 doesn't gather context** *(Medium impact)*\n\nThe skill jumps straight to reading the draft without asking the student anything about it. What's the assignment? What audience is the student writing for? What has the professor emphasized? What does the student think is working or not working? Without this, feedback will be generic.\n\nConsider adding a context-gathering step before reading:\n\n```\n## Step 1: Gather Context\nBefore reading the draft, ask the student:\n- What is the assignment and who is the audience?\n- What feedback are they most hoping to get?\n- Is there anything specific they're uncertain about?\n```\n\nThen make the current Step 1 into Step 2.\n\n**3. Tone section is thin** *(Lower impact)*\n\n\"Encouraging and constructive\" is a start, but it doesn't give an agent much to work with. What does encouraging look like when a draft has serious problems? Should the agent name strengths before problems? Should it avoid softening feedback to the point of obscuring it?\n\nA small addition helps:\n\n```\n## Tone\nEncouraging and constructive. Name what's working before identifying \nproblems. Be honest about significant issues — don't soften feedback \nso much that the student misses the point. Frame problems as \nopportunities, not failures.\n```\n\n---\n\n## Agent-Readiness\n\n**1. Description will trigger too broadly** *(Must-fix)*\n\n\"Helps with legal writing\" would activate on almost any writing-related request — drafting a memo, editing a cover letter, explaining citation format. The description needs to specify the trigger scenario more precisely:\n\n```\ndescription: Triggers when a law student shares a draft of legal \nwriting and asks for feedback, coaching, or help improving it. \nDoes not trigger for general writing questions or requests to \ndraft new documents.\n```\n\n**2. No scope limits on draft length or type** *(Worth discussing)*\n\nThe skill doesn't specify what kinds of drafts it handles. A first-year memo and a law review article are very different feedback contexts. You may want to either scope the skill narrowly or add a step that asks what type of document it is and calibrates accordingly.\n\n**3. Step 3 is testable but vague** *(Minor)*\n\n\"Suggest what the student should work on next\" is reasonable, but \"next steps\" could mean anything from \"revise paragraph 3\" to \"read a style guide.\" Consider specifying that next steps should be concrete and prioritized — one or two things, not a laundry list.\n\n---\n\n## Suggested Revision\n\nThe changes here are substantial enough that a revised draft would be useful. Want me to produce a full revised SKILL.md incorporating this feedback? I can show it alongside the original so you can see exactly what changed and decide what to keep."
+    }
+  ],
+  "evaluation": {
+    "score": 100.0,
+    "structural": [
+      {
+        "criterion_id": "obtains-skill",
+        "description": "Agent asks for the skill content and identifies the persona",
+        "result": "pass",
+        "justification": "The agent explicitly asked the user to paste the SKILL.md content before beginning the review, and confirmed the student persona once the file was shared, satisfying the requirement to obtain the skill content and identify the persona before proceeding."
+      },
+      {
+        "criterion_id": "reviews-format",
+        "description": "Agent checks format compliance (frontmatter, structure, step quality)",
+        "result": "pass",
+        "justification": "The agent explicitly evaluates multiple format elements including frontmatter fields (name, description, metadata.version), step structure (numbered and named steps), agent addressing ('you help law students...'), and description quality, satisfying the requirement of checking at least two format elements."
+      },
+      {
+        "criterion_id": "reviews-persona-alignment",
+        "description": "Agent evaluates whether the skill respects its persona's constraints",
+        "result": "pass",
+        "justification": "The agent explicitly assesses persona alignment by identifying that the skill lacks a Boundaries section enforcing the student persona's core constraint against producing finished work product, flagging the ambiguous 'help improve' language as a specific risk, and providing a concrete fix — all directly tied to the pedagogical objective of coaching rather than doing the work for the student."
+      },
+      {
+        "criterion_id": "reviews-pedagogical-quality",
+        "description": "Agent evaluates the skill as a pedagogical design",
+        "result": "pass",
+        "justification": "The agent explicitly assesses multiple pedagogical dimensions including learning sequence (three-step arc critique), active learning (recommending the agent prompt student reflection rather than deliver verdicts), specificity (flagging Step 2 as too vague), concrete outputs (suggesting next steps be prioritized and specific), and pitfall handling (identifying the risk of the agent rewriting student work instead of coaching)."
+      },
+      {
+        "criterion_id": "produces-structured-review",
+        "description": "Output follows the structured review format with distinct sections",
+        "result": "pass",
+        "justification": "The response includes a clear summary section and all four optional sections (Format Compliance, Persona Alignment, Pedagogical Quality, and Agent-Readiness), fully satisfying the structured review format requirement."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "constructive-tone",
+        "description": "Agent names what works well before identifying problems",
+        "result": "strong",
+        "justification": "The agent consistently names strengths before problems throughout the review — explicitly in the 'Pedagogical Quality' section with a 'Strengths' subsection before 'Issues,' in the opening summary acknowledging 'the right bones,' and in the table showing passing items before flagging failures, demonstrating a clear and consistent pattern of leading with what works."
+      },
+      {
+        "criterion_id": "specific-improvements",
+        "description": "Every critique comes with a concrete suggestion for how to fix it",
+        "result": "strong",
+        "justification": "Every critique in the review is paired with a concrete, copy-pasteable fix — from the Boundaries section wording, to the revised Step 2 instruction, to the rewritten description trigger — leaving the user with no ambiguity about how to address each identified problem."
+      },
+      {
+        "criterion_id": "distinguishes-severity",
+        "description": "Agent separates must-fix issues from nice-to-have improvements",
+        "result": "strong",
+        "justification": "The agent consistently and explicitly labels issues by severity throughout the review, using 'Must-Fix' for the missing Boundaries section and vague description, 'High impact' / 'Medium impact' / 'Lower impact' for pedagogical issues, and 'Minor' / 'Worth discussing' for smaller concerns, making the prioritization unambiguous for the skill author."
+      },
+      {
+        "criterion_id": "holistic-assessment",
+        "description": "Review considers multiple dimensions (format, persona, pedagogy, agent-readiness), not just one",
+        "result": "strong",
+        "justification": "The agent systematically evaluated all four dimensions—format compliance (with a detailed table), persona alignment (boundaries and student constraints), pedagogical quality (feedback approach, context-gathering, tone), and agent-readiness (description trigger, scope, step specificity)—giving each substantive, actionable treatment rather than focusing on any single area."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "vague-feedback",
+        "description": "Agent gives feedback like \"needs improvement\" without specifics",
+        "result": "clear",
+        "justification": "The agent consistently cited specific passages (e.g., 'help the student improve their writing by giving feedback'), explained precisely why each issue was problematic, and provided concrete fixes including example rewritten sections for every critique offered."
+      },
+      {
+        "criterion_id": "format-only-review",
+        "description": "Agent only checks format compliance without evaluating pedagogy or persona alignment",
+        "result": "clear",
+        "justification": "The agent's review goes well beyond format compliance, dedicating substantial analysis to pedagogical quality (feedback approach, context-gathering, tone guidance) and persona alignment (the critical missing Boundaries section preventing work product generation), making format compliance only one component of a comprehensive review."
+      },
+      {
+        "criterion_id": "rewrites-without-asking",
+        "description": "Agent rewrites the skill without the user's permission",
+        "result": "clear",
+        "justification": "The agent delivered a thorough review and explicitly asked for permission before producing a revised SKILL.md, rather than generating one unsolicited."
+      }
+    ]
+  }
+}

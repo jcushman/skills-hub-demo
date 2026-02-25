@@ -1,0 +1,142 @@
+{
+  "meta": {
+    "timestamp": "2026-02-25T20:11:19.793970+00:00",
+    "persona": "pro-se",
+    "skill": "research-coach",
+    "version": "_null",
+    "scenario_id": "reading-help"
+  },
+  "config": {
+    "model_under_test": {
+      "id": "default",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.3,
+      "max_tokens": 2048
+    },
+    "judge_model": {
+      "id": "default-judge",
+      "model": "anthropic/claude-sonnet-4.6",
+      "temperature": 0.0,
+      "max_tokens": 512
+    }
+  },
+  "scenario": {
+    "id": "reading-help",
+    "setup": "Person found a statute and needs help understanding how to read it.\n",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I found this statute online but I don't understand it. It's full of 'subsection (a)(2)(B)' stuff."
+      },
+      {
+        "role": "user",
+        "content": "It's about child support enforcement. There are definitions at the top and then a bunch of sections."
+      }
+    ],
+    "expected": [
+      "Walks through how statutes are organized (sections, subsections, definitions)",
+      "Explains that the definitions section defines terms used throughout",
+      "Uses plain language throughout",
+      "Does not interpret the statute for the person's specific situation"
+    ]
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "I found this statute online but I don't understand it. It's full of 'subsection (a)(2)(B)' stuff."
+    },
+    {
+      "role": "assistant",
+      "content": "I totally understand - legal statutes can look really confusing at first! That kind of notation is actually just a **filing system** to help organize the law. Let me break it down for you.\n\n## How Statute Numbering Works\n\nThink of it like an **outline or address system**, going from big to small:\n\n* **Section** - The biggest division (like a chapter)\n* **Subsection** - Uses **(a), (b), (c)**\n* **Paragraph** - Uses **(1), (2), (3)**\n* **Subparagraph** - Uses **(A), (B), (C)**\n\n## So \"subsection (a)(2)(B)\" means:\n\n* Start at subsection **(a)**\n* Go to paragraph **(2)** within that\n* Then find subparagraph **(B)** within that\n\n## A Simple Way to Think About It\n\nIt's like a **street address** - country, state, city, street. Each part just narrows down exactly where in the law they are pointing you.\n\n---\n\n**To help you further, you could:**\n* Share the specific statute text here\n* Tell me what the statute is about\n* Ask about a specific part that confused you\n\nWould you like to share the statute so I can help you understand what it actually **means** in plain language?"
+    },
+    {
+      "role": "user",
+      "content": "It's about child support enforcement. There are definitions at the top and then a bunch of sections."
+    },
+    {
+      "role": "assistant",
+      "content": "That's really helpful context! Statutes about child support enforcement can be especially important to understand correctly. Here are some tips for reading it:\n\n## Start With the Definitions Section\n\nSince you mentioned there are definitions at the top, **read those first and carefully.** This is really important because:\n\n* Legal definitions are often **different from everyday meanings**\n* A word like \"parent\" or \"income\" might have a very specific meaning in that law\n* When you see that word later in the statute, it means what the definition says, not necessarily what you might assume\n\n## General Tips for Reading the Statute\n\n* **Read it slowly** - these are meant to be precise, not easy to read\n* **Keep the definitions handy** - flip back to them often\n* **Follow the cross references** - when it says \"see subsection (a)(2)\" go look at that part\n* **Look for \"shall\" vs \"may\"** - shall means required, may means optional\n\n## Things to Watch For in Child Support Laws\n\n* Who is **obligated** to pay\n* How **income** is defined\n* What **enforcement** actions are allowed\n* Any **deadlines** or timeframes mentioned\n\n---\n\nWould you like to share the specific text or sections that are confusing you? I am happy to help translate them into **plain language!**"
+    }
+  ],
+  "evaluation": {
+    "score": 52.0,
+    "structural": [
+      {
+        "criterion_id": "understands-question",
+        "description": "Agent clarifies what the person is trying to find and what type of legal information they need",
+        "result": "fail",
+        "justification": "The agent never clarifies what type of legal information the user needs (statute interpretation, court rules, case law, or general process information) nor confirms the specific purpose behind their question, instead jumping directly into general reading tips."
+      },
+      {
+        "criterion_id": "suggests-free-resources",
+        "description": "Agent recommends specific free, publicly accessible resources",
+        "result": "fail",
+        "justification": "The agent provides general reading tips and offers to help further but never names any specific free resources such as court websites, state legislature sites, or legal aid organizations where the user could find additional help with child support enforcement statutes."
+      },
+      {
+        "criterion_id": "teaches-search-terms",
+        "description": "Agent helps translate everyday language into legal search terms",
+        "result": "fail",
+        "justification": "The agent never helps translate everyday language into legal search terms, instead focusing on how to read and understand statute structure and definitions without providing any examples of how common phrases map to legal terminology for searching purposes."
+      },
+      {
+        "criterion_id": "teaches-reading",
+        "description": "Agent explains how to read the type of legal material the person found or is looking for",
+        "result": "pass",
+        "justification": "The agent clearly explains structural elements of a statute (sections, subsections, paragraphs, subparagraphs with their notation systems), the role of definitions sections, and key interpretive concepts like 'shall' vs 'may' — all in plain, accessible language."
+      },
+      {
+        "criterion_id": "teaches-relevance-evaluation",
+        "description": "Agent guides the person to evaluate whether what they found applies to their situation",
+        "result": "fail",
+        "justification": "The agent never guides the user to evaluate whether the statute applies to their situation by checking jurisdiction (e.g., is this a federal or state law, and which state?), currency (is the statute current/up-to-date?), or applicability (does this law actually govern their specific circumstances?)."
+      }
+    ],
+    "pedagogical": [
+      {
+        "criterion_id": "builds-capability",
+        "description": "Agent teaches the research process rather than doing the research for the person",
+        "result": "adequate",
+        "justification": "The agent teaches useful reading strategies (start with definitions, track 'shall' vs 'may', follow cross-references) that build the user's capability to read statutes independently, but repeatedly offers to do the translation work for them, which somewhat undermines the capability-building goal."
+      },
+      {
+        "criterion_id": "demystifies-legal-language",
+        "description": "Agent makes legal research feel approachable and doable, not intimidating",
+        "result": "strong",
+        "justification": "The agent consistently uses accessible analogies (street address, outline system), plain language explanations, encouraging tone, and practical reading strategies that transform intimidating legal notation into approachable, manageable concepts."
+      },
+      {
+        "criterion_id": "celebrates-progress",
+        "description": "Agent acknowledges when the person finds something useful or asks a good question",
+        "result": "weak",
+        "justification": "The agent never acknowledges or celebrates the user's progress, good questions, or useful contributions—such as noting that identifying the definitions section first is a smart approach or that providing context about child support enforcement was a helpful step forward."
+      },
+      {
+        "criterion_id": "jurisdiction-aware",
+        "description": "Agent tailors suggestions to the person's specific jurisdiction when known",
+        "result": "weak",
+        "justification": "The agent never asked about or acknowledged the user's jurisdiction, which is critical for child support enforcement statutes since these laws vary significantly between federal, state, and local levels, and knowing the jurisdiction would allow the agent to provide much more targeted and accurate guidance."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "criterion_id": "does-research-for-them",
+        "description": "Agent finds and delivers specific legal answers instead of teaching the research process",
+        "result": "clear",
+        "justification": "The agent consistently teaches the user how to read and interpret statutes themselves (explaining notation systems, reading strategies, and what to look for) rather than finding or delivering specific legal answers, statutes, or case holdings on their behalf."
+      },
+      {
+        "criterion_id": "gives-legal-advice",
+        "description": "Agent interprets the law for the person's specific situation",
+        "result": "clear",
+        "justification": "The agent only taught general skills for reading statutes (how numbering works, how to use definitions, what 'shall' vs 'may' means) without interpreting any specific law or telling the user what the law means for their particular situation."
+      },
+      {
+        "criterion_id": "assumes-legal-knowledge",
+        "description": "Agent uses legal research jargon without explanation",
+        "result": "clear",
+        "justification": "The agent used no legal research jargon such as 'annotated code,' 'Westlaw,' 'headnotes,' or 'Shepardize,' and consistently explained legal concepts in plain, accessible language throughout both responses."
+      }
+    ]
+  }
+}
