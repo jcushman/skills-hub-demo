@@ -188,7 +188,7 @@ section {
 
 .video-wrapper {
     position: relative;
-    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    padding-bottom: 56.25%;
     height: 0;
     overflow: hidden;
     border-bottom: var(--border-width) solid var(--text-color);
@@ -216,10 +216,11 @@ section {
     color: #555;
 }
 
-/* Skills Section */
+/* Filters */
 .filters {
     display: flex;
     gap: 0.5rem;
+    flex-wrap: wrap;
 }
 
 .filter-btn {
@@ -238,6 +239,61 @@ section {
     border-color: var(--text-color);
 }
 
+/* Persona Sections */
+.persona-section {
+    margin-bottom: 3rem;
+}
+
+.persona-section:last-child {
+    margin-bottom: 0;
+}
+
+/* Meta Skill Callout */
+.meta-callout {
+    border: var(--border-width) solid var(--text-color);
+    border-left-width: 6px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    background-color: #fafafa;
+}
+
+.meta-callout-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+}
+
+.meta-callout-text {
+    flex: 1;
+}
+
+.meta-callout-text h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.meta-objective {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: #555;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+}
+
+.meta-desc {
+    font-size: 0.95rem;
+    color: #444;
+    line-height: 1.5;
+}
+
+.meta-install-btn {
+    white-space: nowrap;
+    flex-shrink: 0;
+    align-self: center;
+}
+
+/* Skills Grid */
 .skills-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -266,40 +322,12 @@ section {
     margin-bottom: 1rem;
 }
 
-.skill-badges {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-}
-
 .skill-category {
     font-family: var(--font-mono);
     font-size: 0.75rem;
-    background-color: var(--accent-green);
     padding: 0.2rem 0.6rem;
     text-transform: uppercase;
     font-weight: 500;
-}
-
-/* Category Colors */
-.skill-card[data-category="syllabus"] .skill-category {
-    background-color: var(--accent-purple);
-}
-.skill-card[data-category="assessment"] .skill-category {
-    background-color: var(--accent-yellow);
-}
-.skill-card[data-category="data"] .skill-category {
-    background-color: var(--accent-blue);
-}
-
-.badge-coming-soon {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    background-color: var(--text-color);
-    color: var(--bg-color);
-    padding: 0.2rem 0.6rem;
-    text-transform: uppercase;
-    font-weight: 700;
 }
 
 .skill-title {
@@ -331,11 +359,6 @@ section {
     color: #666;
 }
 
-.skill-footer {
-    border-top: 1px solid #eee;
-    padding-top: 1.5rem;
-}
-
 .download-btn {
     display: block;
     width: 100%;
@@ -354,16 +377,18 @@ section {
     background-color: #333;
 }
 
-.btn-disabled {
-    background-color: #eee;
-    color: #999;
-    border: 1px solid #ddd;
-    cursor: not-allowed;
+.no-results {
+    font-family: var(--font-mono);
+    color: #666;
+    text-align: center;
+    padding: 3rem 0;
 }
 
-.btn-disabled:hover {
-    background-color: #eee;
+.loading-msg {
+    font-family: var(--font-mono);
     color: #999;
+    text-align: center;
+    padding: 3rem 0;
 }
 
 /* Footer */
@@ -434,6 +459,19 @@ section {
     }
 
     .video-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .meta-callout-body {
+        flex-direction: column;
+    }
+
+    .meta-install-btn {
+        align-self: stretch;
+        text-align: center;
+    }
+
+    .skills-grid {
         grid-template-columns: 1fr;
     }
 
