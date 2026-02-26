@@ -1,0 +1,24 @@
+{
+  "manifest_version": "0.1",
+  "name": "legal-ed-skills-hub",
+  "display_name": "Legal Ed Skills Hub",
+  "version": "0.1.0",
+  "description": "Expert coaching on legal education tasks - professors, students, CLE, and pro se. Loads pedagogical skills from the Legal Ed Skills Hub.",
+  "author": {
+    "name": "Harvard Law School Library Innovation Lab"
+  },
+  "server": {
+    "type": "node",
+    "entry_point": "server/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/server/index.js"]
+    }
+  },
+  "tools": [
+    {
+      "name": "getJson",
+      "description": "Fetch a JSON document from the Legal Ed Skills Hub API"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}LIL Agent Skills Hub{% endblock %}</title>
+    <meta name="description" content="{% block description %}A collection of AI Agent Skills for legal education, created by the Harvard Law School Library Innovation Lab.{% endblock %}">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ root }}css/styles.css">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">
+                <a href="https://lil.law.harvard.edu/" target="_blank">LIBRARY INNOVATION LAB</a>
+                <span class="divider">/</span>
+                <a href="{{ root or './' }}" class="site-title">AGENT SKILLS HUB</a>
+            </div>
+            <nav>
+                <a href="{{ root }}#personas">Skills</a>
+                <a href="{{ root }}#training">Training</a>
+                <a href="{{ root }}traces/">Traces</a>
+                <a href="{{ repo_url }}" target="_blank">GitHub</a>
+                <a href="{{ root }}install.html" class="nav-cta">Get Started</a>
+            </nav>
+        </div>
+    </header>
+
+    {% block content %}{% endblock %}
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <h3>LIBRARY INNOVATION LAB</h3>
+                    <p>Harvard Law School</p>
+                    <p>1557 Massachusetts Ave<br>Cambridge, MA 02138</p>
+                </div>
+                <div class="footer-right">
+                    <a href="https://lil.law.harvard.edu/about/">About</a>
+                    <a href="https://lil.law.harvard.edu/blog/">Blog</a>
+                    <a href="https://lil.law.harvard.edu/contact/">Contact</a>
+                    <p class="copyright">&copy; 2026 The President and Fellows of Harvard University</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

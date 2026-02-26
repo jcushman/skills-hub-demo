@@ -83,6 +83,19 @@ Each skill is a folder with a `SKILL.md` file and optional reference material. T
 - **Skill Reviewer** -- Evaluates an existing skill for format compliance, persona alignment, pedagogical quality, and agent-readiness.
 - **Skill Tester** -- Helps define rubrics and test scenarios for a skill, and evaluates conversation traces against those rubrics.
 
+## Delivery
+
+The core of this project is the `skills/` directory: markdown files in the [Agent Skills](https://agentskills.org/) format. But not every chat client makes agent skills easy or convenient to install, and keeping a full collection up to date is harder still. Skills are a simple concept -- progressive context management (load a list of descriptions, load a SKILL.md, load references) -- and that's easy to replicate in lots of ways.
+
+So we use a flexible build approach that meets people where they're at:
+
+- **ChatGPT**: We build a static JSON API with an [OpenAPI spec](https://developers.openai.com/docs/actions/introduction) that a Custom GPT can use as an Action. The GPT calls the API to discover and load skills on demand.
+- **Claude Desktop**: We build a `.mcpb` [Desktop Extension](https://www.anthropic.com/engineering/desktop-extensions) that packages a lightweight MCP server. Double-click to install; the server fetches skills from the same static API.
+- **Raw skills**: The `.skill` zip files and JSON inventories are available for any agent that supports the Agent Skills format directly.
+- **API**: Any tool-calling agent can point at the OpenAPI spec and use the API without a wrapper.
+
+We intend to keep iterating on this to address more clients and offer a smoother experience. The install page on the website guides users to the right option for their setup.
+
 ## Development
 
 Requires Python 3.12+ and [uv](https://docs.astral.sh/uv/).
@@ -98,7 +111,7 @@ uv run scripts/build.py --base-url https://example.github.io/skills-hub-demo/
 uv run python -m http.server -d _site
 ```
 
-The build script reads `skills/` and produces `_site/` containing `.skill` zip files, JSON inventories, and the static website. The website is deployed to GitHub Pages automatically on push to `main`.
+The build script reads `skills/` and produces `_site/` containing `.skill` zip files, JSON inventories, the Claude Desktop extension (`.mcpb`), GPT Actions API, and the static website. HTML pages use Jinja2 templates (in `website/`) with a shared `_base.html` layout. The website is deployed to GitHub Pages automatically on push to `main`.
 
 ### Testing skills
 

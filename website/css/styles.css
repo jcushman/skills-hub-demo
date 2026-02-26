@@ -130,6 +130,20 @@ img {
     text-decoration: underline;
 }
 
+.nav-cta {
+    background-color: var(--text-color);
+    color: var(--bg-color) !important;
+    padding: 0.4rem 1.2rem;
+    border: var(--border-width) solid var(--text-color);
+    font-weight: 500;
+}
+
+.nav-cta:hover {
+    background-color: var(--bg-color);
+    color: var(--text-color) !important;
+    text-decoration: none !important;
+}
+
 /* Hero Section */
 .hero {
     padding: 6rem 0;
@@ -416,6 +430,172 @@ section {
     padding: 3rem 0;
 }
 
+/* Install Page */
+.install-hero {
+    padding: 4rem 0 2rem;
+}
+
+.install-hero h1 {
+    font-size: 3rem;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+}
+
+.install-subtitle {
+    font-size: 1.15rem;
+    color: #444;
+    max-width: 600px;
+    line-height: 1.6;
+}
+
+.install-tier {
+    padding: 3rem 0;
+}
+
+.install-tier-alt {
+    background-color: #fafafa;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+
+.install-tier-heading {
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.install-tier-desc {
+    font-size: 1rem;
+    color: #444;
+    max-width: 600px;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.install-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 2rem;
+}
+
+.install-card {
+    border: var(--border-width) solid var(--text-color);
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background-color: var(--bg-color);
+}
+
+.install-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 1);
+}
+
+.install-card-header {
+    margin-bottom: 1rem;
+}
+
+.install-card-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    background-color: var(--accent-yellow);
+    padding: 0.2rem 0.6rem;
+    margin-bottom: 0.75rem;
+}
+
+.install-card-header h2 {
+    font-size: 1.75rem;
+    margin-bottom: 0;
+}
+
+.install-card-desc {
+    font-size: 1rem;
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+}
+
+.install-card-features {
+    list-style: none;
+    margin-bottom: 2rem;
+    flex-grow: 1;
+}
+
+.install-card-features li {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: #555;
+    padding: 0.3rem 0;
+    padding-left: 1.25rem;
+    position: relative;
+}
+
+.install-card-features li::before {
+    content: "\2713";
+    position: absolute;
+    left: 0;
+    color: #333;
+}
+
+.install-card-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: auto;
+}
+
+.install-card-btn-soon {
+    background-color: #ccc;
+    border-color: #ccc;
+    color: #666;
+    cursor: default;
+}
+
+.install-card-btn-soon:hover {
+    background-color: #ccc;
+    color: #666;
+}
+
+.install-dev-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.install-dev-option {
+    border: 1px solid #ddd;
+    padding: 1.5rem;
+}
+
+.install-dev-option h3 {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.install-dev-option p {
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+.install-dev-link {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+.install-dev-link:hover {
+    color: #555;
+}
+
 /* Footer */
 .site-footer {
     background-color: var(--text-color);
@@ -506,5 +686,21 @@ section {
 
     .footer-right {
         align-items: flex-start;
+    }
+
+    .install-hero h1 {
+        font-size: 2rem;
+    }
+
+    .install-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .install-dev-options {
+        grid-template-columns: 1fr;
+    }
+
+    .nav-cta {
+        padding: 0.3rem 0.8rem;
     }
 }

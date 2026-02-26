@@ -17,6 +17,7 @@ import shutil
 import zipfile
 from pathlib import Path
 
+import jinja2
 import yaml
 from dotenv import load_dotenv
 
@@ -244,7 +245,45 @@ def build_inventory(personas: dict[str, dict], base_url: str, repo_url: str = ""
     }
 
 
-def build(base_url: str, *, repo_url: str = ""):
+def build_website(base_url: str, *, repo_url: str = "", custom_gpt_url: str = ""):
+    """Render Jinja2 HTML templates and copy static assets to _site/."""
+    env = jinja2.Environment(
+        loader=jinja2.FileSystemLoader(str(WEBSITE_DIR)),
+        autoescape=False,
+        keep_trailing_newline=True,
+    )
+
+    mcpb_download_url = f"{base_url}packages/mcpb/legal-ed-skills-hub.mcpb"
+
+    for html_path in WEBSITE_DIR.rglob("*.html"):
+        if html_path.name.startswith("_"):
+            continue
+        rel = html_path.relative_to(WEBSITE_DIR)
+        root = "../" * (len(rel.parts) - 1)
+
+        template = env.get_template(str(rel))
+        rendered = template.render(
+            base_url=base_url,
+            repo_url=repo_url,
+            root=root,
+            custom_gpt_url=custom_gpt_url,
+            mcpb_download_url=mcpb_download_url,
+        )
+
+        dest = OUTPUT_DIR / rel
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_text(rendered, encoding="utf-8")
+
+    for item in WEBSITE_DIR.rglob("*"):
+        if not item.is_file() or item.suffix == ".html":
+            continue
+        rel = item.relative_to(WEBSITE_DIR)
+        dest = OUTPUT_DIR / rel
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(item, dest)
+
+
+def build(base_url: str, *, repo_url: str = "", custom_gpt_url: str = ""):
     """Run the full build."""
     if OUTPUT_DIR.exists():
         shutil.rmtree(OUTPUT_DIR)
@@ -262,12 +301,10 @@ def build(base_url: str, *, repo_url: str = ""):
             else:
                 regular_skills.append(skill)
 
-        # Zip individual (non-meta) skills
         for skill in regular_skills:
             output_path = OUTPUT_DIR / "skills" / persona_id / f"{skill['name']}.skill"
             zip_skill(skill["dir"], output_path)
 
-        # Zip meta skill bundled with all persona skills
         if meta_skill:
             sections = parse_meta_sections(meta_skill["dir"] / "SKILL.md")
             repo_skills = f"{repo_url}tree/main/skills/{persona_id}" if repo_url else ""
@@ -302,11 +339,10 @@ def build(base_url: str, *, repo_url: str = ""):
         json.dumps(inv_data["personas"], indent=2, ensure_ascii=False), encoding="utf-8"
     )
 
-    # Copy website (includes website/traces/index.html)
-    shutil.copytree(WEBSITE_DIR, OUTPUT_DIR, dirs_exist_ok=True)
+    # Render website HTML templates and copy static assets
+    build_website(base_url, repo_url=repo_url, custom_gpt_url=custom_gpt_url)
 
-    # Copy trace data (JSON files) into _site/traces/, skipping the standalone
-    # viewer HTML since the website version already landed above.
+    # Copy trace data (JSON files) into _site/traces/
     if TRACES_DIR.is_dir():
         traces_out = OUTPUT_DIR / "traces"
         traces_out.mkdir(parents=True, exist_ok=True)
@@ -328,6 +364,10 @@ def build(base_url: str, *, repo_url: str = ""):
         output_dir=OUTPUT_DIR,
         skills_dir=SKILLS_DIR,
     )
+
+    # Claude Desktop Extension (.mcpb)
+    from build_mcpb import build_mcpb
+    build_mcpb(base_url, output_dir=OUTPUT_DIR / "packages" / "mcpb")
 
     # Summary
     skill_count = sum(len(p["skills"]) for p in personas.values())
@@ -352,6 +392,12 @@ def main():
              "Used for 'edit' links on the website. "
              "Defaults to REPO_URL from .env or empty string.",
     )
+    parser.add_argument(
+        "--custom-gpt-url",
+        default=os.environ.get("CUSTOM_GPT_URL", ""),
+        help="URL of the ChatGPT Custom GPT. "
+             "Defaults to CUSTOM_GPT_URL from .env or empty string (shows 'coming soon').",
+    )
     args = parser.parse_args()
 
     base = args.base_url
@@ -362,7 +408,7 @@ def main():
     if repo and not repo.endswith("/"):
         repo += "/"
 
-    build(base, repo_url=repo)
+    build(base, repo_url=repo, custom_gpt_url=args.custom_gpt_url)
 
 
 if __name__ == "__main__":

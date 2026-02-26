@@ -31,7 +31,8 @@ jobs:
           REPO_NAME="${GITHUB_REPOSITORY#*/}"
           uv run scripts/build.py \
             --base-url "https://${GITHUB_REPOSITORY_OWNER}.github.io/${REPO_NAME}/" \
-            --repo-url "https://github.com/${GITHUB_REPOSITORY}/"
+            --repo-url "https://github.com/${GITHUB_REPOSITORY}/" \
+            --custom-gpt-url "${{ vars.CUSTOM_GPT_URL }}"
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
