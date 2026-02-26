@@ -20,6 +20,8 @@ from pathlib import Path
 import yaml
 from dotenv import load_dotenv
 
+from build_actions import build_actions
+
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 SKILLS_DIR = PROJECT_ROOT / "skills"
 TEMPLATES_DIR = PROJECT_ROOT / "templates"
@@ -317,6 +319,15 @@ def build(base_url: str, *, repo_url: str = ""):
             dest = traces_out / rel
             dest.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(item, dest)
+
+    # GPT Actions (static OpenAPI + JSON endpoints)
+    build_actions(
+        personas=personas,
+        personas_config=load_personas_config(),
+        base_url=base_url,
+        output_dir=OUTPUT_DIR,
+        skills_dir=SKILLS_DIR,
+    )
 
     # Summary
     skill_count = sum(len(p["skills"]) for p in personas.values())
